@@ -130,14 +130,14 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Đối tác</label>
-                                    {!! Form::select('partner', $partner, null, ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Hệ điều hành</label>
 
-                                    {!! Form::select('clientType', $clientType, null, ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                    {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>

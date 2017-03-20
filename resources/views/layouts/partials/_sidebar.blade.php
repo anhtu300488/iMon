@@ -75,8 +75,8 @@
 
                 </li>
 
-                <li class="">
-                    <a href="elements.html">
+                <li {{ setActive('basic/userReg') }}>
+                    <a href="{{route('basic.userReg')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Người dùng đăng ký
                     </a>
@@ -92,8 +92,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="content-slider.html">
+                <li {{ setActive('basic/history') }}>
+                    <a href="{{route('basic.history')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Lịch sử
                     </a>

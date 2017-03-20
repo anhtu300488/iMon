@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Người dùng đăng ký
+    Lịch sử
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,22 +19,22 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'basic/userReg','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'basic/history','role'=>'search'])  !!}
                             {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Người dùng</label>
-                                    <div class="input-group" >
+                                    <label class="col-sm-4" for="id-date-picker-1">Người dùng</label>
+                                    <div class="input-group col-sm-8" >
                                         <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <label class="col-sm-3" for="id-date-picker-1">Từ ngày</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
+                                        <input class="form-control date-picker col-sm-9" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
                                         <span class="input-group-addon">
 																		<i class="fa fa-calendar bigger-110"></i>
 																	</span>
@@ -43,35 +43,13 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
+                                    <label class="col-sm-3" for="id-date-picker-1">Đến ngày</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
+                                        <input class="form-control date-picker col-sm-9" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
                                         <span class="input-group-addon">
 																		<i class="fa fa-calendar bigger-110"></i>
 																	</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Thiết bị</label>
-                                    <input class="form-control" name="device" type="text" value="{{request('device')}}"/>
-
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">IP</label>
-                                    <div class="input-group">
-                                        <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Nền tảng</label>
-
-                                    {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
 
@@ -94,29 +72,6 @@
 
         </div>
     </div><!-- /.page-header -->
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
-
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê người dùng đăng ký</span>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Tổng người dùng</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
     <hr />
     <div class="row">
         <div class="col-xs-12">
@@ -127,16 +82,17 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên tài khoản</th>
-                            <th>Tên hiển thị</th>
-                            <th class="hidden-480">IP</th>
+                            <th>Mã lịch sử</th>
+                            <th>Tên người chơi</th>
+                            <th class="hidden-480">Mã thiết bị</th>
 
                             <th>
-                                Thiết bị
+                                IME
                             </th>
-                            <th class="hidden-480">Đối tác</th>
-                            <th>Nền tảng</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
+                            <th class="hidden-480">CP Id</th>
+                            <th>Địa chỉ IP</th>
+                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Bắt đầu</th>
+                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Kết thúc</th>
                         </tr>
                         </thead>
 
@@ -144,13 +100,14 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td>{{ ++$i }}</td>
+                                <td>{{ $rs->id }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td>{{ $rs->displayName }}</td>
-                                <td class="hidden-480">{{ $rs->ip }}</td>
-                                <td>{{ $rs->device }}</td>
-                                <td>{{ $rs->cp }}</td>
-                                <td>{{ $rs->clientId }}</td>
-                                <td>{{ $rs->registedTime }}</td>
+                                <td class="hidden-480">{{ $rs->deviceId }}</td>
+                                <td></td>
+                                <td>{{ $rs->clientType }}</td>
+                                <td>{{ $rs->remoteIp }}</td>
+                                <td>{{ $rs->loggedInTime }}</td>
+                                <td>{{ $rs->loggedInTime }}</td>
                             </tr>
                         @endforeach
                         </tbody>

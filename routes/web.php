@@ -37,7 +37,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('basic/kenHistory', ['as' => 'basic.kenHistory', 'uses' => 'Admin\Basic\KenHistoryController@index']);
 
-
     Route::get('basic/xunHistory', ['as' => 'basic.xuHistory', 'uses' => 'Admin\Basic\XuHistoryController@index']);
 
     Route::get('tool/addMoney', ['as' => 'tool.addMoney', 'uses' => 'Admin\Tool\AddMoneyController@index']);
@@ -78,5 +77,25 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('tool/roles/{id}/edit',['as'=>'tool.roles.edit','uses'=>'Admin\Tool\CreateRoleController@edit']);
     Route::patch('tool/roles/{id}',['as'=>'tool.roles.update','uses'=>'Admin\Tool\CreateRoleController@update']);
     Route::delete('tool/roles/{id}',['as'=>'tool.roles.destroy','uses'=>'Admin\Tool\CreateRoleController@destroy']);
+
+    Route::get('tool/lockUser', ['as' => 'tool.lockUser', 'uses' => 'Admin\Tool\LockUserController@lock']);
+
+    Route::post('tool/lockUser', ['as' => 'tool.lockUser.store', 'uses' => 'Admin\Tool\LockUserController@store']);
+
+    Route::get('tool/unlockUser', ['as' => 'tool.unlockUser', 'uses' => 'Admin\Tool\UnlockUserController@unlock']);
+
+    Route::post('tool/unlockUser', ['as' => 'tool.unlockUser.store', 'uses' => 'Admin\Tool\UnlockUserController@store']);
+
+    Route::get('tool/emailUpdate', ['as' => 'tool.emailUpdate', 'uses' => 'Admin\Tool\EmailUpdateController@email']);
+
+    Route::post('tool/emailUpdate', ['as' => 'tool.emailUpdate.store', 'uses' => 'Admin\Tool\EmailUpdateController@store']);
+
+    Route::get('tool/phoneUpdate', ['as' => 'tool.phoneUpdate', 'uses' => 'Admin\Tool\PhoneUpdateController@phone']);
+
+    Route::post('tool/phoneUpdate', ['as' => 'tool.phoneUpdate.store', 'uses' => 'Admin\Tool\PhoneUpdateController@store']);
+
+    Route::get('system/ipLock', ['as' => 'system.ipLock', 'uses' => 'Admin\System\LockIpController@index']);
+
+    Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store']);
 
 });

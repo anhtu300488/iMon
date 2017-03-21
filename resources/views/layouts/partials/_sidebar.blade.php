@@ -284,8 +284,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('tool/lockUser') }}>
+                    <a href="{{route('tool.lockUser')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Khóa tài khoản
                     </a>
@@ -293,8 +293,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('tool/unlockUser') }}>
+                    <a href="{{route('tool.unlockUser')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Mở khóa tài khoản
                     </a>
@@ -311,8 +311,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('tool/emailUpdate') }}>
+                    <a href="{{route('tool.emailUpdate')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Cập nhật địa chỉ email
                     </a>
@@ -320,8 +320,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('tool/phoneUpdate') }}>
+                    <a href="{{route('tool.phoneUpdate')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Cập nhật số điện thoại
                     </a>
@@ -412,8 +412,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="pricing.html">
+                <li {{ setActive('system/ipLock') }}>
+                    <a href="{{route('system.ipLock')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Khóa IP
                     </a>

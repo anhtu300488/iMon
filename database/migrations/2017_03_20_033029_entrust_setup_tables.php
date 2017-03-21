@@ -21,16 +21,16 @@ class EntrustSetupTables extends Migration
         });
 
         // Create table for associating roles to admin (Many-to-Many)
-        Schema::create('role_admin', function (Blueprint $table) {
-            $table->integer('admin_id')->unsigned();
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
-            $table->foreign('admin_id')->references('id')->on('admin')
+            $table->foreign('user_id')->references('id')->on('admin')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['admin_id', 'role_id']);
+            $table->primary(['user_id', 'role_id']);
         });
 
         // Create table for storing permissions

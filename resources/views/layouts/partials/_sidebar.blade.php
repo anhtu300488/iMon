@@ -212,10 +212,28 @@
                     <b class="arrow"></b>
                 </li>
 
+                <li {{ setActive('tool/roles') }}>
+                    <a href="{{route('tool.roles')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách role
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
                 <li {{ setActive('tool/userInfo') }}>
                     <a href="{{route('tool.userInfo')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thông tin người chơi
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('tool/createAdmin/create') }}>
+                    <a href="{{route('tool.createAdmin.create')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tạo User
                     </a>
 
                     <b class="arrow"></b>
@@ -248,8 +266,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('tool/serverMessage') }}>
-                    <a href="{{route('tool.serverMessage')}}">
+                <li {{ setActive('tool/serverMessage/create') }}>
+                    <a href="{{route('tool.serverMessage.create')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thông báo toàn server
                     </a>
@@ -257,8 +275,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('tool/sendEmail/create') }}>
+                    <a href="{{route('tool.sendEmail.create')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Gửi email cho người dùng
                     </a>

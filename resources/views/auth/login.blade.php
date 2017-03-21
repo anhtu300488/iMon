@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Route::has('login'))
+    @if (Auth::check())
+        <script type="text/javascript">
+            window.location = "/home";//here double curly bracket
+        </script>
+    @else
 
     <div class="position-relative">
         <div id="login-box" class="login-box visible widget-box no-border">
@@ -218,4 +224,7 @@
         {{--</div><!-- /.signup-box -->--}}
 
     </div><!-- /.position-relative -->
+
+        @endif
+    @endif
 @endsection

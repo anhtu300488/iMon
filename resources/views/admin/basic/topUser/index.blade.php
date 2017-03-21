@@ -87,7 +87,7 @@
 
                     <div class="col-xs-12 col-lg-6">
                         <div>
-                            <span>Doanh thu</span>
+                            <span>Tổng Doanh thu</span>
                         </div>
                     </div>
                 </div>
@@ -108,19 +108,8 @@
                             <th>STT</th>
                             <th>Người dùng</th>
                             <th>Tên nhân vật</th>
-                            <th class="hidden-480">Mã thẻ</th>
+                            <th class="hidden-480">Tổng tiền nạp(VNĐ)</th>
 
-                            <th>
-                                Serial thẻ
-                            </th>
-                            <th class="hidden-480">Loại thẻ</th>
-                            <th>Mệnh giá</th>
-                            <th>Pay type</th>
-                            <th>Kênh</th>
-                            <th>Trạng thái</th>
-                            <th>Nền tảng</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày nạp</th>
-                            <th>Mô tả</th>
                         </tr>
                         </thead>
 
@@ -130,16 +119,7 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
-                            <td class="hidden-480"></td>
-                            <td></td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->currentCash }}</td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->status }}</td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->purchasedTime }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td style="color: red">{{ $rs->sum_cash }}</td>
                         </tr>
                         @endforeach
                         </tbody>

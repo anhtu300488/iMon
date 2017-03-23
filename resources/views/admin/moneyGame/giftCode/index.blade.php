@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Danh sách phần thưởng VQMM
+    Thông tin GiftCode
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,27 +19,24 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/chanceLuckyWheel','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'moneyGame/giftCode','role'=>'search'])  !!}
                             <div class="row">
+
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">User Id</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Người dùng: </label>
+                                    <div class="input-group col-sm-8" >
+                                        <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                    </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Chance Number</label>
-                                    <input class="form-control" name="chanceNumber" type="text" value="{{request('chanceNumber')}}"/>
-                                </div>
-
-                            </div>
-                            <hr />
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -60,9 +57,19 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Chance</th>
-                            <th>User</th>
-                            <th>Chance number</th>
+                            <th>Tên người chơi</th>
+                            <th>Gift event</th>
+                            <th>Code</th>
+                            <th>Ken</th>
+                            <th>Xu</th>
+                            <th>Ip</th>
+                            <th>Reuseable</th>
+                            <th>Trạng thái</th>
+                            <th>Người tạo giftcode</th>
+                            <th>Mô tả</th>
+                            <th>Thời gian tạo</th>
+                            <th>Thời gian cập nhật</th>
+                            <th>Tác vụ</th>
                         </tr>
                         </thead>
 
@@ -70,9 +77,19 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $rs->chance_number }}</td>
-                                <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->chanceNumberFree }}</td>
+                                <td>{{ $rs->userName }}</td>
+                                <td>{{ $rs->giftEventId }}</td>
+                                <td>{{ $rs->code }}</td>
+                                <td>{{ $rs->cashValue }}</td>
+                                <td>{{ $rs->goldValue }}</td>
+                                <td>{{ $rs->ip }}</td>
+                                <td>{{ $rs->reuseable }}</td>
+                                <td>{{ $rs->status }}</td>
+                                <td>{{ $rs->adminId }}</td>
+                                <td>{{ $rs->description }}</td>
+                                <td>{{ $rs->created_at }}</td>
+                                <td>{{ $rs->updated_at }}</td>
+                                <td></td>
                             </tr>
                         @endforeach
                         </tbody>

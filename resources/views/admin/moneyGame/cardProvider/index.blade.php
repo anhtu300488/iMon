@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Danh sách phần thưởng VQMM
+    Quản lý nhà cung cấp thẻ
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,19 +19,15 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/chanceLuckyWheel','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'moneyGame/cardProvider','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">User Id</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Chance Number</label>
-                                    <input class="form-control" name="chanceNumber" type="text" value="{{request('chanceNumber')}}"/>
+                                    <label for="form-field-select-1">Provider Code</label>
+                                    <input class="form-control" name="providerCode" type="text" />
                                 </div>
 
                             </div>
+
                             <hr />
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6">
@@ -60,9 +56,12 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Chance</th>
-                            <th>User</th>
-                            <th>Chance number</th>
+                            <th>Provider code</th>
+                            <th>Provider name</th>
+                            <th>Mô tả</th>
+                            <th>Active</th>
+                            <th>Telco percent</th>
+                            <th>Value percent</th>
                         </tr>
                         </thead>
 
@@ -70,9 +69,12 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $rs->chance_number }}</td>
-                                <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->chanceNumberFree }}</td>
+                                <td>{{ $rs->providerCode }}</td>
+                                <td>{{ $rs->providerName }}</td>
+                                <td>{{ $rs->description }}</td>
+                                <td>{{ $rs->active }}</td>
+                                <td>{{ $rs->telcoPercent }}</td>
+                                <td>{{ $rs->valuePercent }}</td>
                             </tr>
                         @endforeach
                         </tbody>

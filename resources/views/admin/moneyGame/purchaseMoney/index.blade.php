@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Lịch sử quay MiniPoker
+    Danh sách nạp thẻ lỗi
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,51 +19,48 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/logMiniPoker','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'moneyGame/purchaseMoney','role'=>'search'])  !!}
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Vòng ngoài</label>
-
-                                    {!! Form::select('item', $item, request('item'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Description</label>
-                                    <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
-                                </div>
-
-                            </div>
-                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
+                                    <label class="control-label no-padding-right" for="form-field-1"> User Id </label>
+                                    <div class="input-group" >
+                                        <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
+                                    <label class="control-label no-padding-right" for="form-field-1"> Nhà cung cấp</label>
+                                    <div class="input-group" >
+                                        <input class="form-control" name="provider" type="text" value="{{request('provider')}}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="control-label no-padding-right" for="form-field-1"> Giá trị thẻ nạp</label>
+                                    <div class="input-group" >
+                                        <input class="form-control" name="cardValue" type="text" value="{{request('cardValue')}}"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="control-label no-padding-right" for="form-field-1"> CardPin</label>
+                                    <div class="input-group" >
+                                        <input class="form-control" name="cardPin" type="text" value="{{request('cardPin')}}"/>
                                     </div>
                                 </div>
                             </div>
+
                             <hr />
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6">
+                                <div class="col-xs-4 col-sm-4">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
@@ -89,11 +86,12 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>User ID</th>
-                            <th>Vòng ngoài</th>
-                            <th>Vòng trong</th>
-                            <th>Desciption</th>
-                            <th>Time</th>
+                            <th>User</th>
+                            <th>Nhà cung cấp</th>
+                            <th>Card value</th>
+                            <th>Card pin</th>
+                            <th>Active view</th>
+                            <th>Tác vụ</th>
                         </tr>
                         </thead>
 
@@ -102,10 +100,11 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->round1_item }}</td>
-                                <td>{{ $rs->round2_item }}</td>
-                                <td>{{ $rs->desciption }}</td>
-                                <td>{{ $rs->time }}</td>
+                                <td>{{ $rs->provider }}</td>
+                                <td>{{ $rs->cardValue }}</td>
+                                <td>{{ $rs->cardPin }}</td>
+                                <td>{{ $rs->active }}</td>
+                                <td></td>
                             </tr>
                         @endforeach
                         </tbody>

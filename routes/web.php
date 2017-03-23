@@ -116,4 +116,29 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('game/manageGame', ['as' => 'game.manageGame', 'uses' => 'Admin\Game\GameController@index']);
 
     Route::get('game/matchLog', ['as' => 'game.matchLog', 'uses' => 'Admin\Game\MatchLogController@index']);
+
+    //room
+    Route::resource('game/room','Admin\Game\RoomController');
+
+    //lucky wheel
+    Route::get('game/logLuckyWheel', ['as' => 'game.logLuckyWheel', 'uses' => 'Admin\Game\LuckyWheelController@log']);
+    Route::get('game/itemLuckyWheel', ['as' => 'game.itemLuckyWheel', 'uses' => 'Admin\Game\LuckyWheelController@item']);
+    Route::get('game/chanceLuckyWheel', ['as' => 'game.chanceLuckyWheel', 'uses' => 'Admin\Game\LuckyWheelController@chance']);
+
+    //mini poker
+
+    Route::get('moneyGame/cardProvider', ['as' => 'moneyGame.cardProvider', 'uses' => 'Admin\MoneyGame\CardProviderController@index']);
+
+    //giftcode
+    Route::resource('moneyGame/giftCode','Admin\MoneyGame\GiftCodeController');
+
+    //giftevent
+    Route::resource('moneyGame/eventGift','Admin\MoneyGame\GiftEventController');
+
+    //purchase money
+    Route::resource('moneyGame/purchaseMoney','Admin\MoneyGame\PurchaseMoneyController');
+
+    //add money
+    Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');
+
 });

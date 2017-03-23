@@ -529,7 +529,7 @@
 
         <li {{ setOpen('game') }}>
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <i class="menu-icon fa fa-list-alt"></i>
                 <span class="menu-text"> Game </span>
 
                 <b class="arrow fa fa-angle-down"></b>
@@ -565,19 +565,37 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="wysiwyg.html">
+                <li {{ setActive('game/room') }}>
+                    <a href="{{route('room.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wysiwyg &amp; Markdown
+                        Quản lý phòng game
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('game/logLuckyWheel') }}>
+                    <a href="{{route('game.logLuckyWheel')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Dropzone File Upload
+                        Lịch sử vòng quay may mắn
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('game/itemLuckyWheel') }}>
+                    <a href="{{route('game.itemLuckyWheel')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê tỉ lệ quay vòng quay may mắn
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('game/chanceLuckyWheel') }}>
+                    <a href="{{route('game.chanceLuckyWheel')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê số lượt quay vòng quay may mắn
                     </a>
 
                     <b class="arrow"></b>
@@ -585,57 +603,56 @@
             </ul>
         </li>
 
-        <li class="">
+        <li {{ setOpen('moneyGame') }}>
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <i class="menu-icon fa fa-calendar"></i>
                 <span class="menu-text"> Tiền trong game </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
 
             <b class="arrow"></b>
-
             <ul class="submenu">
-                <li class="">
-                    <a href="form-elements.html">
+                <li {{ setActive('moneyGame/cardProvider') }}>
+                    <a href="{{route('moneyGame.cardProvider')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements
+                        Quản lý nhà cung cấp thẻ
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-elements-2.html">
+                <li {{ setActive('moneyGame/giftCode') }}>
+                    <a href="{{route('giftCode.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements 2
+                        Quản lý mã quà tặng
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
+                <li {{ setActive('moneyGame/eventGift') }}>
+                    <a href="{{route('eventGift.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wizard &amp; Validation
+                        Quản lý quà sự kiện
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="wysiwyg.html">
+                <li {{ setActive('moneyGame/purchaseMoney') }}>
+                    <a href="{{route('purchaseMoney.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wysiwyg &amp; Markdown
+                       Bù tiền nạp thẻ lỗi
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('moneyGame/addMoney') }}>
+                    <a href="{{route('addMoney.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Dropzone File Upload
+                        Cộng tiền cho người dùng
                     </a>
 
                     <b class="arrow"></b>
@@ -645,7 +662,7 @@
 
         <li {{ setOpen('users') }}>
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <i class="menu-icon fa fa-tag"></i>
                 <span class="menu-text"> Người chơi game </span>
 
                 <b class="arrow fa fa-angle-down"></b>
@@ -703,7 +720,7 @@
 
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <i class="menu-icon fa fa-file-o"></i>
                 <span class="menu-text"> Các phân hệ khác </span>
 
                 <b class="arrow fa fa-angle-down"></b>

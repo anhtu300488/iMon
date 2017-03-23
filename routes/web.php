@@ -98,4 +98,22 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store']);
 
+    //users management
+    Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
+
+    Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);
+
+    Route::get('users/otp', ['as' => 'users.otp', 'uses' => 'Admin\Users\OtpController@index']);
+
+    Route::get('users/autoOtp', ['as' => 'users.autoOtp', 'uses' => 'Admin\Users\OtpAutoController@index']);
+
+    Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
+
+    //notification
+    Route::resource('game/notification','Admin\Game\NotificationController');
+
+    //game mangement
+    Route::get('game/manageGame', ['as' => 'game.manageGame', 'uses' => 'Admin\Game\GameController@index']);
+
+    Route::get('game/matchLog', ['as' => 'game.matchLog', 'uses' => 'Admin\Game\MatchLogController@index']);
 });

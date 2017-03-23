@@ -527,7 +527,7 @@
             </ul>
         </li>
 
-        <li class="">
+        <li {{ setOpen('game') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
                 <span class="menu-text"> Game </span>
@@ -538,28 +538,28 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="form-elements.html">
+                <li {{ setActive('game/notification') }}>
+                    <a href="{{route('notification.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements
+                        Quản lý thông báo khẩn cấp trong game
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-elements-2.html">
+                <li {{ setActive('game/manageGame') }}>
+                    <a href="{{route('game.manageGame')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements 2
+                        Quản lý game
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
+                <li {{ setActive('game/matchLog') }}>
+                    <a href="{{route('game.matchLog')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wizard &amp; Validation
+                        Thống kê ván đánh
                     </a>
 
                     <b class="arrow"></b>
@@ -643,7 +643,7 @@
             </ul>
         </li>
 
-        <li class="">
+        <li {{ setOpen('users') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
                 <span class="menu-text"> Người chơi game </span>
@@ -654,46 +654,46 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="form-elements.html">
+                <li {{ setActive('users/userReg') }}>
+                    <a href="{{route('users.userReg')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements
+                        Quản lý user đăng ký
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-elements-2.html">
+                <li {{ setActive('users/userInfo') }}>
+                    <a href="{{route('users.userInfo')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements 2
+                        Quản lý thông tin người chơi
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
+                <li {{ setActive('users/otp') }}>
+                    <a href="{{route('users.otp')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wizard &amp; Validation
+                        Quản lý OTP
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="wysiwyg.html">
+                <li {{ setActive('users/autoOtp') }}>
+                    <a href="{{route('users.autoOtp')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wysiwyg &amp; Markdown
+                        Quản lý OTP tự kích hoạt
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('users/logUserLogin') }}>
+                    <a href="{{route('users.logUserLogin')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Dropzone File Upload
+                        Quản lý log user đăng nhập
                     </a>
 
                     <b class="arrow"></b>

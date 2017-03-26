@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ClientType extends Model
 {
     protected $table = 'client_type';
+
+    public $timestamps = false;
+
+    protected $fillable = ['code', 'name'];
+
+    protected $primaryKey = 'clientId';
 }

@@ -11,4 +11,6 @@ class Notification extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'notificationId';
+
+    protected $fillable = ['title', 'message', 'pushHour', 'pushMinutes', 'repeat_daily', 'status', 'pushTime', 'admin_id'];
 }

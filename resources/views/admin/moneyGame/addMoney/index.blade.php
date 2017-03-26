@@ -49,6 +49,11 @@
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+
+                                    @permission('administrator')
+                                    <a class="btn btn-info btn-sm" href="{{ route('addMoney.create') }}"> Create New Add Money</a>
+                                    @endpermission
+
                                 </div>
                             </div>
                             {!! Form::close() !!}
@@ -91,7 +96,6 @@
                                 <td>{{ $rs->description }}</td>
                                 <td>{{ $rs->admin_id }}</td>
                                 <td>{{ $rs->status }}</td>
-                                <td>{{ $rs->admin_id }}</td>
                                 <td>{{ $rs->created_at }}</td>
                                 <td>{{ $rs->updated_at }}</td>
                             </tr>

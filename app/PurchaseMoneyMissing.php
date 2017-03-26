@@ -11,4 +11,6 @@ class PurchaseMoneyMissing extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'missId';
+
+    public $fillable = ['arrProvider','cardValue','userId','cardPin','cardSerial','arrCash'];
 }

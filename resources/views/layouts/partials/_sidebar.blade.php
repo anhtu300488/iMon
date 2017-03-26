@@ -718,7 +718,7 @@
             </ul>
         </li>
 
-        <li class="">
+        <li {{ setOpen('others') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-file-o"></i>
                 <span class="menu-text"> Các phân hệ khác </span>
@@ -729,46 +729,91 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="form-elements.html">
+                <li {{ setActive('others/linkDownload') }}>
+                    <a href="{{route('linkDownload.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements
+                        Quản lý link tải game
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-elements-2.html">
+                <li {{ setActive('others/logWeb') }}>
+                    <a href="{{route('logWeb.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Form Elements 2
+                        Quản lý log truy cập web
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
+                <li {{ setActive('others/testCase') }}>
+                    <a href="{{route('testCase.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wizard &amp; Validation
+                        Quản lý testcase
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="wysiwyg.html">
+                <li {{ setActive('others/clientType') }}>
+                    <a href="{{route('clientType.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Wysiwyg &amp; Markdown
+                        Quản lý hệ điều hành
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('others/partner') }}>
+                    <a href="{{route('partner.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Dropzone File Upload
+                        Quản lý đối tác
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('others/provider') }}>
+                    <a href="{{route('provider.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách nhà mạng
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('others/notify') }}>
+                    <a href="{{route('notify.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý notify game
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('others/messageUser') }}>
+                    <a href="{{route('messageUser.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý tin nhắn đến user
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('others/webContent') }}>
+                    <a href="{{route('webContent.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý nội dung web
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('others/notification') }}>
+                    <a href="{{route('notification.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý notifications bắn vào game
                     </a>
 
                     <b class="arrow"></b>

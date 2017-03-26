@@ -65,6 +65,11 @@
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+
+                                    @permission('administrator')
+                                    <a class="btn btn-info btn-sm" href="{{ route('purchaseMoney.create') }}"> Create New Purchase Money</a>
+                                    @endpermission
+
                                 </div>
                             </div>
                             {!! Form::close() !!}
@@ -104,7 +109,13 @@
                                 <td>{{ $rs->cardValue }}</td>
                                 <td>{{ $rs->cardPin }}</td>
                                 <td>{{ $rs->active }}</td>
-                                <td></td>
+                                <td>
+                                    @permission('administrator')
+                                    <a class="btn btn-xs btn-info" href="{{ route('purchaseMoney.edit',$rs->missId) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
+                                    @endpermission
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

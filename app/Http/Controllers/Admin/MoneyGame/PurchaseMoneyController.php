@@ -39,4 +39,65 @@ class PurchaseMoneyController extends Controller
 
         return view('admin.moneyGame.purchaseMoney.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
+
+    public function create(){
+        $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
+            "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
+        $toCash = array(1 => "Ken", 0 => "Xu" );
+        return view('admin.moneyGame.purchaseMoney.create', compact('provider', 'toCash'));
+    }
+
+    public function store(Request $request){
+        $this->validate($request, [
+            'provider' => 'required',
+            'cardValue' => 'required',
+            'userId' => 'required',
+            'cardPin' => 'required',
+            'cardSerial' => 'required',
+            'toCash' => 'required'
+        ]);
+
+        $input = $request->all();
+        PurchaseMoneyMissing::create($input);
+
+        return redirect()->route('purchaseMoney.index')
+            ->with('success','Add PurchaseMoneyMissing successfully');
+    }
+
+    public function edit($id){
+        $purchaseMoneyMissing = PurchaseMoneyMissing::find($id);
+        $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
+            "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
+        $toCash = array(1 => "Ken", 0 => "Xu" );
+        return view('admin.moneyGame.purchaseMoney.edit',compact('provider', 'toCash', 'purchaseMoneyMissing'));
+    }
+
+    public function update(Request $request, $id){
+        $this->validate($request, [
+            'provider' => 'required',
+            'cardValue' => 'required',
+            'userId' => 'required',
+            'cardPin' => 'required',
+            'cardSerial' => 'required',
+            'toCash' => 'required'
+        ]);
+
+        $purchaseMoneyMissing = PurchaseMoneyMissing::find($id);
+        $purchaseMoneyMissing->provider = $request->input('provider');
+        $purchaseMoneyMissing->cardValue = $request->input('cardValue');
+        $purchaseMoneyMissing->userId = $request->input('userId');
+        $purchaseMoneyMissing->cardPin = $request->get('cardPin');
+        $purchaseMoneyMissing->cardSerial = $request->input('cardSerial');
+        $purchaseMoneyMissing->toCash = $request->input('toCash');
+        $purchaseMoneyMissing->save();
+
+        return redirect()->route('purchaseMoney.index')
+            ->with('success','Gift Code updated successfully');
+    }
+
+    public function destroy($id){
+        PurchaseMoneyMissing::find($id)->delete();
+        return redirect()->route('purchaseMoney.index')
+            ->with('success','Gift Code deleted successfully');
+    }
 }

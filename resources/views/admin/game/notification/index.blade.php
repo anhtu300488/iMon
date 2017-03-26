@@ -76,12 +76,17 @@
                                 <td>{{ $rs->expriedTime }}</td>
                                 <td>
                                     @permission('administrator')
-                                    <a class="btn btn-primary" href="{{ route('notification.edit',$rs->notificationId) }}">Edit</a>
+                                    <a class="btn btn-xs btn-info" href="{{ route('notification.edit',$rs->notificationId) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
                                     @endpermission
                                     @permission('administrator')
                                     {!! Form::open(['method' => 'DELETE','route' => ['notification.destroy', $rs->notificationId],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button class="btn btn-xs btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </button>
                                     {!! Form::close() !!}
+
                                     @endpermission
                                 </td>
                             </tr>

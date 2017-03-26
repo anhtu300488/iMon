@@ -35,6 +35,9 @@
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                    @permission('administrator')
+                                    <a class="btn btn-info btn-sm" href="{{ route('eventGift.create') }}"> Create New GiftEvent</a>
+                                    @endpermission
                                 </div>
 
                             </div>
@@ -85,7 +88,21 @@
                                 <td>{{ $rs->status }}</td>
                                 <td>{{ $rs->created_at }}</td>
                                 <td>{{ $rs->updated_at }}</td>
-                                <td></td>
+                                <td>
+                                    @permission('administrator')
+                                    <a class="btn btn-xs btn-info" href="{{ route('eventGift.edit',$rs->giftEventId) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
+                                    @endpermission
+                                    @permission('administrator')
+                                    {!! Form::open(['method' => 'DELETE','route' => ['eventGift.destroy', $rs->giftEventId],'style'=>'display:inline']) !!}
+                                    <button class="btn btn-xs btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </button>
+                                    {!! Form::close() !!}
+
+                                    @endpermission
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

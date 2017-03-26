@@ -8,6 +8,8 @@ class Notify extends Model
 {
     protected $table = 'notify';
 
-    public $timestamps = false;
+//    public $timestamps = false;
+
+    protected $fillable = ['content', 'status'];
 
 }

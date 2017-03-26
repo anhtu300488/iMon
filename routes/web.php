@@ -141,4 +141,33 @@ Route::group(['middleware' => ['auth']], function() {
     //add money
     Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');
 
+    //link download
+    Route::resource('others/linkDownload','Admin\Others\LinkDownloadController');
+
+    //log web
+    Route::resource('others/logWeb','Admin\Others\LogWebController');
+
+    //message user
+    Route::resource('others/messageUser','Admin\Others\MessageController');
+
+    //notification
+    Route::resource('others/notification','Admin\Others\NotificationController');
+
+    //notify
+    Route::resource('others/notify','Admin\Others\NotifyController');
+
+    //OS
+    Route::resource('others/clientType','Admin\Others\ClientTypeController');
+
+    //partner
+    Route::resource('others/partner','Admin\Others\PartnerController');
+
+    //telco
+    Route::resource('others/provider','Admin\Others\ProviderController');
+
+    //test case
+    Route::resource('others/testCase','Admin\Others\TestCaseController');
+
+    //web content
+    Route::resource('others/webContent','Admin\Others\WebContentController');
 });

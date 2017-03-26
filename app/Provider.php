@@ -9,4 +9,6 @@ class Provider extends Model
     protected $table = 'provider';
 
     public $timestamps = false;
+
+    protected $fillable = ['code', 'description'];
 }

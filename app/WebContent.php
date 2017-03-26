@@ -8,5 +8,5 @@ class WebContent extends Model
 {
     protected $table = 'web_content';
 
-    public $timestamps = false;
+    protected $fillable = ['title','keywords','description','content','image','type', 'status', 'is_hot'];
 }

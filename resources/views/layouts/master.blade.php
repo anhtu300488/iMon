@@ -418,7 +418,7 @@
 <script type="text/javascript"> ace.vars['base'] = '..'; </script>
 <script src="{!! asset('assets/js/ace/elements.onpage-help.js') !!}"></script>
 <script src="{!! asset('assets/js/ace/ace.onpage-help.js') !!}"></script>
-{{--<script src="{!! asset('docs/assets/js/rainbow.js') !!}"></script>--}}
+<script src="{!! asset('docs/assets/js/rainbow.js') !!}"></script>
 <script src="{!! asset('docs/assets/js/language/generic.js') !!}"></script>
 <script src="{!! asset('docs/assets/js/language/html.js') !!}"></script>
 <script src="{!! asset('docs/assets/js/language/css.js') !!}"></script>

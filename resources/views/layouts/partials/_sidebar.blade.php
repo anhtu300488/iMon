@@ -410,8 +410,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="wysiwyg.html">
+                <li {{ setActive('revenue/historyMoney') }}>
+                    <a href="{{route('revenue.historyMoney')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Lịch sử tiền chơi game
                     </a>
@@ -419,8 +419,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/logPayment') }}>
+                    <a href="{{route('revenue.logPayment')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Lịch sử nạp thẻ
                     </a>
@@ -428,8 +428,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/smsRevenue') }}>
+                    <a href="{{route('revenue.smsRevenue')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Doanh thu SMS
                     </a>
@@ -437,8 +437,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/moRevenue') }}>
+                    <a href="{{route('revenue.moRevenue')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chi tiết MO SIM
                     </a>
@@ -446,8 +446,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/detailSmsHistory') }}>
+                    <a href="{{route('revenue.detailSmsHistory')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chi tiết MO SMS
                     </a>
@@ -455,8 +455,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/exchangeRequest') }}>
+                    <a href="{{route('revenue.exchangeRequest')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thống kê đổi thưởng
                     </a>
@@ -464,8 +464,17 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
+                <li {{ setActive('revenue/ccu') }}>
+                    <a href="{{route('revenue.ccu')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý CCU
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/userOnline') }}>
+                    <a href="{{route('revenue.userOnline')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý user online
                     </a>

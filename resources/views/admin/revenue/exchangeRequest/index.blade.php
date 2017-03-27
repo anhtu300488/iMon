@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Chi tiết giao dịch nạp tiền
+    Chi tiết giao dịch đổi thưởng
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/rechargeTransaction','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/exchangeRequest','role'=>'search'])  !!}
                             {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
@@ -30,13 +30,13 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Tên hiển thị</label>
-                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
+                                    <label for="id-date-picker-1">SĐT xác thực</label>
+                                    <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Đối tác</label>
-                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                    <label  for="form-field-select-1">Trạng thái</label>
+                                    {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
                                 </div>
 
@@ -46,46 +46,27 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian nạp thẻ</label>
+                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
                                         <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Request topup</label>
+                                    <input class="form-control" name="requestTopup" type="text" value="{{request('requestTopup')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Thời gian bắt đầu chơi game</label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="date_play_game" id="id-date-range-picker-1" value="{{request('date_play_game')}}" />
-                                        <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
-                                    </div>
+                                    <label for="id-date-picker-1">ResponseData</label>
+                                    <input class="form-control" name="responseData" type="text" value="{{request('responseData')}}"/>
                                 </div>
 
 
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Hệ điều hành</label>
-
-                                    {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Loại</label>
-
-                                    <select class="form-control" id="form-field-select-1" name="type">
-                                        <option value="">---Tất cả---</option>
-                                        <option value="1" <?php if(request('type') == 1) echo "selected='selected'"; ?> >Thẻ cào</option>
-                                        <option value="2" <?php if(request('type') == 2) echo "selected='selected'"; ?> >SMS</option>
-                                        <option value="3" <?php if(request('type') == 3) echo "selected='selected'"; ?> >IAP</option>
-                                    </select>
-                                </div>
                             </div>
                             <hr />
                             <div class="row">
@@ -110,45 +91,23 @@
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
-
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê nạp tiền</span>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Doanh thu</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
             <div class="row">
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>User</th>
-                            <th>Tên đăng nhập</th>
+                            <th>User ID</th>
                             <th class="hidden-480">Tên hiển thị</th>
-                            <th>Mệnh giá</th>
-                            <th class="hidden-480">Cash value</th>
-                            <th>Ken hiện tại</th>
-                            <th>Purchased time</th>
-                            <th>Loại</th>
-                            <th>Mô tả</th>
+                            <th>Tên đăng nhập</th>
+                            <th>SDT xác thực</th>
+                            <th class="hidden-480">Asset</th>
+                            <th>Total cash</th>
+                            <th>Giá trị thẻ</th>
+                            <th>Trạng thái</th>
+                            <th>Response data</th>
+                            <th>Request topup</th>
+                            <th>Thời gian tạo</th>
                         </tr>
                         </thead>
 
@@ -156,15 +115,17 @@
                         @foreach($data as $key => $rs)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $rs->userId }}</td>
-                            <td>{{ $rs->userName }}</td>
-                            <td class="hidden-480">{{ $rs->displayName }}</td>
+                            <td>{{ $rs->requestUserId }}</td>
+                            <td>{{ $rs->requestUserName }}</td>
+                            <td class="hidden-480">{{ $rs->requestUserName }}</td>
                             <td></td>
-                            <td>{{ $rs->cashValue }}</td>
-                            <td>{{ $rs->currentCash }}</td>
-                            <td>{{ $rs->purchasedTime }}</td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td>{{ $rs->assetId }}</td>
+                            <td>{{ $rs->totalCash }}</td>
+                            <td>{{ $rs->totalParValue }}</td>
+                            <td>{{ $rs->status }}</td>
+                            <td>{{ $rs->responseData }}</td>
+                            <td>{{ $rs->request_topup_id }}</td>
+                            <td>{{ $rs->created_at }}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -183,7 +144,7 @@
 
 
             //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
-            $('input[name=date_charge]').daterangepicker({
+            $('input[name=timeRequest]').daterangepicker({
                 'applyClass' : 'btn-sm btn-success',
                 'cancelClass' : 'btn-sm btn-default',
                 locale: {
@@ -195,17 +156,6 @@
                 $(this).next().focus();
             });
 
-            $('input[name=date_play_game]').daterangepicker({
-                'applyClass' : 'btn-sm btn-success',
-                'cancelClass' : 'btn-sm btn-default',
-                locale: {
-                    applyLabel: 'Apply',
-                    cancelLabel: 'Cancel',
-                }
-            })
-                .prev().on(ace.click_event, function(){
-                $(this).next().focus();
-            });
         });
     </script>
 

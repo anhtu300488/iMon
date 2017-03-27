@@ -33,15 +33,19 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung push</label>
             <div class="col-sm-9">
-                {!! Form::text('message', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
+                {!! Form::textarea('message', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">PushTime</label>
-            <div class="col-sm-9">
-                {!! Form::text('pushHour', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
-                {!! Form::text('pushMinutes', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
+            <div class="col-sm-9" style="padding-left: 0px">
+                <div class="col-sm-4">
+                    {!! Form::text('pushHour', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
+                </div>
+                <div class="col-sm-4">
+                    {!! Form::text('pushMinutes', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
+                </div>
             </div>
         </div>
 

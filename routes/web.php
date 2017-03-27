@@ -110,7 +110,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
 
     //notification
-    Route::resource('game/notification','Admin\Game\NotificationController');
+    Route::resource('game/emergencyNotification','Admin\Game\NotificationController');
 
     //game mangement
     Route::get('game/manageGame', ['as' => 'game.manageGame', 'uses' => 'Admin\Game\GameController@index']);

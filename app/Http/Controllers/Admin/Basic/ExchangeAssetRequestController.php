@@ -19,6 +19,9 @@ class ExchangeAssetRequestController extends Controller
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
         $status = \Request::get('status');
+
+        $statusArr = array('' => '---Tất cả---',0 => 'Mới insert chưa xử lý', 1 => 'SMS đã check thành công', 2 => 'Thất bại');
+
         $matchThese = [];
         if($status != ''){
             $matchThese['status'] = $status;
@@ -36,6 +39,6 @@ class ExchangeAssetRequestController extends Controller
         }
         $data = $query->orderBy('requestUserName')->paginate(10);
 
-        return view('admin.basic.exchangeAssetRequest.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.basic.exchangeAssetRequest.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

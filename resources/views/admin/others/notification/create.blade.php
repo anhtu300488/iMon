@@ -40,15 +40,15 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung push</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="message" />
+                    {!! Form::textarea('message') !!}
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">PushTime</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="pushHour" />
-                    <input type="text" class="form-control" id="form-field-8" name="pushMinutes" />
+                <div class="col-sm-9" style="padding-left: 0px">
+                    <div class="col-sm-4"><input type="text" class="form-control" id="form-field-8" name="pushHour" /></div>
+                    <div class="col-sm-4"><input type="text" class="form-control" id="form-field-8" name="pushMinutes" /></div>
                 </div>
             </div>
 

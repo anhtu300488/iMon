@@ -25,33 +25,25 @@
                                 <div class="col-xs-3 col-sm-3">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Id người gửi </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="senderUserId" type="text" value="{{request('senderUserId')}}"/>
-                                    </div>
+                                    <input class="form-control" name="senderUserId" type="text" value="{{request('senderUserId')}}"/>
                                 </div>
 
                                 <div class="col-xs-3 col-sm-3">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Tên người gửi </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="senderUsername" type="text" value="{{request('senderUsername')}}"/>
-                                    </div>
+                                    <input class="form-control" name="senderUsername" type="text" value="{{request('senderUsername')}}"/>
                                 </div>
 
                                 <div class="col-xs-3 col-sm-3">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Id người nhận </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="recipientUserId" type="text" value="{{request('recipientUserId')}}"/>
-                                    </div>
+                                    <input class="form-control" name="recipientUserId" type="text" value="{{request('recipientUserId')}}"/>
                                 </div>
 
                                 <div class="col-xs-3 col-sm-3">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Tên người nhận </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="recipientUsername" type="text" value="{{request('recipientUsername')}}"/>
-                                    </div>
+                                    <input class="form-control" name="recipientUsername" type="text" value="{{request('recipientUsername')}}"/>
                                 </div>
 
                             </div>

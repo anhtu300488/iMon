@@ -8,5 +8,5 @@ class TaiGame extends Model
 {
     protected $table = 'tai_game';
 
-    public $timestamps = false;
+    protected $fillable = ['os', 'link_tai', 'file_down', 'is_direct', 'status', 'file_down', 'delay'];
 }

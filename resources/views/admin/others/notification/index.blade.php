@@ -25,17 +25,13 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Tiêu đề </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="title" type="text" value="{{request('title')}}"/>
-                                    </div>
+                                    <input class="form-control" name="title" type="text" value="{{request('title')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Nội dung </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="message" type="text" value="{{request('message')}}"/>
-                                    </div>
+                                    <input class="form-control" name="message" type="text" value="{{request('message')}}"/>
                                 </div>
 
                             </div>

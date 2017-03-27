@@ -119,76 +119,24 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="jquery-ui.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử vật phẩm
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="jquery-ui.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Lịch sử vật phẩm--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
-                    <a href="nestable-list.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử thanh toán
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="nestable-list.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Lịch sử thanh toán--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-caret-right"></i>
-
-                        Three Level Menu
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-
-                    <b class="arrow"></b>
-
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="#">
-                                <i class="menu-icon fa fa-leaf green"></i>
-                                Item #1
-                            </a>
-
-                            <b class="arrow"></b>
-                        </li>
-
-                        <li class="">
-                            <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa fa-pencil orange"></i>
-
-                                4th level
-                                <b class="arrow fa fa-angle-down"></b>
-                            </a>
-
-                            <b class="arrow"></b>
-
-                            <ul class="submenu">
-                                <li class="">
-                                    <a href="#">
-                                        <i class="menu-icon fa fa-plus purple"></i>
-                                        Add Product
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-
-                                <li class="">
-                                    <a href="#">
-                                        <i class="menu-icon fa fa-eye pink"></i>
-                                        View Products
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </li>
 
@@ -203,14 +151,14 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li {{ setActive('tool/topGame') }}>
-                    <a href="{{route('tool.topGame')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Top Game
-                    </a>
+                {{--<li {{ setActive('tool/topGame') }}>--}}
+                    {{--<a href="{{route('tool.topGame')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Top Game--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('tool/roles') }}>
                     <a href="{{route('tool.roles')}}">
@@ -221,14 +169,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('tool/userInfo') }}>
-                    <a href="{{route('tool.userInfo')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Thông tin người chơi
-                    </a>
+                {{--<li {{ setActive('tool/userInfo') }}>--}}
+                    {{--<a href="{{route('tool.userInfo')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Thông tin người chơi--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('tool/createAdmin/create') }}>
                     <a href="{{route('tool.createAdmin.create')}}">
@@ -239,25 +187,25 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử ván chơi
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="form-wizard.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Lịch sử ván chơi--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
-                    <a href="wysiwyg.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Cập nhật mật khẩu
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="wysiwyg.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Cập nhật mật khẩu--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
+                <li {{ setActive('tool/addMoney') }}>
                     <a href="{{url('tool/addMoney')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Cộng tiền cho người chơi
@@ -266,14 +214,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('tool/serverMessage/create') }}>
-                    <a href="{{route('tool.serverMessage.create')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Thông báo toàn server
-                    </a>
+                {{--<li {{ setActive('tool/serverMessage/create') }}>--}}
+                    {{--<a href="{{route('tool.serverMessage.create')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Thông báo toàn server--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('tool/sendEmail/create') }}>
                     <a href="{{route('tool.sendEmail.create')}}">
@@ -302,14 +250,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Kiểm tra trạng thái user
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="dropzone.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Kiểm tra trạng thái user--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('tool/emailUpdate') }}>
                     <a href="{{route('tool.emailUpdate')}}">
@@ -329,23 +277,23 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="dropzone.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Mở khóa thiết bị
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="dropzone.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Mở khóa thiết bị--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
-                    <a href="dropzone.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Khóa thiết bị
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="dropzone.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Khóa thiết bị--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('tool/giftCode') }}>
                     <a href="{{route('tool.giftCode')}}">
@@ -360,28 +308,28 @@
             </ul>
         </li>
 
-        <li {{ setOpen('report') }}>
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-calendar"></i>
-                <span class="menu-text"> Thống kê </span>
+        {{--<li {{ setOpen('report') }}>--}}
+            {{--<a href="#" class="dropdown-toggle">--}}
+                {{--<i class="menu-icon fa fa-calendar"></i>--}}
+                {{--<span class="menu-text"> Thống kê </span>--}}
 
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
+                {{--<b class="arrow fa fa-angle-down"></b>--}}
+            {{--</a>--}}
 
-            <b class="arrow"></b>
+            {{--<b class="arrow"></b>--}}
 
-            <ul class="submenu">
-                <li class="">
-                    <a href="tables.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Daily active user
-                    </a>
+            {{--<ul class="submenu">--}}
+                {{--<li class="">--}}
+                    {{--<a href="tables.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Daily active user--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-            </ul>
-        </li>
+            {{--</ul>--}}
+        {{--</li>--}}
 
         <li {{ setOpen('system') }}>
             <a href="#" class="dropdown-toggle">
@@ -394,23 +342,23 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="profile.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Bảo trì server
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="profile.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Bảo trì server--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
-                <li class="">
-                    <a href="inbox.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Cấu hình event đua top
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="inbox.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Cấu hình event đua top--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('system/ipLock') }}>
                     <a href="{{route('system.ipLock')}}">
@@ -538,8 +486,8 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li {{ setActive('game/notification') }}>
-                    <a href="{{route('notification.index')}}">
+                <li {{ setActive('game/emergencyNotification') }}>
+                    <a href="{{route('emergencyNotification.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý thông báo khẩn cấp trong game
                     </a>

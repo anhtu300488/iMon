@@ -40,16 +40,18 @@ class LinkDownloadController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'eventName' => 'required',
-            'cashValue' => 'required',
-            'goldValue' => 'required',
-            'expiredTime' => 'required',
-            'description' => 'required'
+            'os' => 'required',
+            'link_tai' => 'required',
+            'file_down' => 'required',
+            'is_direct' => 'required',
+            'status' => 'required',
+            'file_down' => 'required|mimes:apk,ipa,exe,jpg,jpeg,png',
+            'delay' => 'required'
         ]);
 
 
         $input = $request->all();
-        $input['expiredTime'] = date('Y-m-d',strtotime($request->get('expiredTime')));
+        $input['file_down'] = $request->file('file_down')->store('public');
         TaiGame::create($input);
 
         return redirect()->route('linkDownload.index')
@@ -57,26 +59,30 @@ class LinkDownloadController extends Controller
     }
 
     public function edit($id){
-        $eventGift = TaiGame::find($id);
-
-        return view('admin.others.linkDownload.edit',compact('eventGift'));
+        $linkDownload = TaiGame::find($id);
+        $osBuild = array(0 => 'Android', 1 => 'IOS', 2 => 'Window Phone', 3 => 'Desktop');
+        $downloadType = array(0 => 'Qua Store', 1 => 'Tải file');
+        return view('admin.others.linkDownload.edit',compact('linkDownload','osBuild', 'downloadType'));
     }
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'eventName' => 'required',
-            'cashValue' => 'required',
-            'goldValue' => 'required',
-            'expiredTime' => 'required',
-            'description' => 'required'
+            'os' => 'required',
+            'link_tai' => 'required',
+            'file_down' => 'required',
+            'is_direct' => 'required',
+            'status' => 'required',
+            'file_down' => 'required|mimes:apk,ipa,exe',
+            'delay' => 'required'
         ]);
 
         $giftEvent = TaiGame::find($id);
-        $giftEvent->eventName = $request->input('eventName');
-        $giftEvent->cashValue = $request->input('cashValue');
-        $giftEvent->goldValue = $request->input('goldValue');
-        $giftEvent->expiredTime = date('Y-m-d',strtotime($request->get('expiredTime')));
-        $giftEvent->description = $request->input('description');
+        $giftEvent->os = $request->input('os');
+        $giftEvent->link_tai = $request->input('link_tai');
+        $giftEvent->is_direct = $request->input('is_direct');
+        $giftEvent->delay = $request->input('delay');
+        $giftEvent->status = $request->input('status');
+        $giftEvent->file_down = $request->input('file_down');
         $giftEvent->save();
 
         return redirect()->route('linkDownload.index')

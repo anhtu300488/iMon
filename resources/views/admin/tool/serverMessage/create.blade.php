@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="form-field-8"></textarea>
+                        {!! Form::textarea('body') !!}
                     </div>
                 </div>
 

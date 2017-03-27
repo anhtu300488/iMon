@@ -4,10 +4,6 @@
 @endsection
 @section('content')
 
-    <!-- /section:settings.box -->
-    <div class="page-header">
-        <h1>Wysiwyg &amp; Markdown Editor </h1>
-    </div><!-- /.page-header -->
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>

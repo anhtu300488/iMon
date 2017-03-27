@@ -4,21 +4,10 @@
 @endsection
 @section('content')
 
-    <!-- /section:settings.box -->
-    <div class="page-header">
-        <h1>
-            Form Elements
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                Common form elements and layouts
-            </small>
-        </h1>
-    </div><!-- /.page-header -->
-
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
-            {!! Form::open(array('route' => 'notification.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+            {!! Form::open(array('route' => 'emergencyNotification.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung</label>

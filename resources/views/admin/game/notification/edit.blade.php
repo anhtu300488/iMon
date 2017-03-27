@@ -20,7 +20,7 @@
             </ul>
         </div>
     @endif
-    {!! Form::model($notification, ['method' => 'PATCH', 'class' => 'form-horizontal','route' => ['notification.update', $notification->notificationId]]) !!}
+    {!! Form::model($notification, ['method' => 'PATCH', 'class' => 'form-horizontal','route' => ['emergencyNotification.update', $notification->notificationId]]) !!}
     <div class="row">
 
         <div class="form-group">

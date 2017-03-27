@@ -24,10 +24,8 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Người dùng</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
-                                    </div>
+                                    <label for="form-field-select-1">Người dùng</label>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -36,8 +34,8 @@
                                     <div class="input-group">
                                         <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
                                         <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -47,8 +45,8 @@
                                     <div class="input-group">
                                         <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
                                         <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -57,15 +55,12 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Thiết bị</label>
                                     <input class="form-control" name="device" type="text" value="{{request('device')}}"/>
-
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">IP</label>
-                                    <div class="input-group">
-                                        <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
-                                    </div>
+                                    <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">

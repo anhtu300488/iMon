@@ -11,4 +11,6 @@ class Message extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'messageId';
+
+    protected $fillable = ['recipientUserName', 'title', 'body', 'senderUserId', 'senderUserName', 'recipientUserId'];
 }

@@ -24,46 +24,40 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-4" for="id-date-picker-1">Người dùng</label>
-                                    <div class="input-group col-sm-8" >
-                                        <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                    <label for="id-date-picker-1">Người dùng</label>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <div class="input-group">
+                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-3" for="id-date-picker-1">Từ ngày</label>
+                                    <label for="id-date-picker-1">Đến ngày</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker col-sm-9" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
+                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
                                         <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-3" for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker col-sm-9" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
-                                        <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                             <br/>
 
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <label class="col-sm-4" for="form-field-select-1">Trạng thái</label>
 
-                                    <select class="col-sm-8" id="form-field-select-1" name="status">
-                                        <option value="">---Tất cả---</option>
-                                        <option value="0" <?php if(request('status') == 0) echo "selected='selected'"; ?> >Mới insert chưa xử lý</option>
-                                        <option value="1" <?php if(request('status') == 1) echo "selected='selected'"; ?> >SMS đã check thành công</option>
-                                        <option value="2" <?php if(request('status') == 2) echo "selected='selected'"; ?> >Thất bại</option>
-                                    </select>
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Nền tảng</label>
+
+                                    {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>

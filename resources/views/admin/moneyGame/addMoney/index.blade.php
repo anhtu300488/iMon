@@ -25,17 +25,13 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> User Id </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                    </div>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Mô tả</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
-                                    </div>
+                                    <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
                                 </div>
 
 

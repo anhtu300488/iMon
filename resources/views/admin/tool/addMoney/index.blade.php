@@ -25,27 +25,25 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> User ID: </label>
-                                    <div class="input-group col-sm-9" >
-                                         <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                    </div>
+                                    <label class="control-label no-padding-right" for="form-field-1"> User ID: </label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Mô tả: </label>
-                                    <div class="input-group col-sm-9" >
-                                         <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
-                                    </div>
+                                    <label class="control-label no-padding-right" for="form-field-1"> Mô tả: </label>
+                                     <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
                                 </div>
 
+                            </div>
+                            <hr />
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
-
                             </div>
                             {{--</form>--}}
                             {!! Form::close() !!}

@@ -25,17 +25,13 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Os </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="os" type="text" value="{{request('os')}}"/>
-                                    </div>
+                                    <input class="form-control" name="os" type="text" value="{{request('os')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Version build </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="versionBuild" type="text" value="{{request('versionBuild')}}"/>
-                                    </div>
+                                    <input class="form-control" name="versionBuild" type="text" value="{{request('versionBuild')}}"/>
                                 </div>
 
 

@@ -28,12 +28,12 @@
                 </div>
             @endif
         <!-- PAGE CONTENT BEGINS -->
-            {!! Form::open(array('route' => 'linkDownload.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+            {!! Form::open(array('route' => 'linkDownload.store','method'=>'POST', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) !!}
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">OS</label>
                 <div class="col-sm-9">
-                    {!! Form::select('osBuild', $osBuild, request('osBuild'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                    {!! Form::select('os', $osBuild, request('os'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                 </div>
             </div>
 
@@ -47,14 +47,23 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">File Download</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="file_down" />
+                    {{--<input type="text" class="form-control" id="form-field-8" name="file_down" />--}}
+                    {!! Form::file('file_down', null) !!}
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Is Direct</label>
                 <div class="col-sm-9">
-                    {!! Form::select('downloadType', $downloadType, request('downloadType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                    {!! Form::select('is_direct', $downloadType, request('is_direct'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Trạng thái</label>
+                <div class="col-sm-9">
+                    {!! Form::hidden('status',0) !!}
+                    {{ Form::checkbox('status', 1, true, ['class' => 'field']) }}
                 </div>
             </div>
 

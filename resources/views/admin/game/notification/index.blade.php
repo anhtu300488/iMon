@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/notification','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'game/emergencyNotification','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Nội dung</label>
@@ -35,7 +35,7 @@
                                         Tìm kiếm
                                     </button>
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('notification.create') }}"> Create New Notification</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('emergencyNotification.create') }}"> Create New Notification</a>
                                     @endpermission
                                 </div>
                             </div>
@@ -76,12 +76,12 @@
                                 <td>{{ $rs->expriedTime }}</td>
                                 <td>
                                     @permission('administrator')
-                                    <a class="btn btn-xs btn-info" href="{{ route('notification.edit',$rs->notificationId) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('emergencyNotification.edit',$rs->notificationId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
                                     @permission('administrator')
-                                    {!! Form::open(['method' => 'DELETE','route' => ['notification.destroy', $rs->notificationId],'style'=>'display:inline']) !!}
+                                    {!! Form::open(['method' => 'DELETE','route' => ['emergencyNotification.destroy', $rs->notificationId],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>

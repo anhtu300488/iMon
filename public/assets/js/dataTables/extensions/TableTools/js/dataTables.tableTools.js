@@ -562,7 +562,7 @@ TableTools = function( oDT, oOpts )
 			"selected": [],
 
 			/**
-			 * Basic to run before the selection can take place. Will cancel the select if the
+			 * Function to run before the selection can take place. Will cancel the select if the
 			 * function returns false
 			 *  @property preRowSelect
 			 *  @type	 Function
@@ -571,7 +571,7 @@ TableTools = function( oDT, oOpts )
 			"preRowSelect": null,
 
 			/**
-			 * Basic to run when a row is selected
+			 * Function to run when a row is selected
 			 *  @property postSelected
 			 *  @type	 Function
 			 *  @default  null
@@ -579,7 +579,7 @@ TableTools = function( oDT, oOpts )
 			"postSelected": null,
 
 			/**
-			 * Basic to run when a row is deselected
+			 * Function to run when a row is deselected
 			 *  @property postDeselected
 			 *  @type	 Function
 			 *  @default  null
@@ -2735,7 +2735,7 @@ TableTools.fnGetInstance = function ( node )
  *  @method  _fnEventListen
  *  @param   {Object} that Scope of the listening function (i.e. 'this' in the caller)
  *  @param   {String} type Event type
- *  @param   {Function} fn Basic
+ *  @param   {Function} fn Function
  *  @returns void
  *  @private
  *  @static

@@ -12313,7 +12313,7 @@ $.jgrid.extend({
                     "width": opts.width+20
                 }, opts.dialog_opts || {});
             },
-            /* Basic to get the permutation array, and pass it to the
+            /* Function to get the permutation array, and pass it to the
                "done" function */
             "apply_perm" : function() {
                 $('option',select).each(function() {
@@ -12336,7 +12336,7 @@ $.jgrid.extend({
                     opts.done.call(self, perm);
                 }
             },
-            /* Basic to cleanup the dialog, and select. Also calls the
+            /* Function to cleanup the dialog, and select. Also calls the
                done function with no permutation (to indicate that the
                columnChooser was aborted */
             "cleanup" : function(calldone) {

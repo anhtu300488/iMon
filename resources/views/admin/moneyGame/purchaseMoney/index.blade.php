@@ -25,25 +25,19 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> User Id </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                    </div>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Nhà cung cấp</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="provider" type="text" value="{{request('provider')}}"/>
-                                    </div>
+                                    <input class="form-control" name="provider" type="text" value="{{request('provider')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Giá trị thẻ nạp</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="cardValue" type="text" value="{{request('cardValue')}}"/>
-                                    </div>
+                                    <input class="form-control" name="cardValue" type="text" value="{{request('cardValue')}}"/>
                                 </div>
 
                             </div>
@@ -52,9 +46,7 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> CardPin</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="cardPin" type="text" value="{{request('cardPin')}}"/>
-                                    </div>
+                                    <input class="form-control" name="cardPin" type="text" value="{{request('cardPin')}}"/>
                                 </div>
                             </div>
 

@@ -25,25 +25,19 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> ip </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
-                                    </div>
+                                    <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Refer </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="refer" type="text" value="{{request('refer')}}"/>
-                                    </div>
+                                    <input class="form-control" name="refer" type="text" value="{{request('refer')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Platform </label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="platform" type="text" value="{{request('platform')}}"/>
-                                    </div>
+                                    <input class="form-control" name="platform" type="text" value="{{request('platform')}}"/>
                                 </div>
 
 

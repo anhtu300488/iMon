@@ -12,7 +12,7 @@
                     <div class="widget-header widget-header-flat widget-header-small">
                         <h5 class="widget-title">
                             <i class="ace-icon fa fa-signal"></i>
-                            Traffic Sources
+                            Doanh thu tổng hợp
                         </h5>
 
                         <div class="widget-toolbar no-border">
@@ -68,15 +68,15 @@
                                 <div class="grid3">
 															<span class="grey">
 																<i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
-																&nbsp; likes
+																&nbsp; Thẻ cào
 															</span>
-                                    <h4 class="bigger pull-right">1,255</h4>
+                                    <h4 class="bigger pull-right">1,255111</h4>
                                 </div>
 
                                 <div class="grid3">
 															<span class="grey">
 																<i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
-																&nbsp; tweets
+																&nbsp; SMS
 															</span>
                                     <h4 class="bigger pull-right">941</h4>
                                 </div>
@@ -84,7 +84,7 @@
                                 <div class="grid3">
 															<span class="grey">
 																<i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
-																&nbsp; pins
+																&nbsp; IAP
 															</span>
                                     <h4 class="bigger pull-right">1,050</h4>
                                 </div>

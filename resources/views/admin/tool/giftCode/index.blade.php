@@ -25,19 +25,20 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Mã nhận thưởng: </label>
-                                    <div class="input-group col-sm-8" >
-                                        <input class="form-control" name="code" type="text" value="{{request('code')}}"/>
-                                    </div>
+                                    <label class="control-label no-padding-right" for="form-field-1"> Mã nhận thưởng: </label>
+                                    <input class="form-control" name="code" type="text" value="{{request('code')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="col-sm-4 control-label no-padding-right" for="form-field-1"> Người dùng: </label>
-                                    <div class="input-group col-sm-8" >
-                                        <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
-                                    </div>
+                                    <label class="control-label no-padding-right" for="form-field-1"> Người dùng: </label>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
+
+
+                            </div>
+                            <hr />
+                            <div class="row">
 
                                 <div class="col-xs-4 col-sm-4">
                                     <button type="submit" class="btn btn-info btn-sm">
@@ -45,7 +46,6 @@
                                         Tìm kiếm
                                     </button>
                                 </div>
-
                             </div>
                             {{--</form>--}}
                             {!! Form::close() !!}

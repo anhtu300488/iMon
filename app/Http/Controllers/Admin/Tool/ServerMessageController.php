@@ -16,7 +16,17 @@ class ServerMessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+    public function create(Request $request){
+        $this->validate($request, [
+            'recipientUserName' => 'required',
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        $input = $request->all();
+        $input['senderUserId'] = -1;
+        $input['senderUserName'] = 'Hệ thống';
+        $input['recipientUserId'] = 1000001;
+        Message::create($input);
         return view('admin.tool.serverMessage.create');
     }
 

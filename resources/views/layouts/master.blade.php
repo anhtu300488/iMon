@@ -173,9 +173,23 @@
 <script src="{!! asset('assets/js/ace/ace.widget-on-reload.js') !!}"></script>
 <script src="{!! asset('assets/js/ace/ace.searchbox-autocomplete.js') !!}"></script>
 
+<script src="{!! asset('assets/tinymce/js/tinymce/tinymce.min.js') !!}"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
+        tinymce.init({
+            selector: 'textarea',
+            height: 200,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            content_css: '//www.tinymce.com/css/codepen.min.css'
+        });
+
         $('.easy-pie-chart.percentage').each(function(){
             var $box = $(this).closest('.infobox');
             var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');

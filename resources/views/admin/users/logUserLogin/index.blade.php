@@ -73,14 +73,14 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>User ID</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">User ID</th>
                             <th>Tên đăng nhập</th>
-                            <th>Logged in time</th>
-                            <th>IME</th>
-                            <th>Thông tin thiết bị</th>
-                            <th>Địa chỉ Ip</th>
-                            <th>Client type</th>
+                            <th class="hidden-480">Logged in time</th>
+                            <th class="hidden-480">IME</th>
+                            <th class="hidden-480">Thông tin thiết bị</th>
+                            <th class="hidden-480">Địa chỉ Ip</th>
+                            <th class="hidden-480">Client type</th>
                             <th>Package name</th>
                             <th>Version code</th>
                             <th>Version build</th>
@@ -92,14 +92,14 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->userId }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->userId }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td>{{ $rs->loggedInTime }}</td>
+                                <td class="hidden-480">{{ $rs->loggedInTime }}</td>
                                 <td class="hidden-480">{{ $rs->deviceId }}</td>
-                                <td>{{ $rs->deviceInfo }}</td>
-                                <td>{{ $rs->remoteIp }}</td>
-                                <td>{{ $rs->clientType }}</td>
+                                <td class="hidden-480">{{ $rs->deviceInfo }}</td>
+                                <td class="hidden-480">{{ $rs->remoteIp }}</td>
+                                <td class="hidden-480">{{ $rs->clientType }}</td>
                                 <td>{{ $rs->packageName }}</td>
                                 <td>{{ $rs->versionCode }}</td>
                                 <td>{{ $rs->versionBuild }}</td>

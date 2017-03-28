@@ -54,13 +54,13 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Phần thưởng </th>
                             <th>Vòng</th>
                             <th>Giá trị</th>
                             <th>Tỷ lệ</th>
-                            <th>Mô tả</th>
-                            <th>Icon Id thắng</th>
+                            <th class="hidden-480">Mô tả</th>
+                            <th class="hidden-480">Icon Id thắng</th>
                             <th>Trạng thái</th>
                         </tr>
                         </thead>
@@ -68,14 +68,14 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->itemName }}</td>
                                 <td>{{ $rs->round }}</td>
                                 <td>{{ $rs->value }}</td>
                                 <td>{{ $rs->rate }}</td>
-                                <td>{{ $rs->description }}</td>
-                                <td>{{ $rs->emotionId }}</td>
-                                <td>{{ $rs->status }}</td>
+                                <td class="hidden-480">{{ $rs->description }}</td>
+                                <td class="hidden-480">{{ $rs->emotionId }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                             </tr>
                         @endforeach
                         </tbody>

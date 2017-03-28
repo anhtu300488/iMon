@@ -72,22 +72,22 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Keyword</th>
                             <th>Tổng tiền nạp(VNĐ)</th>
-                            <th class="hidden-480">Telco</th>
-                            <th>Ngày tạo</th>
+                            <th >Telco</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Ngày tạo</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->keyword }}</td>
                             <td>{{ $rs->sum_money }}</td>
-                            <td class="hidden-480">{{ $rs->telco }}</td>
-                            <td>{{ $rs->created_at }}</td>
+                            <td >{{ $rs->telco }}</td>
+                            <td class="hidden-480">{{ $rs->created_at }}</td>
                         </tr>
                         @endforeach
                         </tbody>

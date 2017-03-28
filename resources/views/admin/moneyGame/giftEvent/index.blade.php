@@ -31,11 +31,13 @@
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('eventGift.create') }}"> Create New GiftEvent</a>
                                     @endpermission
@@ -59,17 +61,17 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Gift event</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Gift event</th>
                             <th>Event name</th>
                             <th>Cash value</th>
                             <th>Gold value</th>
-                            <th>Expired time</th>
-                            <th>Reuseable</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Expired time</th>
+                            <th class="hidden-480">Reuseable</th>
+                            <th class="hidden-480">Mô tả</th>
                             <th>Trạng thái</th>
-                            <th>Thời gian tạo</th>
-                            <th>Thời gian cập nhật</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian cập nhật</th>
                             <th>Tác vụ</th>
                         </tr>
                         </thead>
@@ -77,17 +79,17 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->giftEventId }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->giftEventId }}</td>
                                 <td>{{ $rs->eventName }}</td>
                                 <td>{{ $rs->cashValue }}</td>
                                 <td>{{ $rs->goldValue }}</td>
-                                <td>{{ $rs->expiredTime }}</td>
-                                <td>{{ $rs->reuseable }}</td>
-                                <td>{{ $rs->description }}</td>
-                                <td>{{ $rs->status }}</td>
-                                <td>{{ $rs->created_at }}</td>
-                                <td>{{ $rs->updated_at }}</td>
+                                <td class="hidden-480">{{ $rs->expiredTime }}</td>
+                                <td class="hidden-480">{{ $rs->reuseable }}</td>
+                                <td class="hidden-480">{{ $rs->description }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->created_at }}</td>
+                                <td class="hidden-480">{{ $rs->updated_at }}</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('eventGift.edit',$rs->giftEventId) }}">

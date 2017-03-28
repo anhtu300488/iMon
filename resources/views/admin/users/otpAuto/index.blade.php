@@ -69,24 +69,24 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User ID</th>
                             <th>Verify code</th>
                             <th>Số điện thoại</th>
                             <th>Trạng thái</th>
-                            <th>Expired time</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Expired time</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
                                 <td>{{ $rs->verifyCode }}</td>
                                 <td>{{ $rs->phoneNumber }}</td>
-                                <td>{{ $rs->status }}</td>
-                                <td>{{ $rs->expiredTime }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->expiredTime }}</td>
                             </tr>
                         @endforeach
                         </tbody>

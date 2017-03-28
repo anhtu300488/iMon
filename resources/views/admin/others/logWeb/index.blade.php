@@ -72,30 +72,30 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Imei</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Imei</th>
                             <th>Agent</th>
                             <th>Browser</th>
                             <th>Refer</th>
-                            <th>Ip</th>
+                            <th class="hidden-480">Ip</th>
                             <th>Platform</th>
-                            <th>Thời gian tạo</th>
-                            <th>Thời gian cập nhật</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian cập nhật</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->imei }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->imei }}</td>
                                 <td>{{ $rs->agent }}</td>
                                 <td>{{ $rs->brownser }}</td>
                                 <td>{{ $rs->refer }}</td>
-                                <td>{{ $rs->ip }}</td>
+                                <td class="hidden-480">{{ $rs->ip }}</td>
                                 <td>{{ $rs->platform }}</td>
-                                <td>{{ $rs->created_at }}</td>
-                                <td>{{ $rs->updated_at }}</td>
+                                <td class="hidden-480">{{ $rs->created_at }}</td>
+                                <td class="hidden-480">{{ $rs->updated_at }}</td>
                             </tr>
                         @endforeach
                         </tbody>

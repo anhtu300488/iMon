@@ -66,122 +66,6 @@
                                         </select>
                                     </div>
 
-                                    {{--<div class="col-xs-4 col-sm-4">--}}
-                                        {{--<label for="form-field-select-1">Loại thẻ</label>--}}
-
-                                        {{--<select class="form-control" id="form-field-select-1">--}}
-                                            {{--<option value=""></option>--}}
-                                            {{--<option value="AL">Alabama</option>--}}
-                                            {{--<option value="AK">Alaska</option>--}}
-                                            {{--<option value="AZ">Arizona</option>--}}
-                                            {{--<option value="AR">Arkansas</option>--}}
-                                            {{--<option value="CA">California</option>--}}
-                                            {{--<option value="CO">Colorado</option>--}}
-                                            {{--<option value="CT">Connecticut</option>--}}
-                                            {{--<option value="DE">Delaware</option>--}}
-                                            {{--<option value="FL">Florida</option>--}}
-                                            {{--<option value="GA">Georgia</option>--}}
-                                            {{--<option value="HI">Hawaii</option>--}}
-                                            {{--<option value="ID">Idaho</option>--}}
-                                            {{--<option value="IL">Illinois</option>--}}
-                                            {{--<option value="IN">Indiana</option>--}}
-                                            {{--<option value="IA">Iowa</option>--}}
-                                            {{--<option value="KS">Kansas</option>--}}
-                                            {{--<option value="KY">Kentucky</option>--}}
-                                            {{--<option value="LA">Louisiana</option>--}}
-                                            {{--<option value="ME">Maine</option>--}}
-                                            {{--<option value="MD">Maryland</option>--}}
-                                            {{--<option value="MA">Massachusetts</option>--}}
-                                            {{--<option value="MI">Michigan</option>--}}
-                                            {{--<option value="MN">Minnesota</option>--}}
-                                            {{--<option value="MS">Mississippi</option>--}}
-                                            {{--<option value="MO">Missouri</option>--}}
-                                            {{--<option value="MT">Montana</option>--}}
-                                            {{--<option value="NE">Nebraska</option>--}}
-                                            {{--<option value="NV">Nevada</option>--}}
-                                            {{--<option value="NH">New Hampshire</option>--}}
-                                            {{--<option value="NJ">New Jersey</option>--}}
-                                            {{--<option value="NM">New Mexico</option>--}}
-                                            {{--<option value="NY">New York</option>--}}
-                                            {{--<option value="NC">North Carolina</option>--}}
-                                            {{--<option value="ND">North Dakota</option>--}}
-                                            {{--<option value="OH">Ohio</option>--}}
-                                            {{--<option value="OK">Oklahoma</option>--}}
-                                            {{--<option value="OR">Oregon</option>--}}
-                                            {{--<option value="PA">Pennsylvania</option>--}}
-                                            {{--<option value="RI">Rhode Island</option>--}}
-                                            {{--<option value="SC">South Carolina</option>--}}
-                                            {{--<option value="SD">South Dakota</option>--}}
-                                            {{--<option value="TN">Tennessee</option>--}}
-                                            {{--<option value="TX">Texas</option>--}}
-                                            {{--<option value="UT">Utah</option>--}}
-                                            {{--<option value="VT">Vermont</option>--}}
-                                            {{--<option value="VA">Virginia</option>--}}
-                                            {{--<option value="WA">Washington</option>--}}
-                                            {{--<option value="WV">West Virginia</option>--}}
-                                            {{--<option value="WI">Wisconsin</option>--}}
-                                            {{--<option value="WY">Wyoming</option>--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="col-xs-4 col-sm-4">--}}
-                                        {{--<label for="form-field-select-1">Nền tảng</label>--}}
-
-                                        {{--<select class="form-control" id="form-field-select-1">--}}
-                                            {{--<option value=""></option>--}}
-                                            {{--<option value="AL">Alabama</option>--}}
-                                            {{--<option value="AK">Alaska</option>--}}
-                                            {{--<option value="AZ">Arizona</option>--}}
-                                            {{--<option value="AR">Arkansas</option>--}}
-                                            {{--<option value="CA">California</option>--}}
-                                            {{--<option value="CO">Colorado</option>--}}
-                                            {{--<option value="CT">Connecticut</option>--}}
-                                            {{--<option value="DE">Delaware</option>--}}
-                                            {{--<option value="FL">Florida</option>--}}
-                                            {{--<option value="GA">Georgia</option>--}}
-                                            {{--<option value="HI">Hawaii</option>--}}
-                                            {{--<option value="ID">Idaho</option>--}}
-                                            {{--<option value="IL">Illinois</option>--}}
-                                            {{--<option value="IN">Indiana</option>--}}
-                                            {{--<option value="IA">Iowa</option>--}}
-                                            {{--<option value="KS">Kansas</option>--}}
-                                            {{--<option value="KY">Kentucky</option>--}}
-                                            {{--<option value="LA">Louisiana</option>--}}
-                                            {{--<option value="ME">Maine</option>--}}
-                                            {{--<option value="MD">Maryland</option>--}}
-                                            {{--<option value="MA">Massachusetts</option>--}}
-                                            {{--<option value="MI">Michigan</option>--}}
-                                            {{--<option value="MN">Minnesota</option>--}}
-                                            {{--<option value="MS">Mississippi</option>--}}
-                                            {{--<option value="MO">Missouri</option>--}}
-                                            {{--<option value="MT">Montana</option>--}}
-                                            {{--<option value="NE">Nebraska</option>--}}
-                                            {{--<option value="NV">Nevada</option>--}}
-                                            {{--<option value="NH">New Hampshire</option>--}}
-                                            {{--<option value="NJ">New Jersey</option>--}}
-                                            {{--<option value="NM">New Mexico</option>--}}
-                                            {{--<option value="NY">New York</option>--}}
-                                            {{--<option value="NC">North Carolina</option>--}}
-                                            {{--<option value="ND">North Dakota</option>--}}
-                                            {{--<option value="OH">Ohio</option>--}}
-                                            {{--<option value="OK">Oklahoma</option>--}}
-                                            {{--<option value="OR">Oregon</option>--}}
-                                            {{--<option value="PA">Pennsylvania</option>--}}
-                                            {{--<option value="RI">Rhode Island</option>--}}
-                                            {{--<option value="SC">South Carolina</option>--}}
-                                            {{--<option value="SD">South Dakota</option>--}}
-                                            {{--<option value="TN">Tennessee</option>--}}
-                                            {{--<option value="TX">Texas</option>--}}
-                                            {{--<option value="UT">Utah</option>--}}
-                                            {{--<option value="VT">Vermont</option>--}}
-                                            {{--<option value="VA">Virginia</option>--}}
-                                            {{--<option value="WA">Washington</option>--}}
-                                            {{--<option value="WV">West Virginia</option>--}}
-                                            {{--<option value="WI">Wisconsin</option>--}}
-                                            {{--<option value="WY">Wyoming</option>--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
-
                                 </div>
                                 <hr />
                                 <div class="row">
@@ -203,30 +87,30 @@
         </div>
     </div><!-- /.page-header -->
 
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
+    {{--<div class="row">--}}
+        {{--<div class="col-xs-12">--}}
+            {{--<!-- PAGE CONTENT BEGINS -->--}}
+            {{--<div class="center">--}}
 
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê nạp tiền</span>
-                        </div>
-                    </div>
+                {{--<div class="row">--}}
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Thống kê nạp tiền</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Doanh thu</span>
-                        </div>
-                    </div>
-                </div>
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Doanh thu</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <hr />
+                {{--<!-- PAGE CONTENT ENDS -->--}}
+            {{--</div><!-- /.col -->--}}
+        {{--</div><!-- /.row -->--}}
+    {{--</div>--}}
+    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -235,41 +119,38 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Người dùng</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Người dùng</th>
                             <th>Tên nhân vật</th>
                             <th class="hidden-480">Mã thẻ</th>
-
-                            <th>
-                                Serial thẻ
-                            </th>
+                            <th class="hidden-480">Serial thẻ</th>
                             <th class="hidden-480">Loại thẻ</th>
                             <th>Mệnh giá</th>
-                            <th>Pay type</th>
+                            <th class="hidden-480">Pay type</th>
                             <th>Kênh</th>
                             <th>Trạng thái</th>
-                            <th>Nền tảng</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày nạp</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Nền tảng</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày nạp</th>
+                            <th class="hidden-480">Mô tả</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->userId }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->userId }}</td>
                                 <td>{{ $rs->userName }}</td>
                                 <td class="hidden-480"></td>
-                                <td></td>
-                                <td>{{ $rs->type }}</td>
+                                <td class="hidden-480"></td>
+                                <td class="hidden-480">{{ $rs->type }}</td>
                                 <td>{{ $rs->currentCash }}</td>
+                                <td class="hidden-480">{{ $rs->type }}</td>
                                 <td>{{ $rs->type }}</td>
-                                <td>{{ $rs->type }}</td>
-                                <td>{{ $rs->status }}</td>
-                                <td>{{ $rs->type }}</td>
-                                <td>{{ $rs->purchasedTime }}</td>
-                                <td>{{ $rs->description }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->type }}</td>
+                                <td class="hidden-480">{{ $rs->purchasedTime }}</td>
+                                <td class="hidden-480">{{ $rs->description }}</td>
                             </tr>
                         @endforeach
                         </tbody>

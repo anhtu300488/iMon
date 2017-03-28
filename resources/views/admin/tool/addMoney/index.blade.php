@@ -64,31 +64,31 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User</th>
                             <th>Cộng ken</th>
                             <th>Cộng xu</th>
 
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Mô tả</th>
                             <th>Tên admin</th>
                             <th>Trạng thái</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày cập nhật</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Ngày tạo</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Ngày cập nhật</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->addGold }}</td>
                             <td>{{ $rs->addCash }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td class="hidden-480">{{ $rs->description }}</td>
                             <td>{{ $rs->admin_id }}</td>
-                            <td>{{ $rs->status }}</td>
-                            <td>{{ $rs->created_at }}</td>
-                            <td>{{ $rs->updated_at }}</td>
+                            <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                            <td class="hidden-480">{{ $rs->created_at }}</td>
+                            <td class="hidden-480">{{ $rs->updated_at }}</td>
                         </tr>
                         @endforeach
                         </tbody>

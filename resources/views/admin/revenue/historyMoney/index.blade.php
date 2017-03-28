@@ -89,44 +89,44 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Tên hiển thị</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Tên hiển thị</th>
                             <th class="hidden-480">User ID</th>
                             <th>Tên đăng nhập</th>
-                            <th>Ken ban đầu</th>
-                            <th class="hidden-480">Thay đổi Ken</th>
+                            <th class="hidden-480">Ken ban đầu</th>
+                            <th>Thay đổi Ken</th>
                             <th>Ken hiện tại</th>
-                            <th>Xu ban đầu</th>
+                            <th class="hidden-480">Xu ban đầu</th>
                             <th>Thay đổi Xu</th>
                             <th>Xu hiện tại</th>
-                            <th>Loại giao dịch</th>
-                            <th>Tax percent</th>
+                            <th class="hidden-480">Loại giao dịch</th>
+                            <th class="hidden-480">Tax percent</th>
                             <th>Tax value</th>
-                            <th>Game</th>
-                            <th>Inserted time</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Game</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Inserted time</th>
+                            <th class="hidden-480">Mô tả</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $rs->userName }}</td>
-                            <td>{{ $rs->userId}}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
                             <td class="hidden-480">{{ $rs->userName }}</td>
-                            <td>{{ $rs->lastCash }}</td>
+                            <td class="hidden-480">{{ $rs->userId}}</td>
+                            <td>{{ $rs->userName }}</td>
+                            <td class="hidden-480">{{ $rs->lastCash }}</td>
                             <td>{{ $rs->changeCash }}</td>
                             <td>{{ $rs->currentCash }}</td>
-                            <td>{{ $rs->lastGold }}</td>
+                            <td class="hidden-480">{{ $rs->lastGold }}</td>
                             <td>{{ $rs->changeGold }}</td>
                             <td>{{ $rs->currentGold }}</td>
-                            <td>{{ $rs->transactionId }}</td>
-                            <td>{{ $rs->taxPercent }}</td>
+                            <td class="hidden-480">{{ $rs->transactionId }}</td>
+                            <td class="hidden-480">{{ $rs->taxPercent }}</td>
                             <td>{{ $rs->taxValue }}</td>
-                            <td>{{ $rs->gameId }}</td>
-                            <td>{{ $rs->insertedTime }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td class="hidden-480">{{ $rs->gameId }}</td>
+                            <td class="hidden-480">{{ $rs->insertedTime }}</td>
+                            <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>
                         @endforeach
                         </tbody>

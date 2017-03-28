@@ -102,14 +102,14 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Tên đăng nhập</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Tên đăng nhập</th>
                             <th>Tên người chơi</th>
-                            <th>Cp</th>
-                            <th>Chỉ số tín nhiệm</th>
-                            <th>SDT xác thực</th>
-                            <th>Device</th>
-                            <th>Tổng số trận</th>
+                            <th class="hidden-480">Cp</th>
+                            <th class="hidden-480">Chỉ số tín nhiệm</th>
+                            <th class="hidden-480">SDT xác thực</th>
+                            <th class="hidden-480">Device</th>
+                            <th class="hidden-480">Tổng số trận</th>
                             <th>Số trận thắng</th>
                             <th>Số trận thua</th>
                             <th>Ken</th>
@@ -120,14 +120,14 @@
                         <tbody>
                             @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->userName }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->userName }}</td>
                                 <td>{{ $rs->displayName }}</td>
                                 <td class="hidden-480">{{ $rs->cp }}</td>
-                                <td>{{ $rs->trustedIndex }}</td>
-                                <td>{{ $rs->verifiedPhone }}</td>
-                                <td>{{ $rs->device }}</td>
-                                <td>{{ $rs->totalMatch }}</td>
+                                <td class="hidden-480">{{ $rs->trustedIndex }}</td>
+                                <td class="hidden-480">{{ $rs->verifiedPhone }}</td>
+                                <td class="hidden-480">{{ $rs->device }}</td>
+                                <td class="hidden-480">{{ $rs->totalMatch }}</td>
                                 <td>{{ $rs->totalWin }}</td>
                                 <td>{{ $rs->totalLost }}</td>
                                 <td>{{ $rs->cash }}</td>

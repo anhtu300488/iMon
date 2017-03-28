@@ -73,30 +73,30 @@
         </div>
     </div><!-- /.page-header -->
 
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
+    {{--<div class="row">--}}
+        {{--<div class="col-xs-12">--}}
+            {{--<!-- PAGE CONTENT BEGINS -->--}}
+            {{--<div class="center">--}}
 
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê nạp tiền</span>
-                        </div>
-                    </div>
+                {{--<div class="row">--}}
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Thống kê nạp tiền</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Doanh thu</span>
-                        </div>
-                    </div>
-                </div>
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Doanh thu</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <hr />
+                {{--<!-- PAGE CONTENT ENDS -->--}}
+            {{--</div><!-- /.col -->--}}
+        {{--</div><!-- /.row -->--}}
+    {{--</div>--}}
+    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -105,12 +105,12 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Người dùng</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Người dùng</th>
                             <th>Tên nhân vật</th>
                             <th class="hidden-480">Mã thẻ</th>
 
-                            <th>
+                            <th class="hidden-480">
                                 Serial thẻ
                             </th>
                             <th class="hidden-480">Loại thẻ</th>
@@ -118,28 +118,28 @@
                             <th>Pay type</th>
                             <th>Kênh</th>
                             <th>Trạng thái</th>
-                            <th>Nền tảng</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày nạp</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Nền tảng</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày nạp</th>
+                            <th class="hidden-480">Mô tả</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $rs->userId }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
+                            <td class="hidden-480">{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480"></td>
-                            <td></td>
-                            <td>{{ $rs->type }}</td>
+                            <td class="hidden-480"></td>
+                            <td class="hidden-480">{{ $rs->type }}</td>
                             <td>{{ $rs->currentCash }}</td>
                             <td>{{ $rs->type }}</td>
                             <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->status }}</td>
-                            <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->purchasedTime }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                            <td class="hidden-480">{{ $rs->type }}</td>
+                            <td class="hidden-480">{{ $rs->purchasedTime }}</td>
+                            <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>
                         @endforeach
                         </tbody>

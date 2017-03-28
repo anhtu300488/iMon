@@ -81,33 +81,33 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Mã lịch sử</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Mã lịch sử</th>
                             <th>Tên người chơi</th>
-                            <th class="hidden-480">Mã thiết bị</th>
+                            <th>Mã thiết bị</th>
 
-                            <th>
+                            <th class="hidden-480">
                                 IME
                             </th>
-                            <th class="hidden-480">CP Id</th>
-                            <th>Địa chỉ IP</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Bắt đầu</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Kết thúc</th>
+                            <th >CP Id</th>
+                            <th class="hidden-480">Địa chỉ IP</th>
+                            <th ><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Bắt đầu</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Kết thúc</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->id }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->id }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td class="hidden-480">{{ $rs->deviceId }}</td>
-                                <td></td>
-                                <td>{{ $rs->clientType }}</td>
-                                <td>{{ $rs->remoteIp }}</td>
+                                <td >{{ $rs->deviceId }}</td>
+                                <td class="hidden-480"></td>
+                                <td >{{ $rs->clientType }}</td>
+                                <td class="hidden-480">{{ $rs->remoteIp }}</td>
                                 <td>{{ $rs->loggedInTime }}</td>
-                                <td>{{ $rs->loggedInTime }}</td>
+                                <td class="hidden-480">{{ $rs->loggedInTime }}</td>
                             </tr>
                         @endforeach
                         </tbody>

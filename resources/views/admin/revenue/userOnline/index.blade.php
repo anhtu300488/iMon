@@ -68,19 +68,19 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User</th>
                             <th>Tên đăng nhập</th>
                             <th class="hidden-480">Game</th>
                             <th>Cash</th>
-                            <th class="hidden-480">Gold</th>
+                            <th>Gold</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $rs->currentGameId }}</td>

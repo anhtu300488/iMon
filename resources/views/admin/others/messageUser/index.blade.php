@@ -36,7 +36,7 @@
 
                                 <div class="col-xs-3 col-sm-3">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="control-label no-padding-right" for="form-field-1"> Id người nhận </label>
+                                    <label class="control-label no-padding-right" for="form-field-1"> Người nhận </label>
                                     <input class="form-control" name="recipientUserId" type="text" value="{{request('recipientUserId')}}"/>
                                 </div>
 
@@ -77,42 +77,42 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Id người gửi</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Id người gửi</th>
                             <th>Tên người gửi</th>
-                            <th>Id người nhận</th>
+                            <th class="hidden-480">Id người nhận</th>
                             <th>Tên người gửi</th>
                             <th>Tiêu đề</th>
-                            <th>Nội dung</th>
-                            <th>Thời gian gửi</th>
+                            <th class="hidden-480">Nội dung</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian gửi</th>
                             <th>Trạng thái</th>
                             <th>Readed</th>
                             <th>Attach item</th>
                             <th>Attach item quatity</th>
-                            <th>Expiredtime</th>
-                            <th>Parentid</th>
-                            <th>Secret box</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Expiredtime</th>
+                            <th class="hidden-480">Parentid</th>
+                            <th class="hidden-480">Secret box</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->senderUserId }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->senderUserId }}</td>
                                 <td>{{ $rs->senderUserName }}</td>
-                                <td>{{ $rs->recipientUserId }}</td>
+                                <td class="hidden-480">{{ $rs->recipientUserId }}</td>
                                 <td>{{ $rs->recipientUserName }}</td>
                                 <td>{{ $rs->title }}</td>
-                                <td>{{ $rs->body }}</td>
-                                <td>{{ $rs->sentTime }}</td>
+                                <td class="hidden-480">{{ $rs->body }}</td>
+                                <td class="hidden-480">{{ $rs->sentTime }}</td>
                                 <td>{{ $rs->status }}</td>
                                 <td>{{ $rs->readed }}</td>
                                 <td>{{ $rs->attachItemId }}</td>
                                 <td>{{ $rs->attachItemQuatity }}</td>
-                                <td>{{ $rs->expiredTime }}</td>
-                                <td>{{ $rs->parentId }}</td>
-                                <td>{{ $rs->secretBoxId }}</td>
+                                <td class="hidden-480">{{ $rs->expiredTime }}</td>
+                                <td class="hidden-480">{{ $rs->parentId }}</td>
+                                <td class="hidden-480">{{ $rs->secretBoxId }}</td>
                             </tr>
                         @endforeach
                         </tbody>

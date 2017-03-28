@@ -39,11 +39,13 @@
 
                             <hr />
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('clientType.create') }}"> Create New Client Type</a>
                                     @endpermission
@@ -67,7 +69,7 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Client</th>
                             <th>Code</th>
                             <th>Name</th>
@@ -78,7 +80,7 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->clientId }}</td>
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ $rs->name }}</td>

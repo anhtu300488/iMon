@@ -39,11 +39,13 @@
 
                             <hr />
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('partner.create') }}"> Create New Partner</a>
                                     @endpermission
@@ -67,12 +69,12 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Đối tác</th>
                             <th>Smsnumber</th>
                             <th>Username</th>
-                            <th>Accesskey1</th>
-                            <th>Accesskey2</th>
+                            <th class="hidden-480">Accesskey1</th>
+                            <th class="hidden-480">Accesskey2</th>
                             <th>Tên admin</th>
                             <th>Tác vụ</th>
                         </tr>
@@ -81,12 +83,12 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->partnerName }}</td>
                                 <td>{{ $rs->smsNumber }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td>{{ $rs->accessKey1 }}</td>
-                                <td>{{ $rs->accessKey2 }}</td>
+                                <td class="hidden-480">{{ $rs->accessKey1 }}</td>
+                                <td class="hidden-480">{{ $rs->accessKey2 }}</td>
                                 <td>{{ $rs->admin_id }}</td>
                                 <td>
                                     @permission('administrator')

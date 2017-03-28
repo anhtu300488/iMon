@@ -65,24 +65,24 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Room Id</th>
-                            <th>Matchindex</th>
-                            <th>Gameid</th>
+                            <th >Matchindex</th>
+                            <th class="hidden-480">Gameid</th>
                             <th>Game name</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Mô tả</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->roomId }}</td>
-                                <td>{{ $rs->matchIndex }}</td>
-                                <td>{{ $rs->gameId }}</td>
-                                <td></td>
-                                <td>{{ $rs->description }}</td>
+                                <td >{{ $rs->matchIndex }}</td>
+                                <td class="hidden-480">{{ $rs->gameId }}</td>
+                                <td ></td>
+                                <td class="hidden-480">{{ $rs->description }}</td>
                             </tr>
                         @endforeach
                         </tbody>

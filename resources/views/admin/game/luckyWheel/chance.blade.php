@@ -59,7 +59,7 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Chance</th>
                             <th>User</th>
                             <th>Chance number</th>
@@ -69,7 +69,7 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->chance_number }}</td>
                                 <td>{{ $rs->userId }}</td>
                                 <td>{{ $rs->chanceNumberFree }}</td>

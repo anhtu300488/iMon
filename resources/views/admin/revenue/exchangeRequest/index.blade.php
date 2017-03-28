@@ -96,8 +96,8 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>User ID</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">User ID</th>
                             <th class="hidden-480">Tên hiển thị</th>
                             <th>Tên đăng nhập</th>
                             <th>SDT xác thực</th>
@@ -105,27 +105,27 @@
                             <th>Total cash</th>
                             <th>Giá trị thẻ</th>
                             <th>Trạng thái</th>
-                            <th>Response data</th>
-                            <th>Request topup</th>
-                            <th>Thời gian tạo</th>
+                            <th class="hidden-480">Response data</th>
+                            <th class="hidden-480">Request topup</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $rs->requestUserId }}</td>
-                            <td>{{ $rs->requestUserName }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
+                            <td class="hidden-480">{{ $rs->requestUserId }}</td>
                             <td class="hidden-480">{{ $rs->requestUserName }}</td>
+                            <td>{{ $rs->requestUserName }}</td>
                             <td></td>
-                            <td>{{ $rs->assetId }}</td>
+                            <td class="hidden-480">{{ $rs->assetId }}</td>
                             <td>{{ $rs->totalCash }}</td>
                             <td>{{ $rs->totalParValue }}</td>
-                            <td>{{ $rs->status }}</td>
-                            <td>{{ $rs->responseData }}</td>
-                            <td>{{ $rs->request_topup_id }}</td>
-                            <td>{{ $rs->created_at }}</td>
+                            <td>@if($rs->status == 1) : <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                            <td class="hidden-480">{{ $rs->responseData }}</td>
+                            <td class="hidden-480">{{ $rs->request_topup_id }}</td>
+                            <td class="hidden-480">{{ $rs->created_at }}</td>
                         </tr>
                         @endforeach
                         </tbody>

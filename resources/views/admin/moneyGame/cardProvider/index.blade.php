@@ -55,10 +55,10 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Provider code</th>
                             <th>Provider name</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Mô tả</th>
                             <th>Active</th>
                             <th>Telco percent</th>
                             <th>Value percent</th>
@@ -68,11 +68,11 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->providerCode }}</td>
                                 <td>{{ $rs->providerName }}</td>
-                                <td>{{ $rs->description }}</td>
-                                <td>{{ $rs->active }}</td>
+                                <td class="hidden-480">{{ $rs->description }}</td>
+                                <td>@if($rs->active == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 <td>{{ $rs->telcoPercent }}</td>
                                 <td>{{ $rs->valuePercent }}</td>
                             </tr>

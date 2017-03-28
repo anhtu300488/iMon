@@ -52,11 +52,14 @@
 
                             <hr />
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
 
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('purchaseMoney.create') }}"> Create New Purchase Money</a>
@@ -82,12 +85,12 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User</th>
-                            <th>Nhà cung cấp</th>
+                            <th class="hidden-480">Nhà cung cấp</th>
                             <th>Card value</th>
                             <th>Card pin</th>
-                            <th>Active view</th>
+                            <th>Active</th>
                             <th>Tác vụ</th>
                         </tr>
                         </thead>
@@ -95,12 +98,12 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->provider }}</td>
+                                <td class="hidden-480">{{ $rs->provider }}</td>
                                 <td>{{ $rs->cardValue }}</td>
                                 <td>{{ $rs->cardPin }}</td>
-                                <td>{{ $rs->active }}</td>
+                                <td>@if($rs->active == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('purchaseMoney.edit',$rs->missId) }}">

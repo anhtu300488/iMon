@@ -75,30 +75,30 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User ID</th>
-                            <th>Seria</th>
+                            <th class="hidden-480">Seria</th>
                             <th class="hidden-480">Mã thẻ</th>
                             <th>Mệnh giá</th>
                             <th>Message</th>
                             <th>Nhà cung cấp</th>
-                            <th>Thời gian tạo</th>
-                            <th>Thời gian cập nhật</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian cập nhật</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userid }}</td>
-                                <td>{{ $rs->seria }}</td>
+                                <td class="hidden-480">{{ $rs->seria }}</td>
                                 <td class="hidden-480">{{ $rs->pin_card }}</td>
                                 <td>{{ $rs->money }}</td>
                                 <td>{{ $rs->message }}</td>
                                 <td>{{ $rs->providerId }}</td>
-                                <td>{{ $rs->created_at }}</td>
-                                <td>{{ $rs->updated_at }}</td>
+                                <td class="hidden-480">{{ $rs->created_at }}</td>
+                                <td class="hidden-480">{{ $rs->updated_at }}</td>
                             </tr>
                         @endforeach
                         </tbody>

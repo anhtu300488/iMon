@@ -90,30 +90,30 @@
 
         </div>
     </div><!-- /.page-header -->
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
+    {{--<div class="row">--}}
+        {{--<div class="col-xs-12">--}}
+            {{--<!-- PAGE CONTENT BEGINS -->--}}
+            {{--<div class="center">--}}
 
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê người dùng đăng ký</span>
-                        </div>
-                    </div>
+                {{--<div class="row">--}}
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Thống kê người dùng đăng ký</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Tổng người dùng</span>
-                        </div>
-                    </div>
-                </div>
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Tổng người dùng</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <hr />
+                {{--<!-- PAGE CONTENT ENDS -->--}}
+            {{--</div><!-- /.col -->--}}
+        {{--</div><!-- /.row -->--}}
+    {{--</div>--}}
+    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -122,7 +122,7 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Tên tài khoản</th>
                             <th>Tên hiển thị</th>
                             <th class="hidden-480">IP</th>
@@ -132,21 +132,21 @@
                             </th>
                             <th class="hidden-480">Đối tác</th>
                             <th>Nền tảng</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userName }}</td>
                                 <td>{{ $rs->displayName }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>
                                 <td>{{ $rs->device }}</td>
-                                <td>{{ $rs->cp }}</td>
+                                <td class="hidden-480">{{ $rs->cp }}</td>
                                 <td>{{ $rs->clientId }}</td>
-                                <td>{{ $rs->registedTime }}</td>
+                                <td class="hidden-480">{{ $rs->registedTime }}</td>
                             </tr>
                         @endforeach
                         </tbody>

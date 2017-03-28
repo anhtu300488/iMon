@@ -88,24 +88,24 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>User ID</th>
                             <th>Vòng ngoài</th>
                             <th>Vòng trong</th>
-                            <th>Desciption</th>
-                            <th>Time</th>
+                            <th class="hidden-480">Desciption</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Time</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
                                 <td>{{ $rs->round1_item }}</td>
                                 <td>{{ $rs->round2_item }}</td>
-                                <td>{{ $rs->desciption }}</td>
-                                <td>{{ $rs->time }}</td>
+                                <td class="hidden-480">{{ $rs->desciption }}</td>
+                                <td class="hidden-480">{{ $rs->time }}</td>
                             </tr>
                         @endforeach
                         </tbody>

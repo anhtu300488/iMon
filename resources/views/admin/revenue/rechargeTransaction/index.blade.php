@@ -57,7 +57,7 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Thời gian bắt đầu chơi game</label>
+                                    <label for="id-date-picker-1">Bắt đầu chơi game</label>
                                     <div class="input-group">
                                         <input class="form-control" type="text" name="date_play_game" id="id-date-range-picker-1" value="{{request('date_play_game')}}" />
                                         <span class="input-group-addon">
@@ -107,30 +107,30 @@
         </div>
     </div><!-- /.page-header -->
 
-    <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="center">
+    {{--<div class="row">--}}
+        {{--<div class="col-xs-12">--}}
+            {{--<!-- PAGE CONTENT BEGINS -->--}}
+            {{--<div class="center">--}}
 
-                <div class="row">
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Thống kê nạp tiền</span>
-                        </div>
-                    </div>
+                {{--<div class="row">--}}
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Thống kê nạp tiền</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="col-xs-12 col-lg-6">
-                        <div>
-                            <span>Doanh thu</span>
-                        </div>
-                    </div>
-                </div>
+                    {{--<div class="col-xs-12 col-lg-6">--}}
+                        {{--<div>--}}
+                            {{--<span>Doanh thu</span>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-                <!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <hr />
+                {{--<!-- PAGE CONTENT ENDS -->--}}
+            {{--</div><!-- /.col -->--}}
+        {{--</div><!-- /.row -->--}}
+    {{--</div>--}}
+    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -139,32 +139,32 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>User</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">User</th>
                             <th>Tên đăng nhập</th>
                             <th class="hidden-480">Tên hiển thị</th>
                             <th>Mệnh giá</th>
-                            <th class="hidden-480">Cash value</th>
+                            <th>Cash value</th>
                             <th>Ken hiện tại</th>
-                            <th>Purchased time</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Purchased time</th>
                             <th>Loại</th>
-                            <th>Mô tả</th>
+                            <th class="hidden-480">Mô tả</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $rs->userId }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
+                            <td class="hidden-480">{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td></td>
                             <td>{{ $rs->cashValue }}</td>
                             <td>{{ $rs->currentCash }}</td>
-                            <td>{{ $rs->purchasedTime }}</td>
+                            <td class="hidden-480">{{ $rs->purchasedTime }}</td>
                             <td>{{ $rs->type }}</td>
-                            <td>{{ $rs->description }}</td>
+                            <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>
                         @endforeach
                         </tbody>

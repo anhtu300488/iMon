@@ -39,11 +39,13 @@
 
                             <hr />
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('notification.create') }}"> Create New Notification</a>
                                     @endpermission
@@ -67,10 +69,10 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Tiêu đề</th>
                             <th>Nội dung push</th>
-                            <th>Push time</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Push time</th>
                             <th>Lặp lại hàng ngày</th>
                             <th>Trạng thái</th>
                             <th>Tác vụ</th>
@@ -80,12 +82,12 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->title }}</td>
                                 <td>{{ $rs->message }}</td>
-                                <td>{{ $rs->pushTime }}</td>
+                                <td class="hidden-480">{{ $rs->pushTime }}</td>
                                 <td>{{ $rs->repeat_daily }}</td>
-                                <td>{{ $rs->status }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('notification.edit',$rs->notificationId) }}">

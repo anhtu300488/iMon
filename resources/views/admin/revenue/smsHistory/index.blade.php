@@ -92,8 +92,8 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Mo</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Mo</th>
                             <th>Phone number</th>
                             <th class="hidden-480">User ID</th>
                             <th>Số lượng</th>
@@ -101,23 +101,23 @@
                             <th>Content</th>
                             <th>Mt content</th>
                             <th>Telco</th>
-                            <th>Thời gian tạo</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $rs->mo_id }}</td>
+                            <td class="hidden-480">{{ ++$i }}</td>
+                            <td class="hidden-480">{{ $rs->mo_id }}</td>
                             <td>{{ $rs->phone_number }}</td>
                             <td class="hidden-480">{{ $rs->user_id }}</td>
                             <td>{{ $rs->amount }}</td>
-                            <td>{{ $rs->shortcode }}</td>
+                            <td class="hidden-480">{{ $rs->shortcode }}</td>
                             <td>{{ $rs->content }}</td>
                             <td>{{ $rs->mo_request_id }}</td>
                             <td>{{ $rs->telco }}</td>
-                            <td>{{ $rs->created_at }}</td>
+                            <td class="hidden-480">{{ $rs->created_at }}</td>
                         </tr>
                         @endforeach
                         </tbody>

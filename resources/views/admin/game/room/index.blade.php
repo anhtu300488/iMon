@@ -39,6 +39,8 @@
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
                                     <a class="btn btn-info btn-sm" href="{{ route('room.create') }}"> Create New Room</a>
                                     @endpermission
@@ -62,22 +64,22 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Game ID</th>
+                            <th class="hidden-480">STT</th>
+                            <th class="hidden-480">Game ID</th>
                             <th>Room name</th>
                             <th>Vip room</th>
                             <th>Min cash</th>
                             <th>Min gold</th>
                             <th>Min level</th>
-                            <th>Room capacity</th>
-                            <th>Player size</th>
+                            <th class="hidden-480">Room capacity</th>
+                            <th class="hidden-480">Player size</th>
                             <th>Min bet</th>
-                            <th>Tax</th>
-                            <th>Max roomplay</th>
-                            <th>Permanent room play</th>
-                            <th>Kick limit</th>
-                            <th>Start time</th>
-                            <th>End time</th>
+                            <th class="hidden-480">Tax</th>
+                            <th class="hidden-480">Max roomplay</th>
+                            <th class="hidden-480">Permanent room play</th>
+                            <th class="hidden-480">Kick limit</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Start time</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>End time</th>
                             <th>Trạng thái</th>
                             <th>Action</th>
                         </tr>
@@ -86,23 +88,23 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $rs->gameId }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->gameId }}</td>
                                 <td>{{ $rs->roomName }}</td>
                                 <td>{{ $rs->vipRoom }}</td>
                                 <td>{{ $rs->minCash }}</td>
                                 <td>{{ $rs->minGold }}</td>
                                 <td>{{ $rs->minLevel }}</td>
-                                <td>{{ $rs->roomCapacity }}</td>
-                                <td>{{ $rs->playerSize }}</td>
+                                <td class="hidden-480">{{ $rs->roomCapacity }}</td>
+                                <td class="hidden-480">{{ $rs->playerSize }}</td>
                                 <td>{{ $rs->minBet }}</td>
-                                <td>{{ $rs->tax }}</td>
-                                <td>{{ $rs->maxRoomPlay }}</td>
-                                <td>{{ $rs->permanentRoomPlay }}</td>
-                                <td>{{ $rs->kickLimit }}</td>
-                                <td>{{ $rs->startTime }}</td>
-                                <td>{{ $rs->endTime }}</td>
-                                <td>{{ $rs->status }}</td>
+                                <td class="hidden-480">{{ $rs->tax }}</td>
+                                <td class="hidden-480">{{ $rs->maxRoomPlay }}</td>
+                                <td class="hidden-480">{{ $rs->permanentRoomPlay }}</td>
+                                <td class="hidden-480">{{ $rs->kickLimit }}</td>
+                                <td class="hidden-480">{{ $rs->startTime }}</td>
+                                <td class="hidden-480">{{ $rs->endTime }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('room.edit',$rs->roomId) }}">

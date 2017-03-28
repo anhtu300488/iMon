@@ -77,9 +77,9 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>STT</th>
+                            <th class="hidden-480">STT</th>
                             <th>Tên game</th>
-                            <th>Hướng dẫn</th>
+                            <th class="hidden-480">Hướng dẫn</th>
                             <th>Hỗ trợ</th>
                             <th>Trạng thái</th>
                         </tr>
@@ -88,11 +88,11 @@
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td>{{ ++$i }}</td>
+                                <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->name }}</td>
                                 <td>{{ $rs->description }}</td>
-                                <td>{{ $rs->help }}</td>
-                                <td>{{ $rs->status }}</td>
+                                <td class="hidden-480">{{ $rs->help }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                             </tr>
                         @endforeach
                         </tbody>

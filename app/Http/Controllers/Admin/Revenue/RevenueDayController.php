@@ -25,6 +25,8 @@ class RevenueDayController extends Controller
         $cp = \Request::get('partner');
         $os = \Request::get('clientType');
 
+        $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
+
         $partner = Partner::pluck('partnerName', 'partnerId');
 
         $partner->prepend('---Tất cả---', '');
@@ -83,6 +85,6 @@ class RevenueDayController extends Controller
 //        var_dump($total_by_type);die;
 
 
-        return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

@@ -11,10 +11,10 @@ class Game extends Model
 
     public static function getListGame($gameId = null)
     {
-        $sql = Game::query()
+        $sql = Game::query()->select(DB::raw('gameId, name, description'))
             ->where('status', '=', 1);
         if($gameId){
-            $sql->where('gameid', '=', $gameId);
+            $sql->where('gameId', '=', $gameId);
         }
         return $sql->get();
     }

@@ -20,6 +20,7 @@ class AddMoneyController extends Controller
 
         $userId = \Request::get('userId');
         $description = \Request::get('description');
+
         $matchThese = [];
         if($userId != ''){
             $matchThese['userId'] = $userId;

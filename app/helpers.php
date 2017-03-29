@@ -15,3 +15,9 @@ function setOpen($path)
 {
     return \Request::is($path . '*') ? ' class=open' :  '';
 }
+
+function getAdminName($id)
+{
+    $result = \App\Admin::find($id);
+    return $result['name'];
+}

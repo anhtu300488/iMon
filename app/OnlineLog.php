@@ -13,7 +13,7 @@ class OnlineLog extends Model
 
     public static function getOnlineLog($insertedtime = null, $option = null)
     {
-        $sql = OnlineLog::query();
+        $sql = OnlineLog::query()->select(DB::raw('logId, peakData, insertedTime'));
 
         if ($insertedtime != ''){
             $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));

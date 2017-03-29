@@ -87,6 +87,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/historyMoney', ['as' => 'revenue.historyMoney', 'uses' => 'Admin\Revenue\MoneyHistoryController@index']);
 
+    Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
+
     Route::get('tool/roles',['as'=>'tool.roles','uses'=>'Admin\Tool\CreateRoleController@index']);
     Route::get('tool/roles/create',['as'=>'tool.roles.create','uses'=>'Admin\Tool\CreateRoleController@create']);
     Route::post('tool/roles/create',['as'=>'tool.roles.store','uses'=>'Admin\Tool\CreateRoleController@store']);

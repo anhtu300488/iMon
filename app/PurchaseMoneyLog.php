@@ -31,7 +31,7 @@ class PurchaseMoneyLog extends Model
 
         $query = PurchaseMoneyLog::query();
 //        $query->select("sum(a.parValue) as sum_money, sum(a.cashValue) as sum_cash, a.type");
-        $query->select(DB::raw('SUM(parValue) as sum_money',DB::raw('SUM(cashValue) as sum_cash')));
+        $query->select("type", DB::raw('SUM(parValue) as sum_money',DB::raw('SUM(cashValue) as sum_cash')));
 
 //        $query->where($alias. ".money > 0");
 //        $query->andWhere("status = 1");

@@ -85,7 +85,7 @@
                             <td>{{ $rs->addGold }}</td>
                             <td>{{ $rs->addCash }}</td>
                             <td class="hidden-480">{{ $rs->description }}</td>
-                            <td>{{ $rs->admin_id }}</td>
+                            <td>{{ getAdminName($rs->admin_id) }}</td>
                             <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td class="hidden-480">{{ $rs->updated_at }}</td>

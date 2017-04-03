@@ -401,14 +401,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="form-wizard.html">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Tiền phế trong game
-                    </a>
+                {{--<li class="">--}}
+                    {{--<a href="form-wizard.html">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Tiền phế trong game--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('revenue/historyMoney') }}>
                     <a href="{{route('revenue.historyMoney')}}">

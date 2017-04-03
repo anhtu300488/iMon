@@ -22,6 +22,11 @@ class PurchaseMoneyLogController extends Controller
 //        $cardType = \Request::get('cardType');
 //        $os = \Request::get('os');
 //
+        $partner = Partner::pluck('partnerName', 'partnerId');
+
+        $clientType = ClientType::pluck('name', 'clientId');
+
+        $payTypeArr = array(1 => 'Nạp thẻ', 2 => 'SMS', 3 => 'IAP');
         $matchThese = [];
         if($payType != ''){
             $matchThese['type'] = $payType;
@@ -39,6 +44,6 @@ class PurchaseMoneyLogController extends Controller
         }
         $data = $query->orderBy('userName')->paginate(10);
 
-        return view('admin.basic.purchaseMoneyLog.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.basic.purchaseMoneyLog.index',compact('data', 'payTypeArr', 'partner', 'clientType'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

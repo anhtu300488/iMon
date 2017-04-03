@@ -58,7 +58,7 @@
                     <div class="widget-body">
                         <div class="widget-main">
                             <!-- #section:plugins/charts.flotchart -->
-                            <div id="piechart-placeholder"></div>
+                            <div id="piechart_pub_register"></div>
 
                             <!-- /section:plugins/charts.flotchart -->
                             <div class="hr hr8 hr-double"></div>
@@ -299,5 +299,36 @@
             });
         });
     </script>
+    <script type="text/javascript" src="/css/jsapi.css"></script>
+<!--    --><?php //var_dump($total_by_type);die;?>
+    <script type="text/javascript">
+//        google.load("visualization", "1", {packages:["" +
+//        ""]});
+        google.load("visualization", "1", {packages:["corechart"]});
+
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'
+            });
+
+            //Hình 1: Loại nhà phát triển
+            var array_type = new Array(['Task', '<?php echo __('Loại hệ điều hành')?>']);
+            <?php
+            $arr_type = array(1 => "Thẻ cào", 2 =>"SMS", 3 => "IAP");
+            foreach ($total_by_type as $value) {?>
+            array_type.push(['<?php echo $arr_type[$value['type']]?>', <?php echo $value['sum_money']; ?>]);
+                    <?php } ?>
+            var data_api = google.visualization.arrayToDataTable(array_type);
+            formatter.format(data_api, 1);
+            var options_api = {
+                title: '<?php echo __('Doanh thu theo loại')?>',
+                is3D: true
+            };
+            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_register'));
+            chart_api.draw(data_api, options_api);
+        }
+    </script>
+
 
 @endsection

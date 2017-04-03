@@ -37,7 +37,8 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Loại </label>
-                                    <input class="form-control" name="status" type="text" value="{{request('status')}}"/>
+                                    {{--<input class="form-control" name="status" type="text" value="{{request('status')}}"/>--}}
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>
@@ -95,7 +96,7 @@
                                 <td class="hidden-480">{{ $rs->image }}</td>
                                 <td class="hidden-480">{{ $rs->content }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
-                                <td>{{ $rs->type }}</td>
+                                <td>{{ $typeArr[$rs->type] }}</td>
                                 <td>@if($rs->is_hot == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td>

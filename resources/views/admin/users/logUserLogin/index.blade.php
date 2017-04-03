@@ -99,7 +99,7 @@
                                 <td class="hidden-480">{{ $rs->deviceId }}</td>
                                 <td class="hidden-480">{{ $rs->deviceInfo }}</td>
                                 <td class="hidden-480">{{ $rs->remoteIp }}</td>
-                                <td class="hidden-480">{{ $rs->clientType }}</td>
+                                <td class="hidden-480">{{ $clientType[$rs->clientType] }}</td>
                                 <td>{{ $rs->packageName }}</td>
                                 <td>{{ $rs->versionCode }}</td>
                                 <td>{{ $rs->versionBuild }}</td>

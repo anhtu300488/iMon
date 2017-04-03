@@ -13,13 +13,15 @@ class GiftCodeController extends Controller
 
         $userName = \Request::get('userName');
 
+        $giftEvent = GiftEvent::pluck('eventName', 'giftEventId');
+
         $query = GiftCode::query();
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
         $data = $query->orderBy('userName')->paginate(10);
 
-        return view('admin.moneyGame.giftCode.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.moneyGame.giftCode.index',compact('data', 'giftEvent'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     public function create(){

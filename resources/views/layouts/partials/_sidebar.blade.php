@@ -704,14 +704,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('others/testCase') }}>
-                    <a href="{{route('testCase.index')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Quản lý testcase
-                    </a>
+                {{--<li {{ setActive('others/testCase') }}>--}}
+                    {{--<a href="{{route('testCase.index')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Quản lý testcase--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('others/clientType') }}>
                     <a href="{{route('clientType.index')}}">

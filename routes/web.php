@@ -188,4 +188,10 @@ Route::group(['middleware' => ['auth']], function() {
 
     //web content
     Route::resource('others/webContent','Admin\Others\WebContentController');
+
+    //Check username exists via userid
+    Route::get('checkUser', [
+        'uses' => 'Admin\CheckUserController@checkUser',
+        'as' => 'checkUser',
+    ]);
 });

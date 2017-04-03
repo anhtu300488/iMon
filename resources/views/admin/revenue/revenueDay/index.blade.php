@@ -123,9 +123,7 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Tên đăng nhập</label>
-                                    <div class="input-group" >
-                                        <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
-                                    </div>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">

@@ -84,7 +84,7 @@
                                     </a>
                                     @endpermission
                                     @permission('administrator')
-                                    {!! Form::open(['method' => 'DELETE','route' => ['emergencyNotification.destroy', $rs->notificationId],'style'=>'display:inline']) !!}
+                                    {!! Form::open(['method' => 'DELETE','route' => ['emergencyNotification.destroy', $rs->notificationId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>
@@ -101,5 +101,18 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script>
+        function validate(form) {
 
+            // validation code here ...
+
+            if(!valid) {
+                alert('Please correct the errors in the form!');
+                return false;
+            }
+            else {
+                return confirm('Do you really want to submit the form?');
+            }
+        }
+    </script>
 @endsection

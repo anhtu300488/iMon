@@ -89,7 +89,7 @@
                                 <td>{{ $rs->userName }}</td>
                                 <td class="hidden-480">{{ $rs->accessKey1 }}</td>
                                 <td class="hidden-480">{{ $rs->accessKey2 }}</td>
-                                <td>{{ $rs->admin_id }}</td>
+                                <td>{{ getAdminName($rs->admin_id) }}</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('partner.edit',$rs->partnerId) }}">

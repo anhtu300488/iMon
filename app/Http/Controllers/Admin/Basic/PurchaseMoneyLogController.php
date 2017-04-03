@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Basic;
 
+use App\ClientType;
+use App\Partner;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

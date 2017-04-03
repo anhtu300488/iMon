@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <meta name="description" content="overview &amp; stats" />
@@ -409,6 +410,15 @@
         });
 
     })
+</script>
+
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 </script>
 
 <!-- the following scripts are used in demo only for onpage help and you don't need them -->

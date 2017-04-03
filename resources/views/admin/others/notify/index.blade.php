@@ -31,7 +31,8 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Trạng thái </label>
-                                    <input class="form-control" name="status" type="text" value="{{request('status')}}"/>
+                                    {{--<input class="form-control" name="status" type="text" value="{{request('status')}}"/>--}}
+                                    {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>

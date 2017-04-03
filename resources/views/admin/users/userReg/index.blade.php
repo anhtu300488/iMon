@@ -145,7 +145,7 @@
                                 <td class="hidden-480">{{ $rs->ip }}</td>
                                 <td>{{ $rs->device }}</td>
                                 <td class="hidden-480">{{ $rs->cp }}</td>
-                                <td>{{ $rs->clientId }}</td>
+                                <td>{{ $clientType[$rs->clientId] }}</td>
                                 <td class="hidden-480">{{ $rs->registedTime }}</td>
                             </tr>
                         @endforeach

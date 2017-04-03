@@ -87,7 +87,7 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td class="hidden-480">{{ $rs->giftEventId }}</td>
+                                <td class="hidden-480">{{ $giftEvent[$rs->giftEventId] }}</td>
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ $rs->cashValue }}</td>
                                 <td>{{ $rs->goldValue }}</td>

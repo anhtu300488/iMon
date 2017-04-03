@@ -106,7 +106,7 @@
                                 <td>{{ $rs->title }}</td>
                                 <td class="hidden-480">{{ $rs->body }}</td>
                                 <td class="hidden-480">{{ $rs->sentTime }}</td>
-                                <td>{{ $rs->status }}</td>
+                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsuccess</span> @endif</td>
                                 <td>{{ $rs->readed }}</td>
                                 <td>{{ $rs->attachItemId }}</td>
                                 <td>{{ $rs->attachItemQuatity }}</td>

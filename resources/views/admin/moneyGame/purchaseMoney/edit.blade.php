@@ -25,8 +25,8 @@
 
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">User ID</label>
-            <div class="col-sm-9">
-                {!! Form::text('userId', null, array('placeholder' => 'User ID','class' => 'form-control')) !!}
+            <div class="col-sm-9 input-icon input-icon-right">
+                {!! Form::text('userId', null, array('placeholder' => 'User ID','class' => 'form-control', 'id' => 'userId', 'onkeyup' => 'checkname()')) !!}
             </div>
         </div>
 
@@ -81,5 +81,38 @@
         </div>
     </div>
     {!! Form::close() !!}
+
+    <script type="text/javascript">
+
+        function checkname()
+        {
+            var name=document.getElementById( "userId" ).value;
+
+            if(name)
+            {
+                $.ajax({
+                    dataType: 'json',
+                    url: '/checkUser',
+                    data: {
+                        userID:name
+                    },
+                    success: function (response) {
+                        $('#userId').next('i').remove();
+                        if(response.status == 'OK'){
+                            $('#userId').after('<i class="ace-icon fa fa-check green" style="right:15px"></i>');
+                        } else {
+                            $('#userId').after('<i class="ace-icon fa fa-close red" style="right:15px"></i>');
+                        }
+                    }
+                });
+            }
+            else
+            {
+                $('#userId').next('i').remove();
+                return false;
+            }
+        }
+
+    </script>
 
 @endsection

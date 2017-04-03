@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Game;
 
+use App\Game;
 use App\MatchLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,8 @@ class MatchLogController extends Controller
         $roomId = \Request::get('roomId');
         $matchIndex = \Request::get('matchIndex');
         $gameId = \Request::get('gameId');
+
+        $game = Game::pluck('name', 'gameId');
 
         $matchThese = [];
         if($roomId != ''){
@@ -38,6 +41,6 @@ class MatchLogController extends Controller
 
         $data = $query->orderBy('createdTime', 'desc')->paginate(10);
 
-        return view('admin.game.matchLog.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.matchLog.index',compact('data', 'game'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

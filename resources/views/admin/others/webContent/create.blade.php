@@ -68,7 +68,8 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Loại</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="type" />
+                    {{--<input type="text" class="form-control" id="form-field-8" name="type" />--}}
+                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                 </div>
             </div>
 

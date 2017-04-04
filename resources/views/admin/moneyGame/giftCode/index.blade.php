@@ -43,7 +43,7 @@
                                 <div class="col-xs-6 col-sm-6">
 
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New GiftCode</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userName }}</td>
-                                <td class="hidden-480">{{ $rs->giftEventId }}</td>
+                                <td class="hidden-480">{{ $giftEvent[$rs->giftEventId] }}</td>
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ $rs->cashValue }}</td>
                                 <td>{{ $rs->goldValue }}</td>

@@ -52,7 +52,9 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Lặp lại hàng ngày</label>
             <div class="col-sm-9">
-                {!! Form::text('repeat_daily', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}
+                {{--{!! Form::text('repeat_daily', null, array('placeholder' => 'Game ID','class' => 'form-control')) !!}--}}
+                {!! Form::hidden('repeat_daily',0) !!}
+                {{ Form::checkbox('repeat_daily', 1, null, ['class' => 'field']) }}
             </div>
         </div>
 

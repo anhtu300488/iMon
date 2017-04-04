@@ -10,7 +10,7 @@
             </div>
             <div class="pull-right">
                 @permission('administrator')
-                <a class="btn btn-success" href="{{ route('tool.roles.create') }}"> Create New Role</a>
+                <a class="btn btn-success" href="{{ route('tool.roles.create') }}"> Create New</a>
                 @endpermission
             </div>
         </div>
@@ -43,12 +43,17 @@
                                 <td>{{ $role->description }}</td>
                                 <td>
                                     @permission('administrator')
-                                    <a class="btn btn-primary" href="{{ route('tool.roles.edit',$role->id) }}">Edit</a>
+                                    <a class="btn btn-xs btn-info" href="{{ route('tool.roles.edit',$role->id) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
                                     @endpermission
                                     @permission('administrator')
                                     {!! Form::open(['method' => 'DELETE','route' => ['tool.roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button class="btn btn-xs btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </button>
                                     {!! Form::close() !!}
+
                                     @endpermission
                                 </td>
                             </tr>

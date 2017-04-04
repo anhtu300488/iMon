@@ -13,6 +13,8 @@ class NotifyController extends Controller
         $content = \Request::get('content');
         $status = \Request::get('status');
 
+        $statusArr = array('' => '---Tất cả---', 0 => 'Active', 1 => 'Deactive');
+
         $query = Notify::query();
         $matchThese = [];
         if($status != ''){
@@ -26,7 +28,7 @@ class NotifyController extends Controller
 
         $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.others.notify.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.notify.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     public function create(){

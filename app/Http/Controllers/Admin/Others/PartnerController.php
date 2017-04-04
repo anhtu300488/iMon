@@ -43,7 +43,7 @@ class PartnerController extends Controller
 
 
         $input = $request->all();
-        $input['password'] = bcrypt($request->get('password'));
+//        $input['password'] = bcrypt($request->get('password'));
         $input['admin_id'] = Auth::user()->id;
         Partner::create($input);
 

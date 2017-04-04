@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
+use App\ClientType;
 use App\LoggedInLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,8 @@ class LogUserLoginController extends Controller
         $userName = \Request::get('userName');
         $ime = \Request::get('ime');
         $ip = \Request::get('ip');
+
+        $clientType = ClientType::pluck('name', 'clientId');
 
         $matchThese = [];
         if($userID != ''){
@@ -43,6 +46,6 @@ class LogUserLoginController extends Controller
 
         $data = $query->orderBy('loggedInTime', 'desc')->paginate(10);
 
-        return view('admin.users.logUserLogin.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.users.logUserLogin.index',compact('data', 'clientType'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

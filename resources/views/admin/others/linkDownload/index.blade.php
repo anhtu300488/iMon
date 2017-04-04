@@ -50,7 +50,7 @@
                                 <div class="col-xs-6 col-sm-6">
 
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('linkDownload.create') }}"> Create Link Download</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('linkDownload.create') }}"> Create New</a>
                                     @endpermission
 
                                 </div>

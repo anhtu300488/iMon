@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('partner.create') }}"> Create New Partner</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('partner.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                 <td>{{ $rs->userName }}</td>
                                 <td class="hidden-480">{{ $rs->accessKey1 }}</td>
                                 <td class="hidden-480">{{ $rs->accessKey2 }}</td>
-                                <td>{{ $rs->admin_id }}</td>
+                                <td>{{ getAdminName($rs->admin_id) }}</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('partner.edit',$rs->partnerId) }}">

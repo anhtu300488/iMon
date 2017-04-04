@@ -81,7 +81,7 @@
                                 <td>{{ $rs->roomId }}</td>
                                 <td >{{ $rs->matchIndex }}</td>
                                 <td class="hidden-480">{{ $rs->gameId }}</td>
-                                <td ></td>
+                                <td >{{ $game[$rs->gameId] }}</td>
                                 <td class="hidden-480">{{ $rs->description }}</td>
                             </tr>
                         @endforeach

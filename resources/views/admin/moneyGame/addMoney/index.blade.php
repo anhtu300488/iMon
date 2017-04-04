@@ -51,7 +51,7 @@
                                 <div class="col-xs-6 col-sm-6">
 
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('addMoney.create') }}"> Create New Add Money</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('addMoney.create') }}"> Create New</a>
                                     @endpermission
 
                                 </div>
@@ -94,7 +94,7 @@
                                 <td>{{ $rs->addGold }}</td>
                                 <td>{{ $rs->addCash }}</td>
                                 <td class="hidden-480">{{ $rs->description }}</td>
-                                <td class="hidden-480">{{ $rs->admin_id }}</td>
+                                <td class="hidden-480">{{ getAdminName($rs->admin_id) }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td class="hidden-480">{{ $rs->updated_at }}</td>

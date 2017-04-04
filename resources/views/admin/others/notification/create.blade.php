@@ -55,7 +55,9 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Lặp lại hàng ngày</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="repeat_daily" />
+                    {{--<input type="text" class="form-control" id="form-field-8" name="repeat_daily" />--}}
+                    {!! Form::hidden('repeat_daily',0) !!}
+                    {{ Form::checkbox('repeat_daily', 1, true, ['class' => 'field']) }}
                 </div>
             </div>
 

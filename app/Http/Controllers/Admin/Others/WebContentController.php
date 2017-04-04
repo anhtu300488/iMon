@@ -12,12 +12,14 @@ class WebContentController extends Controller
 
         $title = \Request::get('title');
         $content = \Request::get('content');
-        $status = \Request::get('status');
+        $type = \Request::get('type');
+
+        $typeArr = array('' => '---Tất cả---', 0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game', 5 => 'Thông báo');
 
         $query = WebContent::query();
         $matchThese = [];
-        if($status != ''){
-            $matchThese['status'] = $status;
+        if($type != ''){
+            $matchThese['type'] = $type;
         }
 
         if($title != ''){
@@ -30,11 +32,12 @@ class WebContentController extends Controller
         $query->where($matchThese);
         $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.others.webContent.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.webContent.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     public function create(){
-        return view('admin.others.webContent.create');
+        $typeArr = array(0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game');
+        return view('admin.others.webContent.create', compact('typeArr'));
     }
 
     public function store(Request $request){
@@ -59,8 +62,9 @@ class WebContentController extends Controller
 
     public function edit($id){
         $webContent = WebContent::find($id);
+        $typeArr = array(0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game');
 
-        return view('admin.others.webContent.edit',compact('webContent'));
+        return view('admin.others.webContent.edit',compact('webContent', 'typeArr'));
     }
 
     public function update(Request $request, $id){

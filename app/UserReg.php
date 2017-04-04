@@ -10,6 +10,8 @@ class UserReg extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = 'userId';
+
     public function purchaseMoneyLogs()
     {
         return $this->belongsToMany('App\PurchaseMoneyLog', 'purchase_money_log');

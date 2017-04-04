@@ -141,11 +141,11 @@
         jQuery(function($) {
 
             //or change it into a date range picker
-            $('.input-daterange').datepicker({autoclose:true});
+            $('.date_charge').datepicker({autoclose:true});
 
 
             //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
-            $('input[name=timeRequest]').daterangepicker({
+            $('input[name=date_charge]').daterangepicker({
                 'applyClass' : 'btn-sm btn-success',
                 'cancelClass' : 'btn-sm btn-default',
                 locale: {

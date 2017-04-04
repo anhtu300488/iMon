@@ -14,7 +14,7 @@ class WebContentController extends Controller
         $content = \Request::get('content');
         $type = \Request::get('type');
 
-        $typeArr = array('' => '---Tất cả---',0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game');
+        $typeArr = array('' => '---Tất cả---', 0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game', 5 => 'Thông báo');
 
         $query = WebContent::query();
         $matchThese = [];

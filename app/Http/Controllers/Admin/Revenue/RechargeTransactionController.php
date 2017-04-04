@@ -35,6 +35,8 @@ class RechargeTransactionController extends Controller
 
         $clientType->prepend('---Tất cả---', '');
 
+        $typeArr = array('' => '---Tất cả---', 1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
+
         $matchThese = [];
         if($type != ''){
             $matchThese['type'] = $type;
@@ -78,6 +80,6 @@ class RechargeTransactionController extends Controller
 
         $data = $query->orderBy('purchase_money_log.userName')->paginate(10);
 
-        return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

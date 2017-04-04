@@ -35,52 +35,12 @@ class PurchaseMoneyLog extends Model
 
 //        $query->where($alias. ".money > 0");
 //        $query->andWhere("status = 1");
+
         if ($dateCharge) {
-            $text = trim($dateCharge);
-            $dateArr = explode('-', $text);
-            if (count($dateArr) == 2) {
-                $date1 = trim($dateArr[0]);
-                $day_time1 = explode(' ', $date1);
-                $date1Arr = explode('/', $day_time1[0]);
-                $date1Str = '';
-                $day1= $date1Arr[2] . '-' . $date1Arr[1] . '-' . $date1Arr[0];
-                if (count($date1Arr) == 3) {
-                    $date1Str = $day1 . ' ' .  $day_time1[1];
-                }
-                $date2 = trim($dateArr[1]);
-                $day_time2 = explode(' ', $date2);
-                $date2Arr = explode('/', $day_time2[0]);
-                $date2Str = '';
-                $day2 =  $date2Arr[2] . '-' . $date2Arr[1] . '-' . $date2Arr[0];
-                if (count($date2Arr) == 3) {
-                    $date2Str = $day2 . ' ' .  $day_time2[1];
-                }
-                $query->whereBetween('purchasedTime', [$date1Str, $date2Str]);
-            }
+                $query->whereBetween('purchasedTime', [$dateCharge[0], $dateCharge[1]]);
         }
         if ($datePlayGame) {
-            $text = trim($datePlayGame);
-            $dateArr = explode('-', $text);
-            if (count($dateArr) == 2) {
-                $date1 = trim($dateArr[0]);
-                $day_time1 = explode(' ', $date1);
-                $date1Arr = explode('/', $day_time1[0]);
-                $date1Str = '';
-                $day1= $date1Arr[2] . '-' . $date1Arr[1] . '-' . $date1Arr[0];
-                if (count($date1Arr) == 3) {
-                    $date1Str = $day1 . ' ' .  $day_time1[1];
-                }
-                $date2 = trim($dateArr[1]);
-                $day_time2 = explode(' ', $date2);
-                $date2Arr = explode('/', $day_time2[0]);
-                $date2Str = '';
-                $day2 =  $date2Arr[2] . '-' . $date2Arr[1] . '-' . $date2Arr[0];
-                if (count($date2Arr) == 3) {
-                    $date2Str = $day2 . ' ' .  $day_time2[1];
-                }
-                $query->whereBetween('startPlayedTime', [$date1Str, $date2Str]);
-
-            }
+                $query->whereBetween('user.startPlayedTime', [$datePlayGame[0], $datePlayGame[1]]);
         }
         if($type){
             $query->where('type ','=',$type);
@@ -98,9 +58,129 @@ class PurchaseMoneyLog extends Model
 //            $cp_id = PartnerTable::getCpIdByAdmin();
 //            $query->andWhere("g.cp = ?", $cp_id);
 //        }
-//        $query->leftJoin("user", 'users.id', '=', 'contacts.user_id');
+        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
 //        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
          $query->groupBy("type");
         return $query->get()->toArray();
     }
+    public static function getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os)
+    {
+//        $query = PurchaseMoneyLog::query();
+//
+//        $inday = false;
+//        $search = false;
+//
+//        if($dateCharge != ''){
+//            $startDateCharge = $dateCharge[0];
+//
+//            $endDateCharge = $dateCharge[1];
+//
+//            if($startDateCharge != '' && $endDateCharge != ''){
+//                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+//                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+//                $query->whereBetween('purchasedTime',[$start,$end]);
+//            }
+//        }
+//
+//        if($datePlayGame != ''){
+//            $startPlayGame = $datePlayGame[0];
+//
+//            $endPlayGame = $datePlayGame[1];
+//
+//            if($startPlayGame != '' && $endPlayGame != ''){
+//                $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
+//                $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
+//                $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
+//            }
+//        }
+//
+////        if($type){
+////            $query->where('p.type ','=',$type);
+////        }
+////        if($cp){
+////            $query->where('p.cp ','=',$cp);
+////        }
+////        if($os){
+////            $query->where('p.clientID ','=',$type);
+////        }
+//        if($userName){
+//            $query->where('userName','LIKE','%'.$userName.'%');
+//        }
+//
+//        $inday = 0;
+//        if($dateCharge[0] = $dateCharge[1]){
+//            $query->select("type", DB::raw('SUM(parValue) as sum_money',DB::raw('SUM(cashValue) as sum_cash'),DB::raw('hour(purchasedTime) as purchase_date') ));
+//            $inday =1;
+//            $search = true;
+////            $query->select("sum(a.parValue) as sum_money, sum(a.cashValue) as sum_cash, a.type, hour(a.purchasedTime) as purchase_date");
+//        } else {
+//            $query->select("type", DB::raw('SUM(parValue) as sum_money',DB::raw('SUM(cashValue) as sum_cash'),DB::raw('DATE(purchasedTime) as purchase_date') ));
+////            $query->select("sum(a.parValue) as sum_money, sum(a.cashValue) as sum_cash, a.type, DATE(a.purchasedTime) as purchase_date");
+//        }
+//        $query->leftJoin("user", 'user.userId', '=', 'userId');
+////        $query->leftJoin("g.Partner p");
+//        if($inday = 1){
+//            $query->groupBy("hour(purchasedTime) , type");
+//        } else {
+//            $query->groupBy("DATE(purchasedTime ) , type");
+//        }
+//        $query->orderBy(" purchasedTime asc");
+////        if(!$search){
+////            $query->where("purchasedTime > ?",  Date("Y-m-d H:i:s", time() - 86400* 7));
+////        }
+//        return $query->get()->toArray();
+
+
+        $matchThese = [];
+        if($type != ''){
+            $matchThese['type'] = $type;
+        }
+
+        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') )
+            ->join('user', function($join)
+            {
+                $join->on('user.userId', '=', 'p.userId');
+
+            })
+            ->join('partner', function($join)
+            {
+                $join->on('partner.partnerId', '=', 'user.cp');
+
+            });
+        if($userName != ''){
+            $query->where('p.userName','LIKE','%'.$userName.'%');
+        }
+        $query->where($matchThese);
+
+        if($dateCharge != ''){
+            $startDateCharge = $dateCharge[0];
+
+            $endDateCharge = $dateCharge[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('p.purchasedTime',[$start,$end]);
+            }
+        }
+
+        if($datePlayGame != ''){
+            $startPlayGame = $datePlayGame[0];
+
+            $endPlayGame = $datePlayGame[1];
+
+            if($startPlayGame != '' && $endPlayGame != ''){
+                $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
+                $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
+                $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
+            }
+        }
+
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->get()->toArray();
+
+
+        return $data;
+    }
+
+
 }

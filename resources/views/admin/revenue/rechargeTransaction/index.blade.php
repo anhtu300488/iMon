@@ -79,12 +79,7 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Loại</label>
 
-                                    <select class="form-control" id="form-field-select-1" name="type">
-                                        <option value="">---Tất cả---</option>
-                                        <option value="1" <?php if(request('type') == 1) echo "selected='selected'"; ?> >Thẻ cào</option>
-                                        <option value="2" <?php if(request('type') == 2) echo "selected='selected'"; ?> >SMS</option>
-                                        <option value="3" <?php if(request('type') == 3) echo "selected='selected'"; ?> >IAP</option>
-                                    </select>
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
                             <hr />
@@ -163,7 +158,7 @@
                             <td>{{ $rs->cashValue }}</td>
                             <td>{{ $rs->currentCash }}</td>
                             <td class="hidden-480">{{ $rs->purchasedTime }}</td>
-                            <td>{{ $rs->type }}</td>
+                            <td>{{ $typeArr[$rs->type] }}</td>
                             <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>
                         @endforeach

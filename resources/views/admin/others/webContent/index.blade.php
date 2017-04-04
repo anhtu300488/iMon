@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('webContent.create') }}"> Create New Web Content</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('webContent.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
                             </div>

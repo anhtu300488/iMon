@@ -22,7 +22,7 @@
             <a href="#" class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
-                    Ace Admin
+                    IMon Administrator
                 </small>
             </a>
 
@@ -57,7 +57,7 @@
                         </li>
 
                         <li>
-                            <a href="profile.html">
+                            <a href="#">
                                 <i class="ace-icon fa fa-user"></i>
                                 Profile
                             </a>

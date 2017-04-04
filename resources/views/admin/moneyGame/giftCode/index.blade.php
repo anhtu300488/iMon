@@ -43,7 +43,7 @@
                                 <div class="col-xs-6 col-sm-6">
 
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New GiftCode</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
                             </div>

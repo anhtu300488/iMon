@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
                                     @permission('administrator')
-                                    <a class="btn btn-info btn-sm" href="{{ route('notify.create') }}"> Create New Notify</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('notify.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
                             </div>

@@ -47,331 +47,6 @@
             <b class="arrow"></b>
         </li>
 
-        <li {{ setOpen('basic') }} >
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-desktop"></i>
-                <span class="menu-text">
-                            Chức năng cơ bản
-                        </span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-
-            <b class="arrow"></b>
-
-            <ul class="submenu">
-                <li {{ setActive('basic/purchaseMoneyLog') }} >
-                    <a href="{{url('basic/purchaseMoneyLog')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách nạp thẻ
-                    </a>
-                </li>
-
-                <li {{ setActive('basic/topUser') }}>
-                    <a href="{{route('basic.topUser')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        TOP người dùng nạp tiền
-                    </a>
-
-                </li>
-
-                <li {{ setActive('basic/userReg') }}>
-                    <a href="{{route('basic.userReg')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Người dùng đăng ký
-                    </a>
-
-                </li>
-
-                <li {{ setActive('basic/exchangeAssetRequest') }}>
-                    <a href="{{route('basic.exchangeAssetRequest')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách đổi thẻ
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('basic/history') }}>
-                    <a href="{{route('basic.history')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('basic/kenHistory') }}>
-                    <a href="{{route('basic.kenHistory')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử Ken
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('basic/xuHistory') }}>
-                    <a href="{{route('basic.xuHistory')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử xu
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li class="">--}}
-                    {{--<a href="jquery-ui.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Lịch sử vật phẩm--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                {{--<li class="">--}}
-                    {{--<a href="nestable-list.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Lịch sử thanh toán--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-            </ul>
-        </li>
-
-        <li {{ setOpen('tool') }}>
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil-square-o"></i>
-                <span class="menu-text"> Tool Server </span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-
-            <b class="arrow"></b>
-
-            <ul class="submenu">
-                {{--<li {{ setActive('tool/topGame') }}>--}}
-                    {{--<a href="{{route('tool.topGame')}}">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Top Game--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/roles') }}>
-                    <a href="{{route('tool.roles')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Danh sách role
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li {{ setActive('tool/userInfo') }}>--}}
-                    {{--<a href="{{route('tool.userInfo')}}">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Thông tin người chơi--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/createAdmin/create') }}>
-                    <a href="{{route('tool.createAdmin.create')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Tạo User
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li class="">--}}
-                    {{--<a href="form-wizard.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Lịch sử ván chơi--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                {{--<li class="">--}}
-                    {{--<a href="wysiwyg.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Cập nhật mật khẩu--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/addMoney') }}>
-                    <a href="{{url('tool/addMoney')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Cộng tiền cho người chơi
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li {{ setActive('tool/serverMessage/create') }}>--}}
-                    {{--<a href="{{route('tool.serverMessage.create')}}">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Thông báo toàn server--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/sendEmail/create') }}>
-                    <a href="{{route('tool.sendEmail.create')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Gửi email cho người dùng
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('tool/lockUser') }}>
-                    <a href="{{route('tool.lockUser')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Khóa tài khoản
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('tool/unlockUser') }}>
-                    <a href="{{route('tool.unlockUser')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Mở khóa tài khoản
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li class="">--}}
-                    {{--<a href="dropzone.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Kiểm tra trạng thái user--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/emailUpdate') }}>
-                    <a href="{{route('tool.emailUpdate')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Cập nhật địa chỉ email
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('tool/phoneUpdate') }}>
-                    <a href="{{route('tool.phoneUpdate')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Cập nhật số điện thoại
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                {{--<li class="">--}}
-                    {{--<a href="dropzone.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Mở khóa thiết bị--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                {{--<li class="">--}}
-                    {{--<a href="dropzone.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Khóa thiết bị--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('tool/giftCode') }}>
-                    <a href="{{route('tool.giftCode')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Thông tin GiftCode
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-
-            </ul>
-        </li>
-
-        {{--<li {{ setOpen('report') }}>--}}
-            {{--<a href="#" class="dropdown-toggle">--}}
-                {{--<i class="menu-icon fa fa-calendar"></i>--}}
-                {{--<span class="menu-text"> Thống kê </span>--}}
-
-                {{--<b class="arrow fa fa-angle-down"></b>--}}
-            {{--</a>--}}
-
-            {{--<b class="arrow"></b>--}}
-
-            {{--<ul class="submenu">--}}
-                {{--<li class="">--}}
-                    {{--<a href="tables.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Daily active user--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-            {{--</ul>--}}
-        {{--</li>--}}
-
-        <li {{ setOpen('system') }}>
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-list"></i>
-                <span class="menu-text"> Tương tác hệ thống </span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-
-            <b class="arrow"></b>
-
-            <ul class="submenu">
-                {{--<li class="">--}}
-                    {{--<a href="profile.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Bảo trì server--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                {{--<li class="">--}}
-                    {{--<a href="inbox.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Cấu hình event đua top--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
-                <li {{ setActive('system/ipLock') }}>
-                    <a href="{{route('system.ipLock')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Khóa IP
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-            </ul>
-        </li>
-
         <li {{ setOpen('revenue') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -464,14 +139,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('revenue/ccu') }}>
-                    <a href="{{route('revenue.ccu')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Quản lý CCU
-                    </a>
+                {{--<li {{ setActive('revenue/ccu') }}>--}}
+                    {{--<a href="{{route('revenue.ccu')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Quản lý CCU--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('revenue/userOnline') }}>
                     <a href="{{route('revenue.userOnline')}}">
@@ -778,6 +453,331 @@
             </ul>
         </li>
 
+        <!-- Sidebar Ruby -->
+        <li {{ setOpen('basic') }} >
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-desktop"></i>
+                <span class="menu-text">
+                            Chức năng cơ bản
+                        </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li {{ setActive('basic/purchaseMoneyLog') }} >
+                    <a href="{{url('basic/purchaseMoneyLog')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách nạp thẻ
+                    </a>
+                </li>
+
+                <li {{ setActive('basic/topUser') }}>
+                    <a href="{{route('basic.topUser')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        TOP người dùng nạp tiền
+                    </a>
+
+                </li>
+
+                <li {{ setActive('basic/userReg') }}>
+                    <a href="{{route('basic.userReg')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Người dùng đăng ký
+                    </a>
+
+                </li>
+
+                <li {{ setActive('basic/exchangeAssetRequest') }}>
+                    <a href="{{route('basic.exchangeAssetRequest')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách đổi thẻ
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('basic/history') }}>
+                    <a href="{{route('basic.history')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Lịch sử
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('basic/kenHistory') }}>
+                    <a href="{{route('basic.kenHistory')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Lịch sử Ken
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('basic/xuHistory') }}>
+                    <a href="{{route('basic.xuHistory')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Lịch sử xu
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li class="">--}}
+                {{--<a href="jquery-ui.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Lịch sử vật phẩm--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                {{--<li class="">--}}
+                {{--<a href="nestable-list.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Lịch sử thanh toán--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+            </ul>
+        </li>
+
+        <li {{ setOpen('tool') }}>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-pencil-square-o"></i>
+                <span class="menu-text"> Tool Server </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                {{--<li {{ setActive('tool/topGame') }}>--}}
+                {{--<a href="{{route('tool.topGame')}}">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Top Game--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/roles') }}>
+                    <a href="{{route('tool.roles')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách role
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li {{ setActive('tool/userInfo') }}>--}}
+                {{--<a href="{{route('tool.userInfo')}}">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Thông tin người chơi--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/createAdmin/create') }}>
+                    <a href="{{route('tool.createAdmin.create')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tạo User
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li class="">--}}
+                {{--<a href="form-wizard.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Lịch sử ván chơi--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                {{--<li class="">--}}
+                {{--<a href="wysiwyg.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Cập nhật mật khẩu--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/addMoney') }}>
+                    <a href="{{url('tool/addMoney')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Cộng tiền cho người chơi
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li {{ setActive('tool/serverMessage/create') }}>--}}
+                {{--<a href="{{route('tool.serverMessage.create')}}">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Thông báo toàn server--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/sendEmail/create') }}>
+                    <a href="{{route('tool.sendEmail.create')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Gửi email cho người dùng
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('tool/lockUser') }}>
+                    <a href="{{route('tool.lockUser')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Khóa tài khoản
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('tool/unlockUser') }}>
+                    <a href="{{route('tool.unlockUser')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Mở khóa tài khoản
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li class="">--}}
+                {{--<a href="dropzone.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Kiểm tra trạng thái user--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/emailUpdate') }}>
+                    <a href="{{route('tool.emailUpdate')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Cập nhật địa chỉ email
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('tool/phoneUpdate') }}>
+                    <a href="{{route('tool.phoneUpdate')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Cập nhật số điện thoại
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                {{--<li class="">--}}
+                {{--<a href="dropzone.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Mở khóa thiết bị--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                {{--<li class="">--}}
+                {{--<a href="dropzone.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Khóa thiết bị--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('tool/giftCode') }}>
+                    <a href="{{route('tool.giftCode')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thông tin GiftCode
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+
+            </ul>
+        </li>
+
+        {{--<li {{ setOpen('report') }}>--}}
+        {{--<a href="#" class="dropdown-toggle">--}}
+        {{--<i class="menu-icon fa fa-calendar"></i>--}}
+        {{--<span class="menu-text"> Thống kê </span>--}}
+
+        {{--<b class="arrow fa fa-angle-down"></b>--}}
+        {{--</a>--}}
+
+        {{--<b class="arrow"></b>--}}
+
+        {{--<ul class="submenu">--}}
+        {{--<li class="">--}}
+        {{--<a href="tables.html">--}}
+        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+        {{--Daily active user--}}
+        {{--</a>--}}
+
+        {{--<b class="arrow"></b>--}}
+        {{--</li>--}}
+
+        {{--</ul>--}}
+        {{--</li>--}}
+
+        <li {{ setOpen('system') }}>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list"></i>
+                <span class="menu-text"> Tương tác hệ thống </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                {{--<li class="">--}}
+                {{--<a href="profile.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Bảo trì server--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                {{--<li class="">--}}
+                {{--<a href="inbox.html">--}}
+                {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                {{--Cấu hình event đua top--}}
+                {{--</a>--}}
+
+                {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
+
+                <li {{ setActive('system/ipLock') }}>
+                    <a href="{{route('system.ipLock')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Khóa IP
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+            </ul>
+        </li>
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->

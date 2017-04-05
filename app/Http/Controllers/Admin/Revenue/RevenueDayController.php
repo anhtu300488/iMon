@@ -40,7 +40,7 @@ class RevenueDayController extends Controller
             $matchThese['type'] = $type;
         }
 
-        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') )
+        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash'),  'partner.partnerName as partnerName')
         ->join('user', function($join)
         {
             $join->on('user.userId', '=', 'p.userId');
@@ -80,20 +80,15 @@ class RevenueDayController extends Controller
             }
         }
 
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type', 'partnerName')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-//        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-//        var_dump($purchase_moneys);die;
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){
-//            var_dump($purchase_money->type);die;
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
-//            $chartDate[$index] = $purchase_money->purchase_date ;
-//            $chartSumMoney[$index] = isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0;
-//            $chartSumCash[$index] = isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0 ;
         }
-//        var_dump($purchase_arr);die;
+
+
         return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

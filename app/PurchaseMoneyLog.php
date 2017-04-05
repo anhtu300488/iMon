@@ -117,27 +117,42 @@ class PurchaseMoneyLog extends Model
 //            $query->select("type", DB::raw('SUM(parValue) as sum_money',DB::raw('SUM(cashValue) as sum_cash'),DB::raw('DATE(purchasedTime) as purchase_date') ));
 ////            $query->select("sum(a.parValue) as sum_money, sum(a.cashValue) as sum_cash, a.type, DATE(a.purchasedTime) as purchase_date");
 //        }
-//        $query->leftJoin("user", 'user.userId', '=', 'userId');
+//        $query->join('user', function($join)
+//            {
+//                $join->on('user.userId', '=', 'userId');
+//
+//            });
 ////        $query->leftJoin("g.Partner p");
 //        if($inday = 1){
-//            $query->groupBy("hour(purchasedTime) , type");
+//            $query->groupBy(DB::raw("HOUR(purchasedTime)"), 'type');
 //        } else {
-//            $query->groupBy("DATE(purchasedTime ) , type");
+//            $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type');
 //        }
-//        $query->orderBy(" purchasedTime asc");
+//        $query->orderBy(DB::raw("DATE(purchasedTime)"),'desc');
 ////        if(!$search){
 ////            $query->where("purchasedTime > ?",  Date("Y-m-d H:i:s", time() - 86400* 7));
 ////        }
 //        return $query->get()->toArray();
 
-
+//        var_dump($dateCharge);die;
         $matchThese = [];
         if($type != ''){
             $matchThese['type'] = $type;
         }
 
-        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') )
-            ->join('user', function($join)
+        $search = false;
+
+        $query = DB::table('purchase_money_log as p');
+        $inday = 0;
+        if($dateCharge != '' && $dateCharge[0] == $dateCharge[1]){
+            $query->select(DB::raw("hour(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') );
+            $inday = 1;
+            $search = true;
+        } else {
+            $query->select(DB::raw("DATE(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') );
+        };
+
+        $query->join('user', function($join)
             {
                 $join->on('user.userId', '=', 'p.userId');
 
@@ -176,7 +191,17 @@ class PurchaseMoneyLog extends Model
             }
         }
 
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->get()->toArray();
+        if(!$search){
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+        }
+
+        if($inday == 1){
+            $query->groupBy(DB::raw("HOUR(purchasedTime)"), 'type');
+        } else {
+            $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type');
+        }
+
+        $data = $query->get()->toArray();
 
 
         return $data;

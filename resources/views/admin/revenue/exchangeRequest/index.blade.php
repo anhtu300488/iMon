@@ -3,7 +3,13 @@
     Chi tiết giao dịch đổi thưởng
 @endsection
 @section('content')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="container"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
@@ -158,5 +164,35 @@
 
         });
     </script>
+    <script type="text/javascript">
+        $(function () {
 
+            var array_date = new Array();
+            var sum_money = new Array();
+            <?php foreach($purchase_arr as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+                sum_money.push(<?php echo isset($value)? $value : 0  ?>);
+            <?php endforeach ?>
+        $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Tổng tiền rút ra'
+                },
+                xAxis: {
+                    categories: array_date
+                },
+                yAxis: {
+                    title: {
+                        text: 'Rate'
+                    }
+                },
+                series: [{
+                    name: 'Tiền rút',
+                    data: sum_money
+                }]
+            });
+        });
+    </script>
     @endsection

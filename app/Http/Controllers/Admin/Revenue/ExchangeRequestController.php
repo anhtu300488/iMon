@@ -58,6 +58,12 @@ class ExchangeRequestController extends Controller
 
         $data = $query->orderBy('requestUserName')->paginate(10);
 
-        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
+        foreach ($purchase_moneys as $index => $purchase_money){
+            $purchase_arr[$purchase_money->purchase_date] = $purchase_money->sum_money;
+        }
+
+
+        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

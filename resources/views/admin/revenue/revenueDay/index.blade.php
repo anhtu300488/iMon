@@ -8,29 +8,11 @@
     <div class="page-header">
         <div class="row">
             <div class="col-sm-4">
-                <div class="widget-box">
-                    <div class="widget-header widget-header-flat widget-header-small">
-                        <h5 class="widget-title">
-                            <i class="ace-icon fa fa-signal"></i>
-                            Doanh thu theo loại
-                        </h5>
+                <div id="piechart_pub_type"></div>
 
-                    </div>
-
-                    <div class="widget-body">
-                        <div class="widget-main">
-                            <!-- #section:plugins/charts.flotchart -->
-                            <div id="piechart_pub_type"></div>
-
-                        </div><!-- /.widget-main -->
-                    </div><!-- /.widget-body -->
-                </div><!-- /.widget-box -->
             </div>
 
-            <hr />
-
             <div class="col-sm-12">
-                <div id="piechart_pub_register"></div>
                 <div id="container"></div>
             </div>
         </div>
@@ -134,10 +116,10 @@
                         <tr>
                             <th>STT</th>
                             <th>Ngày tạo</th>
-                            <th>Đối tác</th>
+                            <th class="hidden-480">Đối tác</th>
                             <th class="hidden-480">Type view</th>
                             <th>Tổng tiền nạp(VNĐ)</th>
-                            <th class="hidden-480">Tổng ken nạp </th>
+                            <th>Tổng ken nạp </th>
                         </tr>
                         </thead>
 
@@ -146,7 +128,7 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->created_date }}</td>
-                                <td></td>
+                                <td class="hidden-480">{{ $rs->partnerName }}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
                                 <td>{{ $rs->sum_money }}</td>
                                 <td>{{ $rs->sum_cash }}</td>
@@ -197,15 +179,25 @@
     <script type="text/javascript">
         $(function () {
 
-            $('#container').highcharts({
+            var array_date = new Array();
+            var sum_money = new Array();
+            var cash_money = new Array();
+            var total_money = new Array();
+            <?php foreach($purchase_arr as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+                sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
+                cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
+                total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
+            <?php endforeach ?>
+        $('#container').highcharts({
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Yearly Website Ratio'
+                    text: 'Doanh thu theo ngày'
                 },
                 xAxis: {
-                    categories: ['2011','2012','2013','2014','2015', '2016', '2017', '2018']
+                    categories: array_date
                 },
                 yAxis: {
                     title: {
@@ -213,14 +205,14 @@
                     }
                 },
                 series: [{
-                    name: 'Click',
-                    data: [1,2,3,4,5,6,7,8]
+                    name: 'SMS',
+                    data: sum_money
                 }, {
-                    name: 'View',
-                    data: [2,4,6,8,10,12,14,16]
+                    name: 'Thẻ cào',
+                    data: cash_money
                 }, {
-                    name: 'View',
-                    data: [4,6,8,10,12,14,16,18]
+                    name: 'Tổng ken nạp vào game',
+                    data: total_money
                 }]
             });
         });
@@ -253,7 +245,6 @@
             };
             var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_type'));
             chart_api.draw(data_api, options_api);
-
         }
     </script>
 

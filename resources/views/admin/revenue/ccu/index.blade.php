@@ -6,6 +6,11 @@
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
+                <div id="piechart_user_online" ></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
                         <h4 class="widget-title">Tìm kiếm</h4>
@@ -34,11 +39,11 @@
                                 </div>
 
 
-                                {{--<div class="col-xs-4 col-sm-4">--}}
-                                    {{--<label  for="form-field-select-1">Thời gian</label>--}}
-                                    {{--{!! Form::select('option', $timeArr, request('option'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}--}}
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Thời gian</label>
+                                    {!! Form::select('option', $timeArr, request('option'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
-                                {{--</div>--}}
+                                </div>
 
                             </div>
 
@@ -103,5 +108,31 @@
 
         });
     </script>
+    <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'
+            });
 
+            //Hình 3: Thông tin nhà phát triển đăng ký tài khoản
+            var array_online_log = new Array(["<?php echo __('Thời gian') ?>", "<?php echo __('Online') ?>", "<?php echo __('Trong bàn') ?>"]);
+            <?php foreach($arr_log as $time => $value):?>
+                array_online_log.push(['<?php echo reFormatDate($time, "H:i");  ?>', Number('<?php echo $value[0]?>') , Number('<?php echo $value[1]?>') ]);
+
+                <?php endforeach ?>
+            var data_online_log = google.visualization.arrayToDataTable(array_online_log);
+            formatter.format(data_online_log, 1);
+            var options_online_log = {
+                title: '<?php echo __('CCU') ?>',
+                is3D: true,
+                hAxis: {title: 'CCU BIGKEN',  titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0}
+            };
+            var chart_online_log = new google.visualization.AreaChart(document.getElementById('piechart_user_online'));
+            chart_online_log.draw(data_online_log, options_online_log);
+        }
+    </script>
 @endsection

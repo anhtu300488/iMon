@@ -14,21 +14,39 @@ class OnlineLog extends Model
     public static function getOnlineLog($insertedtime = null, $option = null)
     {
         $sql = OnlineLog::select(DB::raw('logId, peakData, insertedTime'));
-
-        if ($insertedtime != ''){
+        if ($insertedtime != '' && $insertedtime != date("d-m-Y",strtotime(Carbon::now())) ){
             $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));
             $sql->where(DB::raw('logId % 4'), '=', 1);
-
-//            $sql = "select logId, peakData, insertedTime from online_log where insertedTime = ? and logId %4 = 1";
         } else {
             if($option == 1 || $option == 2 || $option == 6){
-                $sql->where('insertedTime' , '>=', date("Y-m-d H:i:s", time() - 3600 * $option));
+//                $sql->where('insertedTime' , '>=', Date("Y-m-d H:i:s", time() - 3600* $option));
+                $start = date("Y-m-d H:i:s", time() - 3600* $option);
+                $end = date("Y-m-d H:i:s",strtotime(Carbon::now()));
+                $sql->whereBetween('insertedTime',[$start,$end]);
             } else if($option == 24){
                 $sql->where(DB::raw('DATE(insertedTime)'), '=' ,date("Y-m-d",strtotime(Carbon::now())));
                 $sql->where(DB::raw('logId % 4'), '=', 1);
             }
         }
 
-        return  $sql->orderBy('insertedTime', 'desc')->take(1)->get();
+        return  $sql->orderBy('insertedTime', 'desc')->limit(500)->get();
+    }
+
+    public static function getCurrentOnlineLog($insertedtime = null, $option = null)
+    {
+        $sql = OnlineLog::select(DB::raw('logId, peakData, insertedTime'));
+        if ($insertedtime != '' && $insertedtime != date("d-m-Y",strtotime(Carbon::now())) ){
+            $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));
+            $sql->where(DB::raw('logId % 4'), '=', 1);
+        } else {
+            if($option == 1 || $option == 2 || $option == 6){
+                $sql->where('insertedTime' , '>=', Date("Y-m-d H:i:s", time() - 3600* $option));
+            } else if($option == 24){
+                $sql->where(DB::raw('DATE(insertedTime)'), '=' ,date("Y-m-d",strtotime(Carbon::now())));
+                $sql->where(DB::raw('logId % 4'), '=', 1);
+            }
+        }
+
+        return  $sql->orderBy('insertedTime', 'desc')->limit(1)->get();
     }
 }

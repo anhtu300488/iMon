@@ -57,7 +57,7 @@ class ExchangeRequestController extends Controller
 
 
         $data = $query->orderBy('requestUserName')->paginate(10);
-
+        $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date] = $purchase_money->sum_money;

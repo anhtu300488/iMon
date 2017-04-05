@@ -7,96 +7,10 @@
 
     <div class="page-header">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="widget-box">
-                    <div class="widget-header widget-header-flat widget-header-small">
-                        <h5 class="widget-title">
-                            <i class="ace-icon fa fa-signal"></i>
-                            Doanh thu tổng hợp
-                        </h5>
+            <div class="col-sm-4">
+                <div id="piechart_pub_type"></div>
 
-                        <div class="widget-toolbar no-border">
-                            <div class="inline dropdown-hover">
-                                <button class="btn btn-minier btn-primary">
-                                    This Week
-                                    <i class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
-                                </button>
-
-                                <ul class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
-                                    <li class="active">
-                                        <a href="#" class="blue">
-                                            <i class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
-                                            This Week
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                            Last Week
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                            This Month
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                            Last Month
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="widget-body">
-                        <div class="widget-main">
-                            <!-- #section:plugins/charts.flotchart -->
-                            <div id="piechart_pub_register"></div>
-
-                            <!-- /section:plugins/charts.flotchart -->
-                            <div class="hr hr8 hr-double"></div>
-
-                            <div class="clearfix">
-                                <!-- #section:custom/extra.grid -->
-                                <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
-																&nbsp; Thẻ cào
-															</span>
-                                    <h4 class="bigger pull-right">1,255111</h4>
-                                </div>
-
-                                <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
-																&nbsp; SMS
-															</span>
-                                    <h4 class="bigger pull-right">941</h4>
-                                </div>
-
-                                <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
-																&nbsp; IAP
-															</span>
-                                    <h4 class="bigger pull-right">1,050</h4>
-                                </div>
-
-                                <!-- /section:custom/extra.grid -->
-                            </div>
-                        </div><!-- /.widget-main -->
-                    </div><!-- /.widget-body -->
-                </div><!-- /.widget-box -->
             </div>
-
-            <hr />
 
             <div class="col-sm-12">
                 <div id="container"></div>
@@ -202,10 +116,10 @@
                         <tr>
                             <th>STT</th>
                             <th>Ngày tạo</th>
-                            <th>Đối tác</th>
+                            <th class="hidden-480">Đối tác</th>
                             <th class="hidden-480">Type view</th>
                             <th>Tổng tiền nạp(VNĐ)</th>
-                            <th class="hidden-480">Tổng ken nạp </th>
+                            <th>Tổng ken nạp </th>
                         </tr>
                         </thead>
 
@@ -214,7 +128,7 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->created_date }}</td>
-                                <td></td>
+                                <td class="hidden-480">{{ $rs->partnerName }}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
                                 <td>{{ $rs->sum_money }}</td>
                                 <td>{{ $rs->sum_cash }}</td>
@@ -244,9 +158,9 @@
                     cancelLabel: 'Cancel',
                 }
             })
-                    .prev().on(ace.click_event, function(){
-                        $(this).next().focus();
-                    });
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
 
             $('input[name=date_play_game]').daterangepicker({
                 'applyClass' : 'btn-sm btn-success',
@@ -256,44 +170,55 @@
                     cancelLabel: 'Cancel',
                 }
             })
-                    .prev().on(ace.click_event, function(){
-                        $(this).next().focus();
-                    });
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
         });
     </script>
 
     <script type="text/javascript">
         $(function () {
-
+            <?php if($purchase_arr != ''):?>
+                var array_date = new Array();
+                var sum_money = new Array();
+                var cash_money = new Array();
+                var total_money = new Array();
+                <?php foreach($purchase_arr as $day => $value):?>
+                    array_date.push(['<?php echo $day;  ?>']);
+                sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
+                cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
+                total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
+                <?php endforeach ?>
             $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Yearly Website Ratio'
-                },
-                xAxis: {
-                    categories: ['2011','2012','2013','2014','2015', '2016', '2017', '2018']
-                },
-                yAxis: {
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Rate'
-                    }
-                },
-                series: [{
-                    name: 'Click',
-                    data: [1,2,3,4,5,6,7,8]
-                }, {
-                    name: 'View',
-                    data: [2,4,6,8,10,12,14,16]
-                }, {
-                    name: 'View',
-                    data: [4,6,8,10,12,14,16,18]
-                }]
-            });
+                        text: 'Doanh thu theo ngày'
+                    },
+                    xAxis: {
+                        categories: array_date
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rate'
+                        }
+                    },
+                    series: [{
+                        name: 'SMS',
+                        data: sum_money
+                    }, {
+                        name: 'Thẻ cào',
+                        data: cash_money
+                    }, {
+                        name: 'Tổng ken nạp vào game',
+                        data: total_money
+                    }]
+                });
+            <?php endif; ?>
         });
     </script>
-    <script type="text/javascript" src="/css/jsapi.css"></script>
+    <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
     <!--    --><?php //var_dump($total_by_type);die;?>
     <script type="text/javascript">
         //        google.load("visualization", "1", {packages:["" +
@@ -312,14 +237,14 @@
             $arr_type = array(1 => "Thẻ cào", 2 =>"SMS", 3 => "IAP");
             foreach ($total_by_type as $value) {?>
             array_type.push(['<?php echo $arr_type[$value['type']]?>', <?php echo $value['sum_money']; ?>]);
-            <?php } ?>
+                <?php } ?>
             var data_api = google.visualization.arrayToDataTable(array_type);
             formatter.format(data_api, 1);
             var options_api = {
                 title: '<?php echo __('Doanh thu theo loại')?>',
                 is3D: true
             };
-            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_register'));
+            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_type'));
             chart_api.draw(data_api, options_api);
         }
     </script>

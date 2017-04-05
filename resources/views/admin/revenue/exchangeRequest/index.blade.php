@@ -166,33 +166,34 @@
     </script>
     <script type="text/javascript">
         $(function () {
-
-            var array_date = new Array();
-            var sum_money = new Array();
-            <?php foreach($purchase_arr as $day => $value):?>
-                array_date.push(['<?php echo $day;  ?>']);
-                sum_money.push(<?php echo isset($value)? $value : 0  ?>);
-            <?php endforeach ?>
-        $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Tổng tiền rút ra'
-                },
-                xAxis: {
-                    categories: array_date
-                },
-                yAxis: {
+            <?php if($purchase_arr != ''):?>
+                var array_date = new Array();
+                var sum_money = new Array();
+                <?php foreach($purchase_arr as $day => $value):?>
+                    array_date.push(['<?php echo $day;  ?>']);
+                    sum_money.push(<?php echo isset($value)? $value : 0  ?>);
+                <?php endforeach ?>
+            $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Rate'
-                    }
-                },
-                series: [{
-                    name: 'Tiền rút',
-                    data: sum_money
-                }]
-            });
+                        text: 'Tổng tiền rút ra'
+                    },
+                    xAxis: {
+                        categories: array_date
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rate'
+                        }
+                    },
+                    series: [{
+                        name: 'Tiền rút',
+                        data: sum_money
+                    }]
+                });
+            <?php endif; ?>
         });
     </script>
     @endsection

@@ -178,43 +178,44 @@
 
     <script type="text/javascript">
         $(function () {
-
-            var array_date = new Array();
-            var sum_money = new Array();
-            var cash_money = new Array();
-            var total_money = new Array();
-            <?php foreach($purchase_arr as $day => $value):?>
-                array_date.push(['<?php echo $day;  ?>']);
-                sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
-                cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
-                total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
-            <?php endforeach ?>
-        $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Doanh thu theo ngày'
-                },
-                xAxis: {
-                    categories: array_date
-                },
-                yAxis: {
+            <?php if($purchase_arr != ''):?>
+                var array_date = new Array();
+                var sum_money = new Array();
+                var cash_money = new Array();
+                var total_money = new Array();
+                <?php foreach($purchase_arr as $day => $value):?>
+                    array_date.push(['<?php echo $day;  ?>']);
+                    sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
+                    cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
+                    total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
+                <?php endforeach ?>
+            $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Rate'
-                    }
-                },
-                series: [{
-                    name: 'SMS',
-                    data: sum_money
-                }, {
-                    name: 'Thẻ cào',
-                    data: cash_money
-                }, {
-                    name: 'Tổng ken nạp vào game',
-                    data: total_money
-                }]
-            });
+                        text: 'Doanh thu theo ngày'
+                    },
+                    xAxis: {
+                        categories: array_date
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rate'
+                        }
+                    },
+                    series: [{
+                        name: 'SMS',
+                        data: sum_money
+                    }, {
+                        name: 'Thẻ cào',
+                        data: cash_money
+                    }, {
+                        name: 'Tổng ken nạp vào game',
+                        data: total_money
+                    }]
+                });
+            <?php endif; ?>
         });
     </script>
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>

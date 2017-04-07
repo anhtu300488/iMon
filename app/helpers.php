@@ -25,3 +25,9 @@ function getAdminName($id)
 function reFormatDate($datetime, $format='d-m-Y H:i:s'){
     return (isset($datetime) & ($datetime != '0000-00-00 00:00:00'))? date($format, strtotime($datetime)) : '';
 }
+
+function numberFormat($money = 0, $dec_point = '.' , $thousands_sep = ','){
+    $arr = explode('.', sprintf("%.2f", $money));
+    $decimal = (count($arr) > 1 && $arr[1] != '00') ? 2 : 0;
+    return number_format($money, $decimal, $dec_point, $thousands_sep);
+}

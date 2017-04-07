@@ -5,6 +5,21 @@
 @section('content')
     <div class="page-header">
         <div class="row">
+            <div class="col-sm-6">
+                <div id="piechart_pub_type"></div>
+            </div>
+            <div class="col-sm-6">
+                <?php if(isset($sumByFilter[1])){ ?>
+                <h5 style="display: inline"><?php echo __('Tổng Ken cược: ', array(), 'messages') ?><?php echo numberFormat($sumByFilter[1]->sum_bet) ?></h5></br>
+                <h5 style="display: inline"><?php echo __('Tổng Ken thắng: ', array(), 'messages') ?><?php echo numberFormat($sumByFilter[1]->sum_win) ?></h5></br>
+                <?php  }?>
+                <?php if(isset($sumByFilter[0])){ ?>
+                <h5 style="display: inline"><?php echo __('Tổng Xu cược: ', array(), 'messages') ?><?php echo numberFormat($sumByFilter[0]->sum_bet) ?></h5></br>
+                <h5 style="display: inline"><?php echo __('Tổng Xu Thắng: ', array(), 'messages') ?><?php echo numberFormat($sumByFilter[0]->sum_win) ?></h5></br>
+                <?php  }?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
@@ -27,14 +42,14 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Vòng ngoài</label>
+                                    <label  for="form-field-select-1">Tiền cược</label>
 
-                                    {!! Form::select('item', $item, request('item'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                    {!! Form::select('type', $arr_type, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Description</label>
-                                    <input class="form-control" name="description" type="text" value="{{request('description')}}"/>
+                                    {!! Form::select('card', $arr_card, request('card'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>
@@ -90,10 +105,13 @@
                         <tr>
                             <th>STT</th>
                             <th>User ID</th>
-                            <th>Vòng ngoài</th>
-                            <th>Vòng trong</th>
+                            <th>Tiền cược</th>
+                            <th>Win money</th>
+                            <th>Quân bài</th>
                             <th>Desciption</th>
+                            <th>Loại thẻ</th>
                             <th>Time</th>
+                            <th>Chơi Ken</th>
                         </tr>
                         </thead>
 
@@ -102,10 +120,13 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->round1_item }}</td>
-                                <td>{{ $rs->round2_item }}</td>
+                                <td>{{ $rs->betMoney }}</td>
+                                <td>{{ $rs->winMoney }}</td>
+                                <td>{{ $rs->cards }}</td>
                                 <td>{{ $rs->desciption }}</td>
-                                <td>{{ $rs->time }}</td>
+                                <td>{{ $rs->cardType }}</td>
+                                <td>{{ $rs->insertTime }}</td>
+                                <td>{{ $rs->isCash }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -115,5 +136,48 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script>
+        jQuery(function($) {
 
+            //datepicker plugin
+            //link
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            })
+            //show datepicker when clicking on the icon
+                .next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            //or change it into a date range picker
+            $('.input-daterange').datepicker({autoclose:true});
+
+        });
+    </script>
+    <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'
+            });
+
+            //Hình 1: Loại nhà phát triển
+            var array_type = new Array(['Task', '<?php echo __('Tỷ lệ nhận thưởng')?>']);
+            <?php foreach ($list_by_round as $value) {?>
+            array_type.push(['<?php echo $arr_card[$value->cardType]?>', <?php echo $value->count_router; ?>]);
+                <?php } ?>
+            var data_api = google.visualization.arrayToDataTable(array_type);
+            formatter.format(data_api, 1);
+            var options_api = {
+                title: '<?php echo __('Tỷ lệ nhận thưởng')?>',
+                is3D: true
+            };
+            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_type'));
+            chart_api.draw(data_api, options_api);
+
+        }
+    </script>
 @endsection

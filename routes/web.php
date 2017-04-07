@@ -144,6 +144,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('game/chanceLuckyWheel', ['as' => 'game.chanceLuckyWheel', 'uses' => 'Admin\Game\LuckyWheelController@chance']);
 
     //mini poker
+    Route::get('game/miniPoker', ['as' => 'game.miniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@log']);
+    Route::get('game/rateMiniPoker', ['as' => 'game.rateMiniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@rate']);
+
+    //Xoc dia
+    Route::get('game/xocDia', ['as' => 'game.xocDia', 'uses' => 'Admin\Game\XocdiaController@index']);
 
     Route::get('moneyGame/cardProvider', ['as' => 'moneyGame.cardProvider', 'uses' => 'Admin\MoneyGame\CardProviderController@index']);
 

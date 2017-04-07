@@ -232,6 +232,34 @@
 
                     <b class="arrow"></b>
                 </li>
+
+                <li {{ setActive('game/miniPoker') }}>
+                    <a href="{{route('game.miniPoker')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Lịch sử quay MiniPoker
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('game/rateMiniPoker') }}>
+                    <a href="{{route('game.rateMiniPoker')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê tỉ lệ quay MiniPoker
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('game/xocDia') }}>
+                    <a href="{{route('game.xocDia')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game xóc đĩa
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
             </ul>
         </li>
 

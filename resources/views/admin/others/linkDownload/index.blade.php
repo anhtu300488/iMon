@@ -25,7 +25,7 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label class="control-label no-padding-right" for="form-field-1"> Os </label>
-                                    <input class="form-control" name="os" type="text" value="{{request('os')}}"/>
+                                    {!! Form::select('os', $osArr, request('os'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -89,7 +89,7 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
-                                <td class="hidden-480">{{ $rs->OS }}</td>
+                                <td class="hidden-480">{{ $osArr[$rs->OS] }}</td>
                                 <td>{{ $rs->link_tai }}</td>
                                 <td>{{ $rs->file_down }}</td>
                                 <td class="hidden-480">{{ $rs->is_direct }}</td>
@@ -116,7 +116,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

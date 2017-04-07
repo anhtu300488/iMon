@@ -5,6 +5,12 @@
 @section('content')
     <div class="page-header">
         <div class="row">
+            <div class="col-sm-4">
+                <div id="piechart_pub_type"></div>
+
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
@@ -111,7 +117,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -133,5 +139,31 @@
             $('.input-daterange').datepicker({autoclose:true});
 
         });
+    </script>
+
+    <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'
+            });
+
+            //Hình 1: Loại nhà phát triển
+            var array_type = new Array(['Task', '<?php echo __('Tỷ lệ nhận thưởng')?>']);
+            <?php foreach ($list_by_round as $value) {?>
+            array_type.push(['<?php echo $value->description ?>', <?php echo $value->sum_ken; ?>]);
+                <?php } ?>
+            var data_api = google.visualization.arrayToDataTable(array_type);
+            formatter.format(data_api, 1);
+            var options_api = {
+                title: '<?php echo __('Tỷ lệ nhận thưởng')?>',
+                is3D: true
+            };
+            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_type'));
+            chart_api.draw(data_api, options_api);
+
+        }
     </script>
 @endsection

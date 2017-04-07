@@ -83,7 +83,7 @@
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
-                            <td class="hidden-480">{{ $rs->currentGameId }}</td>
+                            <td class="hidden-480">{{ $gameArr[$rs->currentGameId] }}</td>
                             <td>{{ $rs->cash }}</td>
                             <td>{{ $rs->gold }}</td>
                         </tr>
@@ -91,7 +91,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

@@ -21,6 +21,10 @@ class OtpController extends Controller
         $status = \Request::get('status');
         $type = \Request::get('type');
 
+        $typeArr = array('' => '---Tất cả---', 1 => 'Xác thực', 2 => 'Reset mật khẩu', 3 => 'Hủy xác thực');
+
+        $statusArr = array('' => '---Tất cả---', 0 => 'Chửa sử dụng', 1 => 'Đã sử dụng');
+
         $matchThese = [];
         if($status != ''){
             $matchThese['status'] = $status;
@@ -48,6 +52,6 @@ class OtpController extends Controller
 
         $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.users.otp.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.users.otp.index',compact('data', 'typeArr', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

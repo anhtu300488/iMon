@@ -25,7 +25,7 @@ class SmsRevenueController extends Controller
             $matchThese['amount'] = $amount;
         }
 
-        $query = MoHistory::query()->select(DB::raw("DATE(created_at) created_at"),  DB::raw('SUM(amount) as sum_money') );
+        $query = MoHistory::query()->select(DB::raw("DATE(created_at) created_at"),  DB::raw('SUM(amount) as sum_money'), 'keyword as keyword', 'telco as telco' );
         if($keywords != ''){
             $query->where('keyword','LIKE','%'.$keywords.'%');
         }
@@ -44,7 +44,7 @@ class SmsRevenueController extends Controller
             }
         }
 
-        $data = $query->groupBy(DB::raw("DATE(created_at)"))->orderBy('created_at','desc')->paginate(10);
+        $data = $query->groupBy(DB::raw("DATE(created_at)"), 'keyword', 'telco')->orderBy('created_at','desc')->paginate(10);
 
         return view('admin.revenue.smsRevenue.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
     }

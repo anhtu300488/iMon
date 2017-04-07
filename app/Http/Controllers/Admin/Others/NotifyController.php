@@ -37,7 +37,7 @@ class NotifyController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'content' => 'required',
+            'content' => 'required|max:40000',
         ]);
 
 
@@ -57,7 +57,7 @@ class NotifyController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'content' => 'required',
+            'content' => 'required|max:40000',
         ]);
 
         $notify = Notify::find($id);

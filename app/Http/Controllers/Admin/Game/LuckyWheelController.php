@@ -50,7 +50,9 @@ class LuckyWheelController extends Controller
         }
         $data = $query->orderBy('time', 'desc')->paginate(10);
 
-        return view('admin.game.luckyWheel.log',compact('data', 'item'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $list_by_round = LuckyWheelLog::getSumKenByRound($userId, $roundItem, $description, $fromDate, $toDate);
+
+        return view('admin.game.luckyWheel.log',compact('data', 'item', 'list_by_round'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**

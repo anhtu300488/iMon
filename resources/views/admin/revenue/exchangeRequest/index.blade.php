@@ -111,7 +111,7 @@
                             <th>Total cash</th>
                             <th>Giá trị thẻ</th>
                             <th>Trạng thái</th>
-                            <th class="hidden-480">Response data</th>
+                            {{--<th class="hidden-480">Response data</th>--}}
                             <th class="hidden-480">Request topup</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                         </tr>
@@ -129,7 +129,7 @@
                             <td>{{ $rs->totalCash }}</td>
                             <td>{{ $rs->totalParValue }}</td>
                             <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
-                            <td class="hidden-480">{{ $rs->responseData }}</td>
+                            {{--<td class="hidden-480">{{ $rs->responseData }}</td>--}}
                             <td class="hidden-480">{{ $rs->request_topup_id }}</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                         </tr>
@@ -137,7 +137,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

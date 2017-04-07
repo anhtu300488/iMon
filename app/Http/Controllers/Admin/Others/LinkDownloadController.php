@@ -13,6 +13,8 @@ class LinkDownloadController extends Controller
         $os = \Request::get('os');
         $versionBuild = \Request::get('versionBuild');
 
+        $osArr = array('' => '---Tất cả---', 0 => 'Android', 1 => 'IOS', 2 => 'Window Phone', 3 => 'Desktop');
+
         $matchThese = [];
         if($os != ''){
             $matchThese['clientId'] = $os;
@@ -28,7 +30,7 @@ class LinkDownloadController extends Controller
 
         $data = $query->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.others.linkDownload.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.linkDownload.index',compact('data', 'osArr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     public function create(){
@@ -41,12 +43,9 @@ class LinkDownloadController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'os' => 'required',
-            'link_tai' => 'required',
-            'file_down' => 'required',
+            'link_tai' => 'max:256',
             'is_direct' => 'required',
-            'status' => 'required',
-            'file_down' => 'required|mimes:apk,ipa,exe,jpg,jpeg,png',
-            'delay' => 'required'
+            'file_down' => 'mimes:apk,ipa,exe',
         ]);
 
 
@@ -68,12 +67,9 @@ class LinkDownloadController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'os' => 'required',
-            'link_tai' => 'required',
-            'file_down' => 'required',
+            'link_tai' => 'max:256',
             'is_direct' => 'required',
-            'status' => 'required',
-            'file_down' => 'required|mimes:apk,ipa,exe',
-            'delay' => 'required'
+            'file_down' => 'mimes:apk,ipa,exe',
         ]);
 
         $giftEvent = TaiGame::find($id);

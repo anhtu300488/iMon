@@ -27,11 +27,8 @@ class GiftEventController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'eventName' => 'required',
-            'cashValue' => 'required',
-            'goldValue' => 'required',
-            'expiredTime' => 'required',
-            'description' => 'required'
+            'eventName' => 'required|max:250',
+            'description' => 'max:250'
         ]);
 
 
@@ -51,11 +48,8 @@ class GiftEventController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'eventName' => 'required',
-            'cashValue' => 'required',
-            'goldValue' => 'required',
-            'expiredTime' => 'required',
-            'description' => 'required'
+            'eventName' => 'required|max:250',
+            'description' => 'max:250'
         ]);
 
         $giftEvent = GiftEvent::find($id);

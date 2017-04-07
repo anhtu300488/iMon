@@ -32,10 +32,10 @@ class GiftCodeController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'giftEventId' => 'required',
-            'userName' => 'required',
+            'userName' => 'max:20',
             'userId' => 'required',
             'expiredTime' => 'required',
-            'description' => 'required'
+            'description' => 'max:250'
         ]);
 
 
@@ -56,10 +56,10 @@ class GiftCodeController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'giftEventId' => 'required',
-            'userName' => 'required',
+            'userName' => 'max:20',
             'userId' => 'required',
             'expiredTime' => 'required',
-            'description' => 'required'
+            'description' => 'max:250'
         ]);
 
         $giftCode = GiftCode::find($id);

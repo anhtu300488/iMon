@@ -41,21 +41,12 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Trạng thái</label>
-                                    <select class="form-control" id="form-field-select-1" name="status">
-                                        <option value="">---Tất cả---</option>
-                                        <option value="0" <?php if(request('status') == 1) echo "selected='selected'"; ?> >Chửa sử dụng</option>
-                                        <option value="1" <?php if(request('status') == 2) echo "selected='selected'"; ?> >Đã sử dụng</option>
-                                    </select>
+                                    {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Loại</label>
-                                    <select class="form-control" id="form-field-select-1" name="type">
-                                        <option value="">---Tất cả---</option>
-                                        <option value="0" <?php if(request('type') == 1) echo "selected='selected'"; ?> >Xác thực</option>
-                                        <option value="1" <?php if(request('type') == 2) echo "selected='selected'"; ?> >Reset mật khẩu</option>
-                                        <option value="2" <?php if(request('type') == 3) echo "selected='selected'"; ?> >Hủy xác thực</option>
-                                    </select>
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>
@@ -104,7 +95,7 @@
                                 <td>{{ $rs->verifiedPhone }}</td>
                                 <td>{{ $rs->userName }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
-                                <td class="hidden-480">{{ $rs->type }}</td>
+                                <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
                                 <td>{{ $rs->verify_code }}</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td class="hidden-480">{{ $rs->updated_at }}</td>
@@ -113,7 +104,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

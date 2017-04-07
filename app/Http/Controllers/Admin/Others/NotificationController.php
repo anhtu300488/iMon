@@ -34,12 +34,10 @@ class NotificationController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'title' => 'required',
-            'message' => 'required',
+            'title' => 'required|max:100',
+            'message' => 'required|max:200',
             'pushHour' => 'required',
-            'pushMinutes' => 'required',
-            'repeat_daily' => 'required',
-            'status' => 'required'
+            'pushMinutes' => 'required'
         ]);
 
 
@@ -59,12 +57,10 @@ class NotificationController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'title' => 'required',
-            'message' => 'required',
+            'title' => 'required|max:100',
+            'message' => 'required|max:200',
             'pushHour' => 'required',
-            'pushMinutes' => 'required',
-            'repeat_daily' => 'required',
-            'status' => 'required'
+            'pushMinutes' => 'required'
         ]);
 
         $giftEvent = Notification::find($id);

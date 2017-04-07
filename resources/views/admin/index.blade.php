@@ -128,7 +128,7 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->created_date }}</td>
-                                <td class="hidden-480">{{ $rs->partnerName }}</td>
+                                <td class="hidden-480">{{$partner[request('partner')]}}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
                                 <td>{{ $rs->sum_money }}</td>
                                 <td>{{ $rs->sum_cash }}</td>
@@ -137,7 +137,8 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -178,43 +179,43 @@
 
     <script type="text/javascript">
         $(function () {
-            <?php if($purchase_arr != ''):?>
-                var array_date = new Array();
-                var sum_money = new Array();
-                var cash_money = new Array();
-                var total_money = new Array();
-                <?php foreach($purchase_arr as $day => $value):?>
-                    array_date.push(['<?php echo $day;  ?>']);
-                sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
-                cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
-                total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
-                <?php endforeach ?>
-            $('#container').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
+                <?php if($purchase_arr != ''):?>
+            var array_date = new Array();
+            var sum_money = new Array();
+            var cash_money = new Array();
+            var total_money = new Array();
+            <?php foreach($purchase_arr as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+            sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
+            cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
+            total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
+            <?php endforeach ?>
+        $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Doanh thu theo ngày'
+                },
+                xAxis: {
+                    categories: array_date
+                },
+                yAxis: {
                     title: {
-                        text: 'Doanh thu theo ngày'
-                    },
-                    xAxis: {
-                        categories: array_date
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Rate'
-                        }
-                    },
-                    series: [{
-                        name: 'SMS',
-                        data: sum_money
-                    }, {
-                        name: 'Thẻ cào',
-                        data: cash_money
-                    }, {
-                        name: 'Tổng ken nạp vào game',
-                        data: total_money
-                    }]
-                });
+                        text: 'Rate'
+                    }
+                },
+                series: [{
+                    name: 'SMS',
+                    data: sum_money
+                }, {
+                    name: 'Thẻ cào',
+                    data: cash_money
+                }, {
+                    name: 'Tổng ken nạp vào game',
+                    data: total_money
+                }]
+            });
             <?php endif; ?>
         });
     </script>
@@ -236,7 +237,7 @@
             <?php
             $arr_type = array(1 => "Thẻ cào", 2 =>"SMS", 3 => "IAP");
             foreach ($total_by_type as $value) {?>
-            array_type.push(['<?php echo $arr_type[$value['type']]?>', <?php echo $value['sum_money']; ?>]);
+            array_type.push(['<?php echo $arr_type[$value->type]?>', <?php echo $value->sum_money; ?>]);
                 <?php } ?>
             var data_api = google.visualization.arrayToDataTable(array_type);
             formatter.format(data_api, 1);

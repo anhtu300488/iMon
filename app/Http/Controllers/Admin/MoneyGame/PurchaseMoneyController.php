@@ -50,10 +50,10 @@ class PurchaseMoneyController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'provider' => 'required',
-            'cardValue' => 'required',
+            'cardValue' => 'required|integer|max:500000',
             'userId' => 'required',
-            'cardPin' => 'required',
-            'cardSerial' => 'required',
+            'cardPin' => 'required|max:20',
+            'cardSerial' => 'required|max:20',
             'toCash' => 'required'
         ]);
 
@@ -75,10 +75,10 @@ class PurchaseMoneyController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'provider' => 'required',
-            'cardValue' => 'required',
+            'cardValue' => 'required|integer|max:500000',
             'userId' => 'required',
-            'cardPin' => 'required',
-            'cardSerial' => 'required',
+            'cardPin' => 'required|max:20',
+            'cardSerial' => 'required|max:20',
             'toCash' => 'required'
         ]);
 

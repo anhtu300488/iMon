@@ -61,7 +61,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $roles->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

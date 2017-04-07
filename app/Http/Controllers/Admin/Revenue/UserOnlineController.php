@@ -44,9 +44,9 @@ class UserOnlineController extends Controller
 
         $query = UserReg::query();
 
-        $query->where($matchThese);
+        $query->where($matchThese)->where('currentGameId', '>', 0);
 
-        $data = $query->orderBy('userId','desc')->paginate(10);
+        $data = $query->orderBy('cash','desc')->paginate(10);
 
         return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * 10);
     }

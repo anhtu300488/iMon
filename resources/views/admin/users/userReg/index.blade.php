@@ -3,7 +3,18 @@
     Người dùng đăng ký
 @endsection
 @section('content')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <div class="page-header">
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="piechart_pub_type"></div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div id="container"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
@@ -152,7 +163,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -175,6 +186,80 @@
             $('.input-daterange').datepicker({autoclose:true});
 
         });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            <?php if($sevent_day != ''):?>
+            var array_date = new Array();
+            var register = new Array();
+            var device = new Array();
+            var stop_play = new Array();
+            var login = new Array();
+            <?php foreach($sevent_day as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+                register.push(<?php echo $value[0]  ?>);
+                device.push(<?php echo $value[1]  ?>);
+                stop_play.push(<?php echo $value[2]  ?>);
+                login.push(<?php echo $value[3]  ?>);
+            <?php endforeach ?>
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Thông tin người chơi đăng ký'
+                },
+                xAxis: {
+                    categories: array_date
+                },
+                yAxis: {
+                    title: {
+                        text: 'Rate'
+                    }
+                },
+                series: [{
+                    name: 'Đăng ký mới',
+                    data: register
+                }, {
+                    name: 'Thiết bị mới',
+                    data: device
+                }, {
+                    name: 'Nghỉ chơi trong ngày',
+                    data: stop_play
+                }, {
+                    name: 'Đăng nhập trong ngày',
+                    data: login
+                }]
+            });
+            <?php endif; ?>
+        });
+    </script>
+
+    <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'
+            });
+
+            //Hình 1: Loại nhà phát triển
+            var array_type = new Array(['Task', '<?php echo __('Loại hệ điều hành')?>']);
+            <?php foreach ($total_by_os as $value) {?>
+            array_type.push(['<?php echo $value->name?>', <?php echo $value->sum_os; ?>]);
+                <?php } ?>
+            var data_api = google.visualization.arrayToDataTable(array_type);
+            formatter.format(data_api, 1);
+            var options_api = {
+                title: '<?php echo __('Loại hệ điều hành')?>',
+                is3D: true
+            };
+            var chart_api = new google.visualization.PieChart(document.getElementById('piechart_pub_type'));
+            chart_api.draw(data_api, options_api);
+
+        }
     </script>
 
 @endsection

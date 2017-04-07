@@ -33,12 +33,12 @@ class PartnerController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'partnerName' => 'required',
-            'smsNumber' => 'required',
-            'userName' => 'required',
-            'password' => 'required',
-            'accessKey1' => 'required',
-            'accessKey2' => 'required'
+            'partnerName' => 'required|max:50',
+            'smsNumber' => 'max:4|integer',
+            'userName' => 'max:20',
+            'password' => 'max:255',
+            'accessKey1' => 'max:255',
+            'accessKey2' => 'max:255'
         ]);
 
 
@@ -59,12 +59,12 @@ class PartnerController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'partnerName' => 'required',
-            'smsNumber' => 'required',
-            'userName' => 'required',
-            'password' => 'required',
-            'accessKey1' => 'required',
-            'accessKey2' => 'required'
+            'partnerName' => 'required|max:50',
+            'smsNumber' => 'max:4|integer',
+            'userName' => 'max:20',
+            'password' => 'max:255',
+            'accessKey1' => 'max:255',
+            'accessKey2' => 'max:255'
         ]);
 
         $partner = Partner::find($id);

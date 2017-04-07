@@ -42,14 +42,10 @@ class WebContentController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'title' => 'required',
-            'keywords' => 'required',
-            'description' => 'required',
-            'content' => 'required',
-            'image' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-            'is_hot' => 'required'
+            'title' => 'required|max:256',
+            'keywords' => 'max:256',
+            'description' => 'max:512',
+            'content' => 'required|max:40000'
         ]);
 
 
@@ -69,14 +65,10 @@ class WebContentController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'title' => 'required',
-            'keywords' => 'required',
-            'description' => 'required',
-            'content' => 'required',
-            'image' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-            'is_hot' => 'required'
+            'title' => 'required|max:256',
+            'keywords' => 'max:256',
+            'description' => 'max:512',
+            'content' => 'required|max:40000'
         ]);
 
         $giftEvent = WebContent::find($id);

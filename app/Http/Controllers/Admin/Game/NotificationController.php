@@ -34,7 +34,7 @@ class NotificationController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'content' => 'required'
+            'content' => 'required|max:1000'
         ]);
 
 
@@ -58,7 +58,7 @@ class NotificationController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'content' => 'required'
+            'content' => 'required|max:1000'
         ]);
 
         $notification = EmergencyNotification::find($id);

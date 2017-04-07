@@ -317,7 +317,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{--@include('admin.pagination.default', ['paginator' => $data])--}}
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->

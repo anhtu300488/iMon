@@ -128,7 +128,7 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $rs->created_date }}</td>
-                                <td class="hidden-480">{{ $rs->partnerName }}</td>
+                                <td class="hidden-480">{{$partner[request('partner')]}}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
                                 <td>{{ $rs->sum_money }}</td>
                                 <td>{{ $rs->sum_cash }}</td>
@@ -137,7 +137,8 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                {{ $data->appends($_GET)->links() }}
+
+                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -236,7 +237,7 @@
             <?php
             $arr_type = array(1 => "Thẻ cào", 2 =>"SMS", 3 => "IAP");
             foreach ($total_by_type as $value) {?>
-            array_type.push(['<?php echo $arr_type[$value['type']]?>', <?php echo $value['sum_money']; ?>]);
+            array_type.push(['<?php echo $arr_type[$value->type]?>', <?php echo $value->sum_money; ?>]);
                     <?php } ?>
             var data_api = google.visualization.arrayToDataTable(array_type);
             formatter.format(data_api, 1);

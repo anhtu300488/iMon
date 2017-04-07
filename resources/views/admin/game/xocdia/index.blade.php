@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/rateMiniPoker','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'game/xocDia','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Room ID</label>

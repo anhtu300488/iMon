@@ -54,11 +54,10 @@
                 <div class="login-container">
                     <div class="center">
                         <h1>
-                            <i class="ace-icon fa fa-leaf green"></i>
+                            <img src="{{asset('icon/icon.png')}}">
                             <span class="red">IMon</span>
                             <span class="white" id="id-text2">Administrator</span>
                         </h1>
-                        <h4 class="blue" id="id-company-text">&copy; King Game Company</h4>
                     </div>
 
                     <div class="space-6"></div>

@@ -19,9 +19,9 @@
         <!-- /section:basics/sidebar.mobile.toggle -->
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
-            <a href="#" class="navbar-brand">
+            <a href="/" class="navbar-brand" style="padding-bottom: 5px; padding-top: 5px;">
                 <small>
-                    <i class="fa fa-leaf"></i>
+                    <img src="{{asset('icon/icon.png')}}">
                     IMon Administrator
                 </small>
             </a>

@@ -36,7 +36,7 @@
                         </thead>
 
                         <tbody>
-                        @foreach ($roles as $key => $role)
+                        @foreach ($data as $key => $role)
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $role->display_name }}</td>

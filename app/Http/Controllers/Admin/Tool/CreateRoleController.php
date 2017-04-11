@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 class CreateRoleController extends Controller
 {
     public function index(Request $request){
-        $roles = Role::orderBy('id','DESC')->paginate(10);
-        return view('admin.tool.role.index',compact('roles'))
+        $data = Role::orderBy('id','DESC')->paginate(10);
+        return view('admin.tool.role.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Doanh thu theo ngày
+    Thống kê khách hàng nạp tiền
 @endsection
 @section('content')
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -31,7 +31,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/revenueDay','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/revenueUserCharge','role'=>'search'])  !!}
                             {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
@@ -110,6 +110,7 @@
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
+
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -118,8 +119,7 @@
                             <th>Ngày tạo</th>
                             <th class="hidden-480">Đối tác</th>
                             <th class="hidden-480">Type view</th>
-                            <th>Tổng tiền nạp(VNĐ)</th>
-                            <th>Tổng ken nạp </th>
+                            <th>Tổng KH nạp tiền</th>
                         </tr>
                         </thead>
 
@@ -130,8 +130,7 @@
                                 <td>{{ $rs->created_date }}</td>
                                 <td class="hidden-480">{{$partner[request('partner')]}}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
-                                <td>{{ $rs->sum_money }}</td>
-                                <td>{{ $rs->sum_cash }}</td>
+                                <td>{{ $rs->total }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -179,58 +178,47 @@
 
     <script type="text/javascript">
         $(function () {
-                <?php if($purchase_arr != ''):?>
-            var array_date = new Array();
-            var sum_money = new Array();
-            var cash_money = new Array();
-            var total_money = new Array();
-            var exchange_money = new Array();
-            <?php foreach($purchase_arr as $day => $value):?>
-                array_date.push(['<?php echo $day;  ?>']);
-            sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
-            cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
-            <?php $arr1 = isset($value[1][1]) ? $value[1][1] : 0;
-                $arr2 = isset($value[2][1]) ? $value[2][1] : 0;  ?>
-            total_money.push(<?php echo $arr1 + $arr2;  ?>);
-            exchange_money.push(<?php echo isset($value[3]) ?  $value[3] : 0 ?>);
-            <?php endforeach ?>
-        $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Doanh thu theo ngày'
-                },
-                xAxis: {
-                    categories: array_date
-                },
-                yAxis: {
+            <?php if($purchase_arr != ''):?>
+                var array_date = new Array();
+                var total = new Array();
+                var total_cash = new Array();
+                var exchange_money = new Array();
+                <?php foreach($purchase_arr as $day => $value):?>
+                    array_date.push(['<?php echo $day;  ?>']);
+                    total.push(<?php echo isset($value[1]) ? $value[1] : 0  ?>);
+                    total_cash.push(<?php echo isset($value[2]) ? $value[2] : 0  ?>);
+                <?php endforeach ?>
+            $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Rate'
-                    }
-                },
-                series: [{
-                    name: 'SMS',
-                    data: sum_money
-                }, {
-                    name: 'Thẻ cào',
-                    data: cash_money
-                }, {
-                    name: 'Tổng ken nạp vào game',
-                    data: total_money
-                }, {
-                    name: 'Đổi thưởng',
-                    data: exchange_money
-                }]
-            });
+                        text: 'Doanh thu theo ngày'
+                    },
+                    xAxis: {
+                        categories: array_date
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rate'
+                        }
+                    },
+                    series: [{
+                        name: 'SMS',
+                        data: total
+                    }, {
+                        name: 'Thẻ cào',
+                        data: total_cash
+                    }]
+                });
             <?php endif; ?>
         });
     </script>
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
-    <!--    --><?php //var_dump($total_by_type);die;?>
+<!--    --><?php //var_dump($total_by_type);die;?>
     <script type="text/javascript">
-        //        google.load("visualization", "1", {packages:["" +
-        //        ""]});
+//        google.load("visualization", "1", {packages:["" +
+//        ""]});
         google.load("visualization", "1", {packages:["corechart"]});
 
         google.setOnLoadCallback(drawChart);
@@ -244,8 +232,8 @@
             <?php
             $arr_type = array(1 => "Thẻ cào", 2 =>"SMS", 3 => "IAP");
             foreach ($total_by_type as $value) {?>
-            array_type.push(['<?php echo $arr_type[$value->type]?>', <?php echo $value->sum_money; ?>]);
-                <?php } ?>
+            array_type.push(['<?php echo $arr_type[$value->type]?>', <?php echo $value->total; ?>]);
+                    <?php } ?>
             var data_api = google.visualization.arrayToDataTable(array_type);
             formatter.format(data_api, 1);
             var options_api = {

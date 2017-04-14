@@ -101,7 +101,7 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
                                 <td class="hidden-480">{{ $rs->provider }}</td>
-                                <td>{{ $rs->cardValue }}</td>
+                                <td>{{ number_format($rs->cardValue) }}</td>
                                 <td>{{ $rs->cardPin }}</td>
                                 <td>@if($rs->active == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                                 <td>

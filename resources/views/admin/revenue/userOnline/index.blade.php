@@ -84,8 +84,8 @@
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $gameArr[$rs->currentGameId] }}</td>
-                            <td>{{ $rs->cash }}</td>
-                            <td>{{ $rs->gold }}</td>
+                            <td>{{ number_format($rs->cash) }}</td>
+                            <td>{{ number_format($rs->gold) }}</td>
                         </tr>
                         @endforeach
                         </tbody>

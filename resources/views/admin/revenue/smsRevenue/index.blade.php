@@ -85,7 +85,7 @@
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->keyword }}</td>
-                            <td>{{ $rs->sum_money }}</td>
+                            <td>{{ number_format($rs->sum_money) }}</td>
                             <td >{{ $rs->telco }}</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                         </tr>

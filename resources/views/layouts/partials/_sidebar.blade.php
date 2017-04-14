@@ -67,6 +67,15 @@
                     <b class="arrow"></b>
                 </li>
 
+                <li {{ setActive('revenue/revenueUserCharge') }}>
+                    <a href="{{route('revenue.revenueUserCharge')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê KH nạp tiền
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
                 <li {{ setActive('revenue/rechargeTransaction') }}>
                     <a href="{{route('revenue.rechargeTransaction')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -134,6 +143,33 @@
                     <a href="{{route('revenue.exchangeRequest')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Thống kê đổi thưởng
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/cashOut') }}>
+                    <a href="{{route('revenue.cashOut')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê số lượng thẻ đổi
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/topCashOut') }}>
+                    <a href="{{route('revenue.topCashOut')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Top user đổi thưởng
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/payCashOut') }}>
+                    <a href="{{route('revenue.payCashOut')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Số đổi và nạp của user
                     </a>
 
                     <b class="arrow"></b>
@@ -317,6 +353,24 @@
 
                     <b class="arrow"></b>
                 </li>
+
+                <li {{ setActive('moneyGame/income') }}>
+                    <a href="{{route('income.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tiền vào game
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('moneyGame/circulation') }}>
+                    <a href="{{route('circulation.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tiền luân chuyển trong game
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 
@@ -371,6 +425,24 @@
                     <a href="{{route('users.logUserLogin')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý log user đăng nhập
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('users/userRateActive') }}>
+                    <a href="{{route('users.userRateActive')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê tỷ lệ users active
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('users/topMoney') }}>
+                    <a href="{{route('users.topMoney')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Top Mon
                     </a>
 
                     <b class="arrow"></b>

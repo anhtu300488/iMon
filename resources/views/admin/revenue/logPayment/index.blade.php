@@ -94,7 +94,7 @@
                                 <td>{{ $rs->userid }}</td>
                                 <td class="hidden-480">{{ $rs->seria }}</td>
                                 <td class="hidden-480">{{ $rs->pin_card }}</td>
-                                <td>{{ $rs->money }}</td>
+                                <td>{{ number_format($rs->money) }}</td>
                                 <td>{{ $rs->message }}</td>
                                 <td>{{ $rs->providerId }}</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>

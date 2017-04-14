@@ -22,7 +22,7 @@
             <a href="/" class="navbar-brand" style="padding-bottom: 5px; padding-top: 5px;">
                 <small>
                     <img src="{{asset('icon/icon.png')}}">
-                    IMon Administrator
+                    iMon Administrator
                 </small>
             </a>
 

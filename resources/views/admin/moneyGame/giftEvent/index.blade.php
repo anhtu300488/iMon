@@ -82,8 +82,8 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td class="hidden-480">{{ $rs->giftEventId }}</td>
                                 <td>{{ $rs->eventName }}</td>
-                                <td>{{ $rs->cashValue }}</td>
-                                <td>{{ $rs->goldValue }}</td>
+                                <td>{{ number_format($rs->cashValue) }}</td>
+                                <td>{{ number_format($rs->goldValue) }}</td>
                                 <td class="hidden-480">{{ $rs->expiredTime }}</td>
                                 <td class="hidden-480">{{ $rs->reuseable }}</td>
                                 <td class="hidden-480">{{ $rs->description }}</td>

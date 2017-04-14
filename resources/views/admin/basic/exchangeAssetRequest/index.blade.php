@@ -81,30 +81,6 @@
         </div>
     </div><!-- /.page-header -->
 
-    {{--<div class="row">--}}
-        {{--<div class="col-xs-12">--}}
-            {{--<!-- PAGE CONTENT BEGINS -->--}}
-            {{--<div class="center">--}}
-
-                {{--<div class="row">--}}
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Thống kê nạp tiền</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Doanh thu</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<!-- PAGE CONTENT ENDS -->--}}
-            {{--</div><!-- /.col -->--}}
-        {{--</div><!-- /.row -->--}}
-    {{--</div>--}}
-    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -130,8 +106,8 @@
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td class="hidden-480">{{ $rs->requestUserId }}</td>
                             <td>{{ $rs->requestUserName }}</td>
-                            <td >{{ $rs->totalCash }}</td>
-                            <td>{{ $rs->totalParValue }}</td>
+                            <td >{{ number_format($rs->totalCash) }}</td>
+                            <td>{{ number_format($rs->totalParValue) }}</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                             <td class="hidden-480">{{ $rs->description }}</td>

@@ -14,7 +14,16 @@ class ExchangeAssetRequest extends Model
 
         $search = false;
 
-        $query = DB::table('exchange_asset_request as a')->select(DB::raw("SUM(a.totalParValue) sum_money"), DB::raw("DATE(a.created_at) purchase_date"));
+        $query = DB::table('exchange_asset_request as a');
+        $inday = 0;
+        if($timeRequest != '' && $timeRequest[0] == $timeRequest[1]){
+            $query->select(DB::raw("SUM(a.totalParValue) sum_money"),  DB::raw("COUNT(a.requestId) sumCash"), DB::raw("HOUR(a.created_at) purchase_date") );
+            $inday = 1;
+            $search = true;
+        } else {
+            $query->select(DB::raw("SUM(a.totalParValue) sum_money"),  DB::raw("COUNT(a.requestId) sumCash"), DB::raw("DATE(a.created_at) purchase_date") );
+        };
+//            ->select(DB::raw("SUM(a.totalParValue) sum_money"), DB::raw("DATE(a.created_at) purchase_date"));
 
         if($timeRequest != ''){
             $search = true;
@@ -33,7 +42,13 @@ class ExchangeAssetRequest extends Model
             $query->where("a.created_at",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
         }
 
-        $query->groupBy(DB::raw("DATE(a.created_at)"));
+        if($inday == 1){
+            $query->groupBy(DB::raw("HOUR(a.created_at)"));
+        } else {
+            $query->groupBy(DB::raw("DATE(a.created_at)"));
+        }
+
+//        $query->groupBy(DB::raw("DATE(a.created_at)"));
 
         $data = $query->get()->toArray();
 

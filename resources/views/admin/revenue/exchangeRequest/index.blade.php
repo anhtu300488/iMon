@@ -126,8 +126,8 @@
                             <td>{{ $rs->requestUserName }}</td>
                             <td></td>
                             <td class="hidden-480">{{ $rs->assetId }}</td>
-                            <td>{{ $rs->totalCash }}</td>
-                            <td>{{ $rs->totalParValue }}</td>
+                            <td>{{ number_format($rs->totalCash) }}</td>
+                            <td>{{ number_format($rs->totalParValue) }}</td>
                             <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                             {{--<td class="hidden-480">{{ $rs->responseData }}</td>--}}
                             <td class="hidden-480">{{ $rs->request_topup_id }}</td>

@@ -68,9 +68,9 @@
                                         <option value="1" <?php if(request('top') == 1) echo "selected='selected'"; ?> >Level</option>
                                         <option value="2" <?php if(request('top') == 2) echo "selected='selected'"; ?> >Đại gia Ken</option>
                                         <option value="3" <?php if(request('top') == 3) echo "selected='selected'"; ?> >Đại gia Xu</option>
-                                        <option value="4" <?php if(request('top') == 3) echo "selected='selected'"; ?> >Số ván chơi</option>
-                                        <option value="5" <?php if(request('top') == 3) echo "selected='selected'"; ?> >Số ván thắng</option>
-                                        <option value="6" <?php if(request('top') == 3) echo "selected='selected'"; ?> >Top nạp thẻ</option>
+                                        <option value="4" <?php if(request('top') == 4) echo "selected='selected'"; ?> >Số ván chơi</option>
+                                        <option value="5" <?php if(request('top') == 5) echo "selected='selected'"; ?> >Số ván thắng</option>
+                                        <option value="6" <?php if(request('top') == 6) echo "selected='selected'"; ?> >Top nạp thẻ</option>
                                     </select>
                                 </div>
 

@@ -3,7 +3,7 @@
 		<!-- #section:basics/footer -->
 		<div class="footer-content">
 					<span class="bigger-120">
-						<span class="blue bolder">IMon</span>
+						<span class="blue bolder">iMon</span>
 						Administrator &copy; 2017-2018
 					</span>&nbsp; &nbsp;
 		</div>

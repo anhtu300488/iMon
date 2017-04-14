@@ -1,9 +1,16 @@
 @extends('layouts.master')
 @section('title')
-    Chi tiết MO SMS
+    Số lượng tiền vào game
 @endsection
 @section('content')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <div class="page-header">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div id="container"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
@@ -19,32 +26,11 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/detailSmsHistory','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'moneyGame/income','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Mo</label>
-                                    <input class="form-control" name="mo" type="text" value="{{request('mo')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Phone Number</label>
-                                    <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                </div>
-
-                            </div>
-                            <br/>
-
-                            <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Ngày tạo</label>
+                                    <label  for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
                                         <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
                                         <span class="input-group-addon">
@@ -54,17 +40,19 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Short Code</label>
-                                    <input class="form-control" name="shortCode" type="text" value="{{request('shortCode')}}"/>
+                                    <label  for="form-field-select-1">Hình thức</label>
+                                    {!! Form::select('transaction', $transactionArr, request('transaction'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Telco</label>
-                                    <input class="form-control" name="telco" type="text" value="{{request('telco')}}"/>
+                                    <label  for="form-field-select-1">Loại tiền</label>
+
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
                             </div>
+
                             <hr />
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
@@ -93,15 +81,9 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th class="hidden-480">Mo</th>
-                            <th>Phone number</th>
-                            <th class="hidden-480">User ID</th>
-                            <th>Số lượng</th>
-                            <th class="hidden-480">Shortcode</th>
-                            <th>Content</th>
-                            <th>Mt content</th>
-                            <th>Telco</th>
-                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th>Tổng tiền</th>
+                            <th>Hình thức</th>
+                            <th>Time</th>
                         </tr>
                         </thead>
 
@@ -109,15 +91,9 @@
                         @foreach($data as $key => $rs)
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
-                            <td class="hidden-480">{{ $rs->mo_id }}</td>
-                            <td>{{ $rs->phone_number }}</td>
-                            <td class="hidden-480">{{ $rs->user_id }}</td>
-                            <td>{{ number_format($rs->amount) }}</td>
-                            <td class="hidden-480">{{ $rs->shortcode }}</td>
-                            <td>{{ $rs->content }}</td>
-                            <td>{{ $rs->mo_request_id }}</td>
-                            <td>{{ $rs->telco }}</td>
-                            <td class="hidden-480">{{ $rs->created_at }}</td>
+                            <td>{{ number_format($rs->sum_money) }}</td>
+                            <td>{{ $transactionArr[$rs->type] }}</td>
+                            <td>{{ $rs->created_date }}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -148,6 +124,60 @@
                 $(this).next().focus();
             });
 
+            $('input[name=date_play_game]').daterangepicker({
+                'applyClass' : 'btn-sm btn-success',
+                'cancelClass' : 'btn-sm btn-default',
+                locale: {
+                    applyLabel: 'Apply',
+                    cancelLabel: 'Cancel',
+                }
+            })
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+                <?php if($moneyArr != ''):?>
+            var array_date = new Array();
+            var total2 = new Array();
+            var total3 = new Array();
+            var total7 = new Array();
+            <?php foreach($moneyArr as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+                total2.push(<?php echo isset($value[2])? $value[2] : 0  ?>);
+                total3.push(<?php echo isset($value[3])? $value[3] : 0 ?>);
+                total7.push(<?php echo isset($value[7]) ?  $value[7] : 0 ?>);
+            <?php endforeach ?>
+        $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Doanh thu theo ngày'
+                },
+                xAxis: {
+                    categories: array_date
+                },
+                yAxis: {
+                    title: {
+                        text: 'Rate'
+                    }
+                },
+                series: [{
+                    name: 'Nạp tiền',
+                    data: total2
+                }, {
+                    name: 'Quà tặng hệ thống',
+                    data: total3
+                }, {
+                    name: 'Giftcode',
+                    data: total7
+                }]
+            });
+            <?php endif; ?>
         });
     </script>
 

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Quản lý log user đăng nhập
+    Thống kê tỷ lệ users active
 @endsection
 @section('content')
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -26,7 +26,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'users/logUserLogin','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'users/userRateActive','role'=>'search'])  !!}
                             <div class="row">
 
                                 <div class="col-xs-4 col-sm-4">
@@ -50,7 +50,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1"  value="{{request('date_charge')}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -163,12 +163,18 @@
 
     <script type="text/javascript">
         $(function () {
-            <?php if($login_arr != ''):?>
+                <?php if($login_arr != ''):?>
             var array_date = new Array();
-            var total = new Array();
+            var total3 = new Array();
+            var total5 = new Array();
+            var total7 = new Array();
+            var total30 = new Array();
             <?php foreach($login_arr as $day => $value):?>
                 array_date.push(['<?php echo $day;  ?>']);
-                total.push(<?php echo $value;  ?>);
+                total3.push(<?php echo isset($value[0]) ? $value[0] : 0;  ?>);
+                total5.push(<?php echo isset($value[1]) ? $value[1] : 0;  ?>);
+                total7.push(<?php echo isset($value[2]) ? $value[2] : 0;  ?>);
+                total30.push(<?php echo isset($value[3]) ? $value[3] : 0;  ?>);
             <?php endforeach ?>
         $('#container').highcharts({
                 chart: {
@@ -186,8 +192,17 @@
                     }
                 },
                 series: [{
-                    name: 'Số user đăng nhập',
-                    data: total
+                    name: 'R3',
+                    data: total3
+                }, {
+                    name: 'R5',
+                    data: total5
+                }, {
+                    name: 'R7',
+                    data: total7
+                }, {
+                    name: 'R30',
+                    data: total30
                 }]
             });
             <?php endif; ?>

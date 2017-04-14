@@ -76,7 +76,7 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Nền tảng</label>
+                                    <label  for="form-field-select-1">Hệ điều hành</label>
 
                                     {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
@@ -101,30 +101,7 @@
 
         </div>
     </div><!-- /.page-header -->
-    {{--<div class="row">--}}
-        {{--<div class="col-xs-12">--}}
-            {{--<!-- PAGE CONTENT BEGINS -->--}}
-            {{--<div class="center">--}}
 
-                {{--<div class="row">--}}
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Thống kê người dùng đăng ký</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Tổng người dùng</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<!-- PAGE CONTENT ENDS -->--}}
-            {{--</div><!-- /.col -->--}}
-        {{--</div><!-- /.row -->--}}
-    {{--</div>--}}
-    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->

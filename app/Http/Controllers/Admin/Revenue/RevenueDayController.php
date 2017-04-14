@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
+use App\ExchangeAssetRequest;
 use App\Partner;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
@@ -88,12 +89,16 @@ class RevenueDayController extends Controller
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
+        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
         $purchase_arr = array();
+
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
         }
 
-
+        foreach ($exchange_moneys as $index => $exchange_money){
+            $purchase_arr[$exchange_money->purchase_date][3] = $exchange_money->sum_money;
+        }
         return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

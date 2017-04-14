@@ -89,8 +89,8 @@
                                 <td>{{ $rs->userName }}</td>
                                 <td class="hidden-480">{{ $giftEvent[$rs->giftEventId] }}</td>
                                 <td>{{ $rs->code }}</td>
-                                <td>{{ $rs->cashValue }}</td>
-                                <td>{{ $rs->goldValue }}</td>
+                                <td>{{ number_format($rs->cashValue) }}</td>
+                                <td>{{ number_format($rs->goldValue) }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>
                                 <td class="hidden-480">{{ $rs->reuseable }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Danh sách phần thưởng VQMM
+    Top user nhiều tiền ảo
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,11 +19,13 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/itemLuckyWheel','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'users/topMoney','role'=>'search'])  !!}
                             <div class="row">
+
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Phần thưởng</label>
-                                    <input class="form-control" name="itemName" type="text" value="{{request('itemName')}}"/>
+                                    <label  for="form-field-select-1">Loại tiền</label>
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+
                                 </div>
 
                             </div>
@@ -55,29 +57,23 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th>Phần thưởng </th>
-                            <th>Vòng</th>
-                            <th>Giá trị</th>
-                            <th>Tỷ lệ</th>
-                            <th class="hidden-480">Mô tả</th>
-                            <th class="hidden-480">Icon Id thắng</th>
-                            <th>Trạng thái</th>
+                            <th class="hidden-480">Tên đăng nhập</th>
+                            <th>Tên người chơi</th>
+                            <th>Ken</th>
+                            <th>Xu</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($data as $key => $rs)
+                            @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
-                                <td>{{ $rs->itemName }}</td>
-                                <td>{{ $rs->round }}</td>
-                                <td>{{ number_format($rs->value) }}</td>
-                                <td>{{ $rs->rate }}</td>
-                                <td class="hidden-480">{{ $rs->description }}</td>
-                                <td class="hidden-480">{{ $rs->emotionId }}</td>
-                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->userName }}</td>
+                                <td>{{ $rs->displayName }}</td>
+                                <td>{{ number_format($rs->cash) }}</td>
+                                <td>{{ number_format($rs->gold) }}</td>
                             </tr>
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.span -->
@@ -85,5 +81,23 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script>
+        jQuery(function($) {
 
+            //datepicker plugin
+            //link
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            })
+                //show datepicker when clicking on the icon
+                    .next().on(ace.click_event, function(){
+                        $(this).prev().focus();
+                    });
+
+            //or change it into a date range picker
+            $('.input-daterange').datepicker({autoclose:true});
+
+        });
+    </script>
 @endsection

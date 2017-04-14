@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\ClientType;
 use App\LoggedInLog;
-use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class LogUserLoginController extends Controller
+class UserRateActiveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,6 +22,8 @@ class LogUserLoginController extends Controller
         $ip = \Request::get('ip');
         $client = \Request::get('clientType');
         $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+
+//        var_dump($loginTime);die;
 
         $clientType = ClientType::pluck('name', 'clientId');
 
@@ -69,14 +70,33 @@ class LogUserLoginController extends Controller
 
         $data = $query->orderBy('loggedInTime', 'desc')->paginate(10);
 
-        $totals = LoggedInLog::getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime);
+        $total3Rs = LoggedInLog::getTotalActive3R($userID, $userName, $ime, $ip, $client, $loginTime);
+        $total5Rs = LoggedInLog::getTotalActive5R($userID, $userName, $ime, $ip, $client, $loginTime);
+        $total7Rs = LoggedInLog::getTotalActive7R($userID, $userName, $ime, $ip, $client, $loginTime);
+        $total30Rs = LoggedInLog::getTotalActive30R($userID, $userName, $ime, $ip, $client, $loginTime);
+
+//        var_dump($total5Rs);die;
+
+//        $totals = LoggedInLog::getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime);
 
         $login_arr = array();
 
-        foreach ($totals as $index => $total){
-            $login_arr[$total->purchase_date] = isset($total->total) ? $total->total : 0;
+        foreach ($total3Rs as $index => $total){
+            $login_arr[$total->purchase_date][0] = isset($total->total) ? $total->total : 0;
         }
 
-        return view('admin.users.logUserLogin.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        foreach ($total5Rs as $index => $total){
+            $login_arr[$total->purchase_date][1] = isset($total->total) ? $total->total : 0;
+        }
+
+        foreach ($total7Rs as $index => $total){
+            $login_arr[$total->purchase_date][2] = isset($total->total) ? $total->total : 0;
+        }
+
+        foreach ($total30Rs as $index => $total){
+            $login_arr[$total->purchase_date][3] = isset($total->total) ? $total->total : 0;
+        }
+
+        return view('admin.users.userRateActive.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

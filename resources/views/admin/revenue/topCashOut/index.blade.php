@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Danh sách phần thưởng VQMM
+    TOP 50 user đổi thẻ nhiều nhất
 @endsection
 @section('content')
     <div class="page-header">
@@ -19,23 +19,31 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/itemLuckyWheel','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/topCashOut','role'=>'search'])  !!}
+
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Phần thưởng</label>
-                                    <input class="form-control" name="itemName" type="text" value="{{request('itemName')}}"/>
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
+                                    </div>
                                 </div>
 
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6">
+                                <div class="col-xs-12 col-sm-12">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
                             </div>
+                            {{--</form>--}}
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -55,28 +63,22 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th>Phần thưởng </th>
-                            <th>Vòng</th>
-                            <th>Giá trị</th>
-                            <th>Tỷ lệ</th>
-                            <th class="hidden-480">Mô tả</th>
-                            <th class="hidden-480">Icon Id thắng</th>
-                            <th>Trạng thái</th>
+                            <th>User ID</th>
+                            <th>User Name</th>
+                            <th>Tổng số thẻ đổi</th>
+                            <th>Tổng số tiền đổi</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                            <tr>
-                                <td class="hidden-480">{{ ++$i }}</td>
-                                <td>{{ $rs->itemName }}</td>
-                                <td>{{ $rs->round }}</td>
-                                <td>{{ number_format($rs->value) }}</td>
-                                <td>{{ $rs->rate }}</td>
-                                <td class="hidden-480">{{ $rs->description }}</td>
-                                <td class="hidden-480">{{ $rs->emotionId }}</td>
-                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
-                            </tr>
+                        <tr>
+                            <td class="hidden-480">{{ ++$i }}</td>
+                            <td>{{ $rs->userID }}</td>
+                            <td>{{ $rs->userName }}</td>
+                            <td>{{ number_format($rs->sumCash) }}</td>
+                            <td>{{ number_format($rs->sumMoney) }}</td>
+                        </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -86,4 +88,26 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 
-@endsection
+    <script>
+        jQuery(function($) {
+
+            //or change it into a date range picker
+            $('.input-daterange').datepicker({autoclose:true});
+
+
+            //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+            $('input[name=timeRequest]').daterangepicker({
+                'applyClass' : 'btn-sm btn-success',
+                'cancelClass' : 'btn-sm btn-default',
+                locale: {
+                    applyLabel: 'Apply',
+                    cancelLabel: 'Cancel',
+                }
+            })
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
+
+        });
+    </script>
+    @endsection

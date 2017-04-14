@@ -130,8 +130,8 @@
                                 <td>{{ $rs->created_date }}</td>
                                 <td class="hidden-480">{{$partner[request('partner')]}}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
-                                <td>{{ $rs->sum_money }}</td>
-                                <td>{{ $rs->sum_cash }}</td>
+                                <td>{{ number_format($rs->sum_money) }}</td>
+                                <td>{{ number_format($rs->sum_cash) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -184,11 +184,15 @@
                 var sum_money = new Array();
                 var cash_money = new Array();
                 var total_money = new Array();
+                var exchange_money = new Array();
                 <?php foreach($purchase_arr as $day => $value):?>
                     array_date.push(['<?php echo $day;  ?>']);
                     sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
                     cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
-                    total_money.push(<?php echo $value[1][1] + $value[2][1]  ?>);
+                    <?php $arr1 = isset($value[1][1]) ? $value[1][1] : 0;
+                        $arr2 = isset($value[2][1]) ? $value[2][1] : 0;  ?>
+                    total_money.push(<?php echo $arr1 + $arr2;  ?>);
+                    exchange_money.push(<?php echo isset($value[3]) ?  $value[3] : 0 ?>);
                 <?php endforeach ?>
             $('#container').highcharts({
                     chart: {
@@ -214,6 +218,9 @@
                     }, {
                         name: 'Tổng ken nạp vào game',
                         data: total_money
+                    }, {
+                        name: 'Đổi thưởng',
+                        data: exchange_money
                     }]
                 });
             <?php endif; ?>

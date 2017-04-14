@@ -111,7 +111,7 @@
                             <td class="hidden-480">{{ $rs->mo_id }}</td>
                             <td>{{ $rs->phone_number }}</td>
                             <td class="hidden-480">{{ $rs->user_id }}</td>
-                            <td>{{ $rs->amount }}</td>
+                            <td>{{ number_format($rs->amount) }}</td>
                             <td class="hidden-480">{{ $rs->content }}</td>
                             <td>{{ $rs->mo_request_id }}</td>
                             <td>{{ $rs->telco }}</td>

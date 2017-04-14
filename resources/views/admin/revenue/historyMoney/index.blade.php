@@ -115,14 +115,14 @@
                             <td class="hidden-480">{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $rs->userId}}</td>
                             <td>{{ $rs->userName }}</td>
-                            <td class="hidden-480">{{ $rs->lastCash }}</td>
-                            <td>{{ $rs->changeCash }}</td>
-                            <td>{{ $rs->currentCash }}</td>
-                            <td class="hidden-480">{{ $rs->lastGold }}</td>
-                            <td>{{ $rs->changeGold }}</td>
-                            <td>{{ $rs->currentGold }}</td>
+                            <td class="hidden-480">{{ number_format($rs->lastCash) }}</td>
+                            <td>{{ number_format($rs->changeCash) }}</td>
+                            <td>{{ number_format($rs->currentCash) }}</td>
+                            <td class="hidden-480">{{ number_format($rs->lastGold) }}</td>
+                            <td>{{ number_format($rs->changeGold) }}</td>
+                            <td>{{ number_format($rs->currentGold) }}</td>
                             <td class="hidden-480">{{ $rs->transactionId }}</td>
-                            <td class="hidden-480">{{ $rs->taxPercent }}</td>
+                            <td class="hidden-480">{{ $rs->taxPercent }}%</td>
                             <td>{{ $rs->taxValue }}</td>
                             <td class="hidden-480">{{ $rs->gameId }}</td>
                             <td class="hidden-480">{{ $rs->insertedTime }}</td>

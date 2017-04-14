@@ -71,11 +71,19 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/revenueDay', ['as' => 'revenue.revenueDay', 'uses' => 'Admin\Revenue\RevenueDayController@index']);
 
+    Route::get('revenue/revenueUserCharge', ['as' => 'revenue.revenueUserCharge', 'uses' => 'Admin\Revenue\RevenueUserChargeController@index']);
+
     Route::get('revenue/userOnline', ['as' => 'revenue.userOnline', 'uses' => 'Admin\Revenue\UserOnlineController@index']);
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
     Route::get('revenue/exchangeRequest', ['as' => 'revenue.exchangeRequest', 'uses' => 'Admin\Revenue\ExchangeRequestController@index']);
+
+    Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
+
+    Route::get('revenue/topCashOut', ['as' => 'revenue.topCashOut', 'uses' => 'Admin\Revenue\TopCashOutController@index']);
+
+    Route::get('revenue/payCashOut', ['as' => 'revenue.payCashOut', 'uses' => 'Admin\Revenue\PayCashOutController@index']);
 
     Route::get('revenue/detailSmsHistory', ['as' => 'revenue.detailSmsHistory', 'uses' => 'Admin\Revenue\SmsHistoryRevenueController@index']);
 
@@ -121,11 +129,15 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);
 
+    Route::get('users/userRateActive', ['as' => 'users.userRateActive', 'uses' => 'Admin\Users\UserRateActiveController@index']);
+
     Route::get('users/otp', ['as' => 'users.otp', 'uses' => 'Admin\Users\OtpController@index']);
 
     Route::get('users/autoOtp', ['as' => 'users.autoOtp', 'uses' => 'Admin\Users\OtpAutoController@index']);
 
     Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
+
+    Route::get('users/topMoney', ['as' => 'users.topMoney', 'uses' => 'Admin\Users\TopMoneyController@index']);
 
     //notification
     Route::resource('game/emergencyNotification','Admin\Game\NotificationController');
@@ -163,6 +175,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     //add money
     Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');
+
+    //income
+    Route::resource('moneyGame/income','Admin\MoneyGame\IncomeMoneyController');
+
+    //circulation
+    Route::resource('moneyGame/circulation','Admin\MoneyGame\CirculationMoneyController');
 
     //link download
     Route::resource('others/linkDownload','Admin\Others\LinkDownloadController');

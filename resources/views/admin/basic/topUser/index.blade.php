@@ -71,30 +71,6 @@
         </div>
     </div><!-- /.page-header -->
 
-    {{--<div class="row">--}}
-        {{--<div class="col-xs-12">--}}
-            {{--<!-- PAGE CONTENT BEGINS -->--}}
-            {{--<div class="center">--}}
-
-                {{--<div class="row">--}}
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Thống kê nạp tiền</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Tổng Doanh thu</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<!-- PAGE CONTENT ENDS -->--}}
-            {{--</div><!-- /.col -->--}}
-        {{--</div><!-- /.row -->--}}
-    {{--</div>--}}
-    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -117,7 +93,7 @@
                             <td>{{ ++$i }}</td>
                             <td class="hidden-480">{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
-                            <td style="color: red">{{ $rs->sum_cash }}</td>
+                            <td style="color: red">{{ number_format($rs->sum_cash) }}</td>
                         </tr>
                         @endforeach
                         </tbody>

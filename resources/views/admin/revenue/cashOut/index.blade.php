@@ -1,9 +1,15 @@
 @extends('layouts.master')
 @section('title')
-    Chi tiết MO SMS
+    Thống kê số lượng thẻ đổi
 @endsection
 @section('content')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="container"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
@@ -19,49 +25,18 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/detailSmsHistory','role'=>'search'])  !!}
-                            <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Mo</label>
-                                    <input class="form-control" name="mo" type="text" value="{{request('mo')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Phone Number</label>
-                                    <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
-                                </div>
-
-                            </div>
-                            <br/>
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/cashOut','role'=>'search'])  !!}
 
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Ngày tạo</label>
+                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Short Code</label>
-                                    <input class="form-control" name="shortCode" type="text" value="{{request('shortCode')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Telco</label>
-                                    <input class="form-control" name="telco" type="text" value="{{request('telco')}}"/>
                                 </div>
 
                             </div>
@@ -74,6 +49,7 @@
                                     </button>
                                 </div>
                             </div>
+                            {{--</form>--}}
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -93,15 +69,9 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th class="hidden-480">Mo</th>
-                            <th>Phone number</th>
-                            <th class="hidden-480">User ID</th>
-                            <th>Số lượng</th>
-                            <th class="hidden-480">Shortcode</th>
-                            <th>Content</th>
-                            <th>Mt content</th>
-                            <th>Telco</th>
-                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th>Tổng số thẻ đổi</th>
+                            <th>Tổng số tiền đổi</th>
+                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian đổi</th>
                         </tr>
                         </thead>
 
@@ -109,15 +79,9 @@
                         @foreach($data as $key => $rs)
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
-                            <td class="hidden-480">{{ $rs->mo_id }}</td>
-                            <td>{{ $rs->phone_number }}</td>
-                            <td class="hidden-480">{{ $rs->user_id }}</td>
-                            <td>{{ number_format($rs->amount) }}</td>
-                            <td class="hidden-480">{{ $rs->shortcode }}</td>
-                            <td>{{ $rs->content }}</td>
-                            <td>{{ $rs->mo_request_id }}</td>
-                            <td>{{ $rs->telco }}</td>
-                            <td class="hidden-480">{{ $rs->created_at }}</td>
+                            <td>{{ number_format($rs->sumCash) }}</td>
+                            <td>{{ number_format($rs->sumMoney) }}</td>
+                            <td>{{ $rs->purchase_date }}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -136,7 +100,7 @@
 
 
             //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
-            $('input[name=date_charge]').daterangepicker({
+            $('input[name=timeRequest]').daterangepicker({
                 'applyClass' : 'btn-sm btn-success',
                 'cancelClass' : 'btn-sm btn-default',
                 locale: {
@@ -150,5 +114,41 @@
 
         });
     </script>
-
+    <script type="text/javascript">
+        $(function () {
+            <?php if($purchase_arr != ''):?>
+                var array_date = new Array();
+                var sum_money = new Array();
+                var sumCash = new Array();
+                <?php foreach($purchase_arr as $day => $value):?>
+                    array_date.push(['<?php echo $day;  ?>']);
+                    sum_money.push(<?php echo isset($value[0]) ? $value[0] : 0  ?>);
+                    sumCash.push(<?php echo isset($value[1]) ? $value[1] : 0  ?>);
+                <?php endforeach ?>
+            $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Tổng tiền rút ra'
+                    },
+                    xAxis: {
+                        categories: array_date
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rate'
+                        }
+                    },
+                    series: [{
+                        name: 'Tổng tiền đổi thưởng',
+                        data: sum_money
+                    }, {
+                        name: 'Số lượng thẻ đổi thưởng',
+                        data: sumCash
+                    }]
+                });
+            <?php endif; ?>
+        });
+    </script>
     @endsection

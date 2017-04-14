@@ -102,30 +102,6 @@
         </div>
     </div><!-- /.page-header -->
 
-    {{--<div class="row">--}}
-        {{--<div class="col-xs-12">--}}
-            {{--<!-- PAGE CONTENT BEGINS -->--}}
-            {{--<div class="center">--}}
-
-                {{--<div class="row">--}}
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Thống kê nạp tiền</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-xs-12 col-lg-6">--}}
-                        {{--<div>--}}
-                            {{--<span>Doanh thu</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<!-- PAGE CONTENT ENDS -->--}}
-            {{--</div><!-- /.col -->--}}
-        {{--</div><!-- /.row -->--}}
-    {{--</div>--}}
-    {{--<hr />--}}
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -155,8 +131,8 @@
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td></td>
-                            <td>{{ $rs->cashValue }}</td>
-                            <td>{{ $rs->currentCash }}</td>
+                            <td>{{ number_format($rs->cashValue) }}</td>
+                            <td>{{ number_format($rs->currentCash) }}</td>
                             <td class="hidden-480">{{ $rs->purchasedTime }}</td>
                             <td>{{ $typeArr[$rs->type] }}</td>
                             <td class="hidden-480">{{ $rs->description }}</td>

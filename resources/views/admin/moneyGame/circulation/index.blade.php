@@ -153,7 +153,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Doanh thu theo ngày'
+                    text: 'Thống kê tiền luân chuyển trong game'
                 },
                 xAxis: {
                     categories: array_date

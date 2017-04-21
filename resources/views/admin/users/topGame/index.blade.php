@@ -1,15 +1,9 @@
 @extends('layouts.master')
 @section('title')
-    Thống kê số lượng thẻ đổi
+    Top gamer
 @endsection
 @section('content')
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <div class="page-header">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="container"></div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box">
@@ -25,31 +19,35 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/cashOut','role'=>'search'])  !!}
-
+                            {!! Form::open(['method'=>'GET','url'=>'users/topGame','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
+                                    <label  for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
+                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
                                 </div>
 
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Loại game</label>
+                                    {!! Form::select('game', $gameArr, request('game'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+
+                                </div>
+
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12">
+                                <div class="col-xs-6 col-sm-6">
                                     <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
                             </div>
-                            {{--</form>--}}
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -69,21 +67,21 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th>Tổng số thẻ đổi</th>
-                            <th>Tổng số tiền đổi</th>
-                            <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian đổi</th>
+                            <th class="hidden-480">Tên đăng nhập</th>
+                            <th>Tên game</th>
+                            <th>Tổng số ván chơi</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($data as $key => $rs)
-                        <tr>
-                            <td class="hidden-480">{{ ++$i }}</td>
-                            <td>{{ number_format($rs->sumCash) }}</td>
-                            <td>{{ number_format($rs->sumMoney) }}</td>
-                            <td>{{ $rs->purchase_date }}</td>
-                        </tr>
-                        @endforeach
+                            @foreach($data as $key => $rs)
+                            <tr>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->userName }}</td>
+                                <td>{{ $gameArr[$rs->gameId] }}</td>
+                                <td>{{ number_format($rs->total) }}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.span -->
@@ -91,7 +89,6 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
-
     <script>
         jQuery(function($) {
 
@@ -100,7 +97,7 @@
 
 
             //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
-            $('input[name=timeRequest]').daterangepicker({
+            $('input[name=date_charge]').daterangepicker({
                 'applyClass' : 'btn-sm btn-success',
                 'cancelClass' : 'btn-sm btn-default',
                 locale: {
@@ -114,41 +111,4 @@
 
         });
     </script>
-    <script type="text/javascript">
-        $(function () {
-            <?php if($purchase_arr != ''):?>
-                var array_date = new Array();
-                var sum_money = new Array();
-                var sumCash = new Array();
-                <?php foreach($purchase_arr as $day => $value):?>
-                    array_date.push(['<?php echo $day;  ?>']);
-                    sum_money.push(<?php echo isset($value[0]) ? $value[0] : 0  ?>);
-                    sumCash.push(<?php echo isset($value[1]) ? $value[1] : 0  ?>);
-                <?php endforeach ?>
-            $('#container').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Thống kê đổi thưởng'
-                    },
-                    xAxis: {
-                        categories: array_date
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Rate'
-                        }
-                    },
-                    series: [{
-                        name: 'Tổng tiền đổi thưởng',
-                        data: sum_money
-                    }, {
-                        name: 'Số lượng thẻ đổi thưởng',
-                        data: sumCash
-                    }]
-                });
-            <?php endif; ?>
-        });
-    </script>
-    @endsection
+@endsection

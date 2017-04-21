@@ -192,7 +192,7 @@
             <?php $arr1 = isset($value[1][1]) ? $value[1][1] : 0;
                 $arr2 = isset($value[2][1]) ? $value[2][1] : 0;  ?>
             total_money.push(<?php echo $arr1 + $arr2;  ?>);
-            exchange_money.push(<?php echo isset($value[3]) ?  $value[3] : 0 ?>);
+            exchange_money.push(<?php echo isset($value[4]) ?  $value[4] : 0 ?>);
             <?php endforeach ?>
         $('#container').highcharts({
                 chart: {

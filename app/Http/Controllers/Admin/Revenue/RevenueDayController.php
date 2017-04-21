@@ -97,7 +97,7 @@ class RevenueDayController extends Controller
         }
 
         foreach ($exchange_moneys as $index => $exchange_money){
-            $purchase_arr[$exchange_money->purchase_date][3] = $exchange_money->sum_money;
+            $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
         return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }

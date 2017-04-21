@@ -193,7 +193,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Doanh thu theo ngày'
+                        text: 'Thống kê khách hàng nạp tiền'
                     },
                     xAxis: {
                         categories: array_date

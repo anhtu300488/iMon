@@ -8,6 +8,7 @@ use App\Partner;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Excel;
 
 class UserRegisterController extends Controller
 {
@@ -104,5 +105,72 @@ class UserRegisterController extends Controller
         }
 
         return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day'))->with('i', ($request->input('page', 1) - 1) * 10);
+    }
+
+
+    public function downloadExcel(){
+
+        $userName = \Request::get('userName');
+        $fromDate = \Request::get('fromDate');
+        $toDate = \Request::get('toDate');
+        $device = \Request::get('device');
+        $os = \Request::get('clientType');
+        $ip = \Request::get('ip');
+
+        $partner = Partner::pluck('partnerName', 'partnerId');
+
+        $partner->prepend('---Tất cả---', '');
+
+        $clientType = ClientType::pluck('name', 'clientId');
+
+        $clientType->prepend('---Tất cả---', '');
+
+        $matchThese = [];
+        if($os != ''){
+            $matchThese['clientId'] = $os;
+        }
+
+        $query = UserReg::query()->select("userName","displayName", "ip", "device", "cp", "clientId", "registedTime");
+        if($userName != ''){
+            $query->where('userName','LIKE','%'.$userName.'%');
+        }
+
+        if($device != ''){
+            $query->where('device','LIKE','%'.$device.'%');
+        }
+
+        if($ip != ''){
+            $query->where('ip','LIKE','%'.$ip.'%');
+        }
+
+        $query->where($matchThese);
+
+        if($fromDate != '' && $toDate != ''){
+            $start = date("Y-m-d",strtotime($fromDate));
+            $end = date("Y-m-d",strtotime($toDate));
+            $query->whereBetween('registedTime',[$start,$end]);
+        }
+        $results = $query->orderBy('registedTime', 'desc')->get();
+
+        // generator.
+        $data = [];
+
+        // Convert each member of the returned collection into an array,
+        // and append it to the payments array.
+        foreach ($results as $k => $result) {
+            $data[] = $result->toArray();
+            $data[$k]["clientId"] = $clientType[$result->clientId];
+
+        }
+        // Generate and return the spreadsheet
+
+        return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
+            $excel->sheet('mySheet', function($sheet) use ($data)
+            {
+                $headings = array('Tên tài khoản', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
+                $sheet->fromArray($data, null, 'A1', false, false);
+                $sheet->prependRow(1, $headings);
+            });
+        })->download('xlsx');
     }
 }

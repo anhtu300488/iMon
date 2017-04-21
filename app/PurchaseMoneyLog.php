@@ -292,5 +292,98 @@ class PurchaseMoneyLog extends Model
         return $data;
     }
 
+    public static function getTotalRevenueUserActive($dateCharge)
+    {
+        $search = false;
+
+        $query = DB::table('purchase_money_log as p');
+        $inday = 0;
+        if($dateCharge != '' && $dateCharge[0] == $dateCharge[1]){
+            $query->select(DB::raw("HOUR(p.purchasedTime) purchase_date"), DB::raw('SUM(p.parValue) as sum_money'),  DB::raw('COUNT( DISTINCT user.userId) as total') );
+            $inday = 1;
+            $search = true;
+        } else {
+            $query->select(DB::raw("DATE(p.purchasedTime) purchase_date"), DB::raw('SUM(p.parValue) as sum_money'),  DB::raw('COUNT( DISTINCT user.userId) as total') );
+        };
+
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'p.userId');
+
+        });
+
+        if($dateCharge != ''){
+            $startDateCharge = $dateCharge[0];
+
+            $endDateCharge = $dateCharge[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('p.purchasedTime',[$start,$end]);
+                $query->whereBetween('user.lastLoginTime',[$start,$end]);
+            }
+        }
+
+
+        if(!$search){
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("user.lastLoginTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+        }
+
+        if($inday == 1){
+            $query->groupBy(DB::raw("HOUR(purchasedTime)"));
+        } else {
+            $query->groupBy(DB::raw("DATE(p.purchasedTime)"));
+        }
+
+        $data = $query->get()->toArray();
+
+
+        return $data;
+    }
+
+    public static function getTotalRevenueUserPurchase($dateCharge)
+    {
+        $search = false;
+
+        $query = DB::table('purchase_money_log as p');
+        $inday = 0;
+        if($dateCharge != '' && $dateCharge[0] == $dateCharge[1]){
+            $query->select(DB::raw("HOUR(p.purchasedTime) purchase_date"), DB::raw('SUM(p.parValue) as sum_money'),  DB::raw('COUNT( DISTINCT p.userId) as total') );
+            $inday = 1;
+            $search = true;
+        } else {
+            $query->select(DB::raw("DATE(p.purchasedTime) purchase_date"), DB::raw('SUM(p.parValue) as sum_money'),  DB::raw('COUNT( DISTINCT p.userId) as total') );
+        };
+
+        if($dateCharge != ''){
+            $startDateCharge = $dateCharge[0];
+
+            $endDateCharge = $dateCharge[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('p.purchasedTime',[$start,$end]);
+            }
+        }
+
+
+        if(!$search){
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+        }
+
+        if($inday == 1){
+            $query->groupBy(DB::raw("HOUR(purchasedTime)"));
+        } else {
+            $query->groupBy(DB::raw("DATE(p.purchasedTime)"));
+        }
+
+        $data = $query->get()->toArray();
+
+
+        return $data;
+    }
 
 }

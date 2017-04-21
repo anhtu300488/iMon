@@ -85,14 +85,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                {{--<li class="">--}}
-                    {{--<a href="form-wizard.html">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Tiền phế trong game--}}
-                    {{--</a>--}}
+                <li {{ setActive('revenue/tax') }}>
+                    <a href="{{route('revenue.tax')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tiền phế trong game
+                    </a>
 
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
+                    <b class="arrow"></b>
+                </li>
 
                 <li {{ setActive('revenue/historyMoney') }}>
                     <a href="{{route('revenue.historyMoney')}}">
@@ -188,6 +188,24 @@
                     <a href="{{route('revenue.userOnline')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý user online
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/revenueUserActive') }}>
+                    <a href="{{route('revenue.revenueUserActive')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tiền trung bình của user active
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('revenue/revenueUserPurchase') }}>
+                    <a href="{{route('revenue.revenueUserPurchase')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tiền trung bình của user nạp tiền
                     </a>
 
                     <b class="arrow"></b>
@@ -443,6 +461,24 @@
                     <a href="{{route('users.topMoney')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Top Mon
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('users/topGame') }}>
+                    <a href="{{route('users.topGame')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Top User chơi Game
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('users/userLock') }}>
+                    <a href="{{route('users.userLock')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách user bị khóa
                     </a>
 
                     <b class="arrow"></b>

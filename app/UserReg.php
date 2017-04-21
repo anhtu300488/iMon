@@ -18,6 +18,11 @@ class UserReg extends Model
         return $this->belongsToMany('App\PurchaseMoneyLog', 'purchase_money_log');
     }
 
+    public function blackListUser()
+    {
+        return $this->hasOne('App\BlackListUser', 'userId', 'userId');
+    }
+
     public static function getTotalUserByOs()
     {
         $query = DB::table('user as a')

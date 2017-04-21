@@ -1,9 +1,10 @@
 @extends('layouts.master')
 @section('title')
-    Số lượng tiền vào game
+    Tiền trung bình của user nạp tiền
 @endsection
 @section('content')
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <div class="page-header">
         <div class="row">
 
@@ -26,11 +27,12 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'moneyGame/income','role'=>'search', 'name' => 'formSearch'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/revenueUserPurchase','role'=>'search'])  !!}
+
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian</label>
+                                    <label  for="id-date-picker-1">Thời gian nạp tiền</label>
                                     <div class="input-group">
                                         <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
                                         <span class="input-group-addon">
@@ -39,37 +41,17 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Hình thức</label>
-                                    {!! Form::select('transaction', $transactionArr, request('transaction'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Loại tiền</label>
-
-                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-                                </div>
-
                             </div>
-                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6">
-                                    <button type="submit" class="btn btn-info btn-sm" onclick="document.formSearch.submit();">
+                                <div class="col-xs-12 col-sm-12">
+                                    <button type="submit" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
-                                <div class="col-xs-6 col-sm-6">
-                                    <a href="{{ url('moneyGame/income/xlsx') }}">
-                                        <button class="btn btn-info btn-sm">
-                                            Download Excel xlsx
-                                        </button>
-                                    </a>
-                                </div>
                             </div>
-
+                            {!! Form::close() !!}
                         </div>
                     </div>
 
@@ -87,25 +69,26 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="hidden-480">STT</th>
-                            <th>Tổng tiền</th>
-                            <th>Hình thức</th>
-                            <th>Time</th>
+                            <th>STT</th>
+                            <th>Ngày tạo</th>
+                            <th>Tổng user nạp tiền</th>
+                            <th>Tổng doanh thu </th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                        <tr>
-                            <td class="hidden-480">{{ ++$i }}</td>
-                            <td>{{ number_format($rs->sum_money) }}</td>
-                            <td>{{ $transactionArr[$rs->type] }}</td>
-                            <td>{{ $rs->created_date }}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ ++$i }}</td>
+                                <td>{{ $rs->created_date }}</td>
+                                <td>{{ number_format($rs->total) }}</td>
+                                <td>{{ number_format($rs->sum_money) }}</td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.span -->
+
                 @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
@@ -147,23 +130,19 @@
 
     <script type="text/javascript">
         $(function () {
-                <?php if($moneyArr != ''):?>
+                <?php if($purchase_arr != ''):?>
             var array_date = new Array();
-            var total2 = new Array();
-            var total3 = new Array();
-            var total7 = new Array();
-            <?php foreach($moneyArr as $day => $value):?>
+            var rau = new Array();
+            <?php foreach($purchase_arr as $day => $value):?>
                 array_date.push(['<?php echo $day;  ?>']);
-                total2.push(<?php echo isset($value[2])? $value[2] : 0  ?>);
-                total3.push(<?php echo isset($value[3])? $value[3] : 0 ?>);
-                total7.push(<?php echo isset($value[7]) ?  $value[7] : 0 ?>);
+            rau.push(<?php echo isset($value)? $value : 0  ?>);
             <?php endforeach ?>
         $('#container').highcharts({
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Thống kê tiền nạp vào game'
+                    text: 'Tiền trung bình của user nạp tiền'
                 },
                 xAxis: {
                     categories: array_date
@@ -174,18 +153,13 @@
                     }
                 },
                 series: [{
-                    name: 'Nạp tiền',
-                    data: total2
-                }, {
-                    name: 'Quà tặng hệ thống',
-                    data: total3
-                }, {
-                    name: 'Giftcode',
-                    data: total7
+                    name: 'Tiền trung bình của user nạp tiền',
+                    data: rau
                 }]
             });
             <?php endif; ?>
         });
     </script>
 
-    @endsection
+
+@endsection

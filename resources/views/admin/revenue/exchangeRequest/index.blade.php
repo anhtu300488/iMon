@@ -178,7 +178,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Tổng tiền rút ra'
+                        text: 'Thống kê đổi thưởng'
                     },
                     xAxis: {
                         categories: array_date

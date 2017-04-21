@@ -30,8 +30,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'basic/userReg','role'=>'search'])  !!}
-                            {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
+                            {!! Form::open(['method'=>'GET','url'=>'users/userReg','role'=>'search', 'name' => 'formSearch'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
@@ -81,18 +80,24 @@
                                     {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
-
+                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button type="submit" id="search_button" onclick="document.formSearch.submit();" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ url('users/userReg/xlsx') }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel xlsx
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
-                            {{--</form>--}}
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
 

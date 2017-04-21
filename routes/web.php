@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
+    Route::get('revenue/tax', ['as' => 'revenue.tax', 'uses' => 'Admin\Revenue\TaxController@index']);
+
     Route::get('revenue/exchangeRequest', ['as' => 'revenue.exchangeRequest', 'uses' => 'Admin\Revenue\ExchangeRequestController@index']);
 
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
@@ -96,6 +98,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('revenue/historyMoney', ['as' => 'revenue.historyMoney', 'uses' => 'Admin\Revenue\MoneyHistoryController@index']);
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
+
+    Route::get('revenue/revenueUserActive', ['as' => 'revenue.revenueUserActive', 'uses' => 'Admin\Revenue\RevenueUserActiveController@index']);
+
+    Route::get('revenue/revenueUserPurchase', ['as' => 'revenue.revenueUserPurchase', 'uses' => 'Admin\Revenue\RevenueUserPurchaseController@index']);
 
     Route::get('tool/roles',['as'=>'tool.roles','uses'=>'Admin\Tool\CreateRoleController@index']);
     Route::get('tool/roles/create',['as'=>'tool.roles.create','uses'=>'Admin\Tool\CreateRoleController@create']);
@@ -127,6 +133,8 @@ Route::group(['middleware' => ['auth']], function() {
     //users management
     Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
 
+    Route::get('users/userReg/xlsx', 'Admin\Users\UserRegisterController@downloadExcel');
+
     Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);
 
     Route::get('users/userRateActive', ['as' => 'users.userRateActive', 'uses' => 'Admin\Users\UserRateActiveController@index']);
@@ -138,6 +146,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
 
     Route::get('users/topMoney', ['as' => 'users.topMoney', 'uses' => 'Admin\Users\TopMoneyController@index']);
+
+    Route::get('users/topGame', ['as' => 'users.topGame', 'uses' => 'Admin\Users\TopGameController@index']);
+
+    Route::get('users/userLock', ['as' => 'users.userLock', 'uses' => 'Admin\Users\UserLockController@index']);
 
     //notification
     Route::resource('game/emergencyNotification','Admin\Game\NotificationController');
@@ -177,7 +189,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');
 
     //income
-    Route::resource('moneyGame/income','Admin\MoneyGame\IncomeMoneyController');
+    Route::get('moneyGame/income', ['as' => 'income.index', 'uses' => 'Admin\MoneyGame\IncomeMoneyController@index']);
+
+    Route::get('moneyGame/income/xlsx','Admin\MoneyGame\IncomeMoneyController@downloadExcel');
 
     //circulation
     Route::resource('moneyGame/circulation','Admin\MoneyGame\CirculationMoneyController');

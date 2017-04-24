@@ -77,12 +77,12 @@
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                        <tr>
-                            <td class="hidden-480">{{ ++$i }}</td>
-                            <td>{{ number_format($rs->sumCash) }}</td>
-                            <td>{{ number_format($rs->sumMoney) }}</td>
-                            <td>{{ $rs->purchase_date }}</td>
-                        </tr>
+                            <tr>
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td>{{ number_format($rs->sumCash) }}</td>
+                                <td>{{ number_format($rs->sumMoney) }}</td>
+                                <td>{{ $rs->purchase_date }}</td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -115,8 +115,8 @@
         });
     </script>
     <script type="text/javascript">
+        <?php if($purchase_arr != null):?>
         $(function () {
-            <?php if($purchase_arr != ''):?>
                 var array_date = new Array();
                 var sum_money = new Array();
                 var sumCash = new Array();
@@ -148,7 +148,7 @@
                         data: sumCash
                     }]
                 });
-            <?php endif; ?>
         });
+        <?php endif; ?>
     </script>
     @endsection

@@ -8,7 +8,6 @@ use App\Partner;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Excel;
 
 class UserRegisterController extends Controller
 {
@@ -174,3 +173,5 @@ class UserRegisterController extends Controller
         })->download('xlsx');
     }
 }
+
+

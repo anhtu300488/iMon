@@ -145,6 +145,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
 
+    Route::get('users/logUserLogin/xlsx', 'Admin\Users\LogUserLoginController@downloadExcel');
+
     Route::get('users/topMoney', ['as' => 'users.topMoney', 'uses' => 'Admin\Users\TopMoneyController@index']);
 
     Route::get('users/topGame', ['as' => 'users.topGame', 'uses' => 'Admin\Users\TopGameController@index']);

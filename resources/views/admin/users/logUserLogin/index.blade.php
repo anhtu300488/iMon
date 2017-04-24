@@ -26,7 +26,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'users/logUserLogin','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'users/logUserLogin','role'=>'search', 'name' => 'formSearch'])  !!}
                             <div class="row">
 
                                 <div class="col-xs-4 col-sm-4">
@@ -69,16 +69,24 @@
                                 </div>
 
                             </div>
+                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                    <button type="submit" onclick="document.formSearch.submit();" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ url('users/logUserLogin/xlsx') }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel xlsx
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
 
@@ -162,8 +170,9 @@
     </script>
 
     <script type="text/javascript">
+        <?php if($login_arr != null):?>
         $(function () {
-            <?php if($login_arr != ''):?>
+
             var array_date = new Array();
             var total = new Array();
             <?php foreach($login_arr as $day => $value):?>
@@ -190,7 +199,8 @@
                     data: total
                 }]
             });
-            <?php endif; ?>
+
         });
+        <?php endif; ?>
     </script>
 @endsection

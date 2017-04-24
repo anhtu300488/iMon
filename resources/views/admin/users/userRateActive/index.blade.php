@@ -28,24 +28,6 @@
                         <div class="widget-main">
                             {!! Form::open(['method'=>'GET','url'=>'users/userRateActive','role'=>'search'])  !!}
                             <div class="row">
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="userID" type="text" />
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Tên đăng nhập</label>
-                                    <input class="form-control" name="userName" type="text" />
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">IME</label>
-                                    <input class="form-control" name="ime" type="text" />
-                                </div>
-
-                            </div>
-                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian</label>
@@ -55,17 +37,6 @@
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Hệ điều hành</label>
-
-                                    {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Địa chỉ IP</label>
-                                    <input class="form-control" name="ip" type="text" />
                                 </div>
 
                             </div>
@@ -97,43 +68,34 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th class="hidden-480">User ID</th>
-                            <th>Tên đăng nhập</th>
-                            <th class="hidden-480">Logged in time</th>
-                            <th class="hidden-480">IME</th>
-                            <th class="hidden-480">Thông tin thiết bị</th>
-                            <th class="hidden-480">Địa chỉ Ip</th>
-                            <th class="hidden-480">Client type</th>
-                            <th>Package name</th>
-                            <th>Version code</th>
-                            <th>Version build</th>
-                            {{--<th>Ip locked</th>--}}
-                            {{--<th>Relogged in</th>--}}
+                            <th class="hidden-480">Ngày</th>
+                            <th>R1</th>
+                            <th>R3</th>
+                            <th>R5</th>
+                            <th>R7</th>
+                            <th>R30</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($data as $key => $rs)
-                            <tr>
-                                <td class="hidden-480">{{ ++$i }}</td>
-                                <td class="hidden-480">{{ $rs->userId }}</td>
-                                <td>{{ $rs->userName }}</td>
-                                <td class="hidden-480">{{ $rs->loggedInTime }}</td>
-                                <td class="hidden-480">{{ $rs->deviceId }}</td>
-                                <td class="hidden-480">{{ $rs->deviceInfo }}</td>
-                                <td class="hidden-480">{{ $rs->remoteIp }}</td>
-                                <td class="hidden-480">{{ $clientType[$rs->clientType] }}</td>
-                                <td>{{ $rs->packageName }}</td>
-                                <td>{{ $rs->versionCode }}</td>
-                                <td>{{ $rs->versionBuild }}</td>
-                                {{--<td>{{ $rs->ipLocked }}</td>--}}
-                                {{--<td>{{ $rs->reloggedIn }}</td>--}}
-                            </tr>
-                        @endforeach
+                        @if($login_arr != null)
+                            @foreach($login_arr as $day => $value)
+                                <tr>
+                                    <td class="hidden-480">{{ ++$i }}</td>
+                                    <td class="hidden-480">{{ $day }}</td>
+                                    <td>{{ $value[5] }}</td>
+                                    <td>{{ $value[0] }}</td>
+                                    <td>{{ $value[1] }}</td>
+                                    <td>{{ $value[2] }}</td>
+                                    <td>{{ $value[3] }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr><td colspan="7">Không có dữ liệu</td></tr>
+                        @endif
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -162,8 +124,9 @@
     </script>
 
     <script type="text/javascript">
+        <?php if($login_arr != null){ ?>
         $(function () {
-                <?php if($login_arr != ''):?>
+
             var array_date = new Array();
             var total3 = new Array();
             var total5 = new Array();
@@ -205,7 +168,7 @@
                     data: total30
                 }]
             });
-            <?php endif; ?>
         });
+        <?php } ?>
     </script>
 @endsection

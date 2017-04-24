@@ -178,8 +178,9 @@
     </script>
 
     <script type="text/javascript">
+        <?php if($purchase_arr != null):?>
         $(function () {
-                <?php if($purchase_arr != ''):?>
+
             var array_date = new Array();
             var sum_money = new Array();
             var cash_money = new Array();
@@ -223,8 +224,9 @@
                     data: exchange_money
                 }]
             });
-            <?php endif; ?>
+
         });
+        <?php endif; ?>
     </script>
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
     <!--    --><?php //var_dump($total_by_type);die;?>

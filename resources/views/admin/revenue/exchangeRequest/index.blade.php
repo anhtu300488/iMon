@@ -165,8 +165,8 @@
         });
     </script>
     <script type="text/javascript">
+        <?php if($purchase_arr != null):?>
         $(function () {
-            <?php if($purchase_arr != ''):?>
                 var array_date = new Array();
                 var sum_money = new Array();
                 <?php foreach($purchase_arr as $day => $value):?>
@@ -193,7 +193,7 @@
                         data: sum_money
                     }]
                 });
-            <?php endif; ?>
         });
+        <?php endif; ?>
     </script>
     @endsection

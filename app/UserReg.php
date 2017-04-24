@@ -80,4 +80,10 @@ class UserReg extends Model
 //        }
         return $query->get()->toArray();
     }
+
+    public static function getTotalUserRegByDay($loginTime)
+    {
+        $startDateCharge = $loginTime ? date("Y-m-d",strtotime($loginTime[0])) : Date("Y-m-d", time() - 86400* 7);
+        return UserReg::whereDate('registedTime', '=', $startDateCharge)->count();
+    }
 }

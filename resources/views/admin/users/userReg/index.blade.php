@@ -171,8 +171,8 @@
     </script>
 
     <script type="text/javascript">
+        <?php if($sevent_day != null):?>
         $(function () {
-            <?php if($sevent_day != ''):?>
             var array_date = new Array();
             var register = new Array();
             var device = new Array();
@@ -214,8 +214,9 @@
                     data: login
                 }]
             });
-            <?php endif; ?>
+
         });
+        <?php endif; ?>
     </script>
 
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>

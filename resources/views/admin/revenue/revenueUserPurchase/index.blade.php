@@ -129,8 +129,9 @@
     </script>
 
     <script type="text/javascript">
+        <?php if($purchase_arr != null):?>
         $(function () {
-                <?php if($purchase_arr != ''):?>
+
             var array_date = new Array();
             var rau = new Array();
             <?php foreach($purchase_arr as $day => $value):?>
@@ -157,8 +158,9 @@
                     data: rau
                 }]
             });
-            <?php endif; ?>
+
         });
+        <?php endif; ?>
     </script>
 
 

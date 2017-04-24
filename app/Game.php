@@ -9,9 +9,11 @@ class Game extends Model
 {
     protected $table = 'game';
 
+    protected $primaryKey = 'gameId';
+
     public static function getListGame($gameId = null)
     {
-        $sql = Game::query()->select(DB::raw('gameId, name, description'))
+        $sql = Game::query()->select(DB::raw('gameId, name'))
             ->where('status', '=', 1);
         if($gameId){
             $sql->where('gameId', '=', $gameId);

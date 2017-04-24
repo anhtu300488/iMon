@@ -77,7 +77,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
-    Route::get('revenue/tax', ['as' => 'revenue.tax', 'uses' => 'Admin\Revenue\TaxController@index']);
+    Route::get('revenue/wasteMoney', ['as' => 'revenue.wasteMoney', 'uses' => 'Admin\Revenue\WasteMoneyController@index']);
+
+    Route::get('revenue/wasteMoney/xlsx', 'Admin\Revenue\WasteMoneyController@downloadExcel');
 
     Route::get('revenue/exchangeRequest', ['as' => 'revenue.exchangeRequest', 'uses' => 'Admin\Revenue\ExchangeRequestController@index']);
 

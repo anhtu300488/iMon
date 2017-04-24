@@ -85,8 +85,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('revenue/tax') }}>
-                    <a href="{{route('revenue.tax')}}">
+                <li {{ setActive('revenue/wasteMoney') }}>
+                    <a href="{{route('revenue.wasteMoney')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Tiền phế trong game
                     </a>

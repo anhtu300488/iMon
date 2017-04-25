@@ -26,32 +26,46 @@ class WasteMoneyController extends Controller
         return view('admin.revenue.wasteMoney.index',compact('gameArr', 'list_games', 'data'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
-    public function downloadExcel(){
+    public function downloadExcel(Request $request){
 
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $game = \Request::get('game');
-        $gameArr = Game::pluck('name', 'gameId');
-        $gameArr->prepend('---Tất cả---', '');
 
         $list_games = Game::getListGame($game);
 
         $results = TaxDailyStatistic::getRevenueGroupByDateFromTo($game, $timeRequest);
-
+        $headings = ['Ngày'];
+        foreach($list_games  as $valgame){
+            array_push($headings,$valgame['name']);
+        }
         // generator.
         $data = [];
 
         // Convert each member of the returned collection into an array,
         // and append it to the payments array.
-        foreach ($results as $k => $result) {
-            $data[] = $result->toArray();
+        foreach ($results as $rs){
+            $data[$rs->day][$rs->gameId] = $rs->taxValue;
         }
         // Generate and return the spreadsheet
+        $list_data = [];
+        $list_data_arr = [];
+            foreach ($data as $key => $rs){
+                $list_data['day'] = $key;
+                foreach ($list_games as $valgame){
+                    if(isset($rs[$valgame['gameId']])){
+                        $list_data[$valgame['gameId']] = number_format($rs[$valgame['gameId']]);
+                    }else {
+                        $list_data[$valgame['gameId']] = '-';
+                    }
+                }
+                array_push($list_data_arr,$list_data);
+            }
 
-        return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
-            $excel->sheet('mySheet', function($sheet) use ($data)
+
+        return \Maatwebsite\Excel\Facades\Excel::create('waste_money', function($excel) use ($list_data_arr, $headings) {
+            $excel->sheet('mySheet', function($sheet) use ($list_data_arr, $headings)
             {
-                $headings = array('Tên tài khoản', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
-                $sheet->fromArray($data, null, 'A1', false, false);
+                $sheet->fromArray($list_data_arr, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });
         })->download('xlsx');

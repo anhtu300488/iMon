@@ -31,17 +31,17 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="userID" type="text" />
+                                    <input class="form-control" name="userID" type="text" value="{{request('userID')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Tên đăng nhập</label>
-                                    <input class="form-control" name="userName" type="text" />
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">IME</label>
-                                    <input class="form-control" name="ime" type="text" />
+                                    <input class="form-control" name="ime" type="text" value="{{request('ime')}}"/>
                                 </div>
 
                             </div>
@@ -65,7 +65,7 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Địa chỉ IP</label>
-                                    <input class="form-control" name="ip" type="text" />
+                                    <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
                                 </div>
 
                             </div>
@@ -79,7 +79,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    <a href="{{ url('users/logUserLogin/xlsx') }}">
+                                    <a href="{{ route('logUserLogin.excel', ['userID' => request('userID'), 'userName' => request('userName'), 'ime' => request('ime'), 'date_charge' => request('date_charge'), 'clientType' => request('clientType'), 'ip' => request('ip')]) }}">
                                         <button class="btn btn-info btn-sm">
                                             Download Excel xlsx
                                         </button>

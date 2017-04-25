@@ -107,7 +107,7 @@ class UserRegisterController extends Controller
     }
 
 
-    public function downloadExcel(){
+    public function downloadExcel(Request $request){
 
         $userName = \Request::get('userName');
         $fromDate = \Request::get('fromDate');

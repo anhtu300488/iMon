@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/wasteMoney', ['as' => 'revenue.wasteMoney', 'uses' => 'Admin\Revenue\WasteMoneyController@index']);
 
-    Route::get('revenue/wasteMoney/xlsx', 'Admin\Revenue\WasteMoneyController@downloadExcel');
+    Route::get('revenue/wasteMoney/xlsx', ['as' => 'wasteMoney.excel', 'uses' => 'Admin\Revenue\WasteMoneyController@downloadExcel'] );
 
     Route::get('revenue/exchangeRequest', ['as' => 'revenue.exchangeRequest', 'uses' => 'Admin\Revenue\ExchangeRequestController@index']);
 
@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth']], function() {
     //users management
     Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
 
-    Route::get('users/userReg/xlsx', 'Admin\Users\UserRegisterController@downloadExcel');
+    Route::get('users/userReg/xlsx', ['as' => 'userReg.excel', 'uses' => 'Admin\Users\UserRegisterController@downloadExcel']);
 
     Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);
 
@@ -147,7 +147,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('users/logUserLogin', ['as' => 'users.logUserLogin', 'uses' => 'Admin\Users\LogUserLoginController@index']);
 
-    Route::get('users/logUserLogin/xlsx', 'Admin\Users\LogUserLoginController@downloadExcel');
+    Route::get('users/logUserLogin/xlsx', ['as' => 'logUserLogin.excel', 'uses' => 'Admin\Users\LogUserLoginController@downloadExcel']);
 
     Route::get('users/topMoney', ['as' => 'users.topMoney', 'uses' => 'Admin\Users\TopMoneyController@index']);
 
@@ -195,7 +195,7 @@ Route::group(['middleware' => ['auth']], function() {
     //income
     Route::get('moneyGame/income', ['as' => 'income.index', 'uses' => 'Admin\MoneyGame\IncomeMoneyController@index']);
 
-    Route::get('moneyGame/income/xlsx','Admin\MoneyGame\IncomeMoneyController@downloadExcel');
+    Route::get('moneyGame/income/xlsx',['as' => 'income.excel', 'uses' => 'Admin\MoneyGame\IncomeMoneyController@downloadExcel']);
 
     //circulation
     Route::resource('moneyGame/circulation','Admin\MoneyGame\CirculationMoneyController');

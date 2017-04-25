@@ -80,7 +80,7 @@ class LogUserLoginController extends Controller
         return view('admin.users.logUserLogin.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
-    public function downloadExcel(){
+    public function downloadExcel(Request $request){
 
         $userID = \Request::get('userID');
         $userName = \Request::get('userName');

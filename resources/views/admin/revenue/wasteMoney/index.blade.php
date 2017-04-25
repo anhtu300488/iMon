@@ -47,13 +47,13 @@
                                         Tìm kiếm
                                     </button>
                                 </div>
-                                {{--<div class="col-xs-6 col-sm-6">--}}
-                                    {{--<a href="{{ url('revenue/wasteMoney/xlsx') }}">--}}
-                                        {{--<button class="btn btn-info btn-sm">--}}
-                                            {{--Download Excel xlsx--}}
-                                        {{--</button>--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ route('wasteMoney.excel', ['timeRequest' => request('timeRequest'), 'game' => request('game')]) }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel xlsx
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
 
                         </div>

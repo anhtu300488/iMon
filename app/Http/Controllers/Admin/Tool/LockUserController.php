@@ -30,6 +30,6 @@ class LockUserController extends Controller
         $blackListUser->save();
 
         return redirect()->route('tool.lockUser')
-            ->with('success','Lock user successfully');
+            ->with('message','Lock Successfully');
     }
 }

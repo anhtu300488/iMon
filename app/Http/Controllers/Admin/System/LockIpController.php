@@ -26,6 +26,6 @@ class LockIpController extends Controller
         $ipLock->save();
 
         return redirect()->route('system.ipLock')
-            ->with('success','Lock IP successfully');
+            ->with('message','Lock IP Successfully');
     }
 }

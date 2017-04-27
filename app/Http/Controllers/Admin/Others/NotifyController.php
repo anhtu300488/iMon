@@ -46,7 +46,7 @@ class NotifyController extends Controller
         Notify::create($input);
 
         return redirect()->route('notify.index')
-            ->with('success','Add Notify successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -66,12 +66,12 @@ class NotifyController extends Controller
         $notify->save();
 
         return redirect()->route('notify.index')
-            ->with('success','Notify updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         Notify::find($id)->delete();
         return redirect()->route('notify.index')
-            ->with('success','Notify deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

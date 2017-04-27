@@ -40,7 +40,7 @@ class TestCaseController extends Controller
         GvTestCase::create($input);
 
         return redirect()->route('eventGift.index')
-            ->with('success','Add Gift Event successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -67,12 +67,12 @@ class TestCaseController extends Controller
         $giftEvent->save();
 
         return redirect()->route('eventGift.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         GvTestCase::find($id)->delete();
         return redirect()->route('eventGift.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

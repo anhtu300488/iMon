@@ -37,7 +37,7 @@ class GiftEventController extends Controller
         GiftEvent::create($input);
 
         return redirect()->route('eventGift.index')
-            ->with('success','Add Gift Event successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -61,12 +61,12 @@ class GiftEventController extends Controller
         $giftEvent->save();
 
         return redirect()->route('eventGift.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         GiftEvent::find($id)->delete();
         return redirect()->route('eventGift.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

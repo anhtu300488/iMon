@@ -63,8 +63,8 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
                                     <a href="{{ route('income.excel', ['date_charge' => request('date_charge'), 'transaction' => request('transaction'), 'type' => request('type')]) }}">
-                                        <button class="btn btn-info btn-sm">
-                                            Download Excel xlsx
+                                        <button type="button" class="btn btn-info btn-sm">
+                                            Download Excel
                                         </button>
                                     </a>
                                 </div>

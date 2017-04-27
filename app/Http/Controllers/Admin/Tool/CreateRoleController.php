@@ -40,7 +40,7 @@ class CreateRoleController extends Controller
         }
 
         return redirect()->route('tool.roles')
-            ->with('success','Role created successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -80,7 +80,7 @@ class CreateRoleController extends Controller
         }
 
         return redirect()->route('tool.roles')
-            ->with('success','Role updated successfully');
+            ->with('message','Update Successfully');
     }
     /**
      * Remove the specified resource from storage.
@@ -92,6 +92,6 @@ class CreateRoleController extends Controller
     {
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('tool.roles')
-            ->with('success','Role deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

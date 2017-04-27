@@ -66,4 +66,10 @@ class ExchangeRequestController extends Controller
 
         return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
+
+    public function update($id){
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2]);
+        return redirect()->route('revenue.exchangeRequest')
+            ->with('message','Updated Successfully');
+    }
 }

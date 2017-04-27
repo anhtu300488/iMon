@@ -74,6 +74,6 @@ class CreateAdminController extends Controller
         }
 
         return redirect()->route('tool.createAdmin')
-            ->with('success','User created successfully');
+            ->with('message','Add Successfully');
     }
 }

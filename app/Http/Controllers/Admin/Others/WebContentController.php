@@ -53,7 +53,7 @@ class WebContentController extends Controller
         WebContent::create($input);
 
         return redirect()->route('webContent.index')
-            ->with('success','Add Web content successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -82,12 +82,12 @@ class WebContentController extends Controller
         $giftEvent->save();
 
         return redirect()->route('webContent.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         WebContent::find($id)->delete();
         return redirect()->route('webContent.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

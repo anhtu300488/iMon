@@ -57,6 +57,6 @@ class ServerMessageController extends Controller
 //        $addMoney->save();
 
         return redirect()->route('tool.serverMessage')
-            ->with('success','Add message successfully');
+            ->with('message','Add message successfully');
     }
 }

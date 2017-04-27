@@ -82,6 +82,6 @@ class AddMoneyController extends Controller
 //        $user = AddMoney::create($input);
 
         return redirect()->route('tool.addMoney')
-            ->with('success','Add money successfully');
+            ->with('message','Add Successfully');
     }
 }

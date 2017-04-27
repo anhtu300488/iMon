@@ -44,7 +44,7 @@ class GiftCodeController extends Controller
         GiftCode::create($input);
 
         return redirect()->route('giftCode.index')
-            ->with('success','Add Gift Code successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -71,12 +71,12 @@ class GiftCodeController extends Controller
         $giftCode->save();
 
         return redirect()->route('giftCode.index')
-            ->with('success','Gift Code updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         GiftCode::find($id)->delete();
         return redirect()->route('giftCode.index')
-            ->with('success','Gift Code deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

@@ -49,7 +49,7 @@ class AddMoneyController extends Controller
         AddMoney::create($input);
 
         return redirect()->route('addMoney.index')
-            ->with('success','Add Money successfully');
+            ->with('message','Add Successfully');
     }
 
 }

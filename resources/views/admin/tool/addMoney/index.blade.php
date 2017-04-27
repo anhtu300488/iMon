@@ -58,6 +58,11 @@
 
     <div class="row">
         <div class="col-xs-12">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+        @endif
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
                 <div class="col-xs-12">

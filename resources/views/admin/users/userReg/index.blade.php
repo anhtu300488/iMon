@@ -92,7 +92,7 @@
                                 <div class="col-xs-6 col-sm-6">
                                     <a href="{{ route('userReg.excel', ['userName' => request('userName'), 'fromDate' => request('fromDate'), 'toDate' => request('toDate'), 'device' => request('device'), 'ip' => request('ip'), 'clientType' => request('clientType')]) }}">
                                         <button class="btn btn-info btn-sm">
-                                            Download Excel xlsx
+                                            Download Excel
                                         </button>
                                     </a>
                                 </div>

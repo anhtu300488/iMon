@@ -50,11 +50,14 @@ class LinkDownloadController extends Controller
 
 
         $input = $request->all();
-        $input['file_down'] = $request->file('file_down')->store('public');
+        if(isset($input['file_down'])){
+            $input['file_down'] = $request->file('file_down')->store('public');
+        }
+
         TaiGame::create($input);
 
         return redirect()->route('linkDownload.index')
-            ->with('success','Add Gift Event successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -82,12 +85,12 @@ class LinkDownloadController extends Controller
         $giftEvent->save();
 
         return redirect()->route('linkDownload.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         TaiGame::find($id)->delete();
         return redirect()->route('linkDownload.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

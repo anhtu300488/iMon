@@ -48,7 +48,7 @@ class PartnerController extends Controller
         Partner::create($input);
 
         return redirect()->route('partner.index')
-            ->with('success','Add Partner successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -77,12 +77,12 @@ class PartnerController extends Controller
         $partner->save();
 
         return redirect()->route('partner.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         Partner::find($id)->delete();
         return redirect()->route('partner.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

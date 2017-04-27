@@ -61,7 +61,7 @@ class PurchaseMoneyController extends Controller
         PurchaseMoneyMissing::create($input);
 
         return redirect()->route('purchaseMoney.index')
-            ->with('success','Add PurchaseMoneyMissing successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -92,12 +92,12 @@ class PurchaseMoneyController extends Controller
         $purchaseMoneyMissing->save();
 
         return redirect()->route('purchaseMoney.index')
-            ->with('success','Gift Code updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         PurchaseMoneyMissing::find($id)->delete();
         return redirect()->route('purchaseMoney.index')
-            ->with('success','Gift Code deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

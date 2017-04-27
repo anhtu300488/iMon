@@ -23,6 +23,6 @@ class PhoneUpdateController extends Controller
             ->update(['mobile' => $request->get('mobile')]);
 
         return redirect()->route('tool.phoneUpdate')
-            ->with('success','Phone email successfully');
+            ->with('message','Phone email successfully');
     }
 }

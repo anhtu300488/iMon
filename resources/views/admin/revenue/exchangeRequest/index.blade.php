@@ -96,6 +96,21 @@
 
     <div class="row">
         <div class="col-xs-12">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
                 <div class="col-xs-12">
@@ -114,6 +129,7 @@
                             {{--<th class="hidden-480">Response data</th>--}}
                             <th class="hidden-480">Request topup</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th>Reload</th>
                         </tr>
                         </thead>
 
@@ -132,6 +148,18 @@
                             {{--<td class="hidden-480">{{ $rs->responseData }}</td>--}}
                             <td class="hidden-480">{{ $rs->request_topup_id }}</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
+                            <td>
+                            @if($rs->status == 3)
+                                @permission('administrator')
+                                    {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline']) !!}
+                                    <button class="btn btn-info btn-sm" type="submit">
+                                        <i class="ace-icon fa fa-refresh white"></i>
+                                        Reload
+                                    </button>
+                                    {!! Form::close() !!}
+                                @endpermission
+                            @endif
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>

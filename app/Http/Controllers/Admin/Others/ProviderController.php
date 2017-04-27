@@ -45,7 +45,7 @@ class ProviderController extends Controller
         Provider::create($input);
 
         return redirect()->route('telco.index')
-            ->with('success','Add Gift Event successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -72,12 +72,12 @@ class ProviderController extends Controller
         $giftEvent->save();
 
         return redirect()->route('telco.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         Provider::find($id)->delete();
         return redirect()->route('telco.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

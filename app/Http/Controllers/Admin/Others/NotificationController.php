@@ -46,7 +46,7 @@ class NotificationController extends Controller
         Notification::create($input);
 
         return redirect()->route('notification.index')
-            ->with('success','Add notification successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -74,12 +74,12 @@ class NotificationController extends Controller
         $giftEvent->save();
 
         return redirect()->route('notification.index')
-            ->with('success','Gift Event updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         Notification::find($id)->delete();
         return redirect()->route('notification.index')
-            ->with('success','Gift Event deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

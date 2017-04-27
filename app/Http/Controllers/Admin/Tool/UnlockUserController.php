@@ -25,6 +25,6 @@ class UnlockUserController extends Controller
             ->update(['status' => 1]);
 
         return redirect()->route('tool.unlockUser')
-            ->with('success','Unlock user successfully');
+            ->with('message','Unlock user successfully');
     }
 }

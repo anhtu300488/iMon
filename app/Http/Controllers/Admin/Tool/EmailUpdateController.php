@@ -23,6 +23,6 @@ class EmailUpdateController extends Controller
             ->update(['email' => $request->get('email')]);
 
         return redirect()->route('tool.emailUpdate')
-            ->with('success','Update email successfully');
+            ->with('message','Update Successfully');
     }
 }

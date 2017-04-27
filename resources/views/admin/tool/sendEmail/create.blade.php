@@ -6,6 +6,21 @@
 
     <div class="row">
         <div class="col-xs-12">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- PAGE CONTENT BEGINS -->
             {!! Form::open(array('route' => 'tool.sendEmail.store','method'=>'POST', 'class' => 'form-horizontal', 'id'=>'sendEmail')) !!}
 

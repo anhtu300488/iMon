@@ -41,7 +41,7 @@ class ClientTypeController extends Controller
         ClientType::create($input);
 
         return redirect()->route('clientType.index')
-            ->with('success','Add Client Type successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -62,12 +62,12 @@ class ClientTypeController extends Controller
         $clientType->save();
 
         return redirect()->route('clientType.index')
-            ->with('success','Client Type updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         ClientType::find($id)->delete();
         return redirect()->route('clientType.index')
-            ->with('success','Client Type deleted successfully');
+            ->with('message','Deleted successfully');
     }
 }

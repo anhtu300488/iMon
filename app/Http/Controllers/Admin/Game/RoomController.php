@@ -68,7 +68,7 @@ class RoomController extends Controller
         Room::create($input);
 
         return redirect()->route('room.index')
-            ->with('success','Add room successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -115,12 +115,12 @@ class RoomController extends Controller
         $room->save();
 
         return redirect()->route('room.index')
-            ->with('success','Message updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         Room::find($id)->delete();
         return redirect()->route('room.index')
-            ->with('success','Room deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

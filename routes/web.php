@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/exchangeRequest', ['as' => 'revenue.exchangeRequest', 'uses' => 'Admin\Revenue\ExchangeRequestController@index']);
 
+    Route::patch('revenue/exchangeRequest/{id}', ['as' => 'exchangeRequest.update', 'uses' => 'Admin\Revenue\ExchangeRequestController@update']);
+
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
 
     Route::get('revenue/topCashOut', ['as' => 'revenue.topCashOut', 'uses' => 'Admin\Revenue\TopCashOutController@index']);

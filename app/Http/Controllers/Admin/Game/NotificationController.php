@@ -44,7 +44,7 @@ class NotificationController extends Controller
         $notification->save();
 
         return redirect()->route('notification.index')
-            ->with('success','Add message successfully');
+            ->with('message','Add Successfully');
     }
 
     public function edit($id){
@@ -66,12 +66,12 @@ class NotificationController extends Controller
         $notification->save();
 
         return redirect()->route('notification.index')
-            ->with('success','Message updated successfully');
+            ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         EmergencyNotification::query()->where('notificationId',$id)->delete();
         return redirect()->route('notification.index')
-            ->with('success','Message deleted successfully');
+            ->with('message','Deleted Successfully');
     }
 }

@@ -23,6 +23,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('home', ['as' => 'home', 'uses' => 'Admin\HomeController@index']);
 
+    Route::get('profile', ['as' => 'profile', 'uses' => 'Admin\AuthController@profile']);
+
+    Route::get('password.change', ['as' => 'password.change', 'uses' => 'Admin\AuthController@changePassword']);
+
+    Route::post('password.postCredentials', ['as' => 'password.postCredentials', 'uses' => 'Admin\AuthController@postCredentials']);
+
     Route::get('basic/logPayment', ['as' => 'basic.logPayment', 'uses' => 'Admin\Basic\LogPaymentController@index'] );
 
     Route::get('basic/purchaseMoneyLog', ['as' => 'basic.purchaseMoneyLog', 'uses' => 'Admin\Basic\PurchaseMoneyLogController@index']);

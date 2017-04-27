@@ -50,14 +50,14 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#">
+                            <a href="{{route('password.change')}}">
                                 <i class="ace-icon fa fa-cog"></i>
-                                Settings
+                                Change Pass
                             </a>
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="{{route('profile')}}">
                                 <i class="ace-icon fa fa-user"></i>
                                 Profile
                             </a>

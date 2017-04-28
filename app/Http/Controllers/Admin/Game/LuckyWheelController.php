@@ -7,6 +7,7 @@ use App\LuckyWheelItem;
 use App\LuckyWheelLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class LuckyWheelController extends Controller
 {
@@ -48,11 +49,12 @@ class LuckyWheelController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('time',[$start,$end]);
         }
-        $data = $query->orderBy('time', 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('time', 'desc')->paginate($perPage);
 
         $list_by_round = LuckyWheelLog::getSumKenByRound($userId, $roundItem, $description, $fromDate, $toDate);
 
-        return view('admin.game.luckyWheel.log',compact('data', 'item', 'list_by_round'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.luckyWheel.log',compact('data', 'item', 'list_by_round'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     /**
@@ -68,9 +70,10 @@ class LuckyWheelController extends Controller
         if($itemName != ''){
             $query->where('itemName','LIKE','%'.$itemName.'%');
         }
-        $data = $query->orderBy('itemId', 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page');
+        $data = $query->orderBy('itemId', 'desc')->paginate($perPage);
 
-        return view('admin.game.luckyWheel.item',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.luckyWheel.item',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     /**
@@ -96,9 +99,9 @@ class LuckyWheelController extends Controller
 
 
         $query->where($matchThese);
+        $perPage = Config::get('app_per_page');
+        $data = $query->orderBy('chanceId', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('chanceId', 'desc')->paginate(10);
-
-        return view('admin.game.luckyWheel.chance',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.luckyWheel.chance',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

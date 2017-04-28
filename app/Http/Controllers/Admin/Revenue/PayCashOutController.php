@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\ExchangeAssetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class PayCashOutController extends Controller
@@ -41,9 +42,9 @@ class PayCashOutController extends Controller
 
         $query->where('a.status','=',1);
 
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy(DB::raw("DATE(a.created_at)"), "a.requestUserId", "a.requestUserName")->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate($perPage);
 
-        $data = $query->groupBy(DB::raw("DATE(a.created_at)"), "a.requestUserId", "a.requestUserName")->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate(50);
-
-        return view('admin.revenue.payCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 50);
+        return view('admin.revenue.payCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

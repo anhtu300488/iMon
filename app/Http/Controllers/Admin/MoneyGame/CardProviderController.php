@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\MoneyGame;
 use App\CardProvider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class CardProviderController extends Controller
 {
@@ -22,9 +23,9 @@ class CardProviderController extends Controller
         if($providerCode != ''){
             $query->where('providerCode','LIKE','%'.$providerCode.'%');
         }
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('providerId', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('providerId', 'desc')->paginate(10);
-
-        return view('admin.moneyGame.cardProvider.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.moneyGame.cardProvider.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

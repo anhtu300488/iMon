@@ -7,6 +7,7 @@ use App\UserReg;
 use App\UserStatistic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class TopGameController extends Controller
@@ -40,10 +41,10 @@ class TopGameController extends Controller
         if($game != ''){
             $query->where('a.gameId', '=', $game);
         }
-
-        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->paginate($perPage);
 //        var_dump($data);die;
 
-        return view('admin.users.topGame.index',compact('data', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.users.topGame.index',compact('data', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

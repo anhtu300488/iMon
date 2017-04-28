@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Basic;
 use App\MoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class XuHistoryController extends Controller
 {
@@ -28,8 +29,9 @@ class XuHistoryController extends Controller
 //            $end = date("Y-m-d",strtotime($toDate));
 //            $query->whereBetween('purchasedTime',[$start,$end]);
 //        }
-        $data = $query->orderBy('userName')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('userName')->paginate($perPage);
 
-        return view('admin.basic.xuHistory.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.basic.xuHistory.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

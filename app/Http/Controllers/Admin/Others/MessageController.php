@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Others;
 use App\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class MessageController extends Controller
 {
@@ -31,12 +32,12 @@ class MessageController extends Controller
         if($recipientUsername != ''){
             $query->where('recipientUsername','LIKE','%'.$recipientUsername.'%');
         }
-
-        $data = $query->orderBy('messageId','asc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('messageId','asc')->paginate($perPage);
 
 //        var_dump($data);die;
 
-        return view('admin.others.messageUser.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.messageUser.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
 }

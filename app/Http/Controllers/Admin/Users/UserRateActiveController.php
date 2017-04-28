@@ -7,6 +7,7 @@ use App\LoggedInLog;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class UserRateActiveController extends Controller
@@ -46,7 +47,7 @@ class UserRateActiveController extends Controller
         foreach ($total30Rs as $index => $total){
             $login_arr[$total->purchase_date][3] = isset($total->total) ? $total->total : 0;
         }
-
-        return view('admin.users.userRateActive.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        return view('admin.users.userRateActive.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

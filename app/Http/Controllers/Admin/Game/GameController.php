@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Game;
 use App\Game;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class GameController extends Controller
 {
@@ -40,9 +41,9 @@ class GameController extends Controller
         }
 
         $query->where($matchThese);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('gameId', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('gameId', 'desc')->paginate(10);
-
-        return view('admin.game.game.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.game.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

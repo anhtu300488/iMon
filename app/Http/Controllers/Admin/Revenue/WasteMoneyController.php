@@ -6,6 +6,7 @@ use App\Game;
 use App\TaxDailyStatistic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class WasteMoneyController extends Controller
 {
@@ -23,7 +24,8 @@ class WasteMoneyController extends Controller
         foreach ($results as $rs){
             $data[$rs->day][$rs->gameId] = $rs->taxValue;
         }
-        return view('admin.revenue.wasteMoney.index',compact('gameArr', 'list_games', 'data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        return view('admin.revenue.wasteMoney.index',compact('gameArr', 'list_games', 'data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function downloadExcel(Request $request){

@@ -186,16 +186,16 @@ class PurchaseMoneyLog extends Model
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-        if($type){
-            $query->where('p.type ','=',$type);
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp){
-//            $query->where('partner.partnerId','=',$cp);
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
 //        }
-        if($os){
-            $query->where('user.clientId ','=',$type);
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
         }
-        if($userName){
+        if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
 //        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
@@ -210,16 +210,6 @@ class PurchaseMoneyLog extends Model
 
     public static function getTotalUserRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os)
     {
-        $matchThese = [];
-        if($type != ''){
-            $matchThese['p.type'] = $type;
-        }
-        if($cp){
-            $matchThese['partner.partnerId'] = $cp;
-        }
-        if($os){
-            $matchThese['user.clientId '] = $type;
-        }
         $search = false;
 
         $query = DB::table('purchase_money_log as p');
@@ -242,10 +232,18 @@ class PurchaseMoneyLog extends Model
 //                $join->on('partner.partnerId', '=', 'user.cp');
 //
 //            });
-        if($userName != ''){
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
+        }
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
+//        }
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
+        }
+        if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-        $query->where($matchThese);
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
 

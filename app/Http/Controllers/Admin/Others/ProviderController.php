@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Others;
 use App\Provider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class ProviderController extends Controller
 {
@@ -21,9 +22,10 @@ class ProviderController extends Controller
         if($description != ''){
             $query->where('description','LIKE','%'.$description.'%');
         }
-        $data = $query->orderBy('id')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('id')->paginate($perPage);
 
-        return view('admin.others.telco.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.telco.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function create(){

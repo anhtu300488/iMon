@@ -6,6 +6,7 @@ use App\MiniPokerLog;
 use App\MiniPokerRate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class MiniPokerLogController extends Controller
 {
@@ -44,13 +45,14 @@ class MiniPokerLogController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('insertTime',[$start,$end]);
         }
-        $data = $query->orderBy('insertTime', 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('insertTime', 'desc')->paginate($perPage);
 
         $list_by_round = MiniPokerLog::getSumKenByRound($userId, $type, $card, $fromDate, $toDate);
 
         $sumByFilter = MiniPokerLog::getSumByFilter($userId, $type, $card, $fromDate, $toDate);
 
-        return view('admin.game.miniPoker.log',compact('data', 'list_by_round', 'arr_type', 'arr_card', 'sumByFilter'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.miniPoker.log',compact('data', 'list_by_round', 'arr_type', 'arr_card', 'sumByFilter'))->with('i', ($request->input('page', 1) - 1) * $perPage);
 
     }
 
@@ -75,9 +77,9 @@ class MiniPokerLogController extends Controller
             $matchThese['status'] = $status;
         }
         $query->where($matchThese);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('name', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('name', 'desc')->paginate(10);
-
-        return view('admin.game.miniPoker.rate',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.miniPoker.rate',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

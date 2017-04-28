@@ -6,6 +6,7 @@ use App\Partner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class PartnerController extends Controller
 {
@@ -22,9 +23,10 @@ class PartnerController extends Controller
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
-        $data = $query->orderBy('partnerId')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('partnerId')->paginate($perPage);
 
-        return view('admin.others.partner.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.partner.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function create(){

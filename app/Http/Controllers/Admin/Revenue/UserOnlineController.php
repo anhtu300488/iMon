@@ -7,6 +7,7 @@ use App\Game;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class UserOnlineController extends Controller
 {
@@ -45,9 +46,9 @@ class UserOnlineController extends Controller
         $query = UserReg::query();
 
         $query->where($matchThese)->where('currentGameId', '>', 0);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('cash','desc')->paginate($perPage);
 
-        $data = $query->orderBy('cash','desc')->paginate(10);
-
-        return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

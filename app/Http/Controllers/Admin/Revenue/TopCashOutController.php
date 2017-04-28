@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\ExchangeAssetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class TopCashOutController extends Controller
@@ -35,9 +36,9 @@ class TopCashOutController extends Controller
 
         $query->where('a.status','=',1);
 
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->paginate($perPage);
 
-        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->paginate(50);
-
-        return view('admin.revenue.topCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 50);
+        return view('admin.revenue.topCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

@@ -8,6 +8,7 @@ use App\Partner;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class RevenueUserPurchaseController extends Controller
@@ -36,8 +37,8 @@ class RevenueUserPurchaseController extends Controller
             }
         }
 
-
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueUserPurchase($dateCharge);
         $purchase_arr = array();
 
@@ -45,6 +46,6 @@ class RevenueUserPurchaseController extends Controller
             $purchase_arr[$purchase_money->purchase_date] = (isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0)/ (isset($purchase_money->total) ? $purchase_money->total : 1);
         }
 
-        return view('admin.revenue.revenueUserPurchase.index',compact('data','purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.revenueUserPurchase.index',compact('data','purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\ExchangeAssetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 
 class ExchangeRequestController extends Controller
@@ -23,7 +24,7 @@ class ExchangeRequestController extends Controller
         $requestTopup = \Request::get('requestTopup');
         $responseData = \Request::get('responseData');
 
-        $statusArr = array('' => '---Tất cả---', 3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại");
+        $statusArr = array('' => '---Tất cả---', 3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối");
 
         $matchThese = [];
         if($status != ''){
@@ -56,8 +57,9 @@ class ExchangeRequestController extends Controller
             }
         }
 
-
-        $data = $query->orderBy('requestUserName')->paginate(10);
+        $query->where('status', '!=', -1);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('requestUserName')->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){
@@ -65,11 +67,11 @@ class ExchangeRequestController extends Controller
         }
 
 
-        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function update($id){
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2]);
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2, 'description' => 'handler']);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }

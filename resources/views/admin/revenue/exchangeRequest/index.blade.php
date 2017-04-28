@@ -121,12 +121,11 @@
                             <th class="hidden-480">User ID</th>
                             <th class="hidden-480">Tên hiển thị</th>
                             <th>Tên đăng nhập</th>
-                            <th>SDT xác thực</th>
                             <th class="hidden-480">Asset</th>
                             <th>Total cash</th>
                             <th>Giá trị thẻ</th>
                             <th>Trạng thái</th>
-                            {{--<th class="hidden-480">Response data</th>--}}
+                            <th class="hidden-480">Exchange By</th>
                             <th class="hidden-480">Request topup</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                             <th>Action</th>
@@ -140,12 +139,13 @@
                             <td class="hidden-480">{{ $rs->requestUserId }}</td>
                             <td class="hidden-480">{{ $rs->requestUserName }}</td>
                             <td>{{ $rs->requestUserName }}</td>
-                            <td></td>
                             <td class="hidden-480">{{ $rs->assetId }}</td>
                             <td>{{ number_format($rs->totalCash) }}</td>
                             <td>{{ number_format($rs->totalParValue) }}</td>
-                            <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
-                            {{--<td class="hidden-480">{{ $rs->responseData }}</td>--}}
+                            <td>@if($rs->status == 3)  <span class="label label-info arrowed-right arrowed-in">Waiting</span> @elseif($rs->status == 1)  <span class="label label-success arrowed-in arrowed-in-right">Success</span> @elseif($rs->status == -1)  <span class="label arrowed">Reject</span> @else <span class="label label-danger arrowed">Fail</span> @endif</td>
+                            <td class="hidden-480" style="text-align: center">
+                                @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
+                            </td>
                             <td class="hidden-480">{{ $rs->request_topup_id }}</td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Game;
 use App\MatchLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class XocdiaController extends Controller
 {
@@ -38,9 +39,9 @@ class XocdiaController extends Controller
         } else if($type ==  2){
             $query->where("description", 'not like',  "%true%");
         }
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('createdtime', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('createdtime', 'desc')->paginate(10);
-
-        return view('admin.game.xocdia.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.xocdia.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

@@ -6,6 +6,7 @@ use App\Game;
 use App\MoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class MoneyHistoryController extends Controller
 {
@@ -65,9 +66,9 @@ class MoneyHistoryController extends Controller
             }
         }
 
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('insertedTime')->paginate($perPage);
 
-        $data = $query->orderBy('insertedTime')->paginate(10);
-
-        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

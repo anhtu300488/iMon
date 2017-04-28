@@ -7,6 +7,7 @@ use App\Partner;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class RechargeTransactionController extends Controller
@@ -77,9 +78,9 @@ class RechargeTransactionController extends Controller
             }
         }
 
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('purchase_money_log.userName')->paginate($perPage);
 
-        $data = $query->orderBy('purchase_money_log.userName')->paginate(10);
-
-        return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

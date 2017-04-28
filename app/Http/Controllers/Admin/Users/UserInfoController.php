@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Users;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class UserInfoController extends Controller
 {
@@ -42,8 +43,9 @@ class UserInfoController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('lastLoginTime',[$start,$end]);
         }
-        $data = $query->orderBy($list_top[$top], 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy($list_top[$top], 'desc')->paginate($perPage);
 
-        return view('admin.users.userInfo.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.users.userInfo.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

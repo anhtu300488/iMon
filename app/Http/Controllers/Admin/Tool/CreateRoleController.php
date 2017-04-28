@@ -6,14 +6,16 @@ use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class CreateRoleController extends Controller
 {
     public function index(Request $request){
-        $data = Role::orderBy('id','DESC')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = Role::orderBy('id','DESC')->paginate($perPage);
         return view('admin.tool.role.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 10);
+            ->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function create(){

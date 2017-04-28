@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\ExchangeAssetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class CashOutController extends Controller
@@ -36,8 +37,8 @@ class CashOutController extends Controller
 
         $query->where('a.status','=',1);
 
-
-        $data = $query->groupBy(DB::raw("DATE(a.created_at)"))->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy(DB::raw("DATE(a.created_at)"))->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
 
@@ -46,6 +47,6 @@ class CashOutController extends Controller
             $purchase_arr[$purchase_money->purchase_date][1] = $purchase_money->sumCash;
         }
 
-        return view('admin.revenue.cashOut.index',compact('data', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.cashOut.index',compact('data', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

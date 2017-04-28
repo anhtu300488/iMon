@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Others;
 use App\WebContent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class WebContentController extends Controller
 {
@@ -30,9 +31,10 @@ class WebContentController extends Controller
             $query->where('content','LIKE','%'.$content.'%');
         }
         $query->where($matchThese);
-        $data = $query->orderBy('created_at', 'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
-        return view('admin.others.webContent.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.others.webContent.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function create(){

@@ -8,6 +8,7 @@ use App\Partner;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class RevenueUserChargeController extends Controller
@@ -36,31 +37,29 @@ class RevenueUserChargeController extends Controller
 
         $clientType->prepend('---Tất cả---', '');
 
-        $matchThese = [];
-        if($type != ''){
-            $matchThese['p.type'] = $type;
-        }
-        if($cp){
-            $matchThese['partner.partnerId'] = $cp;
-        }
-        if($os){
-            $matchThese['user.clientId '] = $type;
-        }
         $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"), 'p.type as type',  DB::raw('COUNT(p.userId) as total') )
             ->join('user', function($join)
             {
                 $join->on('user.userId', '=', 'p.userId');
 
-            })
-            ->join('partner', function($join)
-            {
-                $join->on('partner.partnerId', '=', 'user.cp');
-
             });
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
+        }
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
+//        }
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
+        }
         if($userName != ''){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-        $query->where($matchThese);
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -85,8 +84,8 @@ class RevenueUserChargeController extends Controller
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalUserByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $purchase_moneys = PurchaseMoneyLog::getTotalUserRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
 
@@ -96,6 +95,6 @@ class RevenueUserChargeController extends Controller
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = $purchase_money->total;
         }
 
-        return view('admin.revenue.revenueUserCharge.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.revenueUserCharge.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

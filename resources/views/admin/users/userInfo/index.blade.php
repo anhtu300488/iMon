@@ -103,6 +103,7 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
+                            <th>UserID</th>
                             <th class="hidden-480">Tên đăng nhập</th>
                             <th>Tên người chơi</th>
                             <th class="hidden-480">Cp</th>
@@ -121,6 +122,7 @@
                             @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
+                                <td>{{ $rs->userId }}</td>
                                 <td class="hidden-480">{{ $rs->userName }}</td>
                                 <td>{{ $rs->displayName }}</td>
                                 <td class="hidden-480">{{ $rs->cp }}</td>

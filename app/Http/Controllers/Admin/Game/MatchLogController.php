@@ -6,6 +6,7 @@ use App\Game;
 use App\MatchLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class MatchLogController extends Controller
 {
@@ -38,9 +39,9 @@ class MatchLogController extends Controller
         $query = MatchLog::query();
 
         $query->where($matchThese);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = $query->orderBy('createdTime', 'desc')->paginate($perPage);
 
-        $data = $query->orderBy('createdTime', 'desc')->paginate(10);
-
-        return view('admin.game.matchLog.index',compact('data', 'game'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.game.matchLog.index',compact('data', 'game'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

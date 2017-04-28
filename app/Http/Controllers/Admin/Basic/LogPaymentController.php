@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\LogPayment;
 use DB;
+use Illuminate\Support\Facades\Config;
 
 class LogPaymentController extends Controller
 {
@@ -29,8 +30,8 @@ class LogPaymentController extends Controller
             $matchThese['userid'] = $userid;
         }
 //        $matchThese = ['userid' => $userid];
-
-        $data = LogPayment::where($matchThese)->orderBy('id')->paginate(20);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $data = LogPayment::where($matchThese)->orderBy('id')->paginate($perPage);
 
         return view('admin.basic.logPayment.index',compact('data'));
     }

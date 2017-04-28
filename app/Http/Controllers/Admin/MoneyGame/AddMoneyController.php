@@ -39,7 +39,7 @@ class AddMoneyController extends Controller
         $this->validate($request, [
             'userId' => 'required',
             'addCash' => 'required',
-            'addGold' => 'required',
+//            'addGold' => 'required',
             'description' => 'required'
         ]);
 

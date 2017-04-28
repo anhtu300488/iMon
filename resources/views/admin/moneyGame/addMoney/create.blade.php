@@ -39,18 +39,18 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Cộng ken</label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Cộng Mon</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="form-field-8" name="addCash" />
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Cộng xu</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="addGold" />
-                </div>
-            </div>
+            {{--<div class="form-group">--}}
+                {{--<label class="col-sm-3 control-label no-padding-right" for="form-field-8">Cộng xu</label>--}}
+                {{--<div class="col-sm-9">--}}
+                    {{--<input type="text" class="form-control" id="form-field-8" name="addGold" />--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Mô tả</label>

@@ -16,19 +16,17 @@ class PurchaseMoneyLog extends Model
     public static function getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os)
     {
         $query = DB::table('purchase_money_log as p');
-        $query->select("p.type", DB::raw('SUM(p.parValue) as sum_money',DB::raw('SUM(p.cashValue) as sum_cash')));
+        $query->select(DB::raw('p.type as type'),  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') );
         $query->join('user', function($join)
         {
             $join->on('user.userId', '=', 'p.userId');
 
-        })
-            ->join('partner', function($join)
-            {
-                $join->on('partner.partnerId', '=', 'user.cp');
-
-            });
-//        $query->where($alias. ".money > 0");
-//        $query->andWhere("status = 1");
+        });
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -53,16 +51,16 @@ class PurchaseMoneyLog extends Model
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-        if($type){
-            $query->where('p.type ','=',$type);
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
         }
-        if($cp){
-            $query->where('partner.partnerId','=',$cp);
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
+//        }
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
         }
-        if($os){
-            $query->where('user.clientId ','=',$type);
-        }
-        if($userName){
+        if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
 //        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
@@ -76,16 +74,6 @@ class PurchaseMoneyLog extends Model
     }
     public static function getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os)
     {
-        $matchThese = [];
-        if($type != ''){
-            $matchThese['p.type'] = $type;
-        }
-        if($cp){
-            $matchThese['partner.partnerId'] = $cp;
-        }
-        if($os){
-            $matchThese['user.clientId '] = $type;
-        }
         $search = false;
 
         $query = DB::table('purchase_money_log as p');
@@ -102,16 +90,24 @@ class PurchaseMoneyLog extends Model
             {
                 $join->on('user.userId', '=', 'p.userId');
 
-            })
-            ->join('partner', function($join)
-            {
-                $join->on('partner.partnerId', '=', 'user.cp');
-
             });
-        if($userName != ''){
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
+        }
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
+//        }
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
+        }
+        if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-        $query->where($matchThese);
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
 
@@ -141,9 +137,9 @@ class PurchaseMoneyLog extends Model
         }
 
         if($inday == 1){
-            $query->groupBy(DB::raw("HOUR(purchasedTime)"), 'type');
+            $query->groupBy(DB::raw("HOUR(p.purchasedTime)"), 'p.type');
         } else {
-            $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type');
+            $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type');
         }
 
         $data = $query->get()->toArray();
@@ -160,14 +156,12 @@ class PurchaseMoneyLog extends Model
         {
             $join->on('user.userId', '=', 'p.userId');
 
-        })
-            ->join('partner', function($join)
-            {
-                $join->on('partner.partnerId', '=', 'user.cp');
-
-            });
-//        $query->where($alias. ".money > 0");
-//        $query->andWhere("status = 1");
+        });
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -195,9 +189,9 @@ class PurchaseMoneyLog extends Model
         if($type){
             $query->where('p.type ','=',$type);
         }
-        if($cp){
-            $query->where('partner.partnerId','=',$cp);
-        }
+//        if($cp){
+//            $query->where('partner.partnerId','=',$cp);
+//        }
         if($os){
             $query->where('user.clientId ','=',$type);
         }
@@ -242,12 +236,12 @@ class PurchaseMoneyLog extends Model
         {
             $join->on('user.userId', '=', 'p.userId');
 
-        })
-            ->join('partner', function($join)
-            {
-                $join->on('partner.partnerId', '=', 'user.cp');
-
-            });
+        });
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
         if($userName != ''){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }

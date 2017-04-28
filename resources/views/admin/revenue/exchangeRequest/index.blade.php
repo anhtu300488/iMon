@@ -129,7 +129,7 @@
                             {{--<th class="hidden-480">Response data</th>--}}
                             <th class="hidden-480">Request topup</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
-                            <th>Reload</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -152,9 +152,11 @@
                             @if($rs->status == 3)
                                 @permission('administrator')
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline']) !!}
-                                    <button class="btn btn-info btn-sm" type="submit">
+                                    <button class="btn btn-xs btn-info" name="reload" type="submit">
                                         <i class="ace-icon fa fa-refresh white"></i>
-                                        Reload
+                                    </button>
+                                    <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-toggle="modal" data-target="#deleteModal">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>
                                     {!! Form::close() !!}
                                 @endpermission
@@ -169,6 +171,44 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="deleteModalLabel">Delete Exchange Request</h4>
+                </div>
+                <div class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    {{ Form::open(array('url'=>'revenue/exchangeRequest/delete','class'=>'form-horizontal', 'method'=> 'POST', 'name' => 'formSubmit')) }}
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="exchangeId" class="id" id="exchangeId">
+                        <div class="form-group">
+                            <label for="description" class="control-label">Lý do từ chối:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="document.formSubmit.submit();" >Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         jQuery(function($) {
@@ -223,5 +263,13 @@
                 });
         });
         <?php endif; ?>
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#deleteModal').on("show.bs.modal", function (e) {
+                $("#exchangeId").val($(e.relatedTarget).data('id'));
+            });
+        });
     </script>
     @endsection

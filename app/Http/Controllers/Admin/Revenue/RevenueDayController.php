@@ -36,31 +36,29 @@ class RevenueDayController extends Controller
 
         $clientType->prepend('---Tất cả---', '');
 
-        $matchThese = [];
-        if($type != ''){
-            $matchThese['p.type'] = $type;
-        }
-        if($cp){
-            $matchThese['partner.partnerId'] = $cp;
-        }
-        if($os){
-            $matchThese['user.clientId '] = $type;
-        }
         $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash'))
         ->join('user', function($join)
         {
             $join->on('user.userId', '=', 'p.userId');
 
-        })
-        ->join('partner', function($join)
-        {
-            $join->on('partner.partnerId', '=', 'user.cp');
-
         });
-        if($userName != ''){
+//        ->join('partner', function($join)
+//        {
+//            $join->on('partner.partnerId', '=', 'user.cp');
+//
+//        });
+        if($type != null){
+            $query->where(DB::raw('p.type'),'=', $type);
+        }
+//        if($cp != null){
+//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
+//        }
+        if($os != null){
+            $query->where(DB::raw('user.clientId'),'=', $os);
+        }
+        if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-        $query->where($matchThese);
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -86,12 +84,14 @@ class RevenueDayController extends Controller
             }
         }
 
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
+        $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate(10);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
+//        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
         $purchase_arr = array();
-
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
         }
@@ -99,6 +99,7 @@ class RevenueDayController extends Controller
         foreach ($exchange_moneys as $index => $exchange_money){
             $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
+
         return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

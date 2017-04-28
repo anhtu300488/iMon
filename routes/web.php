@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::patch('revenue/exchangeRequest/{id}', ['as' => 'exchangeRequest.update', 'uses' => 'Admin\Revenue\ExchangeRequestController@update']);
 
+    Route::post('revenue/exchangeRequest/delete', ['as' => 'exchangeRequest.delete', 'uses' => 'Admin\Revenue\ExchangeRequestController@delete']);
+
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
 
     Route::get('revenue/topCashOut', ['as' => 'revenue.topCashOut', 'uses' => 'Admin\Revenue\TopCashOutController@index']);

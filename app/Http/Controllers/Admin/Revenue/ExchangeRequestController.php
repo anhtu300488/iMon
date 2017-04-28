@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\ExchangeAssetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class ExchangeRequestController extends Controller
 {
@@ -22,7 +23,7 @@ class ExchangeRequestController extends Controller
         $requestTopup = \Request::get('requestTopup');
         $responseData = \Request::get('responseData');
 
-        $statusArr = array('' => '---Tất cả---', 0 => "Chưa xử lý", 1 => "Thành công" ,2 => "Thất bại");
+        $statusArr = array('' => '---Tất cả---', 3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại");
 
         $matchThese = [];
         if($status != ''){
@@ -69,6 +70,18 @@ class ExchangeRequestController extends Controller
 
     public function update($id){
         ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2]);
+        return redirect()->route('revenue.exchangeRequest')
+            ->with('message','Updated Successfully');
+    }
+
+    public function delete(Request $request){
+        $this->validate($request, [
+            'description' => 'required|max:1000',
+            'exchangeId' => 'required'
+        ]);
+        $id = Input::get('exchangeId');
+        $description = Input::get('description');
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 4, 'description' => $description]);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }

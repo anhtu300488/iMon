@@ -96,8 +96,8 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userId }}</td>
-                                <td>{{ number_format($rs->addGold) }}</td>
                                 <td>{{ number_format($rs->addCash) }}</td>
+                                <td>{{ number_format($rs->addGold) }}</td>
                                 <td class="hidden-480">{{ $rs->description }}</td>
                                 <td class="hidden-480">{{ getAdminName($rs->admin_id) }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>

@@ -227,10 +227,7 @@
         <?php endif; ?>
     </script>
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
-<!--    --><?php //var_dump($total_by_type);die;?>
     <script type="text/javascript">
-//        google.load("visualization", "1", {packages:["" +
-//        ""]});
         google.load("visualization", "1", {packages:["corechart"]});
 
         google.setOnLoadCallback(drawChart);

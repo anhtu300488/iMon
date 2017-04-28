@@ -130,8 +130,8 @@
                                 <td>{{ $rs->created_date }}</td>
                                 <td class="hidden-480">{{$partner[request('partner')]}}</td>
                                 <td class="hidden-480">{{ $typeArr[$rs->type] }}</td>
-                                <td>{{ $rs->sum_money }}</td>
-                                <td>{{ $rs->sum_cash }}</td>
+                                <td>{{ number_format($rs->sum_money) }}</td>
+                                <td>{{ number_format($rs->sum_cash) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -180,7 +180,6 @@
     <script type="text/javascript">
         <?php if($purchase_arr != null):?>
         $(function () {
-
             var array_date = new Array();
             var sum_money = new Array();
             var cash_money = new Array();
@@ -224,15 +223,11 @@
                     data: exchange_money
                 }]
             });
-
         });
         <?php endif; ?>
     </script>
     <script type="text/javascript" src="{!! asset('css/jsapi.css') !!}"></script>
-    <!--    --><?php //var_dump($total_by_type);die;?>
     <script type="text/javascript">
-        //        google.load("visualization", "1", {packages:["" +
-        //        ""]});
         google.load("visualization", "1", {packages:["corechart"]});
 
         google.setOnLoadCallback(drawChart);

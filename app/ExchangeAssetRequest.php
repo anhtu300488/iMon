@@ -42,6 +42,8 @@ class ExchangeAssetRequest extends Model
             $query->where("a.created_at",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
         }
 
+        $query->where("a.status", '=', 1);
+
         if($inday == 1){
             $query->groupBy(DB::raw("HOUR(a.created_at)"));
         } else {

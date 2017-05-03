@@ -20,7 +20,7 @@ class GiftCodeController extends Controller
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('userName')->paginate($perPage);
 
         return view('admin.moneyGame.giftCode.index',compact('data', 'giftEvent'))->with('i', ($request->input('page', 1) - 1) * $perPage);

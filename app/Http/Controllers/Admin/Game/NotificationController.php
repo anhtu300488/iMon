@@ -23,7 +23,7 @@ class NotificationController extends Controller
         if($content != ''){
             $query->where('content','LIKE','%'.$content.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('createdTime', 'desc')->paginate($perPage);
 
         return view('admin.game.notification.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

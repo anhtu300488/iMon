@@ -45,7 +45,7 @@ class PurchaseMoneyLogController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('purchasedTime',[$start,$end]);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('userName')->paginate($perPage);
 
         return view('admin.basic.purchaseMoneyLog.index',compact('data', 'payTypeArr', 'partner', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);

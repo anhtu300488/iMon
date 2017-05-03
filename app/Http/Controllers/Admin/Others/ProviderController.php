@@ -22,7 +22,7 @@ class ProviderController extends Controller
         if($description != ''){
             $query->where('description','LIKE','%'.$description.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('id')->paginate($perPage);
 
         return view('admin.others.telco.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

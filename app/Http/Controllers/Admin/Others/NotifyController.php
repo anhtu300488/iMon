@@ -26,7 +26,7 @@ class NotifyController extends Controller
             $query->where('content','LIKE','%'.$content.'%');
         }
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
         return view('admin.others.notify.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

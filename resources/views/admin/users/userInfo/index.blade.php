@@ -21,6 +21,25 @@
                         <div class="widget-main">
                             {!! Form::open(['method'=>'GET','url'=>'users/userInfo','role'=>'search'])  !!}
                             <div class="row">
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">UserID</label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
+
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">Tên đăng nhập</label>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                </div>
+
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Từ ngày</label>
@@ -44,20 +63,16 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Tên đăng nhập</label>
-                                    <input class="form-control" name="userName" type="text" />
+                                    <label for="form-field-select-1">SDT xác thực</label>
+                                    <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
                                 </div>
-
                             </div>
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">SDT xác thực</label>
-                                    <input class="form-control" name="phone" type="text" />
-                                </div>
+
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Thông tin thiết bị</label>
-                                    <input class="form-control" name="device" type="text" />
+                                    <input class="form-control" name="device" type="text" value="{{request('device')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -105,7 +120,7 @@
                             <th class="hidden-480">STT</th>
                             <th>UserID</th>
                             <th class="hidden-480">Tên đăng nhập</th>
-                            <th>Tên người chơi</th>
+                            <th>Tên hiển thị</th>
                             <th class="hidden-480">Cp</th>
                             <th class="hidden-480">Chỉ số tín nhiệm</th>
                             <th class="hidden-480">SDT xác thực</th>

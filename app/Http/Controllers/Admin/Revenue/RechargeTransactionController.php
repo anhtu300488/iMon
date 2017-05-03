@@ -25,12 +25,12 @@ class RechargeTransactionController extends Controller
         $type = \Request::get('type');
         $cp = \Request::get('partner');
         $os = \Request::get('clientType');
+        $displayName = \Request::get('displayName');
+        $userId = \Request::get('userId');
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
         $partner->prepend('---Tất cả---', '');
-
-//        var_dump($partner);die;
 
         $clientType = ClientType::pluck('name', 'clientId');
 
@@ -51,6 +51,12 @@ class RechargeTransactionController extends Controller
         });
         if($userName != ''){
             $query->where('purchase_money_log.userName','LIKE','%'.$userName.'%');
+        }
+        if($displayName != ''){
+            $query->where('user.displayName','LIKE','%'.$displayName.'%');
+        }
+        if($userId != ''){
+            $query->where('user.userId','=',$userId);
         }
         $query->where($matchThese);
 
@@ -78,7 +84,7 @@ class RechargeTransactionController extends Controller
             }
         }
 
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('purchase_money_log.userName')->paginate($perPage);
 
         return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

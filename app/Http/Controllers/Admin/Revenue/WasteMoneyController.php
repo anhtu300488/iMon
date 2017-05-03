@@ -24,7 +24,7 @@ class WasteMoneyController extends Controller
         foreach ($results as $rs){
             $data[$rs->day][$rs->gameId] = $rs->taxValue;
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         return view('admin.revenue.wasteMoney.index',compact('gameArr', 'list_games', 'data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 

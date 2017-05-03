@@ -22,7 +22,7 @@ class ClientTypeController extends Controller
         if($name != ''){
             $query->where('name','LIKE','%'.$code.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('clientId')->paginate($perPage);
 
         return view('admin.others.os.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

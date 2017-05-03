@@ -23,10 +23,25 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">UserID</label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Tên đăng nhập</label>
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Seria</label>
@@ -38,9 +53,7 @@
                                     <label for="id-date-picker-1">Mã thẻ cào</label>
                                     <input class="form-control" name="pinCard" type="text" value="{{request('pinCard')}}"/>
                                 </div>
-                            </div>
 
-                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Mệnh giá thẻ</label>
@@ -77,6 +90,8 @@
                         <tr>
                             <th class="hidden-480">STT</th>
                             <th>User ID</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Tên hiển thị</th>
                             <th class="hidden-480">Seria</th>
                             <th class="hidden-480">Mã thẻ</th>
                             <th>Mệnh giá</th>
@@ -92,6 +107,8 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->userid }}</td>
+                                <th>{{ $rs->userName }}</th>
+                                <th>{{ $rs->displayName }}</th>
                                 <td class="hidden-480">{{ $rs->seria }}</td>
                                 <td class="hidden-480">{{ $rs->pin_card }}</td>
                                 <td>{{ number_format($rs->money) }}</td>

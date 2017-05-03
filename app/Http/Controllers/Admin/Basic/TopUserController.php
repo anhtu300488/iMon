@@ -33,7 +33,7 @@ class TopUserController extends Controller
         }
         $query->groupBy("userId", "userName");
         $query->orderBy("sum_cash", "desc");
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->paginate($perPage);
         return view('admin.basic.topUser.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

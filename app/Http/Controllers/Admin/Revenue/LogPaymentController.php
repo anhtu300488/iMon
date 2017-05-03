@@ -16,19 +16,24 @@ class LogPaymentController extends Controller
      */
     public function index(Request $request)
     {
+        $userId = \Request::get('userId');
         $userName = \Request::get('userName');
+        $displayName = \Request::get('displayName');
         $seria = \Request::get('seria');
         $pinCard = \Request::get('pinCard');
         $money = \Request::get('money');
 
+
+
+        $query = LogPayment::query();
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'log_payment.userId');
+
+        });
         $matchThese = [];
         if($money != ''){
             $matchThese['money'] = $money;
-        }
-
-        $query = LogPayment::query();
-        if($userName != ''){
-            $query->where('userName','LIKE','%'.$userName.'%');
         }
 
         if($seria != ''){
@@ -38,10 +43,18 @@ class LogPaymentController extends Controller
         if($pinCard != ''){
             $query->where('pin_card','LIKE','%'.$pinCard.'%');
         }
-
+        if($userId != ''){
+            $query->where('log_payment.userId','=',$userId);
+        }
+        if($userName != ''){
+            $query->where('user.userName','LIKE','%'.$userName.'%');
+        }
+        if($displayName != ''){
+            $query->where('user.displayName','LIKE','%'.$displayName.'%');
+        }
 
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('created_at','desc')->paginate($perPage);
 
         return view('admin.revenue.logPayment.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

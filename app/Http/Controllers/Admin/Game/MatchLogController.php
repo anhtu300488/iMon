@@ -39,9 +39,15 @@ class MatchLogController extends Controller
         $query = MatchLog::query();
 
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('createdTime', 'desc')->paginate($perPage);
 
+//        var_dump($data);die;
+        foreach ($data as $k => $v){
+            if($v->gameId){
+
+            }
+        }
         return view('admin.game.matchLog.index',compact('data', 'game'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

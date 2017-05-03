@@ -40,15 +40,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung push</label>
                 <div class="col-sm-9">
-                    {!! Form::textarea('message') !!}
+                    {!! Form::textarea('message', null, array('placeholder' => 'Nội dung push','class' => 'form-control')) !!}
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-8">PushTime</label>
-                <div class="col-sm-9" style="padding-left: 0px">
-                    <div class="col-sm-4"><input type="text" class="form-control" id="form-field-8" name="pushHour" /></div>
-                    <div class="col-sm-4"><input type="text" class="form-control" id="form-field-8" name="pushMinutes" /></div>
+                <label class="col-sm-3 control-label no-padding-right" for="timepicker1">Push Time</label>
+
+                <!-- #section:plugins/date-time.timepicker -->
+                <div class="input-group bootstrap-timepicker col-sm-9" style="padding-left: 11px">
+                    <input id="timepicker1" name="pushTime" type="text" class="form-control" />
+                    <span class="input-group-addon">
+                        <i class="fa fa-clock-o bigger-110"></i>
+                    </span>
                 </div>
             </div>
 
@@ -90,4 +94,37 @@
 
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        jQuery(function($) {
+
+            //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+            $('input[name=date-range-picker]').daterangepicker({
+                'applyClass' : 'btn-sm btn-success',
+                'cancelClass' : 'btn-sm btn-default',
+                locale: {
+                    applyLabel: 'Apply',
+                    cancelLabel: 'Cancel',
+                }
+            })
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
+
+
+            $('#timepicker1').timepicker({
+                minuteStep: 1,
+                showSeconds: true,
+                showMeridian: false
+            }).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            $('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+
+        });
+    </script>
 @endsection

@@ -37,7 +37,7 @@ class CashOutController extends Controller
 
         $query->where('a.status','=',1);
 
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(a.created_at)"))->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);

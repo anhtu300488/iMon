@@ -43,7 +43,7 @@ class RevenueUserActiveController extends Controller
             }
         }
 
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueUserActive($dateCharge);
         $purchase_arr = array();

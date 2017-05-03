@@ -67,7 +67,7 @@ class LogUserLoginController extends Controller
         }
 
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('loggedInTime', 'desc')->paginate($perPage);
 
         $totals = LoggedInLog::getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime);

@@ -30,8 +30,34 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">UserID</label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Tên đăng nhập</label>
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -46,20 +72,10 @@
 
                                 </div>
 
-                            </div>
-                            <br/>
 
+                            </div>
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
-                                    </div>
-                                </div>
+
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Request topup</label>
@@ -137,7 +153,7 @@
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td class="hidden-480">{{ $rs->requestUserId }}</td>
-                            <td class="hidden-480">{{ $rs->requestUserName }}</td>
+                            <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td>{{ $rs->requestUserName }}</td>
                             <td class="hidden-480">{{ $rs->assetId }}</td>
                             <td>{{ number_format($rs->totalCash) }}</td>

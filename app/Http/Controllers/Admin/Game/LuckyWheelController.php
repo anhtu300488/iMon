@@ -49,7 +49,7 @@ class LuckyWheelController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('time',[$start,$end]);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('time', 'desc')->paginate($perPage);
 
         $list_by_round = LuckyWheelLog::getSumKenByRound($userId, $roundItem, $description, $fromDate, $toDate);

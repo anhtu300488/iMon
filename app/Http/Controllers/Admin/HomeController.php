@@ -96,7 +96,7 @@ class HomeController extends Controller
         }
 
         $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
 //        var_dump($total_by_type);die;

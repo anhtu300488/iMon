@@ -33,7 +33,7 @@ class UserLockController extends Controller
             $query->whereBetween('lockToTime',[$start,$end]);
         }
         $query->with(['blackListUser']);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('userName', 'desc')->paginate($perPage);
 
         return view('admin.users.userLock.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

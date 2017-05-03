@@ -60,7 +60,7 @@ class IncomeMoneyController extends Controller
         }
 
         $query->whereIn('p.transactionId', [2,3,7]);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->paginate($perPage);
         $results = MoneyLog::getSumByTransaction($transaction, $dateCharge, $type);
         $moneyArr = array();

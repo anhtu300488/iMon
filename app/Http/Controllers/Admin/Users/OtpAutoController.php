@@ -36,7 +36,7 @@ class OtpAutoController extends Controller
         }
 
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
         return view('admin.users.otpAuto.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

@@ -30,7 +30,7 @@ class LogPaymentController extends Controller
             $matchThese['userid'] = $userid;
         }
 //        $matchThese = ['userid' => $userid];
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = LogPayment::where($matchThese)->orderBy('id')->paginate($perPage);
 
         return view('admin.basic.logPayment.index',compact('data'));

@@ -64,7 +64,8 @@
                         <tr>
                             <th class="hidden-480">STT</th>
                             <th>User ID</th>
-                            <th>User Name</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Tên hiển thị</th>
                             <th>Tổng số thẻ đổi</th>
                             <th>Tổng số tiền đổi</th>
                         </tr>
@@ -76,6 +77,7 @@
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ $rs->userID }}</td>
                             <td>{{ $rs->userName }}</td>
+                            <td>{{ $rs->displayName }}</td>
                             <td>{{ number_format($rs->sumCash) }}</td>
                             <td>{{ number_format($rs->sumMoney) }}</td>
                         </tr>

@@ -44,7 +44,7 @@ class SmsRevenueController extends Controller
                 $query->whereBetween('created_at',[$start,$end]);
             }
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(created_at)"), 'keyword', 'telco')->orderBy('created_at','desc')->paginate($perPage);
 
         return view('admin.revenue.smsRevenue.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

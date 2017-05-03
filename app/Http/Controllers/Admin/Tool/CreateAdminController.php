@@ -24,7 +24,7 @@ class CreateAdminController extends Controller
             $query->where('username','LIKE','%'.$username.'%');
         }
         $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('id','desc')->paginate($perPage);
 
         return view('admin.tool.createAdmin.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

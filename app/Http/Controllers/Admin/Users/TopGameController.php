@@ -41,7 +41,7 @@ class TopGameController extends Controller
         if($game != ''){
             $query->where('a.gameId', '=', $game);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->paginate($perPage);
 //        var_dump($data);die;
 

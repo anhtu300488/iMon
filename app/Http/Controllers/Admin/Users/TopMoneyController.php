@@ -26,7 +26,7 @@ class TopMoneyController extends Controller
             $query->orderBy('gold', 'desc');
         }
         $query->orderBy('cash', 'desc');
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->paginate($perPage);
 
         return view('admin.users.topMoney.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

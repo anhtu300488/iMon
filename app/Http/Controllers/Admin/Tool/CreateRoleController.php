@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class CreateRoleController extends Controller
 {
     public function index(Request $request){
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = Role::orderBy('id','DESC')->paginate($perPage);
         return view('admin.tool.role.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * $perPage);

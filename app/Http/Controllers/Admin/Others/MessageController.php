@@ -32,7 +32,7 @@ class MessageController extends Controller
         if($recipientUsername != ''){
             $query->where('recipientUsername','LIKE','%'.$recipientUsername.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('messageId','asc')->paginate($perPage);
 
 //        var_dump($data);die;

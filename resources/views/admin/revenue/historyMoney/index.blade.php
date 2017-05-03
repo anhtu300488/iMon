@@ -34,9 +34,9 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Loại</label>
-                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
                                 </div>
 
                             </div>
@@ -52,6 +52,12 @@
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Loại</label>
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -112,7 +118,7 @@
                         @foreach($data as $key => $rs)
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
-                            <td class="hidden-480">{{ $rs->userName }}</td>
+                            <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td class="hidden-480">{{ $rs->userId}}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ number_format($rs->lastCash) }}</td>

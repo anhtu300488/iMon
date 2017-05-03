@@ -23,7 +23,7 @@ class CardProviderController extends Controller
         if($providerCode != ''){
             $query->where('providerCode','LIKE','%'.$providerCode.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('providerId', 'desc')->paginate($perPage);
 
         return view('admin.moneyGame.cardProvider.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

@@ -45,7 +45,7 @@ class MiniPokerLogController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('insertTime',[$start,$end]);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('insertTime', 'desc')->paginate($perPage);
 
         $list_by_round = MiniPokerLog::getSumKenByRound($userId, $type, $card, $fromDate, $toDate);

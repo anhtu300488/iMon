@@ -20,12 +20,27 @@ class PayCashOutController extends Controller
 
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $userName = \Request::get('userName');
+        $userId = \Request::get('userId');
+        $displayName = \Request::get('displayName');
 
         $query = DB::table('exchange_asset_request as a');
-        $query->select(DB::raw("SUM(a.totalParValue) sumMoney"), "a.requestUserId as userID", "a.requestUserName as userName", DB::raw("DATE(a.created_at) purchase_date" ));
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'a.requestUserId');
+
+        });
+        $query->select(DB::raw("SUM(a.totalParValue) sumMoney"), "a.requestUserId as userID", "a.requestUserName as userName" , "user.displayName as displayName", DB::raw("DATE(a.created_at) purchase_date" ));
 
         if($userName){
             $query->where('a.requestUserName','LIKE', '%'.$userName.'%');
+        }
+
+        if($displayName){
+            $query->where('user.displayName','LIKE', '%'.$displayName.'%');
+        }
+
+        if($userId){
+            $query->where('a.requestUserId','=', $userId);
         }
 
         if($timeRequest != ''){
@@ -42,7 +57,7 @@ class PayCashOutController extends Controller
 
         $query->where('a.status','=',1);
 
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(a.created_at)"), "a.requestUserId", "a.requestUserName")->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate($perPage);
 
         return view('admin.revenue.payCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

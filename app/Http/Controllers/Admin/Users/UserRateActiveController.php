@@ -47,7 +47,7 @@ class UserRateActiveController extends Controller
         foreach ($total30Rs as $index => $total){
             $login_arr[$total->purchase_date][3] = isset($total->total) ? $total->total : 0;
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         return view('admin.users.userRateActive.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

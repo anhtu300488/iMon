@@ -34,10 +34,25 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Người dùng</label>
+                                    <label for="id-date-picker-1">UserID</label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Tên đăng nhập</label>
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Từ ngày</label>
@@ -59,15 +74,15 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Thiết bị</label>
                                     <input class="form-control" name="device" type="text" value="{{request('device')}}"/>
 
                                 </div>
 
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">IP</label>
@@ -116,7 +131,8 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th>Tên tài khoản</th>
+                            <th>UserID</th>
+                            <th>Tên đăng nhập</th>
                             <th>Tên hiển thị</th>
                             <th class="hidden-480">IP</th>
 
@@ -133,6 +149,7 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
+                                <td>{{ $rs->userId }}</td>
                                 <td>{{ $rs->userName }}</td>
                                 <td>{{ $rs->displayName }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>

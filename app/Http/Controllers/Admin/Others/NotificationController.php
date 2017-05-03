@@ -24,7 +24,7 @@ class NotificationController extends Controller
         if($message != ''){
             $query->where('message','LIKE','%'.$message.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('notificationId', 'desc')->paginate($perPage);
 
         return view('admin.others.notification.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
@@ -38,13 +38,14 @@ class NotificationController extends Controller
         $this->validate($request, [
             'title' => 'required|max:100',
             'message' => 'required|max:200',
-            'pushHour' => 'required',
-            'pushMinutes' => 'required'
+            'pushTime' => 'required',
         ]);
-
 
         $input = $request->all();
         $input['admin_id'] = Auth::user()->id;
+        $time = explode(":",$request->get('pushTime'));
+        $input['pushHour'] = $time[0];
+        $input['pushMinutes'] = $time[1];
         Notification::create($input);
 
         return redirect()->route('notification.index')
@@ -61,15 +62,16 @@ class NotificationController extends Controller
         $this->validate($request, [
             'title' => 'required|max:100',
             'message' => 'required|max:200',
-            'pushHour' => 'required',
-            'pushMinutes' => 'required'
+            'pushTime' => 'required',
         ]);
 
         $giftEvent = Notification::find($id);
+        $time = explode(":",$request->get('pushTime'));
         $giftEvent->title = $request->input('title');
         $giftEvent->message = $request->input('message');
-        $giftEvent->pushHour = $request->input('pushHour');
-        $giftEvent->pushMinutes = $request->get('pushMinutes');
+        $giftEvent->pushTime = $request->input('pushTime');
+        $giftEvent->pushHour = $time[0];
+        $giftEvent->pushMinutes = $time[1];
         $giftEvent->repeat_daily = $request->input('repeat_daily');
         $giftEvent->status = $request->input('status');
         $giftEvent->admin_id = Auth::user()->id;

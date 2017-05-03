@@ -19,7 +19,9 @@ class UserRegisterController extends Controller
      */
     public function index(Request $request)
     {
+        $userId = \Request::get('userId');
         $userName = \Request::get('userName');
+        $displayName = \Request::get('displayName');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
         $device = \Request::get('device');
@@ -39,9 +41,16 @@ class UserRegisterController extends Controller
             $matchThese['clientId'] = $os;
         }
 
+        if($userId != ''){
+            $matchThese['userId'] = $userId;
+        }
         $query = UserReg::query();
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
+        }
+
+        if($displayName != ''){
+            $query->where('displayName','LIKE','%'.$displayName.'%');
         }
 
         if($device != ''){
@@ -59,7 +68,7 @@ class UserRegisterController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('registedTime',[$start,$end]);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('registedTime', 'desc')->paginate($perPage);
 
         $total_by_os = UserReg::getTotalUserByOs();

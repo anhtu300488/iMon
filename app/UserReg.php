@@ -26,12 +26,13 @@ class UserReg extends Model
     public static function getTotalUserByOs()
     {
         $query = DB::table('user as a')
-            ->select(DB::raw("count(a.clientId) as sum_os"), "client_type.name as name", "a.clientId as clientId")
-            ->join('client_type', function($join)
-            {
-                $join->on('client_type.clientId', '=', 'a.clientId');
-
-            });
+            ->select(DB::raw("count(a.clientId) as sum_os"), DB::raw("p.name as name"), "a.clientId as clientId")
+            ->leftJoin('client_type as p', 'a.clientId', '=', 'p.clientId');
+//            ->leftJoin('client_type', function($join)
+//            {
+//                $join->on('client_type.clientId', '=', 'a.clientId');
+//
+//            });
         $query ->groupBy("a.clientId");
         $query->orderBy("sum_os", "desc");
         return $query->get()->toArray();

@@ -38,7 +38,7 @@ class ExchangeAssetRequestController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('purchasedTime',[$start,$end]);
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('requestUserName')->paginate($perPage);
 
         return view('admin.basic.exchangeAssetRequest.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

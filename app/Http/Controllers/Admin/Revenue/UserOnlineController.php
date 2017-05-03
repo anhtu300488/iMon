@@ -19,6 +19,8 @@ class UserOnlineController extends Controller
     public function index(Request $request)
     {
         $userId = \Request::get('userId');
+        $userName = \Request::get('userName');
+        $displayName = \Request::get('displayName');
         $game = \Request::get('gameArr');
         $clientId = \Request::get('clientType');
 
@@ -44,9 +46,16 @@ class UserOnlineController extends Controller
         }
 
         $query = UserReg::query();
+        if($userName != ''){
+            $query->where('userName','LIKE', '%'.$userName.'%');
+        }
+
+        if($displayName != ''){
+            $query->where('displayName','LIKE', '%'.$displayName.'%');
+        }
 
         $query->where($matchThese)->where('currentGameId', '>', 0);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('cash','desc')->paginate($perPage);
 
         return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);

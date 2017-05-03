@@ -27,7 +27,7 @@ class LogWebController extends Controller
         if($platform != ''){
             $query->where('platform','LIKE','%'.$platform.'%');
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('id', 'desc')->paginate($perPage);
 
         return view('admin.others.logWeb.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);

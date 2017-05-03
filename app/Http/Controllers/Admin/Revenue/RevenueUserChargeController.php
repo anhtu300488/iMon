@@ -84,7 +84,7 @@ class RevenueUserChargeController extends Controller
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalUserByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $purchase_moneys = PurchaseMoneyLog::getTotalUserRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);

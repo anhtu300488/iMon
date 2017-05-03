@@ -18,6 +18,8 @@ class ExchangeRequestController extends Controller
     public function index(Request $request)
     {
         $userName = \Request::get('userName');
+        $displayName = \Request::get('displayName');
+        $userId = \Request::get('userId');
         $phone = \Request::get('phone');
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $status = \Request::get('status');
@@ -32,10 +34,20 @@ class ExchangeRequestController extends Controller
         }
 
         $query = ExchangeAssetRequest::query();
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'requestUserId');
+
+        });
+        if($userId != ''){
+            $query->where('user.userId','=',$userId);
+        }
         if($userName != ''){
             $query->where('requestUserName','LIKE','%'.$userName.'%');
         }
-
+        if($displayName != ''){
+            $query->where('user.displayName','LIKE','%'.$displayName.'%');
+        }
         if($requestTopup != ''){
             $query->where('request_topup_id','LIKE','%'.$requestTopup.'%');
         }
@@ -57,9 +69,9 @@ class ExchangeRequestController extends Controller
             }
         }
 
-        $query->where('status', '!=', -1);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 50;
-        $data = $query->orderBy('requestUserName')->paginate($perPage);
+//        $query->where('status', '!=', -1);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
+        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){

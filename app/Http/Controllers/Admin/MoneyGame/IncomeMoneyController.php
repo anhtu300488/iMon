@@ -22,7 +22,7 @@ class IncomeMoneyController extends Controller
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction');
 
-        $typeArr = array(1 => 'Ken', 2 => 'Xu');
+        $typeArr = array(1 => 'Mon');
 
         $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 3 => 'Quà tặng hệ thống', 7 => 'Giftcode');
 

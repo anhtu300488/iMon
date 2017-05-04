@@ -22,7 +22,7 @@ class TopGameController extends Controller
         $game = \Request::get('game') ? \Request::get('game') : 1;
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
 
-        $gameArr = Game::pluck('name', 'gameId')->toArray();
+        $gameArr = Game::where('status',1)->pluck('name', 'gameId')->toArray();
 
         $query = DB::table('user_statistic as a')->select(DB::raw('COUNT(DISTINCT a.userId) as total'), 'a.userName', 'a.gameId')->where('a.period', '=', 0)->whereIn('a.gameId', array_keys((array) $gameArr));
 

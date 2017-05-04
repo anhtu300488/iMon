@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ExchangeAssetRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class ExchangeRequestController extends Controller
@@ -28,34 +30,34 @@ class ExchangeRequestController extends Controller
 
         $statusArr = array('' => '---Tất cả---', 3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối");
 
-        $matchThese = [];
-        if($status != ''){
-            $matchThese['status'] = $status;
-        }
-
-        $query = ExchangeAssetRequest::query();
-        $query->join('user', function($join)
+        $query = ExchangeAssetRequest::query()->select('*', DB::raw('exchange_asset_request.status as status'), DB::raw('user.displayName as displayName'));
+        $query->leftjoin('user', function($join)
         {
-            $join->on('user.userId', '=', 'requestUserId');
+            $join->on('user.userId', '=', 'exchange_asset_request.requestUserId');
 
         });
         if($userId != ''){
             $query->where('user.userId','=',$userId);
         }
         if($userName != ''){
-            $query->where('requestUserName','LIKE','%'.$userName.'%');
+            $query->where('exchange_asset_request.requestUserName','LIKE','%'.$userName.'%');
         }
         if($displayName != ''){
             $query->where('user.displayName','LIKE','%'.$displayName.'%');
         }
         if($requestTopup != ''){
-            $query->where('request_topup_id','LIKE','%'.$requestTopup.'%');
+            $query->where('exchange_asset_request.request_topup_id','LIKE','%'.$requestTopup.'%');
+        }
+
+        if($status != ''){
+            $query->where('exchange_asset_request.status','=',$status);
         }
 
         if($responseData != ''){
-            $query->where('responseData','LIKE','%'.$responseData.'%');
+            $query->where('exchange_asset_request.responseData','LIKE','%'.$responseData.'%');
         }
-        $query->where($matchThese);
+
+        $query->where('user.status', '=', 1);
 
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];
@@ -65,13 +67,13 @@ class ExchangeRequestController extends Controller
             if($startPlayGame != '' && $endPlayGame != ''){
                 $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
                 $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
-                $query->whereBetween('created_at',[$start1,$end1]);
+                $query->whereBetween('exchange_asset_request.created_at',[$start1,$end1]);
             }
         }
 
 //        $query->where('status', '!=', -1);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){

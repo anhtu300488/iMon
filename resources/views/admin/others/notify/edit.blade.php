@@ -26,7 +26,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung</label>
             <div class="col-sm-9">
-                {!! Form::text('content', null, ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                {!! Form::textarea('content', null, array('class' => 'form-control')) !!}
             </div>
         </div>
 

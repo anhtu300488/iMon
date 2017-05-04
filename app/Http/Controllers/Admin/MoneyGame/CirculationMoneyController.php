@@ -23,7 +23,7 @@ class CirculationMoneyController extends Controller
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction') ? \Request::get('transaction') : 6;
 
-        $typeArr = array(1 => 'Ken', 2 => 'Xu');
+        $typeArr = array(1 => 'Mon');
 
         $transactionArr = array(6 => 'Đổi thưởng', 1 => 'Chơi game');
 

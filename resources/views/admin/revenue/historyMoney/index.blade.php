@@ -99,12 +99,12 @@
                             <th class="hidden-480">Tên hiển thị</th>
                             <th class="hidden-480">User ID</th>
                             <th>Tên đăng nhập</th>
-                            <th class="hidden-480">Ken ban đầu</th>
-                            <th>Thay đổi Ken</th>
-                            <th>Ken hiện tại</th>
-                            <th class="hidden-480">Xu ban đầu</th>
-                            <th>Thay đổi Xu</th>
-                            <th>Xu hiện tại</th>
+                            <th class="hidden-480">Mon ban đầu</th>
+                            <th>Thay đổi Mon</th>
+                            <th>Mon hiện tại</th>
+                            {{--<th class="hidden-480">Xu ban đầu</th>--}}
+                            {{--<th>Thay đổi Xu</th>--}}
+                            {{--<th>Xu hiện tại</th>--}}
                             <th class="hidden-480">Loại giao dịch</th>
                             <th class="hidden-480">Tax percent</th>
                             <th>Tax value</th>
@@ -124,9 +124,9 @@
                             <td class="hidden-480">{{ number_format($rs->lastCash) }}</td>
                             <td>{{ number_format($rs->changeCash) }}</td>
                             <td>{{ number_format($rs->currentCash) }}</td>
-                            <td class="hidden-480">{{ number_format($rs->lastGold) }}</td>
-                            <td>{{ number_format($rs->changeGold) }}</td>
-                            <td>{{ number_format($rs->currentGold) }}</td>
+                            {{--<td class="hidden-480">{{ number_format($rs->lastGold) }}</td>--}}
+                            {{--<td>{{ number_format($rs->changeGold) }}</td>--}}
+                            {{--<td>{{ number_format($rs->currentGold) }}</td>--}}
                             <td class="hidden-480">{{ $rs->transactionId }}</td>
                             <td class="hidden-480">{{ $rs->taxPercent }}%</td>
                             <td>{{ $rs->taxValue }}</td>

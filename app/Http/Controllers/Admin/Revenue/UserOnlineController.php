@@ -24,7 +24,7 @@ class UserOnlineController extends Controller
         $game = \Request::get('gameArr');
         $clientId = \Request::get('clientType');
 
-        $gameArr = Game::pluck('name', 'gameId');
+        $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
         $gameArr->prepend('---Tất cả---', '');
 

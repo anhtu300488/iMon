@@ -13,7 +13,7 @@ class WasteMoneyController extends Controller
     public function index(Request $request){
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $game = \Request::get('game');
-        $gameArr = Game::pluck('name', 'gameId');
+        $gameArr = Game::where('status',1)->pluck('name', 'gameId');
         $gameArr->prepend('---Tất cả---', '');
 
         $list_games = Game::getListGame($game);

@@ -24,11 +24,11 @@ class MoneyHistoryController extends Controller
         $game = \Request::get('game');
         $displayName = \Request::get('displayName');
 
-        $gameArr = Game::pluck('name', 'gameId');
+        $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
         $gameArr->prepend('---Tất cả---', '');
 
-        $typeArr = array('' => '---Tất cả---', 1 => "Ken" ,2 => "Xu");
+        $typeArr = array('' => '---Tất cả---', 1 => "Mon");
 
         $query = MoneyLog::query();
         $query->join('user', function($join)
@@ -73,7 +73,7 @@ class MoneyHistoryController extends Controller
         }
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('insertedTime')->paginate($perPage);
+        $data = $query->orderBy('insertedTime', 'desc')->paginate($perPage);
 
         return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

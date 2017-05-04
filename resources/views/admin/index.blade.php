@@ -119,7 +119,7 @@
                             <th class="hidden-480">Đối tác</th>
                             <th class="hidden-480">Type view</th>
                             <th>Tổng tiền nạp(VNĐ)</th>
-                            <th>Tổng ken nạp </th>
+                            <th>Tổng mon nạp </th>
                         </tr>
                         </thead>
 
@@ -216,7 +216,7 @@
                     name: 'Thẻ cào',
                     data: cash_money
                 }, {
-                    name: 'Tổng ken nạp vào game',
+                    name: 'Tổng mon nạp vào game',
                     data: total_money
                 }, {
                     name: 'Đổi thưởng',

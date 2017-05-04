@@ -119,7 +119,7 @@
                             <th class="hidden-480">Tên hiển thị</th>
                             <th>Mệnh giá</th>
                             <th>Cash value</th>
-                            <th>Ken hiện tại</th>
+                            <th>Mon hiện tại</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Purchased time</th>
                             <th>Loại</th>
                             <th class="hidden-480">Mô tả</th>

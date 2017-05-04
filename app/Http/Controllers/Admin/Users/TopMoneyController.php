@@ -18,7 +18,7 @@ class TopMoneyController extends Controller
     {
         $type = \Request::get('type');
 
-        $typeArr = array('' => '---Tất cả---', 1 => 'Ken', 2 => 'Xu');
+        $typeArr = array('' => '---Tất cả---', 1 => 'Mon');
 
         $query = UserReg::query();
 

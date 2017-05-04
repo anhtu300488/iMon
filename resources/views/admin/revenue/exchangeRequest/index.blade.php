@@ -158,7 +158,17 @@
                             <td class="hidden-480">{{ $rs->assetId }}</td>
                             <td>{{ number_format($rs->totalCash) }}</td>
                             <td>{{ number_format($rs->totalParValue) }}</td>
-                            <td>@if($rs->status == 3)  <span class="label label-info arrowed-right arrowed-in">Waiting</span> @elseif($rs->status == 1)  <span class="label label-success arrowed-in arrowed-in-right">Success</span> @elseif($rs->status == -1)  <span class="label arrowed">Reject</span> @else <span class="label label-danger arrowed">Fail</span> @endif</td>
+                            <td>
+                                @if($rs->status === 3)
+                                    <span class="label label-info arrowed-right arrowed-in">Waiting</span>
+                                @elseif($rs->status === 1)
+                                    <span class="label label-success arrowed-in arrowed-in-right">Success</span>
+                                @elseif($rs->status === -1)
+                                    <span class="label arrowed">Reject</span>
+                                @elseif($rs->status === 2)
+                                    <span class="label label-danger arrowed">Fail</span>
+                                @endif
+                            </td>
                             <td class="hidden-480" style="text-align: center">
                                 @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
                             </td>
@@ -209,18 +219,19 @@
                             </ul>
                         </div>
                     @endif
-                    {{ Form::open(array('url'=>'revenue/exchangeRequest/delete','class'=>'form-horizontal', 'method'=> 'POST', 'name' => 'formSubmit')) }}
+                    {{ Form::open(array('url'=>'revenue/exchangeRequest/delete','class'=>'form-horizontal', 'method'=> 'POST', 'id' => 'formSubmit')) }}
                         {!! csrf_field() !!}
                         <input type="hidden" name="exchangeId" class="id" id="exchangeId">
                         <div class="form-group">
                             <label for="description" class="control-label">Lý do từ chối:</label>
-                            <textarea class="form-control" id="description" name="description"></textarea>
+                            {{--<textarea class="form-control" id="des" name="description"></textarea>--}}
+                            <input class="form-control" type="text" id="des" name="description">
                         </div>
                     {{ Form::close() }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" onclick="document.formSubmit.submit();" >Submit</button>
+                    <button type="submit" class="btn btn-primary" onclick="checkRequired()">Submit</button>
                 </div>
             </div>
         </div>
@@ -287,5 +298,20 @@
                 $("#exchangeId").val($(e.relatedTarget).data('id'));
             });
         });
+
+        function checkRequired()
+        {
+            var description =document.getElementById("des").value;
+            if(description == '')
+            {
+                alert('Bạn phải nhập lý do từ chối');
+                return false;
+            }
+            else
+            {
+                document.getElementById("formSubmit").submit();
+            }
+        }
+
     </script>
     @endsection

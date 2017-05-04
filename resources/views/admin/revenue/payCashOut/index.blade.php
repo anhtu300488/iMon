@@ -25,13 +25,13 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">UserID</label>
-                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Tên đăng nhập</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                    <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">

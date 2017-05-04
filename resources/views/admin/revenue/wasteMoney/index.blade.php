@@ -74,6 +74,7 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">Ngày</th>
+                            <th>Tổng phế</th>
                             <?php foreach($list_games  as $valgame): ?>
                             <th><?php echo $valgame['name'] ?></th>
                             <?php endforeach ?>
@@ -84,11 +85,42 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ $key }}</td>
+                                <td>
+                                @foreach($list_games  as $valgame)
+                                    <?php
+                                    $value = isset($rs[$valgame['gameId']]) ? $rs[$valgame['gameId']] : 0;
+                                    $arrRevenue[] = $value;
+                                    ?>
+                                @endforeach
+                                    <?php
+                                        $arrRevenueTotal[] = array_sum($arrRevenue);
+                                        // Hiển thị dữ liệu
+                                        if (array_sum($arrRevenue) == 0) {
+                                            echo '-';
+                                        } else {
+                                            echo number_format(array_sum($arrRevenue));
+                                        }
+                                    ?>
+                                </td>
                                 <?php foreach($list_games  as $valgame): ?>
                                 <th><?php echo isset($rs[$valgame['gameId']]) ? number_format($rs[$valgame['gameId']]) : '-'; ?></th>
                                 <?php endforeach; ?>
                             </tr>
                         @endforeach
+
+                        <?php if (count($data) == 0){ ?>
+                        <tr>
+                            <td colspan="8"><?php echo __('Không có dữ liệu nào!') ?></td>
+                        </tr>
+                        <?php } else { ?>
+                        <tr style="font-weight: bold">
+                            <td colspan="1" style="text-align: center"><?php echo __('Tổng cộng') ?></td>
+                            <td style="text-align: center">
+                                <?php echo number_format(array_sum($arrRevenueTotal)); ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
+
                         </tbody>
                     </table>
                 </div><!-- /.span -->

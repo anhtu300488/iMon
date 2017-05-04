@@ -143,7 +143,6 @@
 <script src="{!! asset('assets/js/date-time/bootstrap-timepicker.js') !!}"></script>
 <script src="{!! asset('assets/js/date-time/moment.js') !!}"></script>
 <script src="{!! asset('assets/js/date-time/daterangepicker.js') !!}"></script>
-{{--<script src="{!! asset('assets/js/date-time/bootstrap-datetimepicker.jss') !!}"></script>--}}
 <script src="{!! asset('assets/js/bootstrap-colorpicker.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.knob.js') !!}"></script>
 <script src="{!! asset('assets/js/jquery.autosize.js') !!}"></script>

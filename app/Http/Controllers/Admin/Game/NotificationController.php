@@ -35,25 +35,47 @@ class NotificationController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'content' => 'required|max:1000'
+            'content' => 'required|max:1000',
+            'fromDate' => 'required',
+            'fromTime' => 'required',
+            'toDate' => 'required',
+            'toTime' => 'required'
         ]);
 
+        $fromDate = $request->get('fromDate');
+        $fromTime = $request->get('fromTime');
+        $toDate = $request->get('toDate');
+        $toTime = $request->get('toTime');
+
+        $createdTime = date("Y-m-d", strtotime($fromDate)) . ' ' . $fromTime;
+
+        $expriedTime = date("Y-m-d", strtotime($toDate)) . ' ' . $toTime;
 
         $notification = new EmergencyNotification;
 
         $notification->content = $request->get('content');
+        $notification->createdTime = $createdTime;
+        $notification->expriedTime = $expriedTime;
         $notification->save();
 
-        return redirect()->route('notification.index')
+        return redirect()->route('emergencyNotification.index')
             ->with('message','Add Successfully');
     }
 
     public function edit($id){
-//        $notification = EmergencyNotification::query()->where("notificationId",$id)->first();
         $notification = EmergencyNotification::find($id);
-
-//        var_dump($notification);die;
-
+        $createdTime = $notification->createdTime;
+        $expriedTime = $notification->expriedTime;
+        $from = explode(' ', $createdTime);
+        $to = explode(' ', $expriedTime);
+        $fromDate = $from[0];
+        $fromTime = $from[1];
+        $toDate = $to[0];
+        $toTime = $to[1];
+        $notification->fromDate = $fromDate;
+        $notification->fromTime = $fromTime;
+        $notification->toDate = $toDate;
+        $notification->toTime = $toTime;
         return view('admin.game.notification.edit',compact('role','notification'));
     }
 
@@ -66,13 +88,13 @@ class NotificationController extends Controller
         $notification->content = $request->input('content');
         $notification->save();
 
-        return redirect()->route('notification.index')
+        return redirect()->route('emergencyNotification.index')
             ->with('message','Updated Successfully');
     }
 
     public function destroy($id){
         EmergencyNotification::query()->where('notificationId',$id)->delete();
-        return redirect()->route('notification.index')
+        return redirect()->route('emergencyNotification.index')
             ->with('message','Deleted Successfully');
     }
 }

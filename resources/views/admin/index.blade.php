@@ -183,12 +183,14 @@
             var array_date = new Array();
             var sum_money = new Array();
             var cash_money = new Array();
+            var iap_money = new Array();
             var total_money = new Array();
             var exchange_money = new Array();
             <?php foreach($purchase_arr as $day => $value):?>
                 array_date.push(['<?php echo $day;  ?>']);
             sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
             cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
+            iap_money.push(<?php echo isset($value[3][0])? $value[3][0] : 0 ?>);
             <?php $arr1 = isset($value[1][1]) ? $value[1][1] : 0;
                 $arr2 = isset($value[2][1]) ? $value[2][1] : 0;  ?>
             total_money.push(<?php echo (int)($arr1 + $arr2) / 10;  ?>);
@@ -215,6 +217,9 @@
                 }, {
                     name: 'Thẻ cào',
                     data: cash_money
+                }, {
+                    name: 'IAP',
+                    data: iap_money
                 }, {
                     name: 'Tổng mon nạp vào game',
                     data: total_money

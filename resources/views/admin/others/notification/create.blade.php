@@ -138,10 +138,6 @@
                 $(this).prev().focus();
             });
 
-            $('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
-
         });
     </script>
 @endsection

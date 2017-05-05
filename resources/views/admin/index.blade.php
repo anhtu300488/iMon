@@ -218,14 +218,14 @@
                     name: 'Thẻ cào',
                     data: cash_money
                 }, {
-                    name: 'IAP',
-                    data: iap_money
-                }, {
                     name: 'Tổng mon nạp vào game',
                     data: total_money
                 }, {
                     name: 'Đổi thưởng',
                     data: exchange_money
+                }, {
+                    name: 'IAP',
+                    data: iap_money
                 }]
             });
         });

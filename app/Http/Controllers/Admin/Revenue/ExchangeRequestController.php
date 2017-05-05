@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ExchangeAssetRequest;
+use App\Game;
+use App\UserReg;
+use App\UserStatistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,11 +27,11 @@ class ExchangeRequestController extends Controller
         $userId = \Request::get('userId');
         $phone = \Request::get('phone');
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
-        $status = \Request::get('status');
+        $status = \Request::get('status') ? \Request::get('status') : 3;
         $requestTopup = \Request::get('requestTopup');
         $responseData = \Request::get('responseData');
 
-        $statusArr = array('' => '---Tất cả---', 3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối");
+        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", -2 => '---Tất cả---');
 
         $query = ExchangeAssetRequest::query()->select('*', DB::raw('exchange_asset_request.status as status'), DB::raw('user.displayName as displayName'));
         $query->leftjoin('user', function($join)
@@ -49,7 +52,7 @@ class ExchangeRequestController extends Controller
             $query->where('exchange_asset_request.request_topup_id','LIKE','%'.$requestTopup.'%');
         }
 
-        if($status != ''){
+        if($status != -2){
             $query->where('exchange_asset_request.status','=',$status);
         }
 
@@ -100,5 +103,38 @@ class ExchangeRequestController extends Controller
         ExchangeAssetRequest::where('requestId', $id)->update(['status' => 4, 'description' => $description]);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
+    }
+
+    public function getMatchLog($id){
+        $query = UserStatistic::query();
+        $query->select(DB::raw("gameId"), DB::raw('SUM(winningMatch) as sum_winningMatch'), DB::raw('SUM(drawMatch) as sum_drawMatch'), DB::raw('SUM(losingMatch) as sum_losingMatch') );
+        $query->where('period', '=', 0);
+        if($id != ''){
+            $query->where('userId','=', $id);
+        }
+        $results = $query->groupBy("gameId")->get()->toArray();
+        $data = [];
+
+        foreach ($results as $rs){
+            $total = array($rs['sum_winningMatch'] , $rs['sum_drawMatch'], $rs['sum_losingMatch']);
+            $data[$rs['gameId']] = array_sum($total) ? array_sum($total) : 0;
+        }
+        $list_games = Game::getListGame($game = null);
+
+        $html = "<table class='table table-striped table-bordered table-hover no-margin-bottom no-border-top'>
+                <thead><tr>";
+        foreach ($list_games as $valgame){
+            $html = $html . "<th>".$valgame['name']."</th>";
+        }
+
+        $html = $html . "</tr></thead><tbody>";
+        foreach ($list_games as $valgame){
+            $value = isset($data[$valgame['gameId']]) ? $data[$valgame['gameId']] : 0;
+            $html = $html . "<td>".$value."</td>";
+        }
+
+        $html = $html . "</tbody></table>";
+
+        return $html;
     }
 }

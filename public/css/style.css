@@ -1,0 +1,10 @@
+#table-wrapper {
+    position:relative;
+}
+#table-scroll {
+    overflow:auto;
+}
+#table-wrapper table {
+    width:100%;
+
+}

@@ -82,6 +82,7 @@
                         </thead>
 
                         <tbody>
+
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ $key }}</td>
@@ -92,16 +93,18 @@
                                     $arrRevenue[] = $value;
                                     ?>
                                 @endforeach
-                                    <?php
-                                        $arrRevenueTotal[] = array_sum($arrRevenue);
-                                        // Hiển thị dữ liệu
-                                        if (array_sum($arrRevenue) == 0) {
-                                            echo '-';
-                                        } else {
-                                            echo number_format(array_sum($arrRevenue));
-                                        }
-                                    ?>
+                                <?php
+                                    $arrRevenueTotal[] = array_sum($arrRevenue);
+                                    // Hiển thị dữ liệu
+                                    if (array_sum($arrRevenue) == 0) {
+                                        echo '-';
+                                    } else {
+                                        echo number_format(array_sum($arrRevenue));
+                                    }
+
+                                ?>
                                 </td>
+                                <?php $arrRevenue = array();?>
                                 <?php foreach($list_games  as $valgame): ?>
                                 <th><?php echo isset($rs[$valgame['gameId']]) ? number_format($rs[$valgame['gameId']]) : '-'; ?></th>
                                 <?php endforeach; ?>

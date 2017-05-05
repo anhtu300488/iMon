@@ -93,6 +93,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('revenue/exchangeRequest/delete', ['as' => 'exchangeRequest.delete', 'uses' => 'Admin\Revenue\ExchangeRequestController@delete']);
 
+    Route::get('revenue/exchangeRequest/getMatchLog/{id}', ['as' => 'exchangeRequest.getMatchLog', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMatchLog']);
+
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
 
     Route::get('revenue/topCashOut', ['as' => 'revenue.topCashOut', 'uses' => 'Admin\Revenue\TopCashOutController@index']);

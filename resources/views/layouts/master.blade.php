@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="{!! asset('assets/css/ace-ie.css') !!}" />
     <![endif]-->
 
+    <link rel="stylesheet" href="{!! asset('css/style.css') !!}" />
+
     <!-- inline styles related to this page -->
 
     <!-- ace settings handler -->

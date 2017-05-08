@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Others;
 
+use App\Emoji;
 use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,12 +41,12 @@ class NotificationController extends Controller
             'message' => 'required|max:200',
             'pushTime' => 'required',
         ]);
-
         $input = $request->all();
         $input['admin_id'] = Auth::user()->id;
         $time = explode(":",$request->get('pushTime'));
         $input['pushHour'] = $time[0];
         $input['pushMinutes'] = $time[1];
+        $input['message'] = Emoji::Encode($request->get('message'));
         Notification::create($input);
 
         return redirect()->route('notification.index')
@@ -54,7 +55,7 @@ class NotificationController extends Controller
 
     public function edit($id){
         $notification = Notification::find($id);
-
+        $notification->message = Emoji::Decode($notification->message);
         return view('admin.others.notification.edit',compact('notification'));
     }
 
@@ -68,7 +69,7 @@ class NotificationController extends Controller
         $giftEvent = Notification::find($id);
         $time = explode(":",$request->get('pushTime'));
         $giftEvent->title = $request->input('title');
-        $giftEvent->message = $request->input('message');
+        $giftEvent->message = Emoji::Encode($request->get('message'));
         $giftEvent->pushTime = $request->input('pushTime');
         $giftEvent->pushHour = $time[0];
         $giftEvent->pushMinutes = $time[1];

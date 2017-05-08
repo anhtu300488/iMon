@@ -26,8 +26,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Nội dung</label>
             <div class="col-sm-9">
-                {{--<textarea class="form-control" id="form-field-8" name="content"></textarea>--}}
-                {!! Form::text('content', null, array('class' => 'form-control')) !!}
+                {!! Form::textarea('content', null, array('class' => 'form-control')) !!}
             </div>
         </div>
 
@@ -63,6 +62,14 @@
                     </span>
             </div>
 
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Trạng thái</label>
+            <div class="col-sm-9">
+                {!! Form::hidden('active',0) !!}
+                {{ Form::checkbox('active', 1, null, ['class' => 'field']) }}
+            </div>
         </div>
 
         <div class="clearfix form-actions">

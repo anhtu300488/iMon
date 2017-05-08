@@ -96,11 +96,18 @@ class ExchangeRequestController extends Controller
     public function delete(Request $request){
         $this->validate($request, [
             'description' => 'required|max:1000',
-            'exchangeId' => 'required'
+            'exchangeId' => 'required',
+            'type' => 'required',
         ]);
         $id = Input::get('exchangeId');
         $description = Input::get('description');
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 4, 'description' => $description]);
+        $type = Input::get('type');
+        if($type == 1){
+            $status = 2;
+        } elseif ($type == 2){
+            $status = 4;
+        }
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => $description]);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }
@@ -117,23 +124,44 @@ class ExchangeRequestController extends Controller
 
         foreach ($results as $rs){
             $total = array($rs['sum_winningMatch'] , $rs['sum_drawMatch'], $rs['sum_losingMatch']);
-            $data[$rs['gameId']] = array_sum($total) ? array_sum($total) : 0;
+            $sum = array_sum($total) ? array_sum($total) : 0;
+            $data[$rs['gameId']] = array($rs['sum_winningMatch'] , $rs['sum_drawMatch'], $rs['sum_losingMatch'], $sum);
         }
         $list_games = Game::getListGame($game = null);
 
         $html = "<table class='table table-striped table-bordered table-hover no-margin-bottom no-border-top'>
-                <thead><tr>";
+                <thead><tr>
+                <th>Tên Game</th>";
         foreach ($list_games as $valgame){
             $html = $html . "<th>".$valgame['name']."</th>";
         }
 
         $html = $html . "</tr></thead><tbody>";
+        $html = $html . "<tr><td>Tổng số ván chơi</td>";
         foreach ($list_games as $valgame){
-            $value = isset($data[$valgame['gameId']]) ? $data[$valgame['gameId']] : 0;
+            $value = isset($data[$valgame['gameId']][3]) ? $data[$valgame['gameId']][3] : 0;
             $html = $html . "<td>".$value."</td>";
         }
 
-        $html = $html . "</tbody></table>";
+        $html = $html . "</tr><tr><td>Tổng số ván thắng</td>";
+        foreach ($list_games as $valgame){
+            $value = isset($data[$valgame['gameId']][0]) ? $data[$valgame['gameId']][0] : 0;
+            $html = $html . "<td>".$value."</td>";
+        }
+
+        $html = $html . "</tr><tr><td>Tổng số ván hòa</td>";
+        foreach ($list_games as $valgame){
+            $value = isset($data[$valgame['gameId']][1]) ? $data[$valgame['gameId']][1] : 0;
+            $html = $html . "<td>".$value."</td>";
+        }
+
+        $html = $html . "</tr><tr><td>Tổng số ván thua</td>";
+        foreach ($list_games as $valgame){
+            $value = isset($data[$valgame['gameId']][2]) ? $data[$valgame['gameId']][2] : 0;
+            $html = $html . "<td>".$value."</td>";
+        }
+
+        $html = $html . "</tr></tbody></table>";
 
         return $html;
     }

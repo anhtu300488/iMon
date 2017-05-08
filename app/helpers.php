@@ -31,3 +31,7 @@ function numberFormat($money = 0, $dec_point = '.' , $thousands_sep = ','){
     $decimal = (count($arr) > 1 && $arr[1] != '00') ? 2 : 0;
     return number_format($money, $decimal, $dec_point, $thousands_sep);
 }
+
+function decodeEmoji($content){
+    return \App\Emoji::Decode($content);
+}

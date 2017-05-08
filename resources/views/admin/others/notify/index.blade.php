@@ -87,7 +87,7 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
-                                <td>{{ $rs->content }}</td>
+                                <td>{{ strip_tags($rs->content) }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td>

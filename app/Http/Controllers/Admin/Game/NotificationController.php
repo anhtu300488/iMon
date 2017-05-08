@@ -56,6 +56,7 @@ class NotificationController extends Controller
         $notification->content = $request->get('content');
         $notification->createdTime = $createdTime;
         $notification->expriedTime = $expriedTime;
+        $notification->active = $request->get('active');
         $notification->save();
 
         return redirect()->route('emergencyNotification.index')
@@ -81,11 +82,26 @@ class NotificationController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'content' => 'required|max:1000'
+            'content' => 'required|max:1000',
+            'fromDate' => 'required',
+            'fromTime' => 'required',
+            'toDate' => 'required',
+            'toTime' => 'required'
         ]);
+        $fromDate = $request->get('fromDate');
+        $fromTime = $request->get('fromTime');
+        $toDate = $request->get('toDate');
+        $toTime = $request->get('toTime');
+
+        $createdTime = date("Y-m-d", strtotime($fromDate)) . ' ' . $fromTime;
+
+        $expriedTime = date("Y-m-d", strtotime($toDate)) . ' ' . $toTime;
 
         $notification = EmergencyNotification::find($id);
         $notification->content = $request->input('content');
+        $notification->createdTime = $createdTime;
+        $notification->expriedTime = $expriedTime;
+        $notification->active = $request->get('active');
         $notification->save();
 
         return redirect()->route('emergencyNotification.index')

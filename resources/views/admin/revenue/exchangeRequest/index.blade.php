@@ -143,6 +143,7 @@
                             <th>Trạng thái</th>
                             <th class="hidden-480">Exchange By</th>
                             <th class="hidden-480">Request topup</th>
+                            <th>Thống kê số trận</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                             <th>Action</th>
                         </tr>
@@ -173,21 +174,22 @@
                                 @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
                             </td>
                             <td class="hidden-480">{{ $rs->request_topup_id }}</td>
+                            <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td>
                             @if($rs->status == 3)
                                 @permission('administrator')
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline']) !!}
-                                    <button class="btn btn-xs btn-info" name="reload" type="submit">
+                                    <button class="btn btn-xs btn-info" name="reload" type="button" data-id = "{{$rs->requestId}}" data-type="1" data-toggle="modal" data-target="#deleteModal">
                                         <i class="ace-icon fa fa-refresh white"></i>
                                     </button>
-                                    <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-toggle="modal" data-target="#deleteModal">
+                                    <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-type="2" data-toggle="modal" data-target="#deleteModal">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>
                                     {!! Form::close() !!}
                                 @endpermission
                             @endif
-                            <a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a>
+
                             </td>
                         </tr>
                         @endforeach
@@ -207,7 +209,7 @@
                             data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="deleteModalLabel">Delete Exchange Request</h4>
+                    <h4 class="modal-title" id="deleteModalLabel">Update Exchange Request</h4>
                 </div>
                 <div class="modal-body">
                     @if (count($errors) > 0)
@@ -223,10 +225,11 @@
                     {{ Form::open(array('url'=>'revenue/exchangeRequest/delete','class'=>'form-horizontal', 'method'=> 'POST', 'id' => 'formSubmit')) }}
                         {!! csrf_field() !!}
                         <input type="hidden" name="exchangeId" class="id" id="exchangeId">
+                        <input type="hidden" name="type" class="id" id="type">
                         <div class="form-group">
-                            <label for="description" class="control-label">Lý do từ chối:</label>
-                            {{--<textarea class="form-control" id="des" name="description"></textarea>--}}
-                            <input class="form-control" type="text" id="des" name="description">
+                            <label for="description" class="control-label">Nhập lý do:</label>
+                            <textarea class="form-control" id="des" name="description"></textarea>
+                            {{--<input class="form-control" type="text" id="des" name="description">--}}
                         </div>
                     {{ Form::close() }}
                 </div>
@@ -328,6 +331,7 @@
         $(function() {
             $('#deleteModal').on("show.bs.modal", function (e) {
                 $("#exchangeId").val($(e.relatedTarget).data('id'));
+                $("#type").val($(e.relatedTarget).data('type'));
             });
         });
 
@@ -335,6 +339,7 @@
             $('#modal-table').on("show.bs.modal", function (e) {
 
                 var id = $(e.relatedTarget).data('id');
+                var type = $(e.relatedTarget).data('type');
                 $.get('/revenue/exchangeRequest/getMatchLog/' + id, function( data ) {
                     $(".modal-body").html(data);
                 });

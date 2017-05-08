@@ -89,7 +89,7 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->title }}</td>
-                                <td>{{ $rs->message }}</td>
+                                <td>{{ decodeEmoji($rs->message) }}</td>
                                 <td class="hidden-480">{{ $rs->pushTime }}</td>
                                 <td>@if($rs->repeat_daily == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>

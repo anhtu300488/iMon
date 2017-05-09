@@ -108,7 +108,7 @@
                                 <td class="hidden-480">{{ $rs->provider }}</td>
                                 <td>{{ number_format($rs->cardValue) }}</td>
                                 <td>{{ $rs->cardPin }}</td>
-                                <td>@if($rs->active == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                                <td>@if($rs->active == 0)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">New</span> @endif</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('purchaseMoney.edit',$rs->missId) }}">

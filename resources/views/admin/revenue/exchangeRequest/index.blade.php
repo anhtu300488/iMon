@@ -179,8 +179,8 @@
                             <td>
                             @if($rs->status == 3)
                                 @permission('administrator')
-                                    {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline']) !!}
-                                    <button class="btn btn-xs btn-info" name="reload" type="button" data-id = "{{$rs->requestId}}" data-type="1" data-toggle="modal" data-target="#deleteModal">
+                                    {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
+                                    <button class="btn btn-xs btn-info" name="reload" type="submit">
                                         <i class="ace-icon fa fa-refresh white"></i>
                                     </button>
                                     <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-type="2" data-toggle="modal" data-target="#deleteModal">

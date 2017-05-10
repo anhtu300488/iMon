@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/xocDia','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'game/taiXiu','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Room ID</label>
@@ -91,7 +91,7 @@
                             <th>Room ID</th>
                             <th>Match Index</th>
                             <th>Mô tả</th>
-                            {{--<th>Loại</th>--}}
+                            <th>Loại</th>
                             <th>Created time</th>
                         </tr>
                         </thead>
@@ -102,13 +102,8 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->roomId }}</td>
                                 <td>{{ $rs->matchIndex }}</td>
-                                <td>
-                                    <?php $arr_des = explode("+",getDescriptionXocDia($rs->description));
-                                    ?>
-                                    @foreach ($arr_des as $des)
-                                         {{ $des }}</br>
-                                    @endforeach
-                                </td>
+                                <td>{{ $rs->description }}</td>
+                                <td></td>
                                 <td>{{ $rs->createdTime }}</td>
                             </tr>
                         @endforeach

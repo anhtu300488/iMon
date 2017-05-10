@@ -189,6 +189,22 @@ Route::group(['middleware' => ['auth']], function() {
 
     //Xoc dia
     Route::get('game/xocDia', ['as' => 'game.xocDia', 'uses' => 'Admin\Game\XocdiaController@index']);
+    //tai xiu
+    Route::get('game/taiXiu', ['as' => 'game.taiXiu', 'uses' => 'Admin\Game\TaiXiuController@index']);
+    //lieng
+    Route::get('game/lieng', ['as' => 'game.lieng', 'uses' => 'Admin\Game\LiengController@index']);
+    //xito
+    Route::get('game/xito', ['as' => 'game.xito', 'uses' => 'Admin\Game\XiToController@index']);
+    //TLMN
+    Route::get('game/tlmn', ['as' => 'game.tlmn', 'uses' => 'Admin\Game\TLMNController@index']);
+    //TLMN solo
+    Route::get('game/tlmnsolo', ['as' => 'game.tlmnsolo', 'uses' => 'Admin\Game\TLMNSoloController@index']);
+    //Mau Binh
+    Route::get('game/maubinh', ['as' => 'game.maubinh', 'uses' => 'Admin\Game\MauBinhController@index']);
+    //Phom
+    Route::get('game/phom', ['as' => 'game.phom', 'uses' => 'Admin\Game\PhomController@index']);
+    //Bacay
+    Route::get('game/bacay', ['as' => 'game.bacay', 'uses' => 'Admin\Game\BaCayController@index']);
 
     Route::get('moneyGame/cardProvider', ['as' => 'moneyGame.cardProvider', 'uses' => 'Admin\MoneyGame\CardProviderController@index']);
 

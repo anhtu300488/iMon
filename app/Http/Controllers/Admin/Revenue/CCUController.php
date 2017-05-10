@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 
 use App\Game;
 use App\OnlineLog;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,5 +45,29 @@ class CCUController extends Controller
 //        var_dump($arr_log);die;
 
         return view('admin.revenue.ccu.index', compact('timeArr','arr_game','arr_log'))->with('i', ($request->input('page', 1) - 1) * 10);
+    }
+
+    public function statistic($fromDate){
+        $fromDate = str_replace('-', '/', $fromDate);
+        if(date("Y-m-d",strtotime($fromDate)) == date("Y-m-d",strtotime(Carbon::now()))){
+            $fromDate = Carbon::now();
+        } else {
+            $fromDate = date("Y-m-d 23:59:59",strtotime($fromDate));
+        }
+//        $fromDate = Carbon::now();
+        $insertedtime = date("Y-m-d H:i:s",strtotime($fromDate));
+        $arr_log = array();
+        $online_logs = OnlineLog::getOnlineLogHour($insertedtime);
+        foreach($online_logs as $i => $log){
+            $arr_log[date("H:i",strtotime($log["insertedTime"]))][0] = json_decode($log["peakData"])->total ? json_decode($log["peakData"])->total :0;
+
+        }
+        $insertedtime2 = date("Y-m-d H:i:s",strtotime( $fromDate.' -1 days' ));
+        $online_logs1 = OnlineLog::getOnlineLogHour($insertedtime2);
+        foreach($online_logs1 as $i => $log){
+            $arr_log[date("H:i",strtotime($log["insertedTime"]))][1] = json_decode($log["peakData"])->total ? json_decode($log["peakData"])->total :0;
+
+        }
+        return $arr_log;
     }
 }

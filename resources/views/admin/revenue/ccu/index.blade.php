@@ -186,31 +186,28 @@
     <script type="text/javascript">
         $(function() {
             $('#modal-table').on("show.bs.modal", function (e) {
-                var date = $('input[name=date_charge]').val().split(" - ");
+                var date = $('input[name=insertedtime]').val().split(" - ");
                 var newDate = new Date();
-                var newDate1 = new Date();
                 var fromDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
-                var toDate = (newDate1.getMonth() + 1) + '-' + newDate1.getDate() + '-' + newDate1.getFullYear();
                 if(date != ''){
                     fromDate = date[0].split("/").join("-");
-                    toDate = date[1].split("/").join("-");
                 }
-                $.get('/revenue/revenueDay/statistic/' + fromDate + '/' + toDate, function( data ) {
+                $.get('/revenue/ccu/statistic/' + fromDate, function( data ) {
                     var array_date = new Array();
-                    var sum_money_today = new Array();
-                    var cash_money_yesterday = new Array();
-
-                    data.forEach(function(current_value, index, initial_array) {
+                    var online_today = new Array();
+                    var online_yesterday = new Array();
+                    Object.keys(data).forEach(function(index) {
                         array_date.push(index);
-                        sum_money_today.push(current_value[0]);
-                        cash_money_yesterday.push(current_value[1]);
+                        online_today.push(data[index][0]);
+                        online_yesterday.push(data[index][1]);
                     });
+
                     $('#container1').highcharts({
                         chart: {
-                            type: 'column'
+                            type: 'area'
                         },
                         title: {
-                            text: 'So sánh doanh thu'
+                            text: 'So sánh CCU theo thời gian'
                         },
                         xAxis: {
                             categories: array_date
@@ -222,10 +219,10 @@
                         },
                         series: [{
                             name: 'Hôm qua',
-                            data: cash_money_yesterday
+                            data: online_yesterday
                         }, {
                             name: 'Hôm nay',
-                            data: sum_money_today
+                            data: online_today
                         }]
                     });
                 });

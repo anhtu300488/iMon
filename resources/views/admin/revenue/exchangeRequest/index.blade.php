@@ -242,7 +242,7 @@
     </div>
 
     <div id="modal-table" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 768px">
             <div class="modal-content">
                 <div class="modal-header no-padding">
                     <div class="table-header">

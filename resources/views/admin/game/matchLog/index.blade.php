@@ -22,18 +22,20 @@
                             {!! Form::open(['method'=>'GET','url'=>'game/matchLog','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Roomid</label>
-                                    <input class="form-control" name="roomId" type="text" />
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">Ngày</label>
+                                    <div class="input-group">
+                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="createdTime" value="{{request('createdTime')}}"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Matchindex</label>
-                                    <input class="form-control" name="matchIndex" type="text" />
-                                </div>
+                                    <label  for="form-field-select-1">Game</label>
+                                    {!! Form::select('game', $gameArr, request('game'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Gameid</label>
-                                    <input class="form-control" name="gameId" type="text" />
                                 </div>
 
                             </div>
@@ -65,32 +67,43 @@
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="hidden-480">STT</th>
-                            <th>Room Id</th>
-                            <th >Matchindex</th>
-                            <th class="hidden-480">Gameid</th>
-                            <th>Game name</th>
-                            <th class="hidden-480">Mô tả</th>
+                            <th class="hidden-480">Ngày</th>
+                            <?php foreach($list_games  as $valgame): ?>
+                            <th><?php echo $valgame['name'] ?></th>
+                            <?php endforeach ?>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($data as $key => $rs)
                             <tr>
-                                <td class="hidden-480">{{ ++$i }}</td>
-                                <td>{{ $rs->roomId }}</td>
-                                <td >{{ $rs->matchIndex }}</td>
-                                <td class="hidden-480">{{ $rs->gameId }}</td>
-                                <td >{{ $game[$rs->gameId] }}</td>
-                                <td class="hidden-480">{{ $rs->description }}</td>
+                                <td class="hidden-480">{{ $key }}</td>
+                                <?php foreach($list_games  as $valgame): ?>
+                                <th><?php echo isset($rs[$valgame['gameId']]) ? number_format($rs[$valgame['gameId']]) : '-'; ?></th>
+                                <?php endforeach; ?>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.span -->
-                @include('layouts.partials._pagination')
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script>
+        jQuery(function($) {
 
+            //datepicker plugin
+            //link
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            })
+            //show datepicker when clicking on the icon
+                .next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+
+        });
+    </script>
 @endsection

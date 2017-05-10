@@ -17,37 +17,20 @@ class MatchLogController extends Controller
      */
     public function index(Request $request)
     {
-        $roomId = \Request::get('roomId');
-        $matchIndex = \Request::get('matchIndex');
-        $gameId = \Request::get('gameId');
+        $createdTime = $request->get('createdTime');
+        $game = \Request::get('game');
 
-        $game = Game::pluck('name', 'gameId');
+        $gameArr = Game::where('status',1)->pluck('name', 'gameId');
+        $gameArr->prepend('---Tất cả---', '');
 
-        $matchThese = [];
-        if($roomId != ''){
-            $matchThese['roomId'] = $roomId;
+        $list_games = Game::getListGame($game);
+
+        $results = MatchLog::getTotalGame($game, $createdTime);
+
+        $data = [];
+        foreach ($results as $rs){
+            $data[$rs->day][$rs->gameId] = $rs->total;
         }
-
-        if($matchIndex != ''){
-            $matchThese['matchIndex'] = $matchIndex;
-        }
-
-        if($gameId != ''){
-            $matchThese['gameId'] = $gameId;
-        }
-
-        $query = MatchLog::query();
-
-        $query->where($matchThese);
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('createdTime', 'desc')->paginate($perPage);
-
-//        var_dump($data);die;
-        foreach ($data as $k => $v){
-            if($v->gameId){
-
-            }
-        }
-        return view('admin.game.matchLog.index',compact('data', 'game'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.game.matchLog.index',compact('data', 'gameArr', 'list_games'));
     }
 }

@@ -85,6 +85,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
+    Route::get('revenue/ccu/statistic/{fromDate}', ['as' => 'revenue.ccu.statistic', 'uses' => 'Admin\Revenue\CCUController@statistic']);
+
     Route::get('revenue/wasteMoney', ['as' => 'revenue.wasteMoney', 'uses' => 'Admin\Revenue\WasteMoneyController@index']);
 
     Route::get('revenue/wasteMoney/xlsx', ['as' => 'wasteMoney.excel', 'uses' => 'Admin\Revenue\WasteMoneyController@downloadExcel'] );

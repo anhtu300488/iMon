@@ -313,7 +313,62 @@
 
                     <b class="arrow"></b>
                 </li>
+                <li {{ setActive('game/tlmn') }}>
+                    <a href="{{route('game.tlmn')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game TLMN
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/tlmnsolo') }}>
+                    <a href="{{route('game.tlmnsolo')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game TLMN SOLO
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/maubinh') }}>
+                    <a href="{{route('game.maubinh')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Mậu Binh
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/phom') }}>
+                    <a href="{{route('game.phom')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Phỏm
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/bacay') }}>
+                    <a href="{{route('game.bacay')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Ba Cây
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/lieng') }}>
+                    <a href="{{route('game.lieng')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Liêng
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('game/xito') }}>
+                    <a href="{{route('game.xito')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Xì Tố
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 

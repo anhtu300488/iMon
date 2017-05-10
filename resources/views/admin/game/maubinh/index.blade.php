@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Thống kê xóc đĩa
+    Thống kê Mậu Binh
 @endsection
 @section('content')
     <div class="page-header">
@@ -91,7 +91,7 @@
                             <th>Room ID</th>
                             <th>Match Index</th>
                             <th>Mô tả</th>
-                            {{--<th>Loại</th>--}}
+                            <th>Loại</th>
                             <th>Created time</th>
                         </tr>
                         </thead>
@@ -102,13 +102,8 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->roomId }}</td>
                                 <td>{{ $rs->matchIndex }}</td>
-                                <td>
-                                    <?php $arr_des = explode("+",getDescriptionXocDia($rs->description));
-                                    ?>
-                                    @foreach ($arr_des as $des)
-                                         {{ $des }}</br>
-                                    @endforeach
-                                </td>
+                                <td>{{ $rs->description }}</td>
+                                <td></td>
                                 <td>{{ $rs->createdTime }}</td>
                             </tr>
                         @endforeach

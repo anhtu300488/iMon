@@ -38,7 +38,7 @@ class MoneyHistoryController extends Controller
         });
         $matchThese = [];
         if($game != ''){
-            $matchThese['game'] = $game;
+            $matchThese['gameId'] = $game;
         }
         if($userName != ''){
             $query->where('user.userName','LIKE','%'.$userName.'%');

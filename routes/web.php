@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/revenueDay', ['as' => 'revenue.revenueDay', 'uses' => 'Admin\Revenue\RevenueDayController@index']);
 
+    Route::get('revenue/revenueDay/statistic/{fromDate}/{toDate}', ['as' => 'revenue.revenueDay.statistic', 'uses' => 'Admin\Revenue\RevenueDayController@statistic']);
+
     Route::get('revenue/revenueUserCharge', ['as' => 'revenue.revenueUserCharge', 'uses' => 'Admin\Revenue\RevenueUserChargeController@index']);
 
     Route::get('revenue/userOnline', ['as' => 'revenue.userOnline', 'uses' => 'Admin\Revenue\UserOnlineController@index']);

@@ -25,7 +25,7 @@ class UserLockController extends Controller
             $query->where('userName','LIKE','%'.$userName.'%');
         }
 
-        $query->where('status','=', 3);
+        $query->where('status','!=', 1);
 
         if($fromDate != '' && $toDate != ''){
             $start = date("Y-m-d 00:00:00",strtotime($fromDate));

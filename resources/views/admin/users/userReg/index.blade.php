@@ -94,6 +94,12 @@
 
                                     {!! Form::select('clientType', $clientType, request('clientType'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Trạng thái</label>
+
+                                    {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                </div>
                             </div>
                             {!! Form::close() !!}
                             <hr />
@@ -126,41 +132,64 @@
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="col-xs-12">
-                    <table id="simple-table" class="table table-striped table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th class="hidden-480">STT</th>
-                            <th>UserID</th>
-                            <th>Tên đăng nhập</th>
-                            <th>Tên hiển thị</th>
-                            <th class="hidden-480">IP</th>
-
-                            <th>
-                                Thiết bị
-                            </th>
-                            <th class="hidden-480">Đối tác</th>
-                            <th>Nền tảng</th>
-                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($data as $key => $rs)
+                    {!! Form::open(['method'=>'POST','url'=>'users/userReg/lockUser','role'=>'search', 'name' => 'formLockUser'])  !!}
+                    {{ csrf_field() }}
+                    <button class="btn btn-warning" type="submit" name="lock" value="lock" onclick="confirm('Are you sure?');">Tạm khóa</button> <button class="btn btn-danger" type="submit" name="delete" value="delete" onclick="confirm('Are you sure?');">Khóa vĩnh viễn</button> <button class="btn btn-success" type="submit" name="unlock" value="unlock" onclick="confirm('Are you sure?')">Mở khóa</button>
+                        <hr />
+                        <table id="simple-table" class="table table-striped table-bordered table-hover">
+                            <thead>
                             <tr>
-                                <td class="hidden-480">{{ ++$i }}</td>
-                                <td>{{ $rs->userId }}</td>
-                                <td>{{ $rs->userName }}</td>
-                                <td>{{ $rs->displayName }}</td>
-                                <td class="hidden-480">{{ $rs->ip }}</td>
-                                <td>{{ $rs->device }}</td>
-                                <td class="hidden-480">{{ $rs->cp }}</td>
-                                <td>{{ $clientType[$rs->clientId] }}</td>
-                                <td class="hidden-480">{{ $rs->registedTime }}</td>
+                                <th class="hidden-480">STT</th>
+                                <th><input type="checkbox" onclick="toggle(this);" /></th>
+                                <th>UserID</th>
+                                <th>Tên đăng nhập</th>
+                                <th>Tên hiển thị</th>
+                                <th class="hidden-480">IP</th>
+                                <th>
+                                    Thiết bị
+                                </th>
+                                <th class="hidden-480">Đối tác</th>
+                                <th>Nền tảng</th>
+                                <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
+                                <th>Trạng thái</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                            @foreach($data as $key => $rs)
+                                <tr>
+                                    <td class="hidden-480">{{ ++$i }}</td>
+                                    <td><input type="checkbox" name="userIds[]" class="checkboxes" value="{{ $rs->userId }}" /></td>
+                                    <td>{{ $rs->userId }}</td>
+                                    <td>{{ $rs->userName }}</td>
+                                    <td>{{ $rs->displayName }}</td>
+                                    <td class="hidden-480">{{ $rs->ip }}</td>
+                                    <td>{{ $rs->device }}</td>
+                                    <td class="hidden-480">{{ $rs->cp }}</td>
+                                    <td>{{ $clientType[$rs->clientId] }}</td>
+                                    <td class="hidden-480">{{ $rs->registedTime }}</td>
+                                    <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @elseif($rs->status == 3) <span class="label label-sm label-inverse arrowed-in">Lock</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        {!! Form::close() !!}
                 </div><!-- /.span -->
                 @include('layouts.partials._pagination')
             </div><!-- /.row -->
@@ -186,7 +215,17 @@
 
         });
     </script>
+    <script type="text/javascript">
 
+        function toggle(source) {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] != source)
+                    checkboxes[i].checked = source.checked;
+            }
+        }
+
+    </script>
     <script type="text/javascript">
         <?php if($sevent_day != null):?>
         $(function () {

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
+use App\BlackListUser;
 use App\ClientType;
 use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Input;
 
 class UserRegisterController extends Controller
 {
@@ -27,6 +30,9 @@ class UserRegisterController extends Controller
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
+        $status = \Request::get('status');
+
+        $statusArr = array('' => '---Tất cả---', 0 => 'Không hoạt động', 1 => 'Hoạt động', 3 => 'Tạm khóa');
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -43,6 +49,10 @@ class UserRegisterController extends Controller
 
         if($userId != ''){
             $matchThese['userId'] = $userId;
+        }
+
+        if($status != ''){
+            $matchThese['status'] = $status;
         }
         $query = UserReg::query();
         if($userName != ''){
@@ -114,7 +124,7 @@ class UserRegisterController extends Controller
 
         }
 
-        return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
 
@@ -182,6 +192,43 @@ class UserRegisterController extends Controller
                 $sheet->prependRow(1, $headings);
             });
         })->download('xlsx');
+    }
+
+    public function lockUser(Request $request){
+        $this->validate($request, [
+            'userIds' => 'required'
+        ]);
+        $ids = $request->get('userIds');
+        if($request->has('lock')){
+            $data = array();
+            foreach ($ids as $id){
+                $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'lockType' => 2);
+                array_push($data, $arr);
+            }
+
+            BlackListUser::insert($data);
+            return redirect()->route('users.userReg')
+                ->with('message','Lock User Successfully');
+        }
+
+        if($request->has('unlock')){
+            UserReg::whereIn('userId', $ids)->update(['status' => 1]);
+            return redirect()->route('users.userReg')
+                ->with('message','UnLock User Successfully');
+        }
+
+        if($request->has('delete')){
+            $data = array();
+            foreach ($ids as $id){
+                $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'lockType' => 1);
+                array_push($data, $arr);
+            }
+
+            BlackListUser::insert($data);
+            return redirect()->route('users.userReg')
+                ->with('message','Lock User Successfully');
+        }
+
     }
 }
 

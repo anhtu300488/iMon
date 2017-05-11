@@ -151,6 +151,8 @@ Route::group(['middleware' => ['auth']], function() {
     //users management
     Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
 
+    Route::post('users/userReg/lockUser', ['as'=>'users.userReg.lockUser', 'uses'=>'Admin\Users\UserRegisterController@lockUser']);
+
     Route::get('users/userReg/xlsx', ['as' => 'userReg.excel', 'uses' => 'Admin\Users\UserRegisterController@downloadExcel']);
 
     Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);

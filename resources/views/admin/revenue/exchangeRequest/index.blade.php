@@ -74,22 +74,6 @@
 
 
                             </div>
-                            <div class="row">
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Request topup</label>
-                                    <input class="form-control" name="requestTopup" type="text" value="{{request('requestTopup')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">ResponseData</label>
-                                    <input class="form-control" name="responseData" type="text" value="{{request('responseData')}}"/>
-                                </div>
-
-
-                            </div>
                             <hr />
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
@@ -137,12 +121,11 @@
                             <th class="hidden-480">User ID</th>
                             <th class="hidden-480">Tên hiển thị</th>
                             <th>Tên đăng nhập</th>
-                            <th class="hidden-480">Asset</th>
+                            <th class="hidden-480">Tổng tiền đã nạp</th>
                             <th>Total cash</th>
                             <th>Giá trị thẻ</th>
                             <th>Trạng thái</th>
                             <th class="hidden-480">Exchange By</th>
-                            <th class="hidden-480">Request topup</th>
                             <th>Thống kê số trận</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                             <th>Action</th>
@@ -156,7 +139,7 @@
                             <td class="hidden-480">{{ $rs->requestUserId }}</td>
                             <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td>{{ $rs->requestUserName }}</td>
-                            <td class="hidden-480">{{ $rs->assetId }}</td>
+                            <td class="hidden-480">{{ number_format($rs->totalMoneyCharged) }}</td>
                             <td>{{ number_format($rs->totalCash) }}</td>
                             <td>{{ number_format($rs->totalParValue) }}</td>
                             <td>
@@ -173,7 +156,6 @@
                             <td class="hidden-480" style="text-align: center">
                                 @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
                             </td>
-                            <td class="hidden-480">{{ $rs->request_topup_id }}</td>
                             <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td>

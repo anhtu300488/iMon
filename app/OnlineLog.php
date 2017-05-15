@@ -58,7 +58,7 @@ class OnlineLog extends Model
             $end = date("Y-m-d H:i:s",strtotime($insertedtime));
             $sql->whereBetween('insertedTime',[$start,$end]);
 //            $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));
-            $sql->where(DB::raw('logId % 4'), '=', 1);
+//            $sql->where(DB::raw('logId % 4'), '=', 1);
         }
 
         return  $sql->orderBy('insertedTime', 'desc')->get();

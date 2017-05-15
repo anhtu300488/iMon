@@ -28,8 +28,6 @@ class ExchangeRequestController extends Controller
         $phone = \Request::get('phone');
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $status = \Request::get('status') ? \Request::get('status') : 3;
-        $requestTopup = \Request::get('requestTopup');
-        $responseData = \Request::get('responseData');
 
         $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", -2 => '---Tất cả---');
 
@@ -48,16 +46,9 @@ class ExchangeRequestController extends Controller
         if($displayName != ''){
             $query->where('user.displayName','LIKE','%'.$displayName.'%');
         }
-        if($requestTopup != ''){
-            $query->where('exchange_asset_request.request_topup_id','LIKE','%'.$requestTopup.'%');
-        }
 
         if($status != -2){
             $query->where('exchange_asset_request.status','=',$status);
-        }
-
-        if($responseData != ''){
-            $query->where('exchange_asset_request.responseData','LIKE','%'.$responseData.'%');
         }
 
         $query->where('user.status', '=', 1);

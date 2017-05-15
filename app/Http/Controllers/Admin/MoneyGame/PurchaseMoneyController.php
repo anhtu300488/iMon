@@ -44,7 +44,7 @@ class PurchaseMoneyController extends Controller
     public function create(){
         $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
             "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
-        $toCash = array(1 => "Ken", 0 => "Xu" );
+        $toCash = array(1 => "Mon" );
         return view('admin.moneyGame.purchaseMoney.create', compact('provider', 'toCash'));
     }
 
@@ -69,7 +69,7 @@ class PurchaseMoneyController extends Controller
         $purchaseMoneyMissing = PurchaseMoneyMissing::find($id);
         $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
             "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
-        $toCash = array(1 => "Ken", 0 => "Xu" );
+        $toCash = array(1 => "Mon" );
         return view('admin.moneyGame.purchaseMoney.edit',compact('provider', 'toCash', 'purchaseMoneyMissing'));
     }
 

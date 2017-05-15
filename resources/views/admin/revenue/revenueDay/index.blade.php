@@ -309,14 +309,17 @@
                     toDate = date[1].split("/").join("-");
                 }
                 $.get('/revenue/revenueDay/statistic/' + fromDate + '/' + toDate, function( data ) {
+//                    $(".modal-body").html(data);
+//                    alert(JSON.stringify(data[4][0]));
                     var array_date = new Array();
                     var sum_money_today = new Array();
                     var cash_money_yesterday = new Array();
-
-                    data.forEach(function(current_value, index, initial_array) {
+                    Object.keys(data).forEach(function(index) {
                         array_date.push(index);
-                        sum_money_today.push(current_value[0]);
-                        cash_money_yesterday.push(current_value[1]);
+                        var data0 = (data[index][0] === undefined) ? 0 : data[index][0];
+                        var data1 = (data[index][1] === undefined) ? 0 : data[index][1];
+                        sum_money_today.push(data0);
+                        cash_money_yesterday.push(data1);
                     });
                     $('#container1').highcharts({
                         chart: {

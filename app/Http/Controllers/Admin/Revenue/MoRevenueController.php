@@ -25,7 +25,7 @@ class MoRevenueController extends Controller
 
         $matchThese = [];
         if($userID != ''){
-            $matchThese['userId'] = $userID;
+            $matchThese['user_id'] = $userID;
         }
 
         $query = MoHistory::query();

@@ -198,8 +198,10 @@
                     var online_yesterday = new Array();
                     Object.keys(data).forEach(function(index) {
                         array_date.push(index);
-                        online_today.push(data[index][0]);
-                        online_yesterday.push(data[index][1]);
+                        var data0 = (data[index][0] === undefined) ? 0 : data[index][0];
+                        var data1 = (data[index][1] === undefined) ? 0 : data[index][1];
+                        online_yesterday.push(data1);
+                        online_today.push(data0);
                     });
 
                     $('#container1').highcharts({

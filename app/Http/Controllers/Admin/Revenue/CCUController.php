@@ -62,6 +62,7 @@ class CCUController extends Controller
             $arr_log[date("H:i",strtotime($log["insertedTime"]))][0] = json_decode($log["peakData"])->total ? json_decode($log["peakData"])->total :0;
 
         }
+
         $insertedtime2 = date("Y-m-d H:i:s",strtotime( $fromDate.' -1 days' ));
         $online_logs1 = OnlineLog::getOnlineLogHour($insertedtime2);
         foreach($online_logs1 as $i => $log){

@@ -20,8 +20,9 @@
             <div class="col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
-                        <h4 class="widget-title">Tìm kiếm</h4>
-
+                        <h4 class="widget-title">Tìm kiếm {{\Session::get('session_id')}}</h4>
+                        {{\Session::getId()}}
+                        {{auth()->user()->session_id}}
                         <span class="widget-toolbar">
                             <a href="#" data-action="collapse">
                                 <i class="ace-icon fa fa-chevron-up"></i>

@@ -111,8 +111,10 @@ class RevenueDayController extends Controller
         $date = $fromStr.' - '.$toStr;
         $dateCharge = explode(" - ", $date);
 
+
         //get data of today
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, null, null);
+
         $purchase_arr = array();
         $today_arr = array();
         $yesterday_arr = array();
@@ -124,8 +126,12 @@ class RevenueDayController extends Controller
 
         if(count($today_arr) > 0){
             foreach ($today_arr as $k => $v){
-                $purchase_arr[$k][0] = $v['1'] + $v['2'];
+                $t1 = isset($v['1']) ? $v['1'] : 0;
+                $t2 = isset($v['2']) ? $v['2'] : 0;
+                $total = $t1 + $t2;
+                $purchase_arr[$k][0] = $total ? $total : 0;
             }
+
         }
         //get data of yesterday
         $start[0] = $start[1] = date("m/d/Y",strtotime($dateCharge[0].' -1 days') );
@@ -137,10 +143,12 @@ class RevenueDayController extends Controller
         }
         if(count($yesterday_arr) > 0){
             foreach ($yesterday_arr as $k => $v){
-                $purchase_arr[$k][1] = $v['1'] + $v['2'];
+                $t1 = isset($v['1']) ? $v['1'] : 0;
+                $t2 = isset($v['2']) ? $v['2'] : 0;
+                $total = $t1 + $t2;
+                $purchase_arr[$k][1] = $total ? $total : 0;
             }
         }
-
         return $purchase_arr;
 
     }

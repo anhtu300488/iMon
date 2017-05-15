@@ -13,12 +13,20 @@ class GiftCodeController extends Controller
     public function index(Request $request){
 
         $userName = \Request::get('userName');
+        $userId = \Request::get('userId');
+        $code = \Request::get('code');
 
         $giftEvent = GiftEvent::pluck('eventName', 'giftEventId');
 
         $query = GiftCode::query();
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
+        }
+        if($userId != ''){
+            $query->where('userId','=',$userId);
+        }
+        if($code != ''){
+            $query->where('code','=',$code);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('userName')->paginate($perPage);

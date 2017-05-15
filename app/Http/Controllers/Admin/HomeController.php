@@ -110,7 +110,56 @@ class HomeController extends Controller
         foreach ($exchange_moneys as $index => $exchange_money){
             $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
+
         return view('admin.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+    }
+
+    public function statistic($fromDate,$toDate){
+        $fromStr = str_replace('-', '/', $fromDate);
+        $toStr = str_replace('-', '/', $toDate);
+        $date = $fromStr.' - '.$toStr;
+        $dateCharge = explode(" - ", $date);
+
+
+        //get data of today
+        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, null, null);
+
+        $purchase_arr = array();
+        $today_arr = array();
+        $yesterday_arr = array();
+        if(count($purchase_moneys) > 0){
+            foreach ($purchase_moneys as $index => $purchase_money){
+                $today_arr[$purchase_money->purchase_date][$purchase_money->type] = $purchase_money->sum_money;
+            }
+        }
+
+        if(count($today_arr) > 0){
+            foreach ($today_arr as $k => $v){
+                $t1 = isset($v['1']) ? $v['1'] : 0;
+                $t2 = isset($v['2']) ? $v['2'] : 0;
+                $total = $t1 + $t2;
+                $purchase_arr[$k][0] = $total ? $total : 0;
+            }
+
+        }
+        //get data of yesterday
+        $start[0] = $start[1] = date("m/d/Y",strtotime($dateCharge[0].' -1 days') );
+        $purchase_moneys1 = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $start, null, null, null);
+        if(count($purchase_moneys1) > 0) {
+            foreach ($purchase_moneys1 as $index => $purchase_money) {
+                $yesterday_arr[$purchase_money->purchase_date][$purchase_money->type] = $purchase_money->sum_money;
+            }
+        }
+        if(count($yesterday_arr) > 0){
+            foreach ($yesterday_arr as $k => $v){
+                $t1 = isset($v['1']) ? $v['1'] : 0;
+                $t2 = isset($v['2']) ? $v['2'] : 0;
+                $total = $t1 + $t2;
+                $purchase_arr[$k][1] = $total ? $total : 0;
+            }
+        }
+        return $purchase_arr;
+
     }
 
     /**

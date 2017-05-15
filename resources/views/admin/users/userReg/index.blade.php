@@ -148,9 +148,9 @@
                     </div>
                 @endif
                 <div class="col-xs-12">
-                    {!! Form::open(['method'=>'POST','url'=>'users/userReg/lockUser','role'=>'search', 'name' => 'formLockUser'])  !!}
+                    {!! Form::open(['method'=>'POST','url'=>'users/userReg/unlockUser','role'=>'search', 'name' => 'formLockUser'])  !!}
                     {{ csrf_field() }}
-                    <button class="btn btn-warning" type="submit" name="lock" value="lock" onclick="confirm('Are you sure?');">Tạm khóa</button> <button class="btn btn-danger" type="submit" name="delete" value="delete" onclick="confirm('Are you sure?');">Khóa vĩnh viễn</button> <button class="btn btn-success" type="submit" name="unlock" value="unlock" onclick="confirm('Are you sure?')">Mở khóa</button>
+                    <button class="btn btn-warning" type="button" name="lock" value="lock" data-type="2" data-toggle="modal" data-target="#lockUserModal" >Tạm khóa</button> <button class="btn btn-danger" type="button" name="delete" value="delete" data-type="1" data-toggle="modal" data-target="#lockUserModal">Khóa vĩnh viễn</button> <button class="btn btn-success" type="submit" name="unlock" value="unlock" onclick="confirm('Bạn có chắc muốn mở khóa cho user?')">Mở khóa</button>
                         <hr />
                         <table id="simple-table" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -195,6 +195,45 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
+
+    <div class="modal fade" id="lockUserModal" tabindex="-1" role="dialog" aria-labelledby="lockUserModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="lockUserModalLabel">Khóa user</h4>
+                </div>
+                <div class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    {{ Form::open(array('url'=>'users/userReg/lockUser','class'=>'form-horizontal', 'method'=> 'POST', 'id' => 'formSubmit')) }}
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="userId" class="id" id="userId">
+                    <input type="hidden" name="type" class="id" id="type">
+                    <div class="form-group">
+                        <label for="description" class="control-label">Nhập lý do khóa user:</label>
+                        <textarea class="form-control" id="des" name="reason"></textarea>
+                    </div>
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="checkRequired()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         jQuery(function($) {
@@ -299,6 +338,41 @@
             chart_api.draw(data_api, options_api);
 
         }
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#lockUserModal').on("show.bs.modal", function (e) {
+                var userIds = [];
+                $("input:checked").each(function() {
+                    userIds.push($(this).val());
+                });
+
+                $("#userId").val(userIds);
+                $("#type").val($(e.relatedTarget).data('type'));
+            });
+        });
+
+        function checkRequired()
+        {
+            var userId =document.getElementById("userId").value;
+            var description =document.getElementById("des").value;
+            if(description == '')
+            {
+                alert('Bạn phải nhập lý do từ chối');
+                return false;
+            }
+            else if(userId == '')
+            {
+                alert('Bạn phải chọn user cần khóa');
+                return false;
+            }
+            else
+            {
+                document.getElementById("formSubmit").submit();
+            }
+        }
+
     </script>
 
 @endsection

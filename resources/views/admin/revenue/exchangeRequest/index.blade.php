@@ -126,7 +126,7 @@
                             <th>Giá trị thẻ</th>
                             <th>Trạng thái</th>
                             <th class="hidden-480">Exchange By</th>
-                            <th>Thống kê số trận</th>
+                            <th>Thống kê</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                             <th>Action</th>
                         </tr>
@@ -134,7 +134,7 @@
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                        <tr>
+                        <tr @if($rs->status === 5) style="background-color:#3a87ad; color: white" @endif >
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td class="hidden-480">{{ $rs->requestUserId }}</td>
                             <td class="hidden-480">{{ $rs->displayName }}</td>
@@ -151,6 +151,8 @@
                                     <span class="label arrowed">Reject</span>
                                 @elseif($rs->status === 2)
                                     <span class="label label-danger arrowed">Fail</span>
+                                @elseif($rs->status === 5)
+                                    <span class="label label-danger arrowed">Checking</span>
                                 @endif
                             </td>
                             <td class="hidden-480" style="text-align: center">
@@ -159,18 +161,29 @@
                             <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
                             <td class="hidden-480">{{ $rs->created_at }}</td>
                             <td>
-                            @if($rs->status == 3)
+
                                 @permission('administrator')
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
-                                    <button class="btn btn-xs btn-info" name="reload" type="submit">
-                                        <i class="ace-icon fa fa-refresh white"></i>
-                                    </button>
-                                    <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-type="2" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                    </button>
+                                    @if($rs->status == 5)
+                                        <button class="btn btn-xs btn-info" name="reload" type="submit" value="reload" title="Duyệt lại">
+                                            <i class="ace-icon fa fa-refresh white"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-type="2" data-toggle="modal" data-target="#deleteModal" title="Từ chối">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    @elseif($rs->status == 3)
+                                        <button class="btn btn-xs btn-info" name="reload" type="submit" value="reload" title="Duyệt lại">
+                                            <i class="ace-icon fa fa-refresh white"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" type="button" data-id = "{{$rs->requestId}}" data-type="2" data-toggle="modal" data-target="#deleteModal" title="Từ chối">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-warning" name="checking" type="submit" value="checking" title="Checking">
+                                            <i class="ace-icon fa fa-share white"></i>
+                                        </button>
+                                    @endif
                                     {!! Form::close() !!}
                                 @endpermission
-                            @endif
 
                             </td>
                         </tr>

@@ -29,7 +29,7 @@ class ExchangeRequestController extends Controller
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $status = \Request::get('status') ? \Request::get('status') : 3;
 
-        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", -2 => '---Tất cả---');
+        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
 
         $query = ExchangeAssetRequest::query()->select('*', DB::raw('exchange_asset_request.status as status'), DB::raw('user.displayName as displayName'));
         $query->leftjoin('user', function($join)
@@ -79,7 +79,14 @@ class ExchangeRequestController extends Controller
     }
 
     public function update($id){
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2, 'description' => 'handler']);
+        //check which submit was clicked on
+        $status = 5;
+        if(Input::get('checking')) {
+            $status = 5; //if login then use this method
+        } elseif(Input::get('reload')) {
+            $status = 2; //if register then use this method
+        }
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => 'handler']);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }

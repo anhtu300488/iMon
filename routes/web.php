@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('users/userReg/lockUser', ['as'=>'users.userReg.lockUser', 'uses'=>'Admin\Users\UserRegisterController@lockUser']);
 
+    Route::post('users/userReg/unlockUser', ['as'=>'users.userReg.unlockUser', 'uses'=>'Admin\Users\UserRegisterController@unlockUser']);
+
     Route::get('users/userReg/xlsx', ['as' => 'userReg.excel', 'uses' => 'Admin\Users\UserRegisterController@downloadExcel']);
 
     Route::get('users/userInfo', ['as' => 'users.userInfo', 'uses' => 'Admin\Users\UserInfoController@index']);

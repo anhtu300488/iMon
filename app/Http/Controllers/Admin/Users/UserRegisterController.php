@@ -196,38 +196,42 @@ class UserRegisterController extends Controller
 
     public function lockUser(Request $request){
         $this->validate($request, [
+            'userId' => 'required',
+            'type' => 'required',
+            'reason' => 'required',
+        ]);
+        $idStr = Input::get('userId');
+        $type = Input::get('type');
+        $reason = Input::get('reason');
+        $ids = explode(",", $idStr);
+        $lockType = 2;
+        if($type == 1){
+            $lockType = 1;
+        } elseif ($type == 2 ){
+            $lockType = 2;
+        }
+
+        $data = array();
+        foreach ($ids as $id){
+            $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'reason'=> $reason, 'lockType' => $lockType);
+            array_push($data, $arr);
+        }
+
+        BlackListUser::insert($data);
+        return redirect()->route('users.userReg')
+            ->with('message','Lock User Successfully');
+
+    }
+
+    public function unlockUser(Request $request){
+        $this->validate($request, [
             'userIds' => 'required'
         ]);
         $ids = $request->get('userIds');
-        if($request->has('lock')){
-            $data = array();
-            foreach ($ids as $id){
-                $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'lockType' => 2);
-                array_push($data, $arr);
-            }
 
-            BlackListUser::insert($data);
-            return redirect()->route('users.userReg')
-                ->with('message','Lock User Successfully');
-        }
-
-        if($request->has('unlock')){
-            UserReg::whereIn('userId', $ids)->update(['status' => 1]);
-            return redirect()->route('users.userReg')
-                ->with('message','UnLock User Successfully');
-        }
-
-        if($request->has('delete')){
-            $data = array();
-            foreach ($ids as $id){
-                $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'lockType' => 1);
-                array_push($data, $arr);
-            }
-
-            BlackListUser::insert($data);
-            return redirect()->route('users.userReg')
-                ->with('message','Lock User Successfully');
-        }
+        UserReg::whereIn('userId', $ids)->update(['status' => 1]);
+        return redirect()->route('users.userReg')
+            ->with('message','UnLock User Successfully');
 
     }
 }

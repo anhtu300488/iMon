@@ -17,12 +17,22 @@ class UserLockController extends Controller
     public function index(Request $request)
     {
         $userName = \Request::get('userName');
+        $userID = \Request::get('userID');
+        $displayName = \Request::get('displayName');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
 
         $query = UserReg::query();
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
+        }
+
+        if($displayName != ''){
+            $query->where('displayName','LIKE','%'.$displayName.'%');
+        }
+
+        if($userID != ''){
+            $query->where('userId','=',$userID);
         }
 
         $query->where('status','!=', 1);

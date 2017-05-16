@@ -150,7 +150,7 @@
                 <div class="col-xs-12">
                     {!! Form::open(['method'=>'POST','url'=>'users/userReg/unlockUser','role'=>'search', 'name' => 'formLockUser'])  !!}
                     {{ csrf_field() }}
-                    <button class="btn btn-warning" type="button" name="lock" value="lock" data-type="2" data-toggle="modal" data-target="#lockUserModal" >Tạm khóa</button> <button class="btn btn-danger" type="button" name="delete" value="delete" data-type="1" data-toggle="modal" data-target="#lockUserModal">Khóa vĩnh viễn</button> <button class="btn btn-success" type="submit" name="unlock" value="unlock" onclick="confirm('Bạn có chắc muốn mở khóa cho user?')">Mở khóa</button>
+                    <button class="btn btn-warning" type="button" name="lock" value="lock" data-type="2" data-toggle="modal" data-target="#lockUserModal" >Tạm khóa</button> <button class="btn btn-danger" type="button" name="delete" value="delete" data-type="1" data-toggle="modal" data-target="#lockUserModal">Khóa vĩnh viễn</button> <button class="btn btn-success" type="submit" name="unlock" value="unlock" onclick="confirm('Bạn có chắc muốn mở khóa cho user?')">Mở khóa</button> <button class="btn btn-grey" type="button" name="resetPw" value="resetPw" data-type="2" data-toggle="modal" data-target="#resetPwModal" >Reset mật khẩu</button>
                         <hr />
                         <table id="simple-table" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -230,6 +230,54 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" onclick="checkRequired()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resetPwModal" tabindex="-1" role="dialog" aria-labelledby="resetPwModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="lockUserModalLabel">Reset mật khẩu cho user</h4>
+                </div>
+                <div class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    {{ Form::open(array('url'=>'users/userReg/resetUser','class'=>'form-horizontal', 'method'=> 'POST', 'id' => 'formResetSubmit')) }}
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="resetUserId" class="id" id="resetUserId">
+                    <div class="form-group">
+                        <label for="description" class="control-label">Nhập lý do reset:</label>
+                        <textarea class="form-control" id="resetDes" name="description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="control-label">New Password:</label>
+                        <input id="password" type="password" class="form-control" name="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="control-label">Confirm Password:</label>
+                        <input id="confirm_password" type="password" class="form-control" name="confirm_password" required>
+                    </div>
+                    {{ Form::close() }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="checkResetRequired()">Submit</button>
                 </div>
             </div>
         </div>
@@ -351,6 +399,15 @@
                 $("#userId").val(userIds);
                 $("#type").val($(e.relatedTarget).data('type'));
             });
+
+            $('#resetPwModal').on("show.bs.modal", function (e) {
+                var userIds = [];
+                $("input:checked").each(function() {
+                    userIds.push($(this).val());
+                });
+
+                $("#resetUserId").val(userIds);
+            });
         });
 
         function checkRequired()
@@ -373,6 +430,40 @@
             }
         }
 
+        function checkResetRequired()
+        {
+            var userId =document.getElementById("resetUserId").value;
+            var description =document.getElementById("resetDes").value;
+            var password =document.getElementById("password").value;
+            var confirm_password =document.getElementById("confirm_password").value;
+            if(description == '')
+            {
+                alert('Bạn phải nhập lý do reset mật khẩu');
+                return false;
+            }
+            if(userId == '')
+            {
+                alert('Bạn phải chọn user cần reset mật khẩu');
+                return false;
+            }
+            if(password == '')
+            {
+                alert('Bạn phải nhập mật khẩu');
+                return false;
+            }
+            if(confirm_password == '')
+            {
+                alert('Bạn phải nhập mật khẩu xác nhận');
+                return false;
+            }
+            if(password != confirm_password)
+            {
+                alert('Bạn phải nhập mật khẩu xác nhận giống mật khẩu mới');
+                return false;
+            }
+            document.getElementById("formResetSubmit").submit();
+
+        }
     </script>
 
 @endsection

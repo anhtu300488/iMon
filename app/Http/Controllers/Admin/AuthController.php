@@ -52,7 +52,7 @@ class AuthController extends Controller
             {
                 $user_id = Auth::user()->id;
                 $obj_user = Admin::find($user_id);
-                $obj_user->password = Hash::make($request_data['password']);;
+                $obj_user->password = Hash::make($request_data['password']);
                 $obj_user->save();
                 return redirect()->route('password.change')
                     ->with('success','Change Password Successfully');

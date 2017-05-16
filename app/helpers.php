@@ -73,3 +73,7 @@ function getDescriptionXocDia($content){
     }
     return $string;
 }
+
+function checkAlarm(){
+    return \App\CrashTableAlarm::where('isAlarm','=','1')->count();
+}

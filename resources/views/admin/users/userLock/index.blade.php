@@ -21,6 +21,25 @@
                         <div class="widget-main">
                             {!! Form::open(['method'=>'GET','url'=>'users/userLock','role'=>'search'])  !!}
                             <div class="row">
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">UserID</label>
+                                    <input class="form-control" name="userID" type="text" />
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">Tên đăng nhập</label>
+                                    <input class="form-control" name="userName" type="text" />
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">Tên hiển thị</label>
+                                    <input class="form-control" name="displayName" type="text" />
+                                </div>
+
+                            </div>
+
+                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">Từ ngày</label>
@@ -43,12 +62,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Tên đăng nhập</label>
-                                    <input class="form-control" name="userName" type="text" />
-                                </div>
 
                             </div>
+
                             <hr />
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6">

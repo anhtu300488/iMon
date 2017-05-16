@@ -538,6 +538,7 @@
 
                     <b class="arrow"></b>
                 </li>
+
             </ul>
         </li>
 
@@ -674,24 +675,6 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('tool/lockUser') }}>
-                    <a href="{{route('tool.lockUser')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Khóa tài khoản
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
-                <li {{ setActive('tool/unlockUser') }}>
-                    <a href="{{route('tool.unlockUser')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Mở khóa tài khoản
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-
                 <li {{ setActive('tool/emailUpdate') }}>
                     <a href="{{route('tool.emailUpdate')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -710,7 +693,14 @@
                     <b class="arrow"></b>
                 </li>
 
+                <li {{ setActive('tool/crashTableAlarm') }}>
+                    <a href="{{route('crashTableAlarm.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý cảnh báo và kẹt bàn
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 

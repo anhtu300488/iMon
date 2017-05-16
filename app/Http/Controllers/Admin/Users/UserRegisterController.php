@@ -7,6 +7,7 @@ use App\ClientType;
 use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
+use App\UserResetPw;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -232,6 +233,30 @@ class UserRegisterController extends Controller
         UserReg::whereIn('userId', $ids)->update(['status' => 1]);
         return redirect()->route('users.userReg')
             ->with('message','UnLock User Successfully');
+
+    }
+
+    public function resetUser(Request $request){
+        $this->validate($request, [
+            'resetUserId' => 'required',
+            'description' => 'required',
+            'password' => 'required|same:password',
+            'confirm_password' => 'required|same:password',
+        ]);
+        $idStr = Input::get('resetUserId');
+        $description = Input::get('description');
+        $password = Input::get('password');
+        $ids = explode(",", $idStr);
+
+        $data = array();
+        foreach ($ids as $id){
+            $arr = array('userId'=> $id, 'password'=> $password, 'description'=> $description);
+            array_push($data, $arr);
+        }
+
+        UserResetPw::insert($data);
+        return redirect()->route('users.userReg')
+            ->with('message','Reset Password Successfully');
 
     }
 }

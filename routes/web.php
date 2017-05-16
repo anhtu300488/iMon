@@ -128,14 +128,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('tool/roles/{id}',['as'=>'tool.roles.update','uses'=>'Admin\Tool\CreateRoleController@update']);
     Route::delete('tool/roles/{id}',['as'=>'tool.roles.destroy','uses'=>'Admin\Tool\CreateRoleController@destroy']);
 
-    Route::get('tool/lockUser', ['as' => 'tool.lockUser', 'uses' => 'Admin\Tool\LockUserController@lock']);
-
-    Route::post('tool/lockUser', ['as' => 'tool.lockUser.store', 'uses' => 'Admin\Tool\LockUserController@store']);
-
-    Route::get('tool/unlockUser', ['as' => 'tool.unlockUser', 'uses' => 'Admin\Tool\UnlockUserController@unlock']);
-
-    Route::post('tool/unlockUser', ['as' => 'tool.unlockUser.store', 'uses' => 'Admin\Tool\UnlockUserController@store']);
-
     Route::get('tool/emailUpdate', ['as' => 'tool.emailUpdate', 'uses' => 'Admin\Tool\EmailUpdateController@email']);
 
     Route::post('tool/emailUpdate', ['as' => 'tool.emailUpdate.store', 'uses' => 'Admin\Tool\EmailUpdateController@store']);
@@ -144,9 +136,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('tool/phoneUpdate', ['as' => 'tool.phoneUpdate.store', 'uses' => 'Admin\Tool\PhoneUpdateController@store']);
 
+    Route::resource('tool/crashTableAlarm','Admin\Tool\CrashTableAlarmController');
+
     Route::get('system/ipLock', ['as' => 'system.ipLock', 'uses' => 'Admin\System\LockIpController@index']);
 
     Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store']);
+
 
     //users management
     Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
@@ -154,6 +149,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('users/userReg/lockUser', ['as'=>'users.userReg.lockUser', 'uses'=>'Admin\Users\UserRegisterController@lockUser']);
 
     Route::post('users/userReg/unlockUser', ['as'=>'users.userReg.unlockUser', 'uses'=>'Admin\Users\UserRegisterController@unlockUser']);
+
+    Route::post('users/userReg/resetUser', ['as'=>'users.userReg.resetUser', 'uses'=>'Admin\Users\UserRegisterController@resetUser']);
 
     Route::get('users/userReg/xlsx', ['as' => 'userReg.excel', 'uses' => 'Admin\Users\UserRegisterController@downloadExcel']);
 

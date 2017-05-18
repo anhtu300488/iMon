@@ -24,6 +24,7 @@ class UserInfoController extends Controller
         $device = \Request::get('device');
         $phone = \Request::get('phone');
         $top = \Request::get('top');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $list_top = array(null => "startPlayedTime", 1 => "level", 2 => "cash", 3 => "gold", 4 => "totalMatch", 5 => "totalWin", 6 => "");
 //        var_dump($list_top[$top]);die;
@@ -54,7 +55,9 @@ class UserInfoController extends Controller
             $query->whereBetween('lastLoginTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy($list_top[$top], 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy($list_top[$top], 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.users.userInfo.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

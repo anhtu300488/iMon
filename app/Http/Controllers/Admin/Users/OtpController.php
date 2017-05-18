@@ -21,6 +21,7 @@ class OtpController extends Controller
         $verifyCode = \Request::get('verifyCode');
         $status = \Request::get('status');
         $type = \Request::get('type');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---', 1 => 'Xác thực', 2 => 'Reset mật khẩu', 3 => 'Hủy xác thực');
 
@@ -51,7 +52,9 @@ class OtpController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.users.otp.index',compact('data', 'typeArr', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

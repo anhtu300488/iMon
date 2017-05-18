@@ -13,7 +13,7 @@ class ClientTypeController extends Controller
 
         $code = \Request::get('code');
         $name = \Request::get('name');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $query = ClientType::query();
         if($code != ''){
             $query->where('code','LIKE','%'.$code.'%');
@@ -23,7 +23,9 @@ class ClientTypeController extends Controller
             $query->where('name','LIKE','%'.$code.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('clientId')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('clientId')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.os.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

@@ -33,6 +33,12 @@
                                     {!! Form::select('game', $gameArr, request('game'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
 
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Cảnh báo</label>
+
+                                    {!! Form::select('isAlarm', $alarmArr, request('isAlarm'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                </div>
+
                             </div>
 
                             <hr />
@@ -79,7 +85,7 @@
                             <tr>
                                 <th class="hidden-480">STT</th>
                                 <th>Game</th>
-                                <th>Room Index</th>
+                                <th>Phòng</th>
                                 <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày tạo</th>
                                 <th>Cảnh báo</th>
                                 <th>Action</th>
@@ -90,8 +96,8 @@
                             @foreach($data as $key => $rs)
                                 <tr>
                                     <td class="hidden-480">{{ ++$i }}</td>
-                                    <td>{{ $rs->gameId }}</td>
-                                    <td>{{ $rs->roomIndex }}</td>
+                                    <td>{{ $gameArr[$rs->gameId] }}</td>
+                                    <td>{{ $rs->roomIndex + 1 }}</td>
                                     <td class="hidden-480">{{ $rs->insertTime }}</td>
                                     <td>@if($rs->isAlarm == 1)  <span class="label label-sm label-success">Bật</span> @else <span class="label label-sm label-inverse arrowed-in">Tắt</span> @endif</td>
                                     <td>

@@ -20,6 +20,7 @@ class GameController extends Controller
         $description = \Request::get('description');
         $help = \Request::get('help');
         $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $matchThese = [];
         if($status != ''){
@@ -42,7 +43,9 @@ class GameController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('gameId', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('gameId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.game.game.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

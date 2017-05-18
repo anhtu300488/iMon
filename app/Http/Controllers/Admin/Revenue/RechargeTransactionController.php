@@ -27,6 +27,7 @@ class RechargeTransactionController extends Controller
         $os = \Request::get('clientType');
         $displayName = \Request::get('displayName');
         $userId = \Request::get('userId');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -85,7 +86,11 @@ class RechargeTransactionController extends Controller
         }
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('purchase_money_log.purchasedTime', 'desc')->paginate($perPage);
+
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+
+        $data = $query->orderBy('purchase_money_log.purchasedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.rechargeTransaction.index',compact('data', 'partner', 'clientType', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

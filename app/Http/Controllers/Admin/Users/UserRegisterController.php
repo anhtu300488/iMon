@@ -32,6 +32,7 @@ class UserRegisterController extends Controller
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
         $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $statusArr = array('' => '---Tất cả---', 0 => 'Không hoạt động', 1 => 'Hoạt động', 3 => 'Tạm khóa');
 
@@ -80,7 +81,9 @@ class UserRegisterController extends Controller
             $query->whereBetween('registedTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('registedTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('registedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $total_by_os = UserReg::getTotalUserByOs();
 

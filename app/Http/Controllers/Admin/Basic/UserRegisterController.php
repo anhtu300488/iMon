@@ -24,6 +24,7 @@ class UserRegisterController extends Controller
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -59,7 +60,9 @@ class UserRegisterController extends Controller
             $query->whereBetween('registedTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('registedTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('registedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.basic.userReg.index',compact('data', 'partner', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

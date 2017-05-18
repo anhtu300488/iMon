@@ -19,6 +19,7 @@ class CashOutController extends Controller
     {
 
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
 //        $query = ExchangeAssetRequest::query();
         $query = DB::table('exchange_asset_request as a');
@@ -38,7 +39,9 @@ class CashOutController extends Controller
         $query->where('a.status','=',1);
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(a.created_at)"))->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(a.created_at)"))->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
 

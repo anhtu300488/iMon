@@ -17,6 +17,7 @@ class TopMoneyController extends Controller
     public function index(Request $request)
     {
         $type = \Request::get('type');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---', 1 => 'Mon');
 
@@ -27,7 +28,9 @@ class TopMoneyController extends Controller
         }
         $query->orderBy('cash', 'desc');
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.users.topMoney.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

@@ -21,6 +21,7 @@ class RevenueUserActiveController extends Controller
     public function index(Request $request)
     {
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"),  DB::raw('SUM(p.parValue) as sum_money') ,  DB::raw('COUNT( DISTINCT user.userId) as total'))
         ->join('user', function($join)
@@ -44,7 +45,9 @@ class RevenueUserActiveController extends Controller
         }
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueUserActive($dateCharge);
         $purchase_arr = array();
 

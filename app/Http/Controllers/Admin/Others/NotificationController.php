@@ -16,6 +16,7 @@ class NotificationController extends Controller
 
         $title = \Request::get('title');
         $message = \Request::get('message');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = Notification::query();
         if($title != ''){
@@ -26,7 +27,9 @@ class NotificationController extends Controller
             $query->where('message','LIKE','%'.$message.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('notificationId', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('notificationId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.notification.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

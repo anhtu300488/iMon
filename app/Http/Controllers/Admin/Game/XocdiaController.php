@@ -17,7 +17,7 @@ class XocdiaController extends Controller
         $type = \Request::get('type');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = MatchLog::query()->where("gameId", "=", 15);
         if($roomId != ''){
@@ -40,7 +40,9 @@ class XocdiaController extends Controller
             $query->where("description", 'not like',  "%true%");
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('createdtime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('createdtime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.game.xocdia.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

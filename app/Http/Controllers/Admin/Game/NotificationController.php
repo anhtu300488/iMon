@@ -17,6 +17,7 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $content = \Request::get('content');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = EmergencyNotification::query();
 
@@ -24,7 +25,9 @@ class NotificationController extends Controller
             $query->where('content','LIKE','%'.$content.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('createdTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('createdTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.game.notification.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

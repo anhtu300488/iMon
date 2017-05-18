@@ -22,6 +22,7 @@ class SmsHistoryRevenueController extends Controller
         $mo = \Request::get('mo');
         $shortCode = \Request::get('shortCode');
         $telco = \Request::get('telco');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $matchThese = [];
         if($userID != ''){
@@ -59,7 +60,9 @@ class SmsHistoryRevenueController extends Controller
             }
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at','desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at','desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.smsHistory.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

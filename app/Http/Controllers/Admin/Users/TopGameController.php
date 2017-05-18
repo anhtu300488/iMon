@@ -21,6 +21,7 @@ class TopGameController extends Controller
     {
         $game = \Request::get('game') ? \Request::get('game') : 1;
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId')->toArray();
 
@@ -42,7 +43,9 @@ class TopGameController extends Controller
             $query->where('a.gameId', '=', $game);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 //        var_dump($data);die;
 
         return view('admin.users.topGame.index',compact('data', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

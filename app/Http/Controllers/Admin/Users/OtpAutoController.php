@@ -19,6 +19,7 @@ class OtpAutoController extends Controller
         $userID = \Request::get('userID');
         $phone = \Request::get('phone');
         $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $matchThese = [];
         if($status != ''){
@@ -37,7 +38,9 @@ class OtpAutoController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.users.otpAuto.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

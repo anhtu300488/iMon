@@ -20,6 +20,7 @@ class SmsRevenueController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $keywords = \Request::get('keywords');
         $amount = \Request::get('amount');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $matchThese = [];
         if($amount != ''){
@@ -45,7 +46,9 @@ class SmsRevenueController extends Controller
             }
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(created_at)"), 'keyword', 'telco')->orderBy('created_at','desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(created_at)"), 'keyword', 'telco')->orderBy('created_at','desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.smsRevenue.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

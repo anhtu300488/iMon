@@ -121,14 +121,14 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('revenue/moRevenue') }}>
-                    <a href="{{route('revenue.moRevenue')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Chi tiết MO SIM
-                    </a>
+                {{--<li {{ setActive('revenue/moRevenue') }}>--}}
+                    {{--<a href="{{route('revenue.moRevenue')}}">--}}
+                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
+                        {{--Chi tiết MO SIM--}}
+                    {{--</a>--}}
 
-                    <b class="arrow"></b>
-                </li>
+                    {{--<b class="arrow"></b>--}}
+                {{--</li>--}}
 
                 <li {{ setActive('revenue/detailSmsHistory') }}>
                     <a href="{{route('revenue.detailSmsHistory')}}">

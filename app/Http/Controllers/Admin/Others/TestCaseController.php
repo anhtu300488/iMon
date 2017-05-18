@@ -12,13 +12,16 @@ class TestCaseController extends Controller
     public function index(Request $request){
 
         $eventName = \Request::get('eventName');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = GvTestCase::query();
         if($eventName != ''){
             $query->where('eventName','LIKE','%'.$eventName.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('eventName')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('eventName')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.moneyGame.giftEvent.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

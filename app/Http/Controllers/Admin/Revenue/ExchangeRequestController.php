@@ -28,6 +28,7 @@ class ExchangeRequestController extends Controller
         $phone = \Request::get('phone');
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
         $status = \Request::get('status') ? \Request::get('status') : 3;
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
 
@@ -67,7 +68,9 @@ class ExchangeRequestController extends Controller
 
 //        $query->where('status', '!=', -1);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){

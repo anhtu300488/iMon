@@ -14,6 +14,7 @@ class PartnerController extends Controller
 
         $partnerName = \Request::get('partnerName');
         $userName = \Request::get('userName');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = Partner::query();
         if($partnerName != ''){
@@ -24,7 +25,9 @@ class PartnerController extends Controller
             $query->where('userName','LIKE','%'.$userName.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('partnerId')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('partnerId')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.partner.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

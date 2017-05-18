@@ -15,6 +15,9 @@ class CrashTableAlarmController extends Controller
     public function index(Request $request){
         $roomIndex = \Request::get('roomIndex');
         $game = \Request::get('game');
+        $alarm = \Request::get('isAlarm') == null ? 1 : \Request::get('isAlarm');
+        $alarmArr = array(1 => 'Bật', 0 => 'Tắt', -2 => '---Tất cả---');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
@@ -29,10 +32,16 @@ class CrashTableAlarmController extends Controller
             $query->where('roomIndex','=',$roomIndex);
         }
 
-        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('insertTime', 'desc')->paginate($perPage);
+        if($alarm != -2){
+            $query->where('isAlarm','=',$alarm);
+        }
 
-        return view('admin.tool.crashTableAlarm.index',compact('data', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('insertTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+
+        return view('admin.tool.crashTableAlarm.index',compact('data', 'gameArr', 'alarmArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
 
     }
 

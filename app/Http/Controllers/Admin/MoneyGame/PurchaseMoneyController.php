@@ -15,7 +15,7 @@ class PurchaseMoneyController extends Controller
         $cardValue = \Request::get('cardValue');
         $cardPin = \Request::get('cardPin');
         $userId = \Request::get('userId');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $matchThese = [];
         if($userId != ''){
             $matchThese['userId'] = $userId;
@@ -36,7 +36,9 @@ class PurchaseMoneyController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.moneyGame.purchaseMoney.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
@@ -59,6 +61,7 @@ class PurchaseMoneyController extends Controller
         ]);
 
         $input = $request->all();
+        $input['admin_id'] = Auth::user()->id;
         PurchaseMoneyMissing::create($input);
 
         return redirect()->route('purchaseMoney.index')
@@ -90,6 +93,7 @@ class PurchaseMoneyController extends Controller
         $purchaseMoneyMissing->cardPin = $request->get('cardPin');
         $purchaseMoneyMissing->cardSerial = $request->input('cardSerial');
         $purchaseMoneyMissing->toCash = $request->input('toCash');
+        $purchaseMoneyMissing->admin_id = Auth::user()->id;
         $purchaseMoneyMissing->save();
 
         return redirect()->route('purchaseMoney.index')

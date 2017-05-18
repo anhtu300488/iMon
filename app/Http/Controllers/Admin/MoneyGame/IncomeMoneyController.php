@@ -21,7 +21,7 @@ class IncomeMoneyController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $typeArr = array(1 => 'Mon');
 
         $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 3 => 'Quà tặng hệ thống', 7 => 'Giftcode');
@@ -61,7 +61,9 @@ class IncomeMoneyController extends Controller
 
         $query->whereIn('p.transactionId', [2,3,7]);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $results = MoneyLog::getSumByTransaction($transaction, $dateCharge, $type);
         $moneyArr = array();
         foreach ($results as $k => $v){

@@ -19,12 +19,12 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/historyMoney','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/historyMoney','role'=>'search', 'id' => 'formSearch'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">User ID</label>
-                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                    <label for="id-date-picker-1">User ID <span style="color: red">*</span></label>
+                                    <input class="form-control" name="userId" id="userId" type="text" value="{{request('userId')}}" autofocus/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -34,18 +34,17 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Tên hiển thị</label>
-                                    <input class="form-control" name="displayName" type="text" value="{{request('displayName')}}"/>
-                                </div>
+                                    <label  for="form-field-select-1">Game</label>
+                                    {!! Form::select('game', $gameArr, request('game'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
+                                </div>
                             </div>
                             <br/>
 
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian nạp thẻ</label>
+                                    <label  for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
                                         <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
                                         <span class="input-group-addon">
@@ -60,18 +59,12 @@
 
                                 </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Game</label>
-                                    {!! Form::select('game', $gameArr, request('game'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-
-                                </div>
-
 
                             </div>
                             <hr />
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                    <button type="submit" class="btn btn-info btn-sm" onclick="checkRequired()">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
@@ -96,15 +89,11 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th class="hidden-480">Tên hiển thị</th>
                             <th class="hidden-480">User ID</th>
                             <th>Tên đăng nhập</th>
                             <th class="hidden-480">Mon ban đầu</th>
                             <th>Thay đổi Mon</th>
                             <th>Mon hiện tại</th>
-                            {{--<th class="hidden-480">Xu ban đầu</th>--}}
-                            {{--<th>Thay đổi Xu</th>--}}
-                            {{--<th>Xu hiện tại</th>--}}
                             <th class="hidden-480">Loại giao dịch</th>
                             <th class="hidden-480">Tax percent</th>
                             <th>Tax value</th>
@@ -118,19 +107,15 @@
                         @foreach($data as $key => $rs)
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
-                            <td class="hidden-480">{{ $rs->displayName }}</td>
                             <td class="hidden-480">{{ $rs->userId}}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ number_format($rs->lastCash) }}</td>
                             <td>{{ number_format($rs->changeCash) }}</td>
                             <td>{{ number_format($rs->currentCash) }}</td>
-                            {{--<td class="hidden-480">{{ number_format($rs->lastGold) }}</td>--}}
-                            {{--<td>{{ number_format($rs->changeGold) }}</td>--}}
-                            {{--<td>{{ number_format($rs->currentGold) }}</td>--}}
-                            <td class="hidden-480">{{ $rs->transactionId }}</td>
+                            <td class="hidden-480">{{ $typeArr[$rs->transactionId] }}</td>
                             <td class="hidden-480">{{ $rs->taxPercent }}%</td>
                             <td>{{ $rs->taxValue }}</td>
-                            <td class="hidden-480">{{ $rs->gameId }}</td>
+                            <td class="hidden-480">{{ $gameArr[$rs->gameId] }}</td>
                             <td class="hidden-480">{{ $rs->insertedTime }}</td>
                             <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>
@@ -165,5 +150,21 @@
 
         });
     </script>
+    <script type="text/javascript">
 
+        function checkRequired()
+        {
+            var userId = document.getElementById("userId").value;
+            if(userId == '')
+            {
+                alert('Bạn phải nhập UserID để tìm kiếm');
+                return false;
+            }
+            else
+            {
+                document.getElementById("formSearch").submit();
+            }
+        }
+
+    </script>
     @endsection

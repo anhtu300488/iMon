@@ -15,7 +15,7 @@ class GiftCodeController extends Controller
         $userName = \Request::get('userName');
         $userId = \Request::get('userId');
         $code = \Request::get('code');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $giftEvent = GiftEvent::pluck('eventName', 'giftEventId');
 
         $query = GiftCode::query();
@@ -29,7 +29,9 @@ class GiftCodeController extends Controller
             $query->where('code','=',$code);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('userName')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('userName')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.moneyGame.giftCode.index',compact('data', 'giftEvent'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

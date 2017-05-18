@@ -22,7 +22,7 @@ class CirculationMoneyController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction') ? \Request::get('transaction') : 6;
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $typeArr = array(1 => 'Mon');
 
         $transactionArr = array(6 => 'Đổi thưởng', 1 => 'Chơi game');
@@ -63,7 +63,9 @@ class CirculationMoneyController extends Controller
 
         $query->whereIn('p.transactionId', [1,6]);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $results = MoneyLog::getSumByTransaction($transaction, $dateCharge, $type);
         $moneyArr = array();
         foreach ($results as $k => $v){

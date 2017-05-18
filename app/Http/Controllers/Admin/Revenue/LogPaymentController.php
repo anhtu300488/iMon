@@ -22,8 +22,7 @@ class LogPaymentController extends Controller
         $seria = \Request::get('seria');
         $pinCard = \Request::get('pinCard');
         $money = \Request::get('money');
-
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = LogPayment::query();
         $query->join('user', function($join)
@@ -55,7 +54,9 @@ class LogPaymentController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at','desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at','desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.logPayment.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

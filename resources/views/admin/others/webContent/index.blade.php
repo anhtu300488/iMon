@@ -99,7 +99,7 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->title }}</td>
                                 <td class="hidden-480">{{ $rs->image }}</td>
-                                <td class="hidden-480">{{ $rs->content }}</td>
+                                <td class="hidden-480">{{ strip_tags($rs->content) }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 <td>{{ $typeArr[$rs->type] }}</td>
                                 <td>@if($rs->is_hot == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>

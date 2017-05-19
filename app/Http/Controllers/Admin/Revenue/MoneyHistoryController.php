@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 
 use App\Game;
 use App\MoneyLog;
+use App\MoneyTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -30,6 +31,8 @@ class MoneyHistoryController extends Controller
 
         $gameArr->prepend('Hệ thống', -1);
         $gameArr->prepend('---Tất cả---', '');
+
+        $transactionArr = MoneyTransaction::pluck('type', 'transactionId');
 
         $typeArr = array('' => '---Tất cả---', 1 => "Mon");
 
@@ -72,6 +75,8 @@ class MoneyHistoryController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->orderBy('insertedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
-        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+//        var_dump($data);die;
+
+        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr', 'transactionArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

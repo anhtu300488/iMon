@@ -23,7 +23,7 @@ class OtpController extends Controller
         $type = \Request::get('type');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
-        $typeArr = array('' => '---Tất cả---', 1 => 'Xác thực', 2 => 'Reset mật khẩu', 3 => 'Hủy xác thực');
+        $typeArr = array('' => '---Tất cả---', 0 => 'Xác thực', 1 => 'Reset mật khẩu', 2 => 'Hủy xác thực');
 
         $statusArr = array('' => '---Tất cả---', 0 => 'Chửa sử dụng', 1 => 'Đã sử dụng');
 
@@ -55,6 +55,8 @@ class OtpController extends Controller
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
         $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+
+//        var_dump($data);die;
 
         return view('admin.users.otp.index',compact('data', 'typeArr', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

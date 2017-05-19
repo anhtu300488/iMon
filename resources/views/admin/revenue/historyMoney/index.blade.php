@@ -112,7 +112,7 @@
                             <td class="hidden-480">{{ number_format($rs->lastCash) }}</td>
                             <td>{{ number_format($rs->changeCash) }}</td>
                             <td>{{ number_format($rs->currentCash) }}</td>
-                            <td class="hidden-480">{{ $typeArr[$rs->transactionId] }}</td>
+                            <td class="hidden-480">{{ $transactionArr[$rs->transactionId] }}</td>
                             <td class="hidden-480">{{ $rs->taxPercent }}%</td>
                             <td>{{ $rs->taxValue }}</td>
                             <td class="hidden-480">{{ $gameArr[$rs->gameId] }}</td>

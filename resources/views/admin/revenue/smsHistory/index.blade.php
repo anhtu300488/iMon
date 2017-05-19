@@ -46,7 +46,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Ngày tạo</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge') ? request('date_charge') : getToday()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>

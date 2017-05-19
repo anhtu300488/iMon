@@ -53,22 +53,12 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
-                                    </div>
-                                </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
+                                    <label  for="id-date-picker-1">Thời gian đăng ký</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
+                                        <input class="form-control" type="text" name="date_register" id="id-date-range-picker-1" value="{{request('date_register') ? request('date_register') : getToday()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -81,13 +71,15 @@
 
                                 </div>
 
-                            </div>
-                            <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label for="id-date-picker-1">IP</label>
                                     <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
                                 </div>
+
+                            </div>
+                            <div class="row">
+
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Hệ điều hành</label>
@@ -286,22 +278,25 @@
     <script>
         jQuery(function($) {
 
-            //datepicker plugin
-            //link
-            $('.date-picker').datepicker({
-                autoclose: true,
-                todayHighlight: true
-            })
-            //show datepicker when clicking on the icon
-                .next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
-
             //or change it into a date range picker
             $('.input-daterange').datepicker({autoclose:true});
 
+
+            //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+            $('input[name=date_register]').daterangepicker({
+                'applyClass' : 'btn-sm btn-success',
+                'cancelClass' : 'btn-sm btn-default',
+                locale: {
+                    applyLabel: 'Apply',
+                    cancelLabel: 'Cancel',
+                }
+            })
+                .prev().on(ace.click_event, function(){
+                $(this).next().focus();
+            });
         });
     </script>
+
     <script type="text/javascript">
 
         function toggle(source) {

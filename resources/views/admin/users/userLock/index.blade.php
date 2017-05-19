@@ -42,26 +42,14 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <label  for="id-date-picker-1">Thời gian khóa</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
+                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge') ? request('date_charge') : getToday()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
                                 </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
-                                    </div>
-                                </div>
-
 
                             </div>
 

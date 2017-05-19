@@ -19,7 +19,7 @@ class CirculationMoneyController extends Controller
     public function index(Request $request)
     {
 //        die('1');
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction') ? \Request::get('transaction') : 6;
         $page = \Request::get('page') ? \Request::get('page') : 1;

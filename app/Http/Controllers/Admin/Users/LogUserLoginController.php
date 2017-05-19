@@ -23,7 +23,7 @@ class LogUserLoginController extends Controller
         $ime = \Request::get('ime');
         $ip = \Request::get('ip');
         $client = \Request::get('clientType');
-        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $clientType = ClientType::pluck('name', 'clientId');

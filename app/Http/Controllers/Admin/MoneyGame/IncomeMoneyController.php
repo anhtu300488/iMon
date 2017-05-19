@@ -18,7 +18,7 @@ class IncomeMoneyController extends Controller
      */
     public function index(Request $request)
     {
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $type = \Request::get('type') ? \Request::get('type') : 1 ;
         $transaction = \Request::get('transaction');
         $page = \Request::get('page') ? \Request::get('page') : 1;

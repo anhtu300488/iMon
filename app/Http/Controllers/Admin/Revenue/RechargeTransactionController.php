@@ -20,7 +20,7 @@ class RechargeTransactionController extends Controller
     public function index(Request $request)
     {
         $userName = \Request::get('userName');
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
         $cp = \Request::get('partner');

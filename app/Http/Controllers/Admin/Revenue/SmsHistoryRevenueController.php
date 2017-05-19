@@ -17,7 +17,7 @@ class SmsHistoryRevenueController extends Controller
     public function index(Request $request)
     {
         $userID = \Request::get('userId');
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $phone = \Request::get('phone');
         $mo = \Request::get('mo');
         $shortCode = \Request::get('shortCode');

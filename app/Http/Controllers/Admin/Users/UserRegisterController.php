@@ -26,8 +26,7 @@ class UserRegisterController extends Controller
         $userId = \Request::get('userId');
         $userName = \Request::get('userName');
         $displayName = \Request::get('displayName');
-        $fromDate = \Request::get('fromDate');
-        $toDate = \Request::get('toDate');
+        $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : getToday();
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
@@ -74,12 +73,18 @@ class UserRegisterController extends Controller
         }
 
         $query->where($matchThese);
+        if($dateRegister != ''){
+            $startDateCharge = $dateRegister[0];
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('registedTime',[$start,$end]);
+            $endDateCharge = $dateRegister[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('registedTime',[$start,$end]);
+            }
         }
+
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;

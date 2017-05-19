@@ -42,23 +42,12 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <label  for="id-date-picker-1">Thời gian đăng nhập</label>
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
+                                        <input class="form-control" type="text" name="date_register" id="id-date-range-picker-1" value="{{request('date_register') ? request('date_register') : getToday()}}" />
                                         <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
-                                        <span class="input-group-addon">
-																		<i class="fa fa-calendar bigger-110"></i>
-																	</span>
+                                            <i class="fa fa-calendar bigger-110"></i>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -66,14 +55,13 @@
                                     <label for="form-field-select-1">SDT xác thực</label>
                                     <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
                                 </div>
-                            </div>
-                            <div class="row">
-
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Thông tin thiết bị</label>
                                     <input class="form-control" name="device" type="text" value="{{request('device')}}"/>
                                 </div>
+                            </div>
+                            <div class="row">
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Top</label>

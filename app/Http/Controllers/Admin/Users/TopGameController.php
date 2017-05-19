@@ -20,7 +20,7 @@ class TopGameController extends Controller
     public function index(Request $request)
     {
         $game = \Request::get('game') ? \Request::get('game') : 1;
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId')->toArray();

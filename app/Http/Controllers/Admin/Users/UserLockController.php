@@ -19,8 +19,7 @@ class UserLockController extends Controller
         $userName = \Request::get('userName');
         $userID = \Request::get('userID');
         $displayName = \Request::get('displayName');
-        $fromDate = \Request::get('fromDate');
-        $toDate = \Request::get('toDate');
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = UserReg::query();
@@ -37,12 +36,18 @@ class UserLockController extends Controller
         }
 
         $query->where('status','!=', 1);
+        if($dateCharge != ''){
+            $startDateCharge = $dateCharge[0];
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d 00:00:00",strtotime($fromDate));
-            $end = date("Y-m-d 23:59:59",strtotime($toDate));
-            $query->whereBetween('lockToTime',[$start,$end]);
+            $endDateCharge = $dateCharge[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('lockToTime',[$start,$end]);
+            }
         }
+
         $query->with(['blackListUser']);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);

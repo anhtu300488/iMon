@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">User Id</label>
                 <div class="col-sm-9 input-icon input-icon-right">
-                    <input type="text" class="form-control" id="userId" name="userId" onkeyup="checkname()"/>
+                    <input type="text" class="form-control" id="userId" name="userId"/>
                     {{--<span id="name_status" class="alert-danger"></span>--}}
                     <input type="hidden" name="userIdHidden" id="userIdHidden">
                 </div>
@@ -63,7 +63,7 @@
 
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="button" onclick="checkUser()">
+                    <button class="btn btn-info" type="submit">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Submit
                     </button>
@@ -100,10 +100,10 @@
                         $('#userId').next('i').remove();
                         if(response.status == 'OK'){
                             $('#userId').after('<i class="ace-icon fa fa-check green" style="right:15px"></i>');
-                            $('#userIdHidden').val(1);
+//                            $('#userIdHidden').val(1);
                         } else {
                             $('#userId').after('<i class="ace-icon fa fa-close red" style="right:15px"></i>');
-                            $('#userIdHidden').val(0);
+//                            $('#userIdHidden').val(0);
                         }
                     }
                 });
@@ -115,20 +115,20 @@
             }
         }
 
-        function checkUser()
-        {
-            var userIdHidden=document.getElementById( "userIdHidden" ).value;
-
-            if(userIdHidden == 0)
-            {
-                alert('User không tồn tại');
-                return false;
-            }
-            else
-            {
-                document.getElementById("formSubmit").submit();
-            }
-        }
+//        function checkUser()
+//        {
+//            var userIdHidden=document.getElementById( "userIdHidden" ).value;
+//
+//            if(userIdHidden == 0)
+//            {
+//                alert('User không tồn tại');
+//                return false;
+//            }
+//            else
+//            {
+//                document.getElementById("formSubmit").submit();
+//            }
+//        }
 
     </script>
 

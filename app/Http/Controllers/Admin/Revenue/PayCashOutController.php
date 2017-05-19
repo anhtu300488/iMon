@@ -18,7 +18,7 @@ class PayCashOutController extends Controller
     public function index(Request $request)
     {
 
-        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $userName = \Request::get('userName');
         $userId = \Request::get('userId');
         $displayName = \Request::get('displayName');

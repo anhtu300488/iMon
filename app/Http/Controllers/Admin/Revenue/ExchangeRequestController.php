@@ -26,7 +26,7 @@ class ExchangeRequestController extends Controller
         $displayName = \Request::get('displayName');
         $userId = \Request::get('userId');
         $phone = \Request::get('phone');
-        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $status = \Request::get('status') ? \Request::get('status') : 3;
         $page = \Request::get('page') ? \Request::get('page') : 1;
 

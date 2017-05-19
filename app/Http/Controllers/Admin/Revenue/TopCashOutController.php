@@ -18,7 +18,7 @@ class TopCashOutController extends Controller
     public function index(Request $request)
     {
 
-        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = DB::table('exchange_asset_request as a');

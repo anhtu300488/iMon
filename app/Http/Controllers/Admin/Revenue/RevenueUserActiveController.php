@@ -20,7 +20,7 @@ class RevenueUserActiveController extends Controller
      */
     public function index(Request $request)
     {
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"),  DB::raw('SUM(p.parValue) as sum_money') ,  DB::raw('COUNT( DISTINCT user.userId) as total'))

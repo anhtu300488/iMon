@@ -17,7 +17,7 @@ class SmsRevenueController extends Controller
      */
     public function index(Request $request)
     {
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $keywords = \Request::get('keywords');
         $amount = \Request::get('amount');
         $page = \Request::get('page') ? \Request::get('page') : 1;

@@ -19,7 +19,7 @@ class UserRateActiveController extends Controller
      */
     public function index(Request $request)
     {
-        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $total1Rs = LoggedInLog::getTotalActive1R($loginTime);

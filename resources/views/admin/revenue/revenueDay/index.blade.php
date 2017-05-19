@@ -60,7 +60,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian nạp tiền</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="date_charge" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="date_charge" id="date_charge" value="{{request('date_charge') ? request('date_charge') : get7Day()}}" />
                                         <span class="input-group-addon">
 																		<i class="fa fa-calendar bigger-110"></i>
 																	</span>

@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">User ID <span style="color: red">*</span></label>
+                                    <label for="id-date-picker-1">User ID </label>
                                     <input class="form-control" name="userId" id="userId" type="text" value="{{request('userId')}}" autofocus/>
                                 </div>
 
@@ -46,7 +46,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge')}}" />
+                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge') ? request('date_charge') : getToday()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -150,21 +150,5 @@
 
         });
     </script>
-    <script type="text/javascript">
 
-        function checkRequired()
-        {
-            var userId = document.getElementById("userId").value;
-            if(userId == '')
-            {
-                alert('Bạn phải nhập UserID để tìm kiếm');
-                return false;
-            }
-            else
-            {
-                document.getElementById("formSearch").submit();
-            }
-        }
-
-    </script>
     @endsection

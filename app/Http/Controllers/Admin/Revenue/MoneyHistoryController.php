@@ -19,14 +19,16 @@ class MoneyHistoryController extends Controller
     {
 
         $userName = \Request::get('userName');
-        $userId = \Request::get('userId') ? \Request::get('userId') : -1;
-        $timeRequest = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+//        $userId = \Request::get('userId') ? \Request::get('userId') : -1;
+        $userId = \Request::get('userId');
+        $timeRequest = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $type = \Request::get('type');
         $game = \Request::get('game');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
+        $gameArr->prepend('Hệ thống', -1);
         $gameArr->prepend('---Tất cả---', '');
 
         $typeArr = array('' => '---Tất cả---', 1 => "Mon");
@@ -51,7 +53,7 @@ class MoneyHistoryController extends Controller
             }
         }
 
-        $query->where('gameId','!=', -1);
+//        $query->where('gameId','!=', -1);
 
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];

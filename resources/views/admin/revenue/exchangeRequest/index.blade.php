@@ -53,7 +53,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest') ? request('timeRequest') : get7Day()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -110,8 +110,8 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
-            <!-- PAGE CONTENT BEGINS -->
+        @endif
+        <!-- PAGE CONTENT BEGINS -->
             <div class="row">
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
@@ -124,6 +124,7 @@
                             <th class="hidden-480">Tổng tiền đã nạp</th>
                             <th>Total cash</th>
                             <th>Giá trị thẻ</th>
+                            <th>Seri thẻ</th>
                             <th>Trạng thái</th>
                             <th class="hidden-480">Exchange By</th>
                             <th>Thống kê</th>
@@ -134,37 +135,39 @@
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                        <tr @if($rs->status === 5) style="background-color:#3a87ad; color: white" @endif >
-                            <td class="hidden-480">{{ ++$i }}</td>
-                            <td class="hidden-480">{{ $rs->requestUserId }}</td>
-                            <td class="hidden-480">{{ $rs->displayName }}</td>
-                            <td>{{ $rs->requestUserName }}</td>
-                            <td class="hidden-480">{{ number_format($rs->totalMoneyCharged) }}</td>
-                            <td>{{ number_format($rs->totalCash) }}</td>
-                            <td>{{ number_format($rs->totalParValue) }}</td>
-                            <td>
-                                @if($rs->status === 3)
-                                    <span class="label label-info arrowed-right arrowed-in">Waiting</span>
-                                @elseif($rs->status === 1)
-                                    <span class="label label-success arrowed-in arrowed-in-right">Success</span>
-                                @elseif($rs->status === -1)
-                                    <span class="label arrowed">Reject</span>
-                                @elseif($rs->status === 2)
-                                    <span class="label label-danger arrowed">Fail</span>
-                                @elseif($rs->status === 5)
-                                    <span class="label label-danger arrowed">Checking</span>
-                                @endif
-                            </td>
-                            <td class="hidden-480" style="text-align: center">
-                                @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
-                            </td>
-                            <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
-                            <td class="hidden-480">{{ $rs->created_at }}</td>
-                            <td>
-
-                                @permission('administrator')
+                            <tr @if($rs->status === 5) style="background-color:#3a87ad; color: white" @endif >
+                                <td class="hidden-480">{{ ++$i }}</td>
+                                <td class="hidden-480">{{ $rs->requestUserId }}</td>
+                                <td class="hidden-480">{{ $rs->displayName }}</td>
+                                <td>{{ $rs->requestUserName }}</td>
+                                <td class="hidden-480">{{ number_format($rs->totalMoneyCharged) }}</td>
+                                <td>{{ number_format($rs->totalCash) }}</td>
+                                <td>{{ number_format($rs->totalParValue) }}</td>
+                                <td>{{ getSerial($rs->responseData) }}</td>
+                                <td>
+                                    @if($rs->status === 3)
+                                        <span class="label label-info arrowed-right arrowed-in">Waiting</span>
+                                    @elseif($rs->status === 1)
+                                        <span class="label label-success arrowed-in arrowed-in-right">Success</span>
+                                    @elseif($rs->status === -1)
+                                        <span class="label arrowed">Reject</span>
+                                    @elseif($rs->status === 2)
+                                        <span class="label label-danger arrowed">Fail</span>
+                                    @elseif($rs->status === 5)
+                                        <span class="label label-danger arrowed">Checking</span>
+                                    @endif
+                                </td>
+                                <td class="hidden-480" style="text-align: center">
+                                    @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
+                                </td>
+                                <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
+                                <td class="hidden-480">{{ $rs->created_at }}</td>
+                                <td>
+                                    {{--[{"provider":"VTT","amount":20000,"serial":"58122200912","pin":"6567138553863"}]--}}
+                                    {{--[{"provider":"VTT","amount":20000,"serial":"58122218834","pin":"6567755011893"}]--}}
+                                    @permission('administrator')
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
-                                    @if($rs->status == 5)
+                                    @if($rs->status == 1)
                                         <button class="btn btn-xs btn-info" name="reload" type="submit" value="reload" title="Duyệt lại">
                                             <i class="ace-icon fa fa-refresh white"></i>
                                         </button>
@@ -183,10 +186,10 @@
                                         </button>
                                     @endif
                                     {!! Form::close() !!}
-                                @endpermission
+                                    @endpermission
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -218,14 +221,14 @@
                         </div>
                     @endif
                     {{ Form::open(array('url'=>'revenue/exchangeRequest/delete','class'=>'form-horizontal', 'method'=> 'POST', 'id' => 'formSubmit')) }}
-                        {!! csrf_field() !!}
-                        <input type="hidden" name="exchangeId" class="id" id="exchangeId">
-                        <input type="hidden" name="type" class="id" id="type">
-                        <div class="form-group">
-                            <label for="description" class="control-label">Nhập lý do:</label>
-                            <textarea class="form-control" id="des" name="description"></textarea>
-                            {{--<input class="form-control" type="text" id="des" name="description">--}}
-                        </div>
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="exchangeId" class="id" id="exchangeId">
+                    <input type="hidden" name="type" class="id" id="type">
+                    <div class="form-group">
+                        <label for="description" class="control-label">Nhập lý do:</label>
+                        <textarea class="form-control" id="des" name="description"></textarea>
+                        {{--<input class="form-control" type="text" id="des" name="description">--}}
+                    </div>
                     {{ Form::close() }}
                 </div>
                 <div class="modal-footer">
@@ -249,7 +252,7 @@
                 </div>
 
                 <div id="table-wrapper">
-                    <div class="modal-body no-padding" id = "table-scroll">
+                    <div class="modal-body modal-statistic no-padding" id = "table-scroll">
 
 
                     </div>
@@ -292,32 +295,32 @@
     <script type="text/javascript">
         <?php if($purchase_arr != null):?>
         $(function () {
-                var array_date = new Array();
-                var sum_money = new Array();
-                <?php foreach($purchase_arr as $day => $value):?>
-                    array_date.push(['<?php echo $day;  ?>']);
-                    sum_money.push(<?php echo isset($value)? $value : 0  ?>);
-                <?php endforeach ?>
-            $('#container').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
+            var array_date = new Array();
+            var sum_money = new Array();
+            <?php foreach($purchase_arr as $day => $value):?>
+                array_date.push(['<?php echo $day;  ?>']);
+            sum_money.push(<?php echo isset($value)? $value : 0  ?>);
+            <?php endforeach ?>
+        $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Thống kê đổi thưởng'
+                },
+                xAxis: {
+                    categories: array_date
+                },
+                yAxis: {
                     title: {
-                        text: 'Thống kê đổi thưởng'
-                    },
-                    xAxis: {
-                        categories: array_date
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Rate'
-                        }
-                    },
-                    series: [{
-                        name: 'Tiền rút',
-                        data: sum_money
-                    }]
-                });
+                        text: 'Rate'
+                    }
+                },
+                series: [{
+                    name: 'Tiền rút',
+                    data: sum_money
+                }]
+            });
         });
         <?php endif; ?>
     </script>
@@ -336,7 +339,7 @@
                 var id = $(e.relatedTarget).data('id');
                 var type = $(e.relatedTarget).data('type');
                 $.get('/revenue/exchangeRequest/getMatchLog/' + id, function( data ) {
-                    $(".modal-body").html(data);
+                    $("#table-scroll").html(data);
                 });
 
                 document.getElementById("requestUserId").innerHTML = $(e.relatedTarget).data('id');
@@ -358,4 +361,4 @@
         }
 
     </script>
-    @endsection
+@endsection

@@ -14,12 +14,12 @@ class MauBinhController extends Controller
 
         $roomId = \Request::get('roomId');
         $matchIndex = \Request::get('matchIndex');
-        $type = \Request::get('type');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
+        $userId = \Request::get('userId');
 
 
-        $query = MatchLog::query()->where("gameId", "=", 11);
+        $query = MatchLog::query()->where("gameId", "=", 12);
         if($roomId != ''){
             $query->where('roomId','LIKE','%'.$roomId.'%');
         }
@@ -34,10 +34,8 @@ class MauBinhController extends Controller
             $query->whereBetween('createdTime',[$start,$end]);
         }
 
-        if($type ==  1){
-            $query->where("description", 'like', "%true%");
-        } else if($type ==  2){
-            $query->where("description", 'not like',  "%true%");
+        if($userId != ''){
+            $query->where('description','LIKE','%'.$userId.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $data = $query->orderBy('createdtime', 'desc')->paginate($perPage);

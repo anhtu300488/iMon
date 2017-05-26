@@ -22,19 +22,17 @@
                             {!! Form::open(['method'=>'GET','url'=>'game/xocDia','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
+                                    <label for="form-field-select-1">User ID</label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Room ID</label>
-                                    <input class="form-control" name="name" type="text" value="{{request('roomId')}}"/>
+                                    <input class="form-control" name="roomId" type="text" value="{{request('roomId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Match ID</label>
                                     <input class="form-control" name="matchIndex" type="text" value="{{request('matchIndex')}}"/>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Trạng Thái</label>
-
-                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
                             <div class="row">
@@ -91,7 +89,6 @@
                             <th>Room ID</th>
                             <th>Match Index</th>
                             <th>Mô tả</th>
-                            <th>Loại</th>
                             <th>Created time</th>
                         </tr>
                         </thead>
@@ -102,8 +99,13 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->roomId }}</td>
                                 <td>{{ $rs->matchIndex }}</td>
-                                <td>{{ $rs->description }}</td>
-                                <td></td>
+                                <td>
+                                    <?php $arr_des = explode("+",getDescriptionXito($rs->description));
+                                    ?>
+                                    @foreach ($arr_des as $des)
+                                    {{ $des }}</br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $rs->createdTime }}</td>
                             </tr>
                         @endforeach

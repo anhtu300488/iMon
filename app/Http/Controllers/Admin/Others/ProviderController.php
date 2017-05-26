@@ -13,6 +13,7 @@ class ProviderController extends Controller
 
         $code = \Request::get('code');
         $description = \Request::get('description');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = Provider::query();
         if($code != ''){
@@ -23,7 +24,9 @@ class ProviderController extends Controller
             $query->where('description','LIKE','%'.$description.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('id')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('id')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.telco.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

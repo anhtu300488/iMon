@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\MoneyGame;
 use App\PurchaseMoneyMissing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class PurchaseMoneyController extends Controller
@@ -15,7 +16,7 @@ class PurchaseMoneyController extends Controller
         $cardValue = \Request::get('cardValue');
         $cardPin = \Request::get('cardPin');
         $userId = \Request::get('userId');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $matchThese = [];
         if($userId != ''){
             $matchThese['userId'] = $userId;
@@ -36,7 +37,9 @@ class PurchaseMoneyController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.moneyGame.purchaseMoney.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
@@ -44,7 +47,7 @@ class PurchaseMoneyController extends Controller
     public function create(){
         $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
             "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
-        $toCash = array(1 => "Ken", 0 => "Xu" );
+        $toCash = array(1 => "Mon" );
         return view('admin.moneyGame.purchaseMoney.create', compact('provider', 'toCash'));
     }
 
@@ -59,6 +62,7 @@ class PurchaseMoneyController extends Controller
         ]);
 
         $input = $request->all();
+        $input['admin_id'] = Auth::user()->id;
         PurchaseMoneyMissing::create($input);
 
         return redirect()->route('purchaseMoney.index')
@@ -69,7 +73,7 @@ class PurchaseMoneyController extends Controller
         $purchaseMoneyMissing = PurchaseMoneyMissing::find($id);
         $provider = array("VTT" => "Viettel", "VMS" => "Mobifone" ,"VNP" => "Vinaaphone",
             "VNMB" => "VietNam Mobile", "MGC" => "MegaCard" );
-        $toCash = array(1 => "Ken", 0 => "Xu" );
+        $toCash = array(1 => "Mon" );
         return view('admin.moneyGame.purchaseMoney.edit',compact('provider', 'toCash', 'purchaseMoneyMissing'));
     }
 
@@ -90,6 +94,7 @@ class PurchaseMoneyController extends Controller
         $purchaseMoneyMissing->cardPin = $request->get('cardPin');
         $purchaseMoneyMissing->cardSerial = $request->input('cardSerial');
         $purchaseMoneyMissing->toCash = $request->input('toCash');
+        $purchaseMoneyMissing->admin_id = Auth::user()->id;
         $purchaseMoneyMissing->save();
 
         return redirect()->route('purchaseMoney.index')

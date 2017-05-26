@@ -13,6 +13,7 @@ class CheckUserController extends Controller
 
         if($request->ajax()) {
             $userID = $request->get('userID');
+            var_dump($userID);die;
             if($userID != ''){
                 $rs = UserReg::find($userID);
                 if($rs != ''){

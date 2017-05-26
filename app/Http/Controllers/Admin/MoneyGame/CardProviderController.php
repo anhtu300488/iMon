@@ -17,14 +17,16 @@ class CardProviderController extends Controller
     public function index(Request $request)
     {
         $providerCode = \Request::get('providerCode');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $query = CardProvider::query();
 
         if($providerCode != ''){
             $query->where('providerCode','LIKE','%'.$providerCode.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('providerId', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('providerId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.moneyGame.cardProvider.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

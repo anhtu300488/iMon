@@ -20,6 +20,7 @@ class ExchangeAssetRequestController extends Controller
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
         $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $statusArr = array('' => '---Tất cả---',0 => 'Mới insert chưa xử lý', 1 => 'SMS đã check thành công', 2 => 'Thất bại');
 
@@ -39,7 +40,9 @@ class ExchangeAssetRequestController extends Controller
             $query->whereBetween('purchasedTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('requestUserName')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('requestUserName')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.basic.exchangeAssetRequest.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

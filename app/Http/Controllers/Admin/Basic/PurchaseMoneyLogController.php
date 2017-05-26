@@ -24,6 +24,7 @@ class PurchaseMoneyLogController extends Controller
         $payType = \Request::get('payType');
 //        $cardType = \Request::get('cardType');
 //        $os = \Request::get('os');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 //
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -46,7 +47,9 @@ class PurchaseMoneyLogController extends Controller
             $query->whereBetween('purchasedTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('userName')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('userName')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.basic.purchaseMoneyLog.index',compact('data', 'payTypeArr', 'partner', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

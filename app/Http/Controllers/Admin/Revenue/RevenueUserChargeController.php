@@ -21,11 +21,12 @@ class RevenueUserChargeController extends Controller
     public function index(Request $request)
     {
         $userName = \Request::get('userName');
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", get7Day());
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
         $cp = \Request::get('partner');
         $os = \Request::get('clientType');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
@@ -85,7 +86,9 @@ class RevenueUserChargeController extends Controller
             }
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalUserByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $purchase_moneys = PurchaseMoneyLog::getTotalUserRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
 

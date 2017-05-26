@@ -21,14 +21,23 @@
                         <div class="widget-main">
                             {!! Form::open(['method'=>'GET','url'=>'moneyGame/giftCode','role'=>'search'])  !!}
                             <div class="row">
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="control-label no-padding-right" for="form-field-1"> UserID: </label>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
+                                </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label class="control-label no-padding-right" for="form-field-1"> Người dùng: </label>
+                                    <label class="control-label no-padding-right" for="form-field-1"> UserName: </label>
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
-
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="control-label no-padding-right" for="form-field-1"> Code: </label>
+                                    <input class="form-control" name="code" type="text" value="{{request('code')}}"/>
+                                </div>
 
                             </div>
                             <hr />
@@ -71,18 +80,16 @@
                         <thead>
                         <tr>
                             <th class="hidden-480">STT</th>
-                            <th>Tên người chơi</th>
+                            <th>UserID</th>
+                            <th>UserName</th>
                             <th class="hidden-480">Gift event</th>
                             <th>Code</th>
-                            <th>Ken</th>
-                            <th>Xu</th>
+                            <th>Mon</th>
                             <th class="hidden-480">Ip</th>
-                            <th class="hidden-480">Reuseable</th>
+                            <th class="hidden-480">Dùng nhiều lần</th>
                             <th>Trạng thái</th>
-                            <th class="hidden-480">Người tạo giftcode</th>
-                            <th class="hidden-480">Mô tả</th>
-                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
-                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian cập nhật</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian nhận</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian hết hạn</th>
                             <th>Tác vụ</th>
                         </tr>
                         </thead>
@@ -91,18 +98,16 @@
                         @foreach($data as $key => $rs)
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
+                                <td>{{ $rs->userId }}</td>
                                 <td>{{ $rs->userName }}</td>
                                 <td class="hidden-480">{{ $giftEvent[$rs->giftEventId] }}</td>
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ number_format($rs->cashValue) }}</td>
-                                <td>{{ number_format($rs->goldValue) }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>
-                                <td class="hidden-480">{{ $rs->reuseable }}</td>
-                                <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
-                                <td class="hidden-480">{{ $rs->adminId }}</td>
-                                <td class="hidden-480">{{ $rs->description }}</td>
-                                <td class="hidden-480">{{ $rs->created_at }}</td>
-                                <td class="hidden-480">{{ $rs->updated_at }}</td>
+                                <td class="hidden-480">@if($rs->reuseable == 1)  <span class="label label-sm label-inverse arrowed-in">Có</span> @else <span class="label label-sm label-success">Không</span> @endif</td>
+                                <td>@if($rs->status == 0)  <span class="label label-sm label-inverse arrowed-in">Đã sử dụng</span> @else <span class="label label-sm label-success">Mới</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->redeemedTime }}</td>
+                                <td class="hidden-480">{{ $rs->expiredTime }}</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('giftCode.edit',$rs->giftId) }}">

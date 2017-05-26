@@ -99,6 +99,7 @@
 
             <!-- /section:basics/content.breadcrumbs -->
             <div class="page-content">
+                @if(checkAlarm() > 0)<font size="4" color="red"><marquee ><b>Đang có bàn kẹt, hãy vào chức năng Tool Server -> Quản lý cảnh báo và kẹt bàn để check</b></marquee></font> @endif
                 @yield('content')
 
             </div><!-- /.page-content -->

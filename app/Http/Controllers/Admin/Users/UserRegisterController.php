@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
+use App\BlackListUser;
 use App\ClientType;
 use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
+use App\UserResetPw;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Input;
 
 class UserRegisterController extends Controller
 {
@@ -22,11 +26,14 @@ class UserRegisterController extends Controller
         $userId = \Request::get('userId');
         $userName = \Request::get('userName');
         $displayName = \Request::get('displayName');
-        $fromDate = \Request::get('fromDate');
-        $toDate = \Request::get('toDate');
+        $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : getToday();
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
+        $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
+
+        $statusArr = array('' => '---Tất cả---', 0 => 'Không hoạt động', 1 => 'Hoạt động', 3 => 'Tạm khóa');
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -43,6 +50,10 @@ class UserRegisterController extends Controller
 
         if($userId != ''){
             $matchThese['userId'] = $userId;
+        }
+
+        if($status != ''){
+            $matchThese['status'] = $status;
         }
         $query = UserReg::query();
         if($userName != ''){
@@ -62,14 +73,22 @@ class UserRegisterController extends Controller
         }
 
         $query->where($matchThese);
+        if($dateRegister != ''){
+            $startDateCharge = $dateRegister[0];
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('registedTime',[$start,$end]);
+            $endDateCharge = $dateRegister[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('registedTime',[$start,$end]);
+            }
         }
+
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('registedTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('registedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $total_by_os = UserReg::getTotalUserByOs();
 
@@ -114,7 +133,7 @@ class UserRegisterController extends Controller
 
         }
 
-        return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
 
@@ -182,6 +201,71 @@ class UserRegisterController extends Controller
                 $sheet->prependRow(1, $headings);
             });
         })->download('xlsx');
+    }
+
+    public function lockUser(Request $request){
+        $this->validate($request, [
+            'userId' => 'required',
+            'type' => 'required',
+            'reason' => 'required',
+        ]);
+        $idStr = Input::get('userId');
+        $type = Input::get('type');
+        $reason = Input::get('reason');
+        $ids = explode(",", $idStr);
+        $lockType = 2;
+        if($type == 1){
+            $lockType = 1;
+        } elseif ($type == 2 ){
+            $lockType = 2;
+        }
+
+        $data = array();
+        foreach ($ids as $id){
+            $arr = array('userId'=> $id, 'userLockId'=> Auth::user()->id, 'reason'=> $reason, 'lockType' => $lockType);
+            array_push($data, $arr);
+        }
+
+        BlackListUser::insert($data);
+        return redirect()->route('users.userReg')
+            ->with('message','Lock User Successfully');
+
+    }
+
+    public function unlockUser(Request $request){
+        $this->validate($request, [
+            'userIds' => 'required'
+        ]);
+        $ids = $request->get('userIds');
+
+        UserReg::whereIn('userId', $ids)->update(['status' => 1]);
+        return redirect()->route('users.userReg')
+            ->with('message','UnLock User Successfully');
+
+    }
+
+    public function resetUser(Request $request){
+        $this->validate($request, [
+            'resetUserId' => 'required',
+            'description' => 'required',
+            'password' => 'required|same:password',
+            'confirm_password' => 'required|same:password',
+        ]);
+        $idStr = Input::get('resetUserId');
+        $description = Input::get('description');
+        $password = Input::get('password');
+        $ids = explode(",", $idStr);
+
+        $data = array();
+        foreach ($ids as $id){
+            $arr = array('userId'=> $id, 'password'=> $password, 'description'=> $description);
+            array_push($data, $arr);
+        }
+
+        UserResetPw::insert($data);
+        return redirect()->route('users.userReg')
+            ->with('message','Reset Password Successfully');
+
     }
 }
 

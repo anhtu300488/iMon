@@ -26,12 +26,11 @@ class ExchangeRequestController extends Controller
         $displayName = \Request::get('displayName');
         $userId = \Request::get('userId');
         $phone = \Request::get('phone');
-        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $status = \Request::get('status') ? \Request::get('status') : 3;
-        $requestTopup = \Request::get('requestTopup');
-        $responseData = \Request::get('responseData');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
-        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", -2 => '---Tất cả---');
+        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
 
         $query = ExchangeAssetRequest::query()->select('*', DB::raw('exchange_asset_request.status as status'), DB::raw('user.displayName as displayName'));
         $query->leftjoin('user', function($join)
@@ -48,16 +47,9 @@ class ExchangeRequestController extends Controller
         if($displayName != ''){
             $query->where('user.displayName','LIKE','%'.$displayName.'%');
         }
-        if($requestTopup != ''){
-            $query->where('exchange_asset_request.request_topup_id','LIKE','%'.$requestTopup.'%');
-        }
 
         if($status != -2){
             $query->where('exchange_asset_request.status','=',$status);
-        }
-
-        if($responseData != ''){
-            $query->where('exchange_asset_request.responseData','LIKE','%'.$responseData.'%');
         }
 
         $query->where('user.status', '=', 1);
@@ -76,7 +68,9 @@ class ExchangeRequestController extends Controller
 
 //        $query->where('status', '!=', -1);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){
@@ -88,7 +82,14 @@ class ExchangeRequestController extends Controller
     }
 
     public function update($id){
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => 2, 'description' => 'handler']);
+        //check which submit was clicked on
+        $status = 5;
+        if(Input::get('checking')) {
+            $status = 5; //if login then use this method
+        } elseif(Input::get('reload')) {
+            $status = 2; //if register then use this method
+        }
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => 'handler']);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }

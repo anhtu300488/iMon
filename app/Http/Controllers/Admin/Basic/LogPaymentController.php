@@ -23,7 +23,7 @@ class LogPaymentController extends Controller
         $payType = \Request::get('payType');
         $cardType = \Request::get('cardType');
         $os = \Request::get('os');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 //        $matchThese = ['userid' => $userid, 'payType' => $payType, 'cardType' => $cardType, 'os' => $os];
         $matchThese = [];
         if($userid != ''){
@@ -31,7 +31,9 @@ class LogPaymentController extends Controller
         }
 //        $matchThese = ['userid' => $userid];
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = LogPayment::where($matchThese)->orderBy('id')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = LogPayment::where($matchThese)->orderBy('id')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.basic.logPayment.index',compact('data'));
     }

@@ -13,7 +13,7 @@ class LinkDownloadController extends Controller
 
         $os = \Request::get('os');
         $versionBuild = \Request::get('versionBuild');
-
+        $page = \Request::get('page') ? \Request::get('page') : 1;
         $osArr = array('' => '---Tất cả---', 0 => 'Android', 1 => 'IOS', 2 => 'Window Phone', 3 => 'Desktop');
 
         $matchThese = [];
@@ -29,7 +29,9 @@ class LinkDownloadController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.linkDownload.index',compact('data', 'osArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

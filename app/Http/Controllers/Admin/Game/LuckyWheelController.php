@@ -23,6 +23,7 @@ class LuckyWheelController extends Controller
         $description = \Request::get('description');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $item = LuckyWheelItem::pluck('itemName', 'itemId');
 
@@ -50,7 +51,9 @@ class LuckyWheelController extends Controller
             $query->whereBetween('time',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('time', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('time', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $list_by_round = LuckyWheelLog::getSumKenByRound($userId, $roundItem, $description, $fromDate, $toDate);
 

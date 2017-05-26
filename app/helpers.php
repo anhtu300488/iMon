@@ -579,3 +579,35 @@ function getNameCardPhom($int){
     $quan = isset($array_quan[($int - 1) / 4]) ? $array_quan[($int - 1) / 4] : $int;
     return $quan . " " . $chat;
 }
+
+function checkAlarm(){
+    return \App\CrashTableAlarm::where('isAlarm','=','1')->count();
+}
+
+function getSerial($responseData){
+    if($responseData != ''){
+        $result = substr($responseData, 1, -1);
+        return json_decode($result)->serial;
+    }
+    return null;
+}
+
+function getToday(){
+    $today = date("m/d/Y");
+
+    return $today . ' - ' . $today;
+}
+
+function get7Day(){
+    $today = date('m/d/Y');
+
+    $sevenDay = date('m/d/Y', strtotime("-7 days"));
+
+    return $sevenDay . ' - ' . $today;
+}
+
+function getTodayPicker(){
+    $today = date("m/d/Y");
+
+    return $today . ' - ' . $today;
+}

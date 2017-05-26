@@ -19,7 +19,8 @@ class UserRateActiveController extends Controller
      */
     public function index(Request $request)
     {
-        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $total1Rs = LoggedInLog::getTotalActive1R($loginTime);
         $total3Rs = LoggedInLog::getTotalActive3R($loginTime);
@@ -48,6 +49,8 @@ class UserRateActiveController extends Controller
             $login_arr[$total->purchase_date][3] = isset($total->total) ? $total->total : 0;
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
         return view('admin.users.userRateActive.index',compact('data', 'clientType', 'login_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

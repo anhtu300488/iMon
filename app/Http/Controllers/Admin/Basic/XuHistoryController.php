@@ -19,6 +19,7 @@ class XuHistoryController extends Controller
         $userName = \Request::get('userName');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = MoneyLog::query()->where('changeGold','>',0);
         if($userName != ''){
@@ -30,7 +31,9 @@ class XuHistoryController extends Controller
 //            $query->whereBetween('purchasedTime',[$start,$end]);
 //        }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('userName')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('userName')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.basic.xuHistory.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

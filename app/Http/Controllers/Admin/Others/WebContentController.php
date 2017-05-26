@@ -14,6 +14,7 @@ class WebContentController extends Controller
         $title = \Request::get('title');
         $content = \Request::get('content');
         $type = \Request::get('type');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---', 0 => 'Tin Tức', 1 => 'Sự Kiện', 2 => 'Giới Thiệu', 3 => 'Hỗ Trợ', 4 => 'Luật game', 5 => 'Thông báo');
 
@@ -32,7 +33,9 @@ class WebContentController extends Controller
         }
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.webContent.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

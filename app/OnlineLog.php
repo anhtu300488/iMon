@@ -49,4 +49,18 @@ class OnlineLog extends Model
 
         return  $sql->orderBy('insertedTime', 'desc')->limit(1)->get();
     }
+
+    public static function getOnlineLogHour($insertedtime = null)
+    {
+        $sql = OnlineLog::select(DB::raw('logId, peakData, insertedTime'));
+        if ($insertedtime != '' ){
+            $start = date("Y-m-d 00:00:00", strtotime($insertedtime));
+            $end = date("Y-m-d H:i:s",strtotime($insertedtime));
+            $sql->whereBetween('insertedTime',[$start,$end]);
+//            $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));
+//            $sql->where(DB::raw('logId % 4'), '=', 1);
+        }
+
+        return  $sql->orderBy('insertedTime', 'desc')->get();
+    }
 }

@@ -18,7 +18,8 @@ class TopCashOutController extends Controller
     public function index(Request $request)
     {
 
-        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : null;
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = DB::table('exchange_asset_request as a');
         $query->join('user', function($join)
@@ -42,7 +43,9 @@ class TopCashOutController extends Controller
         $query->where('a.status','=',1);
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.topCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

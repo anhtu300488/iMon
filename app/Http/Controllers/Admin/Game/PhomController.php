@@ -19,6 +19,7 @@ class PhomController extends Controller
         $toDate = \Request::get('toDate');
         $userId = \Request::get('userId');
 
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = MatchLog::query()->where("gameId", "=", 4);
         if($roomId != ''){
@@ -34,12 +35,13 @@ class PhomController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('createdTime',[$start,$end]);
         }
-//var_dump($userId);die;
         if($userId != ''){
             $query->where('description','LIKE','%'.$userId.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('createdtime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('createdtime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.game.phom.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

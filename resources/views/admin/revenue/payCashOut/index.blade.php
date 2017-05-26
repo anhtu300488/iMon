@@ -47,7 +47,7 @@
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="id-date-picker-1">Thời gian đổi thẻ</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest')}}" />
+                                        <input class="form-control" type="text" name="timeRequest" id="id-date-range-picker-1" value="{{request('timeRequest') ? request('timeRequest') : get7Day()}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>

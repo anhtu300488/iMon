@@ -28,4 +28,14 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function swap()
+    {
+        $hash = bcrypt(auth()->user()->getKey().microtime());
+
+        \Session::put('session_id', $hash);
+
+        $this->session_id = $hash;
+        $this->save();
+    }
 }

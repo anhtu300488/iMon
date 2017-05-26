@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 
 use App\Game;
 use App\MoneyLog;
+use App\MoneyTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -17,37 +18,34 @@ class MoneyHistoryController extends Controller
      */
     public function index(Request $request)
     {
+
         $userName = \Request::get('userName');
+//        $userId = \Request::get('userId') ? \Request::get('userId') : -1;
         $userId = \Request::get('userId');
-        $timeRequest = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $timeRequest = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $type = \Request::get('type');
         $game = \Request::get('game');
-        $displayName = \Request::get('displayName');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
+        $gameArr->prepend('Hệ thống', -1);
         $gameArr->prepend('---Tất cả---', '');
+
+        $transactionArr = MoneyTransaction::pluck('type', 'transactionId');
 
         $typeArr = array('' => '---Tất cả---', 1 => "Mon");
 
         $query = MoneyLog::query();
-        $query->join('user', function($join)
-        {
-            $join->on('user.userId', '=', 'money_log.userId');
 
-        });
-        $matchThese = [];
         if($game != ''){
-            $matchThese['gameId'] = $game;
+            $query->where('gameId','=',$game);
         }
         if($userName != ''){
-            $query->where('user.userName','LIKE','%'.$userName.'%');
-        }
-        if($displayName != ''){
-            $query->where('user.displayName','LIKE','%'.$displayName.'%');
+            $query->where('userName','LIKE','%'.$userName.'%');
         }
         if($userId != ''){
-            $query->where('user.userId','=',$userId);
+            $query->where('userId','=',$userId);
         }
         if($type != ''){
             if($type == 1){
@@ -58,7 +56,7 @@ class MoneyHistoryController extends Controller
             }
         }
 
-        $query->where($matchThese);
+//        $query->where('gameId','!=', -1);
 
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];
@@ -73,8 +71,12 @@ class MoneyHistoryController extends Controller
         }
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('insertedTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('insertedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
-        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+//        var_dump($data);die;
+
+        return view('admin.revenue.historyMoney.index',compact('data', 'typeArr', 'gameArr', 'transactionArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

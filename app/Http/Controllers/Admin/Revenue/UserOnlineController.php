@@ -23,6 +23,7 @@ class UserOnlineController extends Controller
         $displayName = \Request::get('displayName');
         $game = \Request::get('gameArr');
         $clientId = \Request::get('clientType');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $gameArr = Game::where('status',1)->pluck('name', 'gameId');
 
@@ -56,7 +57,9 @@ class UserOnlineController extends Controller
 
         $query->where($matchThese)->where('currentGameId', '>', 0);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('cash','desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('cash','desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

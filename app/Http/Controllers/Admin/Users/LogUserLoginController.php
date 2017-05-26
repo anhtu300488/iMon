@@ -23,7 +23,8 @@ class LogUserLoginController extends Controller
         $ime = \Request::get('ime');
         $ip = \Request::get('ip');
         $client = \Request::get('clientType');
-        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
+        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $clientType = ClientType::pluck('name', 'clientId');
 
@@ -68,7 +69,9 @@ class LogUserLoginController extends Controller
 
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('loggedInTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('loggedInTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $totals = LoggedInLog::getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime);
 

@@ -13,6 +13,7 @@ class NotifyController extends Controller
 
         $content = \Request::get('content');
         $status = \Request::get('status');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $statusArr = array('' => '---Tất cả---', 0 => 'Active', 1 => 'Deactive');
 
@@ -27,7 +28,9 @@ class NotifyController extends Controller
         }
         $query->where($matchThese);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.others.notify.index',compact('data', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

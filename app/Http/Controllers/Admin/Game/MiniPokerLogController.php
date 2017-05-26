@@ -17,6 +17,7 @@ class MiniPokerLogController extends Controller
         $card = \Request::get('card');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $arr_type = array("" => "---Tất cả---", 100 => "100", 1000 => "1000", 10000 => "10000" );
         $arr_card = array("" => "---Tất cả---" , 54 => "Nổ hũ", 57 => "Thùng phá sảnh", 58 => "Tứ quý chi đầu",
@@ -46,7 +47,9 @@ class MiniPokerLogController extends Controller
             $query->whereBetween('insertTime',[$start,$end]);
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('insertTime', 'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('insertTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $list_by_round = MiniPokerLog::getSumKenByRound($userId, $type, $card, $fromDate, $toDate);
 

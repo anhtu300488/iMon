@@ -15,6 +15,7 @@ class MessageController extends Controller
         $senderUsername = \Request::get('senderUsername');
         $recipientUserId = \Request::get('recipientUserId');
         $recipientUsername = \Request::get('recipientUsername');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = Message::query();
         if($senderUserId != ''){
@@ -33,7 +34,9 @@ class MessageController extends Controller
             $query->where('recipientUsername','LIKE','%'.$recipientUsername.'%');
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->orderBy('messageId','asc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->orderBy('messageId','asc')->limit($startLimit,$endLimit)->paginate($perPage);
 
 //        var_dump($data);die;
 

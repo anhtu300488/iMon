@@ -52,7 +52,7 @@ function getDescriptionXocDia($content){
         }
     }
     $string = $string . "+Ip ";
-    foreach ($arr["player"] as $user){
+    foreach ($arr["playerInfo"] as $user){
         //  $user_ip = (array)(get_object_vars($arr["player"]));
         $string = $string . $user->userId . ":" . $user->ip . ", ";
     }

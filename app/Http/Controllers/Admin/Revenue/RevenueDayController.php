@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use App\MoHistory;
+
 
 class RevenueDayController extends Controller
 {
@@ -104,8 +106,30 @@ class RevenueDayController extends Controller
         foreach ($exchange_moneys as $index => $exchange_money){
             $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
-
-        return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        $money_mo = MoHistory::getTotalSMSRevenue($dateCharge);
+//        var_dump($money_mo);die;
+        $sum_9029 = 0;
+        $sum_8x = 0;
+        foreach ($money_mo as $smsRevenue){
+            if($smsRevenue->shortcode == "9029"){
+                $arr_telco = array("VTT" => 0.54, "VMS" => 0.59, "VNP" => 0.59,  "VNMB" => 0.5);
+                // 0.88 là tỉ lệ chia sẻ sau với CP
+                $sum_9029 = $sum_9029 + $arr_telco[$smsRevenue->telco] * $smsRevenue->sum_money * 0.88;
+            } else {
+                $arr_telco = array("VTT-8098" => 236/1000, "VTT-8198" => 409/1500, "VTT-8698" => 4091/10000, "VTT-8798" => 6136/15000,
+                    "VNP-8098" => 191/1000, "VNP-8198" => 545/1500, "VNP-8698" => 4091/10000, "VNP-8798" => 6136/10000,
+                    "VMS-8098" => 191/1000, "VMS-8198" => 436/1500, "VMS-8698" => 3636/10000, "VMS-8798" => 5454/10000);
+                $text = $smsRevenue->telco . "-" . $smsRevenue->shortcode;
+                $rate = isset($arr_telco[$text])? $arr_telco[$text] : 0.3;
+                $sum_8x = $sum_8x + $smsRevenue->sum_money * $rate * 0.89;
+            }
+        }
+        $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge);
+        $sum_the = $sum_the_cao[0]->sum_money * 0.79;
+        $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
+        $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
+        $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
+        return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr', 'sum_8x', 'sum_9029', 'sum_the', 'sum_doi_thuong', 'loi_nhuan'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function statistic($fromDate,$toDate){

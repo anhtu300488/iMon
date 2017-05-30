@@ -11,7 +11,14 @@
                 <div id="piechart_pub_type"></div>
 
             </div>
-
+            <div class="col-sm-8">
+                <b>Sau telco:</b>
+                <p>Thẻ cào: {{ number_format($sum_the) }}</p>
+                <p>9029: {{ number_format($sum_9029) }}</p>
+                <p>8x98: {{ number_format($sum_8x) }}</p>
+                <p>Chi phí đổi thưởng: {{ number_format($sum_doi_thuong) }}</p>
+                <p>Sau telco trừ đổi thưởng: {{ number_format($loi_nhuan) }}</p>
+            </div>
             <div class="col-sm-12">
                 <div id="container"></div>
             </div>

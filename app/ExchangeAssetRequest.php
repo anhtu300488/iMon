@@ -57,4 +57,33 @@ class ExchangeAssetRequest extends Model
 
         return $data;
     }
+    public static function getTotalFee($timeRequest)
+    {
+        
+        $query = DB::table('exchange_asset_request as a');
+        $query->select(DB::raw("SUM(a.totalParValue) sum_money"));
+
+        if($timeRequest != ''){
+            $startDateCharge = $timeRequest[0];
+
+            $endDateCharge = $timeRequest[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('a.created_at',[$start,$end]);
+            }
+        }
+
+
+        $query->where("a.status", '=', 1);
+        $query->whereNotNull("a.responseData");
+
+//        $query->groupBy(DB::raw("DATE(a.created_at)"));
+
+        $data = $query->get()->toArray();
+
+
+        return $data;
+    }
 }

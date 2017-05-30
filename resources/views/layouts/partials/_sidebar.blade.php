@@ -321,14 +321,6 @@
 
                     <b class="arrow"></b>
                 </li>
-                <li {{ setActive('game/tlmnsolo') }}>
-                    <a href="{{route('game.tlmnsolo')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Thống kê game TLMN SOLO
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
                 <li {{ setActive('game/maubinh') }}>
                     <a href="{{route('game.maubinh')}}">
                         <i class="menu-icon fa fa-caret-right"></i>

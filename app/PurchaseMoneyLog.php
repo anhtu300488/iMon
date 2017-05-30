@@ -13,6 +13,38 @@ class PurchaseMoneyLog extends Model
     {
         return $this->belongsToMany('App\UserReg', 'user','userId');
     }
+    public static function getSumRevenuShare($dateCharge)
+    {
+        $query = DB::table('purchase_money_log as p');
+        $query->select(DB::raw('SUM(p.parValue) as sum_money'));
+
+//            ->join('partner', function($join)
+//            {
+//                $join->on('partner.partnerId', '=', 'user.cp');
+//
+//            });
+
+        if($dateCharge != ''){
+            $startDateCharge = $dateCharge[0];
+
+            $endDateCharge = $dateCharge[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('p.purchasedTime',[$start,$end]);
+            }
+        }
+
+//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
+//            $cp_id = PartnerTable::getCpIdByAdmin();
+//            $query->andWhere("g.cp = ?", $cp_id);
+//        }
+//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
+//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
+        $query->where(DB::raw('p.type'),'=', 1);
+        return $query->get()->toArray();
+    }
     public static function getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os)
     {
         $query = DB::table('purchase_money_log as p');

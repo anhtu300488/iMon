@@ -17,6 +17,8 @@ class XocdiaController extends Controller
         $type = \Request::get('type');
         $fromDate = \Request::get('fromDate');
         $toDate = \Request::get('toDate');
+        $userId = \Request::get('userId');
+
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = MatchLog::query()->where("gameId", "=", 15);
@@ -33,12 +35,14 @@ class XocdiaController extends Controller
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('createdTime',[$start,$end]);
         }
-
-        if($type ==  1){
-            $query->where("description", 'like', "%true%");
-        } else if($type ==  2){
-            $query->where("description", 'not like',  "%true%");
+        if($userId != ''){
+            $query->where('description','LIKE','%'.$userId.'%');
         }
+//        if($type ==  1){
+//            $query->where("description", 'like', "%true%");
+//        } else if($type ==  2){
+//            $query->where("description", 'not like',  "%true%");
+//        }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;

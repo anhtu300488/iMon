@@ -9,6 +9,7 @@ use App\UserStatistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -70,7 +71,7 @@ class ExchangeRequestController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $purchase_arr = array();
         $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
         foreach ($purchase_moneys as $index => $purchase_money){
@@ -89,7 +90,8 @@ class ExchangeRequestController extends Controller
         } elseif(Input::get('reload')) {
             $status = 2; //if register then use this method
         }
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => 'handler']);
+        $admin = Auth::user()->id;
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => 'handler', 'admin_id' => $admin]);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }
@@ -108,7 +110,8 @@ class ExchangeRequestController extends Controller
         } elseif ($type == 2){
             $status = 4;
         }
-        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => $description]);
+        $admin = Auth::user()->id;
+        ExchangeAssetRequest::where('requestId', $id)->update(['status' => $status, 'description' => $description, 'admin_id' => $admin]);
         return redirect()->route('revenue.exchangeRequest')
             ->with('message','Updated Successfully');
     }
@@ -165,5 +168,75 @@ class ExchangeRequestController extends Controller
         $html = $html . "</tr></tbody></table>";
 
         return $html;
+    }
+
+    public function downloadExcel(Request $request){
+        $userName = \Request::get('userName');
+        $displayName = \Request::get('displayName');
+        $userId = \Request::get('userId');
+        $phone = \Request::get('phone');
+        $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
+        $status = \Request::get('status') ? \Request::get('status') : 3;
+
+        $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
+
+        $query = ExchangeAssetRequest::query()->select("userId","userName", DB::raw('user.displayName as displayName'), DB::raw('user.totalMoneyCharged as totalMoneyCharged'), "totalCash", "totalParValue", "responseData", DB::raw('exchange_asset_request.status as status') , "created_at");
+        $query->leftjoin('user', function($join)
+        {
+            $join->on('user.userId', '=', 'exchange_asset_request.requestUserId');
+
+        });
+        if($userId != ''){
+            $query->where('user.userId','=',$userId);
+        }
+        if($userName != ''){
+            $query->where('exchange_asset_request.requestUserName','LIKE','%'.$userName.'%');
+        }
+        if($displayName != ''){
+            $query->where('user.displayName','LIKE','%'.$displayName.'%');
+        }
+
+        if($status != -2){
+            $query->where('exchange_asset_request.status','=',$status);
+        }
+
+        $query->where('user.status', '=', 1);
+
+        if($timeRequest != ''){
+            $startPlayGame = $timeRequest[0];
+
+            $endPlayGame = $timeRequest[1];
+
+            if($startPlayGame != '' && $endPlayGame != ''){
+                $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
+                $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
+                $query->whereBetween('exchange_asset_request.created_at',[$start1,$end1]);
+            }
+        }
+
+        $results = $query->orderBy('exchange_asset_request.created_at', 'desc')->get();
+//        var_dump($results);die;
+        // generator.
+        $data = [];
+
+        // Convert each member of the returned collection into an array,
+        // and append it to the payments array.
+        foreach ($results as $k => $result) {
+            $data[] = $result->toArray();
+            $data[$k]["responseData"] = getSerial($result->responseData);
+            $data[$k]["status"] = $statusArr[$result->status];
+
+        }
+        // Generate and return the spreadsheet
+        ini_set('max_execution_time', 360);
+        ini_set('memory_limit', '-1');
+        return \Maatwebsite\Excel\Facades\Excel::create('exchange_asset', function($excel) use ($data) {
+            $excel->sheet('exchange_asset', function($sheet) use ($data)
+            {
+                $headings = array('User ID', 'Tên hiển thị','Tên đăng nhập','Tổng tiền đã nạp','Total cash', 'Giá trị thẻ', 'Seri thẻ', 'Trạng thái', 'Thời gian tạo');
+                $sheet->fromArray($data, null, 'A1', false, false);
+                $sheet->prependRow(1, $headings);
+            });
+        })->download('xlsx');
     }
 }

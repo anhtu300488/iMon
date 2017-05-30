@@ -91,10 +91,11 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
                 $query->whereDate('user.registedTime', '=', $startDateCharge);
             }
-        } else {
-            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
         }
+//        else {
+//            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
+//        }
 
         $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
         return $query->get()->toArray();
@@ -126,10 +127,11 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
                 $query->whereDate('user.registedTime', '=', $startDateCharge);
             }
-        } else {
-            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
         }
+//        else {
+//            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
+//        }
 
         $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
         return $query->get()->toArray();
@@ -163,10 +165,11 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
                 $query->whereDate('user.registedTime', '=', $startDateCharge);
             }
-        } else {
-            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
         }
+//        else {
+//            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
+//        }
 
         $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
         return $query->get()->toArray();
@@ -200,10 +203,11 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
                 $query->whereDate('user.registedTime', '=', $startDateCharge);
             }
-        } else {
-            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
         }
+//        else {
+//            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
+//        }
 
         $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
         return $query->get()->toArray();
@@ -237,10 +241,11 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
                 $query->whereDate('user.registedTime', '=', $startDateCharge);
             }
-        } else {
-            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
         }
+//        else {
+//            $query->where("p.loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//            $query->whereDate('user.registedTime', '=', Date("Y-m-d", time() - 86400* 7));
+//        }
 
         $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
         return $query->get()->toArray();

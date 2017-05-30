@@ -59,7 +59,7 @@ class UserOnlineController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('cash','desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('cash','desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.revenue.userOnline.index',compact('data', 'gameArr', 'clientType'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

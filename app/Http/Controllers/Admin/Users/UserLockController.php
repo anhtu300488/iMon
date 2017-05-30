@@ -19,7 +19,7 @@ class UserLockController extends Controller
         $userName = \Request::get('userName');
         $userID = \Request::get('userID');
         $displayName = \Request::get('displayName');
-        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
+        $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = UserReg::query();
@@ -52,7 +52,7 @@ class UserLockController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('userName', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('userName', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.users.userLock.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

@@ -29,7 +29,7 @@ class NotificationController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('notificationId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('notificationId', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.others.notification.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

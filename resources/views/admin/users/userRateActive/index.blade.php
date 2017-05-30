@@ -83,11 +83,11 @@
                                 <tr>
                                     <td class="hidden-480">{{ ++$i }}</td>
                                     <td class="hidden-480">{{ $day }}</td>
-                                    <td>{{ $value[5] }}</td>
-                                    <td>{{ $value[0] }}</td>
-                                    <td>{{ $value[1] }}</td>
-                                    <td>{{ $value[2] }}</td>
-                                    <td>{{ $value[3] }}</td>
+                                    <td>{{ isset($value[5]) ? $value[5] : 0 }}</td>
+                                    <td>{{ isset($value[0]) ? $value[0] : 0 }}</td>
+                                    <td>{{ isset($value[1]) ? $value[1] : 0 }}</td>
+                                    <td>{{ isset($value[2]) ? $value[2] : 0 }}</td>
+                                    <td>{{ isset($value[3]) ? $value[3] : 0 }}</td>
                                 </tr>
                             @endforeach
                         @else

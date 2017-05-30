@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
 use App\ExchangeAssetRequest;
+use App\MoHistory;
 use App\Partner;
 use App\PurchaseMoneyLog;
 use Carbon\Carbon;
@@ -11,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use App\MoHistory;
 
 
 class RevenueDayController extends Controller
@@ -93,11 +93,13 @@ class RevenueDayController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
 //        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
+        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge);
+
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
@@ -129,7 +131,12 @@ class RevenueDayController extends Controller
         $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
         $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
         $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
+        foreach ($sms_moneys as $index => $sms_money){
+            $purchase_arr[$sms_money->purchase_date][5] = $sms_money->sum_money;
+        }
+
         return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr', 'sum_8x', 'sum_9029', 'sum_the', 'sum_doi_thuong', 'loi_nhuan'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+
     }
 
     public function statistic($fromDate,$toDate){

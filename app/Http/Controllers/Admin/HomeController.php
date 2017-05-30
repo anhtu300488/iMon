@@ -38,6 +38,7 @@ class HomeController extends Controller
         $type = \Request::get('type');
         $cp = \Request::get('partner');
         $os = \Request::get('clientType');
+        $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
@@ -99,11 +100,14 @@ class HomeController extends Controller
 
         $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->paginate($perPage);
+        $startLimit = $perPage * ($page - 1);
+        $endLimit = $perPage * $page;
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
 //        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
         $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
+        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge);
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
@@ -135,6 +139,10 @@ class HomeController extends Controller
         $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
         $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
         $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
+
+        foreach ($sms_moneys as $index => $sms_money){
+            $purchase_arr[$sms_money->purchase_date][5] = $sms_money->sum_money;
+        }
 
         return view('admin.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr', 'sum_8x', 'sum_9029', 'sum_the', 'sum_doi_thuong', 'loi_nhuan'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

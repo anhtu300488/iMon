@@ -11,6 +11,8 @@ class Game extends Model
 
     protected $primaryKey = 'gameId';
 
+    public $timestamps = false;
+
     public static function getListGame($gameId = null)
     {
         $sql = Game::query()->select(DB::raw('gameId, name'))

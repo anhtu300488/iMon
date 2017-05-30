@@ -19,14 +19,16 @@ class UserRateActiveController extends Controller
      */
     public function index(Request $request)
     {
-        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : getToday();
+        $loginTime = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
-        $total1Rs = LoggedInLog::getTotalActive1R($loginTime);
-        $total3Rs = LoggedInLog::getTotalActive3R($loginTime);
-        $total5Rs = LoggedInLog::getTotalActive5R($loginTime);
-        $total7Rs = LoggedInLog::getTotalActive7R($loginTime);
-        $total30Rs = LoggedInLog::getTotalActive30R($loginTime);
+        var_dump($loginTime);die;
+
+        $total1Rs = LoggedInLog::getTotalActive1R($loginTime[0]);
+        $total3Rs = LoggedInLog::getTotalActive3R($loginTime[0]);
+        $total5Rs = LoggedInLog::getTotalActive5R($loginTime[0]);
+        $total7Rs = LoggedInLog::getTotalActive7R($loginTime[0]);
+        $total30Rs = LoggedInLog::getTotalActive30R($loginTime[0]);
 
         $login_arr = array();
         foreach ($total1Rs as $index => $total){
@@ -48,6 +50,7 @@ class UserRateActiveController extends Controller
         foreach ($total30Rs as $index => $total){
             $login_arr[$total->purchase_date][3] = isset($total->total) ? $total->total : 0;
         }
+//        var_dump($login_arr);die;
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;

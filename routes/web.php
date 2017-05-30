@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/rechargeTransaction', ['as' => 'revenue.rechargeTransaction', 'uses' => 'Admin\Revenue\RechargeTransactionController@index']);
 
+    Route::get('revenue/rechargeTransaction/xlsx', ['as' => 'rechargeTransaction.excel', 'uses' => 'Admin\Revenue\RechargeTransactionController@downloadExcel']);
+
     Route::get('revenue/revenueDay', ['as' => 'revenue.revenueDay', 'uses' => 'Admin\Revenue\RevenueDayController@index']);
 
     Route::get('revenue/revenueDay/statistic/{fromDate}/{toDate}', ['as' => 'revenue.revenueDay.statistic', 'uses' => 'Admin\Revenue\RevenueDayController@statistic']);
@@ -98,6 +100,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('revenue/exchangeRequest/delete', ['as' => 'exchangeRequest.delete', 'uses' => 'Admin\Revenue\ExchangeRequestController@delete']);
 
     Route::get('revenue/exchangeRequest/getMatchLog/{id}', ['as' => 'exchangeRequest.getMatchLog', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMatchLog']);
+
+    Route::get('revenue/exchangeRequest/xlsx', ['as' => 'exchangeRequest.excel', 'uses' => 'Admin\Revenue\ExchangeRequestController@downloadExcel']);
 
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
 
@@ -142,6 +146,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store']);
 
+    Route::get('system/taixiu/create', ['as' => 'system.taixiu.create', 'uses' => 'Admin\System\TaiXiuController@create', 'middleware' => ['permission:administrator']]);
+
+    Route::post('system/taixiu/create',['as'=>'system.taixiu.store','uses'=>'Admin\System\TaiXiuController@store','middleware' => ['permission:administrator']]);
+
+
 
     //users management
     Route::get('users/userReg', ['as' => 'users.userReg', 'uses' => 'Admin\Users\UserRegisterController@index']);
@@ -176,7 +185,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('game/emergencyNotification','Admin\Game\NotificationController');
 
     //game mangement
-    Route::get('game/manageGame', ['as' => 'game.manageGame', 'uses' => 'Admin\Game\GameController@index']);
+//    Route::get('game/manageGame', ['as' => 'game.manageGame', 'uses' => 'Admin\Game\GameController@index']);
+    Route::resource('game/manageGame','Admin\Game\GameController');
 
     Route::get('game/matchLog', ['as' => 'game.matchLog', 'uses' => 'Admin\Game\MatchLogController@index']);
 

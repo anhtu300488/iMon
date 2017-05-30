@@ -230,11 +230,15 @@
             var iap_money = new Array();
             var total_money = new Array();
             var exchange_money = new Array();
+            var sms_money = new Array();
             <?php foreach($purchase_arr as $day => $value):?>
                 array_date.push(['<?php echo $day;  ?>']);
-            sum_money.push(<?php echo isset($value[2][0])? $value[2][0] : 0  ?>);
+            <?php $smsTotal = isset($value[2][0])? $value[2][0] : 0; ?>
+            <?php $smsVerify = isset($value[5])? $value[5] : 0; $smsVerifyTotal = $smsVerify - $smsTotal;?>
+            sum_money.push(<?php echo $smsTotal;  ?>);
             cash_money.push(<?php echo isset($value[1][0])? $value[1][0] : 0 ?>);
             iap_money.push(<?php echo isset($value[3][0])? $value[3][0] : 0 ?>);
+            sms_money.push(<?php echo $smsVerifyTotal; ?>);
             <?php $arr1 = isset($value[1][1]) ? $value[1][1] : 0;
                 $arr2 = isset($value[2][1]) ? $value[2][1] : 0;  ?>
             total_money.push(<?php echo (int)($arr1 + $arr2) / 10;  ?>);
@@ -267,6 +271,9 @@
                 }, {
                     name: 'Đổi thưởng',
                     data: exchange_money
+                }, {
+                    name: 'Xác thực',
+                    data: sms_money
                 }, {
                     name: 'IAP',
                     data: iap_money

@@ -25,7 +25,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/exchangeRequest','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/exchangeRequest','role'=>'search', 'name' => 'formSearch'])  !!}
                             {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
@@ -74,17 +74,25 @@
 
 
                             </div>
+                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button type="submit" id="search_button" onclick="document.formSearch.submit();" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ route('exchangeRequest.excel', ['userId' => request('userId'),'userName' => request('userName'),'displayName' => request('displayName'), 'timeRequest' => request('timeRequest'), 'phone' => request('phone'), 'status' => request('status')]) }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                             {{--</form>--}}
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
 
@@ -167,7 +175,7 @@
                                     {{--[{"provider":"VTT","amount":20000,"serial":"58122218834","pin":"6567755011893"}]--}}
                                     @permission('administrator')
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
-                                    @if($rs->status == 1)
+                                    @if($rs->status == 5)
                                         <button class="btn btn-xs btn-info" name="reload" type="submit" value="reload" title="Duyệt lại">
                                             <i class="ace-icon fa fa-refresh white"></i>
                                         </button>

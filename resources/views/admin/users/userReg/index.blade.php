@@ -58,7 +58,7 @@
                                     <!-- #section:plugins/date-time.datepicker -->
                                     <label  for="id-date-picker-1">Thời gian đăng ký</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_register" id="id-date-range-picker-1" value="{{request('date_register') ? request('date_register') : getToday()}}" />
+                                        <input class="form-control" type="text" name="date_register" id="id-date-range-picker-1" value="{{request('date_register')}}" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -103,7 +103,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    <a href="{{ route('userReg.excel', ['userName' => request('userName'), 'fromDate' => request('fromDate'), 'toDate' => request('toDate'), 'device' => request('device'), 'ip' => request('ip'), 'clientType' => request('clientType')]) }}">
+                                    <a href="{{ route('userReg.excel', ['userId' => request('userId'), 'userName' => request('userName'), 'displayName' => request('displayName'), 'date_register' => request('date_register'), 'device' => request('device'), 'ip' => request('ip'), 'clientType' => request('clientType'), 'status' => request('status')]) }}">
                                         <button class="btn btn-info btn-sm">
                                             Download Excel
                                         </button>
@@ -158,6 +158,7 @@
                                 </th>
                                 <th class="hidden-480">Đối tác</th>
                                 <th>Nền tảng</th>
+                                <th>Note</th>
                                 <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Ngày đăng ký</th>
                                 <th>Trạng thái</th>
                             </tr>
@@ -175,6 +176,7 @@
                                     <td>{{ $rs->device }}</td>
                                     <td class="hidden-480">{{ $rs->cp }}</td>
                                     <td>{{ $clientType[$rs->clientId] }}</td>
+                                    <td>{{ $rs->note }}</td>
                                     <td class="hidden-480">{{ $rs->registedTime }}</td>
                                     <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @elseif($rs->status == 3) <span class="label label-sm label-inverse arrowed-in">Lock</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 </tr>

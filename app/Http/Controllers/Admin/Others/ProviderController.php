@@ -26,7 +26,7 @@ class ProviderController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('id')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('id')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.others.telco.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

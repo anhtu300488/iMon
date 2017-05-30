@@ -49,4 +49,22 @@ class GameController extends Controller
 
         return view('admin.game.game.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
+
+    public function edit($id){
+        $game = Game::find($id);
+        return view('admin.game.game.edit',compact('game'));
+    }
+
+    public function update(Request $request, $id){
+        $this->validate($request, [
+            'description' => 'required'
+        ]);
+
+        $game = Game::find($id);
+        $game->description = $request->input('description');
+        $game->save();
+
+        return redirect()->route('manageGame.index')
+            ->with('message','Updated Successfully');
+    }
 }

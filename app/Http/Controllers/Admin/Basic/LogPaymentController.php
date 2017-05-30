@@ -33,7 +33,7 @@ class LogPaymentController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = LogPayment::where($matchThese)->orderBy('id')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = LogPayment::where($matchThese)->orderBy('id')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.basic.logPayment.index',compact('data'));
     }

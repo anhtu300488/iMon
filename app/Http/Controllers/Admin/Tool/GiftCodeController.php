@@ -28,7 +28,7 @@ class GiftCodeController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('userName')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('userName')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.tool.giftCode.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

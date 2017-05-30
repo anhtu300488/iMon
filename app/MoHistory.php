@@ -51,7 +51,7 @@ class MoHistory extends Model
             if($startDateCharge != '' && $endDateCharge != ''){
                 $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
                 $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
-                $query->whereBetween('m.created_at',[$start,$end]);
+                $query->whereBetween('a.created_at',[$start,$end]);
             }
         }
 

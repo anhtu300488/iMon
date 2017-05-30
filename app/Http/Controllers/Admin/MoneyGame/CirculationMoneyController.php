@@ -65,7 +65,7 @@ class CirculationMoneyController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $results = MoneyLog::getSumByTransaction($transaction, $dateCharge, $type);
         $moneyArr = array();
         foreach ($results as $k => $v){

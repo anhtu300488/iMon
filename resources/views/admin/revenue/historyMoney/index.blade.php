@@ -59,7 +59,11 @@
 
                                 </div>
 
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Loại</label>
+                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
+                                </div>
                             </div>
                             <hr />
                             <div class="row">

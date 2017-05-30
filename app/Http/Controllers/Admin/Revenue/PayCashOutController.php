@@ -61,7 +61,7 @@ class PayCashOutController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy(DB::raw("DATE(a.created_at)"), "a.requestUserId", "a.requestUserName")->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy(DB::raw("DATE(a.created_at)"), "a.requestUserId", "a.requestUserName")->orderBy(DB::raw("DATE(a.created_at)"), 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.revenue.payCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

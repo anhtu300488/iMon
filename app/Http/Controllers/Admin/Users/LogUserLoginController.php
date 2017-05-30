@@ -71,7 +71,7 @@ class LogUserLoginController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('loggedInTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('loggedInTime', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         $totals = LoggedInLog::getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime);
 

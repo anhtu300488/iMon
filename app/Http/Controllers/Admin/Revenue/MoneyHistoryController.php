@@ -73,7 +73,7 @@ class MoneyHistoryController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('insertedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('insertedTime', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
 //        var_dump($data);die;
 

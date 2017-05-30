@@ -45,7 +45,7 @@ class TopGameController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy('a.userName', 'a.gameId')->orderBy(DB::raw('COUNT(DISTINCT a.userId)'),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 //        var_dump($data);die;
 
         return view('admin.users.topGame.index',compact('data', 'gameArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);

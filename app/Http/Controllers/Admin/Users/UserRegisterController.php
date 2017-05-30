@@ -26,7 +26,7 @@ class UserRegisterController extends Controller
         $userId = \Request::get('userId');
         $userName = \Request::get('userName');
         $displayName = \Request::get('displayName');
-        $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : getToday();
+        $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
@@ -139,12 +139,14 @@ class UserRegisterController extends Controller
 
     public function downloadExcel(Request $request){
 
+        $userId = \Request::get('userId');
         $userName = \Request::get('userName');
-        $fromDate = \Request::get('fromDate');
-        $toDate = \Request::get('toDate');
+        $displayName = \Request::get('displayName');
+        $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
+        $status = \Request::get('status');
 
         $partner = Partner::pluck('partnerName', 'partnerId');
 
@@ -159,9 +161,21 @@ class UserRegisterController extends Controller
             $matchThese['clientId'] = $os;
         }
 
-        $query = UserReg::query()->select("userName","displayName", "ip", "device", "cp", "clientId", "registedTime");
+        if($userId != ''){
+            $matchThese['userId'] = $userId;
+        }
+
+        if($status != ''){
+            $matchThese['status'] = $status;
+        }
+
+        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "cp", "clientId", "registedTime");
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
+        }
+
+        if($displayName != ''){
+            $query->where('displayName','LIKE','%'.$displayName.'%');
         }
 
         if($device != ''){
@@ -174,11 +188,18 @@ class UserRegisterController extends Controller
 
         $query->where($matchThese);
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('registedTime',[$start,$end]);
+        if($dateRegister != ''){
+            $startDateCharge = $dateRegister[0];
+
+            $endDateCharge = $dateRegister[1];
+
+            if($startDateCharge != '' && $endDateCharge != ''){
+                $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
+                $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
+                $query->whereBetween('registedTime',[$start,$end]);
+            }
         }
+
         $results = $query->orderBy('registedTime', 'desc')->get();
 
         // generator.
@@ -188,19 +209,23 @@ class UserRegisterController extends Controller
         // and append it to the payments array.
         foreach ($results as $k => $result) {
             $data[] = $result->toArray();
+            $data[$k]["userName"] = str_replace('=','\=',$result->userName);
+            $data[$k]["displayName"] = str_replace('=','\=',$result->displayName);
             $data[$k]["clientId"] = $clientType[$result->clientId];
 
         }
         // Generate and return the spreadsheet
-
+        ini_set('max_execution_time', 3000);
+        ini_set('memory_limit', '-1');
         return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
-                $headings = array('Tên tài khoản', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
+                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
                 $sheet->fromArray($data, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });
         })->download('xlsx');
+
     }
 
     public function lockUser(Request $request){

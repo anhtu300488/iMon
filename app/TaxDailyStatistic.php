@@ -29,6 +29,7 @@ class TaxDailyStatistic extends Model
         if($gameId){
             $query->where('a.gameId','=', $gameId);
         }
+        $query->whereNull('a.hour');
         $data = $query->orderBy("a.day", "DESC")->get()->toArray();
 
 

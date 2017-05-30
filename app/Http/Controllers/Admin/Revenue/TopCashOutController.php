@@ -45,7 +45,7 @@ class TopCashOutController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy("a.requestUserId", "a.requestUserName")->orderBy('sumMoney', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.revenue.topCashOut.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

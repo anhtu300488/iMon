@@ -39,7 +39,7 @@ class CrashTableAlarmController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('insertTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('insertTime', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.tool.crashTableAlarm.index',compact('data', 'gameArr', 'alarmArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
 

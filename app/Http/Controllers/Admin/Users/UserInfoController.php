@@ -62,7 +62,7 @@ class UserInfoController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy($list_top[$top], 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy($list_top[$top], 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.users.userInfo.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

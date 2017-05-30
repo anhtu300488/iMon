@@ -234,7 +234,7 @@
                 </li>
 
                 <li {{ setActive('game/manageGame') }}>
-                    <a href="{{route('game.manageGame')}}">
+                    <a href="{{route('manageGame.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý game
                     </a>

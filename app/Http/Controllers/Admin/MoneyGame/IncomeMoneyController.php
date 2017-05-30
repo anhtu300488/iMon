@@ -24,7 +24,7 @@ class IncomeMoneyController extends Controller
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $typeArr = array(1 => 'Mon');
 
-        $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 3 => 'Quà tặng hệ thống', 7 => 'Giftcode');
+        $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 3 => 'Quà tặng hệ thống', 7 => 'Giftcode', 10 => 'Thưởng nhiệm vụ', 11 => 'Đăng ký tài khoản');
 
         $matchThese = [];
         if($transaction != ''){
@@ -59,11 +59,11 @@ class IncomeMoneyController extends Controller
             $query->where("p.insertedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
         }
 
-        $query->whereIn('p.transactionId', [2,3,7]);
+        $query->whereIn('p.transactionId', [2,3,7,10,11]);
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy(DB::raw("DATE(p.insertedTime)"), 'p.transactionId')->orderBy(DB::raw("DATE(p.insertedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $results = MoneyLog::getSumByTransaction($transaction, $dateCharge, $type);
         $moneyArr = array();
         foreach ($results as $k => $v){

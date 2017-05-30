@@ -82,6 +82,7 @@
                             <th class="hidden-480">Hướng dẫn</th>
                             <th>Hỗ trợ</th>
                             <th>Trạng thái</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -93,6 +94,13 @@
                                 <td>{{ strip_tags($rs->description) }}</td>
                                 <td class="hidden-480">{{ $rs->help }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
+                                <td>
+                                    @permission('administrator')
+                                    <a class="btn btn-xs btn-info" href="{{ route('manageGame.edit',$rs->gameId) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
+                                    @endpermission
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

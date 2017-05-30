@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/rechargeTransaction','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/rechargeTransaction','role'=>'search', 'name' => 'formSearch'])  !!}
                             {{--<form action="{{url('logPayment')}}" role="search" method="get" >--}}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
@@ -85,17 +85,25 @@
                                     {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
+                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button type="submit" id="search_button" onclick="document.formSearch.submit();" class="btn btn-info btn-sm">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ route('rechargeTransaction.excel', ['userId' => request('userId'),'userName' => request('userName'),'displayName' => request('displayName'), 'date_charge' => request('date_charge'), 'date_play_game' => request('date_play_game'), 'clientType' => request('clientType'), 'partner' => request('partner'), 'type' => request('type')]) }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                             {{--</form>--}}
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
 
@@ -133,7 +141,7 @@
                             <td class="hidden-480">{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td class="hidden-480">{{ $rs->displayName }}</td>
-                            <td></td>
+                            <td>{{ number_format($rs->parValue) }}</td>
                             <td>{{ number_format($rs->cashValue) }}</td>
                             <td>{{ number_format($rs->currentCash) }}</td>
                             <td class="hidden-480">{{ $rs->purchasedTime }}</td>

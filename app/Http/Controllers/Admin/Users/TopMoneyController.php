@@ -30,7 +30,7 @@ class TopMoneyController extends Controller
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->offset($startLimit)->limit($perPage)->paginate($perPage);
 
         return view('admin.users.topMoney.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

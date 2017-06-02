@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class TaxDailyStatistic extends Model
                 $query->whereBetween('a.day',[$start,$end]);
             }
         } else {
-            $query->where("a.day",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("a.day",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($gameId){

@@ -37,7 +37,7 @@ class LoggedInLog extends Model
                 $query->whereBetween('p.loggedInTime',[$start,$end]);
             }
         } else {
-            $query->where("loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("loggedInTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($userID){

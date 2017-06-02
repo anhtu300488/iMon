@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,7 @@ class MoneyLog extends Model
                 $query->whereBetween('p.insertedTime',[$start,$end]);
             }
         } else{
-            $query->where("p.insertedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.insertedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         $query->where('p.transactionId', '!=', 1);

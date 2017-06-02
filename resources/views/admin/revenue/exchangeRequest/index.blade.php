@@ -137,6 +137,7 @@
                             <th class="hidden-480">Exchange By</th>
                             <th>Thống kê</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
+                            <th class="hidden-480">Tên Admin</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -170,6 +171,7 @@
                                 </td>
                                 <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
+                                <td class="hidden-480">{{ getAdminName($rs->admin_id) }}</td>
                                 <td>
                                     {{--[{"provider":"VTT","amount":20000,"serial":"58122200912","pin":"6567138553863"}]--}}
                                     {{--[{"provider":"VTT","amount":20000,"serial":"58122218834","pin":"6567755011893"}]--}}

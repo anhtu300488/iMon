@@ -56,8 +56,8 @@ class PurchaseMoneyController extends Controller
             'provider' => 'required',
             'cardValue' => 'required|integer|max:500000',
             'userId' => 'required',
-            'cardPin' => 'required|max:20',
-            'cardSerial' => 'required|max:20',
+            'cardPin' => 'required|unique:purchase_money_missing|max:20',
+            'cardSerial' => 'required|unique:purchase_money_missing|max:20',
             'toCash' => 'required'
         ]);
 
@@ -82,8 +82,8 @@ class PurchaseMoneyController extends Controller
             'provider' => 'required',
             'cardValue' => 'required|integer|max:500000',
             'userId' => 'required',
-            'cardPin' => 'required|max:20',
-            'cardSerial' => 'required|max:20',
+            'cardPin' => 'required|unique:purchase_money_missing|max:20',
+            'cardSerial' => 'required|unique:purchase_money_missing|max:20',
             'toCash' => 'required'
         ]);
 

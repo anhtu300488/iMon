@@ -8,6 +8,7 @@ use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
 use App\UserResetPw;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -93,10 +94,10 @@ class UserRegisterController extends Controller
         $total_by_os = UserReg::getTotalUserByOs();
 
         $day = 60*60*24; $day_7 = time() - 6*$day;
-        $register_info = UserReg::getRegisterInfo(date("Y-m-d", $day_7) . "00:00:00");
-        $register_info_new = UserReg::getRegisterInfoNew(date("Y-m-d", $day_7) . "00:00:00");
-        $user_play_inday  =  UserReg::getPlayUserInday(date("Y-m-d", $day_7) . "00:00:00");
-        $user_login_inday = LoggedInLog::getPlayUserInday(date("Y-m-d", $day_7) . "00:00:00");
+        $register_info = UserReg::getRegisterInfo(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $register_info_new = UserReg::getRegisterInfoNew(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $user_play_inday  =  UserReg::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $user_login_inday = LoggedInLog::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
 //        $register_info_new = UserTable::getRegisterInfoNew(date("Y-m-d", $day_7) . "00:00:00");
         $created_at = array();
         //tai khoan moi

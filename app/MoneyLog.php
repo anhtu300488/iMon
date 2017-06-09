@@ -19,9 +19,9 @@ class MoneyLog extends Model
 
         $query = DB::table('money_log as p');
         if($type == 1){
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentCash) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         } else{
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentGold) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         }
 
         $query->join('money_transaction', function($join)

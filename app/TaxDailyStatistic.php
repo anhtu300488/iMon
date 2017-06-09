@@ -36,4 +36,21 @@ class TaxDailyStatistic extends Model
 
         return $data;
     }
+
+    public static function getRevenueGroupByDateNow($gameId = null)
+    {
+        $query = DB::table('tax_daily_statistic as a');
+        $query->select(DB::raw('SUM(a.taxValue) as taxValue'),"day","gameId");
+
+        $query->whereDate('a.day', date('Y-m-d', strtotime(Carbon::now())));
+
+        if($gameId){
+            $query->where('a.gameId','=', $gameId);
+        }
+//        $query->whereNull('a.hour');
+        $data = $query->groupBy('day', 'gameId' )->orderBy("a.day", "DESC")->get()->toArray();
+
+
+        return $data;
+    }
 }

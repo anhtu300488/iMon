@@ -25,18 +25,19 @@ class IncomeMoneyController extends Controller
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $typeArr = array(1 => 'Mon');
 
-        $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 3 => 'Quà tặng hệ thống', 7 => 'Giftcode', 10 => 'Thưởng nhiệm vụ', 11 => 'Đăng ký tài khoản');
+        $transactionArr = array('' => '---Tất cả---', 2 => 'Nạp tiền', 31 => 'Xác thực tài khoản', 32 => 'Quà tặng giờ vàng', 7 => 'Giftcode', 10 => 'Thưởng nhiệm vụ', 11 => 'Đăng ký tài khoản');
 
         $matchThese = [];
-        if($transaction != ''){
+        if($transaction != '' && $transaction != 31 && $transaction != 32){
             $matchThese['p.transactionId'] = $transaction;
         }
 
+
         $query = DB::table('money_log as p');
         if($type == 1){
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentCash) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         } else{
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentGold) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         }
         $query->join('money_transaction', function($join)
         {
@@ -45,6 +46,16 @@ class IncomeMoneyController extends Controller
         });
 
         $query->where($matchThese);
+
+        if($transaction == 32){
+            $query->where("p.transactionId",  "=",  3);
+            $query->where("p.description",  "LIKE",  '%Quà tặng giờ vàng%');
+        }
+
+        if($transaction == 31){
+            $query->where("p.transactionId",  "=",  3);
+            $query->where("p.description",  "=",  'Xác thực tài khoản');
+        }
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -61,6 +72,7 @@ class IncomeMoneyController extends Controller
         }
 
         $query->whereIn('p.transactionId', [2,3,7,10,11]);
+
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
@@ -91,9 +103,9 @@ class IncomeMoneyController extends Controller
 
         $query = DB::table('money_log as p');
         if($type == 1){
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentCash) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         } else{
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentGold) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         }
         $query->join('money_transaction', function($join)
         {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Users;
 use App\ClientType;
 use App\LoggedInLog;
 use App\UserReg;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -64,7 +65,7 @@ class LogUserLoginController extends Controller
                 $query->whereBetween('loggedInTime',[$start,$end]);
             }
         } else {
-            $query->where("loggedInTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("loggedInTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         }
 
         $query->where($matchThese);

@@ -29,6 +29,7 @@ class UserRegisterController extends Controller
         $displayName = \Request::get('displayName');
         $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
+        $deviceIdentify = \Request::get('deviceIdentify');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
         $status = \Request::get('status');
@@ -71,6 +72,10 @@ class UserRegisterController extends Controller
 
         if($ip != ''){
             $query->where('ip','LIKE','%'.$ip.'%');
+        }
+
+        if($deviceIdentify != ''){
+            $query->where('deviceIdentify','=', $deviceIdentify);
         }
 
         $query->where($matchThese);
@@ -145,6 +150,7 @@ class UserRegisterController extends Controller
         $displayName = \Request::get('displayName');
         $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
+        $deviceIdentify = \Request::get('deviceIdentify');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
         $status = \Request::get('status');
@@ -170,7 +176,7 @@ class UserRegisterController extends Controller
             $matchThese['status'] = $status;
         }
 
-        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "cp", "clientId", "registedTime");
+        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "deviceIdentify", "cp", "clientId", "registedTime");
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
@@ -186,6 +192,11 @@ class UserRegisterController extends Controller
         if($ip != ''){
             $query->where('ip','LIKE','%'.$ip.'%');
         }
+
+        if($deviceIdentify != ''){
+            $query->where('deviceIdentify','=',$deviceIdentify);
+        }
+
 
         $query->where($matchThese);
 
@@ -221,7 +232,7 @@ class UserRegisterController extends Controller
         return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
-                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
+                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Device ID','Đối tác', 'Nền tảng', 'Ngày đăng ký');
                 $sheet->fromArray($data, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });

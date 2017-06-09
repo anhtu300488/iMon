@@ -99,7 +99,8 @@
                         <tr>
                             <td class="hidden-480">{{ ++$i }}</td>
                             <td>{{ number_format($rs->sum_money) }}</td>
-                            <td>{{ $transactionArr[$rs->type] }}</td>
+                            {{--<td>{{ $rs->type == 3 ? (if(request('transaction') == 31){'Xác thực tài khoản'; } else : 'Quà tặng giờ vàng'): $transactionArr[$rs->type] }}</td>--}}
+                            <td><?php if($rs->type == 3){if(request('transaction') == 31){ echo 'Xác thực tài khoản';} elseif(request('transaction') == 32){ echo 'Quà tặng giờ vàng'; } else {echo 'Quà tặng hệ thống';} } else { echo $transactionArr[$rs->type]; } ?></td>
                             <td>{{ $rs->created_date }}</td>
                         </tr>
                         @endforeach

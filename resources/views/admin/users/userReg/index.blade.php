@@ -72,14 +72,18 @@
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">IP</label>
-                                    <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
+                                    <label  for="form-field-select-1">Device ID</label>
+                                    <input class="form-control" name="deviceIdentify" type="text" value="{{request('deviceIdentify')}}"/>
+
                                 </div>
 
                             </div>
                             <div class="row">
-
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label for="id-date-picker-1">IP</label>
+                                    <input class="form-control" name="ip" type="text" value="{{request('ip')}}"/>
+                                </div>
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Hệ điều hành</label>
@@ -103,7 +107,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    <a href="{{ route('userReg.excel', ['userId' => request('userId'), 'userName' => request('userName'), 'displayName' => request('displayName'), 'date_register' => request('date_register'), 'device' => request('device'), 'ip' => request('ip'), 'clientType' => request('clientType'), 'status' => request('status')]) }}">
+                                    <a href="{{ route('userReg.excel', ['userId' => request('userId'), 'userName' => request('userName'), 'displayName' => request('displayName'), 'date_register' => request('date_register'), 'device' => request('device'), 'ip' => request('ip'), 'deviceIdentify' => request('deviceIdentify'), 'clientType' => request('clientType'), 'status' => request('status')]) }}">
                                         <button class="btn btn-info btn-sm">
                                             Download Excel
                                         </button>
@@ -153,9 +157,8 @@
                                 <th>Tên đăng nhập</th>
                                 <th>Tên hiển thị</th>
                                 <th class="hidden-480">IP</th>
-                                <th>
-                                    Thiết bị
-                                </th>
+                                <th>Thiết bị</th>
+                                <th>Device ID</th>
                                 <th class="hidden-480">Đối tác</th>
                                 <th>Nền tảng</th>
                                 <th>Note</th>
@@ -174,6 +177,7 @@
                                     <td>{{ $rs->displayName }}</td>
                                     <td class="hidden-480">{{ $rs->ip }}</td>
                                     <td>{{ $rs->device }}</td>
+                                    <td>{{ $rs->deviceIdentify }}</td>
                                     <td class="hidden-480">{{ $rs->cp }}</td>
                                     <td>{{ $clientType[$rs->clientId] }}</td>
                                     <td>{{ $rs->note }}</td>

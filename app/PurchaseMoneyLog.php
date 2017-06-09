@@ -166,7 +166,7 @@ class PurchaseMoneyLog extends Model
         }
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", strtotime(Carbon::now().' -7 days')));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){
@@ -302,7 +302,7 @@ class PurchaseMoneyLog extends Model
         }
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", strtotime(Carbon::now().' -7 days')));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){
@@ -352,8 +352,8 @@ class PurchaseMoneyLog extends Model
 
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", strtotime(Carbon::now().' -7 days')));
-            $query->where("user.lastLoginTime",  ">",  Date("Y-m-d H:i:s", strtotime(Carbon::now().' -7 days')));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
+            $query->where("user.lastLoginTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){

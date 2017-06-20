@@ -19,15 +19,15 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'game/xocDia','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'game/tlmn','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">User ID</label>
-                                    <input class="form-control" name="name" type="text" value="{{request('userId')}}"/>
+                                    <input class="form-control" name="userId" type="text" value="{{request('userId')}}"/>
                                 </div>
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Room ID</label>
-                                    <input class="form-control" name="name" type="text" value="{{request('roomId')}}"/>
+                                    <input class="form-control" name="roomId" type="text" value="{{request('roomId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">

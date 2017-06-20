@@ -8,6 +8,7 @@ use App\LogPayment;
 use App\MoHistory;
 use App\Partner;
 use App\PurchaseMoneyLog;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -98,7 +99,7 @@ class HomeController extends Controller
             }
         }
 
-        $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+        $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
@@ -127,11 +128,11 @@ class HomeController extends Controller
                 $sum_9029 = $sum_9029 + $arr_telco[$smsRevenue->telco] * $smsRevenue->sum_money * 0.88;
             } else {
                 $arr_telco = array("VTT-8098" => 236/1000, "VTT-8198" => 409/1500, "VTT-8698" => 4091/10000, "VTT-8798" => 6136/15000,
-                    "VNP-8098" => 191/1000, "VNP-8198" => 545/1500, "VNP-8698" => 4091/10000, "VNP-8798" => 6136/10000,
-                    "VMS-8098" => 191/1000, "VMS-8198" => 436/1500, "VMS-8698" => 3636/10000, "VMS-8798" => 5454/10000);
+                    "VNP-8098" => 191/1000, "VNP-8198" => 545/1500, "VNP-8698" => 4091/10000, "VNP-8798" => 6136/15000,
+                    "VMS-8098" => 191/1000, "VMS-8198" => 436/1500, "VMS-8698" => 3636/10000, "VMS-8798" => 5454/15000);
                 $text = $smsRevenue->telco . "-" . $smsRevenue->shortcode;
                 $rate = isset($arr_telco[$text])? $arr_telco[$text] : 0.3;
-                $sum_8x = $sum_8x + $smsRevenue->sum_money * $rate * 0.89;
+                $sum_8x = $sum_8x + $smsRevenue->sum_money * $rate * 0.88;
             }
         }
         $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge);

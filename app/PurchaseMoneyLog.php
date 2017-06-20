@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
@@ -165,7 +166,7 @@ class PurchaseMoneyLog extends Model
         }
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){
@@ -301,7 +302,7 @@ class PurchaseMoneyLog extends Model
         }
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){
@@ -351,8 +352,8 @@ class PurchaseMoneyLog extends Model
 
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
-            $query->where("user.lastLoginTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
+            $query->where("user.lastLoginTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){
@@ -395,7 +396,7 @@ class PurchaseMoneyLog extends Model
 
 
         if(!$search){
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($inday == 1){

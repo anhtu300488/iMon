@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -18,9 +19,9 @@ class MoneyLog extends Model
 
         $query = DB::table('money_log as p');
         if($type == 1){
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentCash) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         } else{
-            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.currentGold) as sum_money'));
+            $query->select(DB::raw("DATE(p.insertedTime) created_date"), 'p.transactionId as type', DB::raw('SUM(p.changeCash) as sum_money'));
         }
 
         $query->join('money_transaction', function($join)
@@ -42,7 +43,7 @@ class MoneyLog extends Model
                 $query->whereBetween('p.insertedTime',[$start,$end]);
             }
         } else{
-            $query->where("p.insertedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.insertedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         $query->where('p.transactionId', '!=', 1);

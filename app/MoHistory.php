@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
@@ -56,7 +57,7 @@ class MoHistory extends Model
         }
 
         if(!$search){
-            $query->where("a.created_at",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("a.created_at",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
 //        $query->where("a.status", '=', 1);

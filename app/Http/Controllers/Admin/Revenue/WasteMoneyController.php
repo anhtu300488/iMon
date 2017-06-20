@@ -19,11 +19,17 @@ class WasteMoneyController extends Controller
         $list_games = Game::getListGame($game);
 
         $results = TaxDailyStatistic::getRevenueGroupByDateFromTo($game, $timeRequest);
-
+        $results1 = TaxDailyStatistic::getRevenueGroupByDateNow($game, $timeRequest);
+//        var_dump($results1);die;
         $data = [];
+        foreach ($results1 as $rs){
+            $data[$rs->day][$rs->gameId] = $rs->taxValue;
+        }
         foreach ($results as $rs){
             $data[$rs->day][$rs->gameId] = $rs->taxValue;
         }
+
+//        var_dump($data);die;
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         return view('admin.revenue.wasteMoney.index',compact('gameArr', 'list_games', 'data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }

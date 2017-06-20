@@ -88,8 +88,8 @@ class RevenueDayController extends Controller
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-
-        $query->where("p.purchasedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+//        var_dump(Date("Y-m-d", strtotime(Carbon::now().' -7 days')));die;
+        $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;

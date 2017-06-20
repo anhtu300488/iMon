@@ -8,6 +8,7 @@ use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
 use App\UserResetPw;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,7 @@ class UserRegisterController extends Controller
         $displayName = \Request::get('displayName');
         $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
+        $deviceIdentify = \Request::get('deviceIdentify');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
         $status = \Request::get('status');
@@ -72,6 +74,10 @@ class UserRegisterController extends Controller
             $query->where('ip','LIKE','%'.$ip.'%');
         }
 
+        if($deviceIdentify != ''){
+            $query->where('deviceIdentify','=', $deviceIdentify);
+        }
+
         $query->where($matchThese);
         if($dateRegister != ''){
             $startDateCharge = $dateRegister[0];
@@ -93,10 +99,10 @@ class UserRegisterController extends Controller
         $total_by_os = UserReg::getTotalUserByOs();
 
         $day = 60*60*24; $day_7 = time() - 6*$day;
-        $register_info = UserReg::getRegisterInfo(date("Y-m-d", $day_7) . "00:00:00");
-        $register_info_new = UserReg::getRegisterInfoNew(date("Y-m-d", $day_7) . "00:00:00");
-        $user_play_inday  =  UserReg::getPlayUserInday(date("Y-m-d", $day_7) . "00:00:00");
-        $user_login_inday = LoggedInLog::getPlayUserInday(date("Y-m-d", $day_7) . "00:00:00");
+        $register_info = UserReg::getRegisterInfo(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $register_info_new = UserReg::getRegisterInfoNew(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $user_play_inday  =  UserReg::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $user_login_inday = LoggedInLog::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
 //        $register_info_new = UserTable::getRegisterInfoNew(date("Y-m-d", $day_7) . "00:00:00");
         $created_at = array();
         //tai khoan moi
@@ -144,6 +150,7 @@ class UserRegisterController extends Controller
         $displayName = \Request::get('displayName');
         $dateRegister = \Request::get('date_register') ? explode(" - ", \Request::get('date_register')) : null;
         $device = \Request::get('device');
+        $deviceIdentify = \Request::get('deviceIdentify');
         $os = \Request::get('clientType');
         $ip = \Request::get('ip');
         $status = \Request::get('status');
@@ -169,7 +176,7 @@ class UserRegisterController extends Controller
             $matchThese['status'] = $status;
         }
 
-        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "cp", "clientId", "registedTime");
+        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "deviceIdentify", "cp", "clientId", "registedTime");
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
@@ -185,6 +192,11 @@ class UserRegisterController extends Controller
         if($ip != ''){
             $query->where('ip','LIKE','%'.$ip.'%');
         }
+
+        if($deviceIdentify != ''){
+            $query->where('deviceIdentify','=',$deviceIdentify);
+        }
+
 
         $query->where($matchThese);
 
@@ -220,7 +232,7 @@ class UserRegisterController extends Controller
         return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
-                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Đối tác', 'Nền tảng', 'Ngày đăng ký');
+                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Device ID','Đối tác', 'Nền tảng', 'Ngày đăng ký');
                 $sheet->fromArray($data, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });

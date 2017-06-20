@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -84,7 +85,7 @@ class UserReg extends Model
 
     public static function getTotalUserRegByDay($loginTime)
     {
-        $startDateCharge = $loginTime ? date("Y-m-d",strtotime($loginTime[0])) : Date("Y-m-d", time() - 86400* 7);
+        $startDateCharge = $loginTime ? date("Y-m-d",strtotime($loginTime[0])) : Date("Y-m-d", strtotime(Carbon::now().' -7 days'));
         return UserReg::whereDate('registedTime', '=', $startDateCharge)->count();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class TaxDailyStatistic extends Model
                 $query->whereBetween('a.day',[$start,$end]);
             }
         } else {
-            $query->where("a.day",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("a.day",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         if($gameId){
@@ -31,6 +32,23 @@ class TaxDailyStatistic extends Model
         }
         $query->whereNull('a.hour');
         $data = $query->orderBy("a.day", "DESC")->get()->toArray();
+
+
+        return $data;
+    }
+
+    public static function getRevenueGroupByDateNow($gameId = null)
+    {
+        $query = DB::table('tax_daily_statistic as a');
+        $query->select(DB::raw('SUM(a.taxValue) as taxValue'),"day","gameId");
+
+        $query->whereDate('a.day', date('Y-m-d', strtotime(Carbon::now())));
+
+        if($gameId){
+            $query->where('a.gameId','=', $gameId);
+        }
+//        $query->whereNull('a.hour');
+        $data = $query->groupBy('day', 'gameId' )->orderBy("a.day", "DESC")->get()->toArray();
 
 
         return $data;

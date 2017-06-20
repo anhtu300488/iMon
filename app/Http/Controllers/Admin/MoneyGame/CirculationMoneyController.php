@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\MoneyGame;
 
 use App\MoneyLog;
 use App\MoneyTransaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -58,7 +59,7 @@ class CirculationMoneyController extends Controller
                 $query->whereBetween('p.insertedTime',[$start,$end]);
             }
         } else{
-            $query->where("p.insertedTime",  ">",  Date("Y-m-d H:i:s", time() - 86400* 7));
+            $query->where("p.insertedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
         $query->whereIn('p.transactionId', [1,6]);

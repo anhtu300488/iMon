@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
+use App\Cp;
 use App\ExchangeAssetRequest;
 use App\MoHistory;
 use App\Partner;
@@ -10,6 +11,7 @@ use App\PurchaseMoneyLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
@@ -27,13 +29,13 @@ class RevenueDayController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
-        $cp = \Request::get('partner');
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $os = \Request::get('clientType');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
-        $partner = Partner::pluck('partnerName', 'partnerId');
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
         $partner->prepend('---Tất cả---', '');
 
@@ -47,17 +49,14 @@ class RevenueDayController extends Controller
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//        ->join('partner', function($join)
-//        {
-//            $join->on('partner.partnerId', '=', 'user.cp');
-//
-//        });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
+
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -95,10 +94,9 @@ class RevenueDayController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-//        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
-        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge);
+        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge,$cp);
+        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge,$cp);
 
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){

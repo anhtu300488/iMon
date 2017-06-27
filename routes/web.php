@@ -55,11 +55,13 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('tool/userInfo', ['as' => 'tool.userInfo', 'uses' => 'Admin\Tool\UserInfoController@index']);
 
-    Route::get('tool/createAdmin', ['as' => 'tool.createAdmin', 'uses' => 'Admin\Tool\CreateAdminController@index']);
+    Route::resource('tool/createAdmin', 'Admin\Tool\CreateAdminController');
 
-    Route::get('tool/createAdmin/create', ['as' => 'tool.createAdmin.create', 'uses' => 'Admin\Tool\CreateAdminController@create', 'middleware' => ['permission:administrator']]);
-
-    Route::post('tool/createAdmin/create',['as'=>'tool.createAdmin.store','uses'=>'Admin\Tool\CreateAdminController@store','middleware' => ['permission:administrator']]);
+//    Route::get('tool/createAdmin', ['as' => 'tool.createAdmin', 'uses' => 'Admin\Tool\CreateAdminController@index']);
+//
+//    Route::get('tool/createAdmin/create', ['as' => 'tool.createAdmin.create', 'uses' => 'Admin\Tool\CreateAdminController@create', 'middleware' => ['permission:administrator']]);
+//
+//    Route::post('tool/createAdmin/create',['as'=>'tool.createAdmin.store','uses'=>'Admin\Tool\CreateAdminController@store','middleware' => ['permission:administrator']]);
 
     Route::get('tool/serverMessage', ['as' => 'tool.serverMessage', 'uses' => 'Admin\Tool\ServerMessageController@index']);
 
@@ -231,6 +233,10 @@ Route::group(['middleware' => ['auth']], function() {
 
     //purchase money
     Route::resource('moneyGame/purchaseMoney','Admin\MoneyGame\PurchaseMoneyController');
+
+    //purchase money error
+    Route::resource('moneyGame/errorPurchaseMoney','Admin\MoneyGame\PurchaseMoneyErrorController');
+    Route::post('moneyGame/errorPurchaseMoney/purchaseMoney','Admin\MoneyGame\PurchaseMoneyErrorController@purchaseMoney');
 
     //add money
     Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');

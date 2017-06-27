@@ -55,11 +55,6 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -87,21 +82,16 @@ class PurchaseMoneyLog extends Model
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
         if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
-//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
-//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
+
          $query->groupBy("p.type");
         return $query->get()->toArray();
     }
@@ -124,17 +114,12 @@ class PurchaseMoneyLog extends Model
                 $join->on('user.userId', '=', 'p.userId');
 
             });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -190,11 +175,6 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -222,21 +202,16 @@ class PurchaseMoneyLog extends Model
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
         if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
-//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
-//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
+
         $query->groupBy("p.type");
         return $query->get()->toArray();
     }
@@ -260,17 +235,12 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }

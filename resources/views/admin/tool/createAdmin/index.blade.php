@@ -19,20 +19,20 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'tool/createAdmin','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'tool.createAdmin.index','role'=>'search'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Người chơi</label>
+                                    <label for="form-field-select-1">Tên đăng nhập</label>
                                     <input class="form-control" name="username" type="text" />
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
-                                    <label for="form-field-select-1">Loại</label>
+                                    <label for="form-field-select-1">Trạng thái</label>
 
                                     <select class="form-control" id="form-field-select-1" name="status">
                                         <option value="">---Tất cả---</option>
-                                        <option value="0" <?php if(request('status') == 0) echo "selected='selected'"; ?> >Không kích hoạt</option>
-                                        <option value="1" <?php if(request('status') == 1) echo "selected='selected'"; ?> >Kích hoạt</option>
+                                        <option value="0" <?php if(request('status') == 0) echo "selected='selected'"; ?> >Không hoạt động</option>
+                                        <option value="1" <?php if(request('status') == 1) echo "selected='selected'"; ?> >Hoạt động</option>
                                     </select>
                                 </div>
 
@@ -67,16 +67,27 @@
         @endif
             <!-- PAGE CONTENT BEGINS -->
             <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="pull-right">
+                        @permission('administrator')
+                        <a class="btn btn-success" href="{{ route('createAdmin.create') }}"> Create New</a>
+                        @endpermission
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>STT</th>
                             <th>Tên đăng nhập</th>
-                            <th>Tên người chơi</th>
+                            <th>Họ tên</th>
                             <th>Địa chỉ Email</th>
                             <th>Trạng thái</th>
                             <th>Ngày tạo</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -88,7 +99,22 @@
                                 <td>{{ $rs->name }}</td>
                                 <td>{{ $rs->email }}</td>
                                 <td>{{ $rs->status }}</td>
-                                <td>{{ $rs->created_date }}</td>
+                                <td>{{ $rs->created_at }}</td>
+                                <td>
+                                    @permission('administrator')
+                                    <a class="btn btn-xs btn-info" href="{{ route('createAdmin.edit',$rs->id) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
+                                    @endpermission
+                                    @permission('administrator')
+                                    {!! Form::open(['method' => 'DELETE','route' => ['createAdmin.destroy', $rs->id],'style'=>'display:inline']) !!}
+                                    <button class="btn btn-xs btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </button>
+                                    {!! Form::close() !!}
+
+                                    @endpermission
+                                </td>
                             </tr>
                         @endforeach
 

@@ -611,3 +611,29 @@ function getTodayPicker(){
 
     return $today . ' - ' . $today;
 }
+
+function checkPurchaseMoney($cardSerial,$cardPin){
+    $check = 0;
+    $checkLogPayment = \App\LogPayment::where(['seria' => $cardSerial, 'pin_card' => $cardPin, 'status' => 1])->count();
+    $checkPurchaseMoney = \App\PurchaseMoney::where(['cardSerial' => $cardSerial, 'cardPin' => $cardPin, 'status' => 1])->count();
+    if($checkLogPayment > 0 && $checkPurchaseMoney == 0){
+        $check = 1;
+    }
+
+    if($checkLogPayment == 1 && $checkPurchaseMoney == 1){
+        \App\PurchaseMoneyError::where(['cardSerial' => $cardSerial, 'cardPin' => $cardPin, 'active' => 1])->update(['active' => 0]);
+    }
+
+    return $check;
+}
+
+function getParValue($cardSerial,$cardPin){
+    $rs = \App\LogPayment::where(['seria' => $cardSerial, 'pin_card' => $cardPin, 'status' => 1])->first();
+
+    $money = null;
+    if($rs != null){
+        $money = $rs['money'];
+    }
+
+    return $money;
+}

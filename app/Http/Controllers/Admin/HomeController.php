@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ClientType;
+use App\Cp;
 use App\ExchangeAssetRequest;
 use App\LogPayment;
 use App\MoHistory;
@@ -11,6 +12,7 @@ use App\PurchaseMoneyLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
@@ -37,13 +39,13 @@ class HomeController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
-        $cp = \Request::get('partner');
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $os = \Request::get('clientType');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
-        $partner = Partner::pluck('partnerName', 'partnerId');
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
         $partner->prepend('---Tất cả---', '');
 
@@ -57,17 +59,14 @@ class HomeController extends Controller
                 $join->on('user.userId', '=', 'p.userId');
 
             });
-//        ->join('partner', function($join)
-//        {
-//            $join->on('partner.partnerId', '=', 'user.cp');
-//
-//        });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
+
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -98,17 +97,17 @@ class HomeController extends Controller
                 $query->whereBetween('user.startPlayedTime',[$start1,$end1]);
             }
         }
-
+//        var_dump(Date("Y-m-d", strtotime(Carbon::now().' -7 days')));die;
         $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-//        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
-        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge);
+        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge,$cp);
+        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge,$cp);
+
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date][$purchase_money->type] = array(isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0, isset($purchase_money->sum_cash) ? $purchase_money->sum_cash : 0);
@@ -140,7 +139,6 @@ class HomeController extends Controller
         $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
         $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
         $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
-
         foreach ($sms_moneys as $index => $sms_money){
             $purchase_arr[$sms_money->purchase_date][5] = $sms_money->sum_money;
         }

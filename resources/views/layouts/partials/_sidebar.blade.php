@@ -436,6 +436,15 @@
 
                     <b class="arrow"></b>
                 </li>
+
+                <li {{ setActive('moneyGame/errorPurchaseMoney') }}>
+                    <a href="{{route('errorPurchaseMoney.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Kiểm tra nạp thẻ lỗi
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
 
@@ -649,8 +658,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li {{ setActive('tool/createAdmin/create') }}>
-                    <a href="{{route('tool.createAdmin.create')}}">
+                <li {{ setActive('tool/createAdmin') }}>
+                    <a href="{{route('createAdmin.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Tạo User
                     </a>

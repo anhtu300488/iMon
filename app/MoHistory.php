@@ -28,7 +28,7 @@ class MoHistory extends Model
         $query->groupBy('m.telco', 'm.shortcode');
         return $query->get()->toArray();
     }
-    public static function getTotalRevenueByDate($timeRequest)
+    public static function getTotalRevenueByDate($timeRequest,$cp)
     {
 
         $search = false;
@@ -42,7 +42,11 @@ class MoHistory extends Model
         } else {
             $query->select(DB::raw("SUM(a.amount) sum_money"), DB::raw("DATE(a.created_at) purchase_date") );
         };
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'a.user_id');
 
+        });
         if($timeRequest != ''){
             $search = true;
             $startDateCharge = $timeRequest[0];
@@ -59,7 +63,9 @@ class MoHistory extends Model
         if(!$search){
             $query->where("a.created_at",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
-
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
 //        $query->where("a.status", '=', 1);
 
         if($inday == 1){

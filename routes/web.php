@@ -74,6 +74,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('tool/sendEmail/create', ['as' => 'tool.sendEmail.store', 'uses' => 'Admin\Tool\SendEmailController@store']);
 
     Route::get('tool/giftCode', ['as' => 'tool.giftCode', 'uses' => 'Admin\Tool\GiftCodeController@index']);
+    Route::get('tool/payment', ['as' => 'tool.payment', 'uses' => 'Admin\Tool\PaymentController@index']);
+    Route::get('tool/payment/{id}/edit', ['as' => 'tool.payment.edit', 'uses' => 'Admin\Tool\PaymentController@edit', 'middleware' => ['permission:administrator']]);
+    Route::patch('tool/payment/{id}', ['as' => 'cp.update', 'uses' => 'Admin\Tool\PaymentController@update']);
 
     Route::get('revenue/rechargeTransaction', ['as' => 'revenue.rechargeTransaction', 'uses' => 'Admin\Revenue\RechargeTransactionController@index']);
 

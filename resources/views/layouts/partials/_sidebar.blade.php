@@ -639,7 +639,14 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+                <li {{ setActive('tool/payment') }}>
+                    <a href="{{route('tool.payment')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Cấu hình kênh thanh toán
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
                 <li {{ setActive('tool/roles') }}>
                     <a href="{{route('tool.roles')}}">
                         <i class="menu-icon fa fa-caret-right"></i>

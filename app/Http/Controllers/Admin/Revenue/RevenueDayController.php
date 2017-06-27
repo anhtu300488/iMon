@@ -137,15 +137,16 @@ class RevenueDayController extends Controller
 
     }
 
-    public function statistic($fromDate,$toDate){
+    public function statistic($fromDate,$toDate,$partner){
         $fromStr = str_replace('-', '/', $fromDate);
         $toStr = str_replace('-', '/', $toDate);
         $date = $fromStr.' - '.$toStr;
         $dateCharge = explode(" - ", $date);
 
+        $cp = $partner != 1 ? $partner : Auth::user()->cp_id;
 
         //get data of today
-        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, null, null);
+        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, $cp, null);
 
         $purchase_arr = array();
         $today_arr = array();
@@ -167,7 +168,7 @@ class RevenueDayController extends Controller
         }
         //get data of yesterday
         $start[0] = $start[1] = date("m/d/Y",strtotime($dateCharge[0].' -1 days') );
-        $purchase_moneys1 = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $start, null, null, null);
+        $purchase_moneys1 = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $start, null, $cp, null);
         if(count($purchase_moneys1) > 0) {
             foreach ($purchase_moneys1 as $index => $purchase_money) {
                 $yesterday_arr[$purchase_money->purchase_date][$purchase_money->type] = $purchase_money->sum_money;

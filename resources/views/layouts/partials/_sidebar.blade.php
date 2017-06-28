@@ -66,7 +66,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @permission('administrator')
                 <li {{ setActive('revenue/revenueUserCharge') }}>
                     <a href="{{route('revenue.revenueUserCharge')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -102,7 +102,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
                 <li {{ setActive('revenue/logPayment') }}>
                     <a href="{{route('revenue.logPayment')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -111,7 +111,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @permission('administrator')
                 <li {{ setActive('revenue/smsRevenue') }}>
                     <a href="{{route('revenue.smsRevenue')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -121,15 +121,6 @@
                     <b class="arrow"></b>
                 </li>
 
-                {{--<li {{ setActive('revenue/moRevenue') }}>--}}
-                    {{--<a href="{{route('revenue.moRevenue')}}">--}}
-                        {{--<i class="menu-icon fa fa-caret-right"></i>--}}
-                        {{--Chi tiết MO SIM--}}
-                    {{--</a>--}}
-
-                    {{--<b class="arrow"></b>--}}
-                {{--</li>--}}
-
                 <li {{ setActive('revenue/detailSmsHistory') }}>
                     <a href="{{route('revenue.detailSmsHistory')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -138,6 +129,7 @@
 
                     <b class="arrow"></b>
                 </li>
+                @endpermission
 
                 <li {{ setActive('revenue/exchangeRequest') }}>
                     <a href="{{route('revenue.exchangeRequest')}}">
@@ -148,6 +140,7 @@
                     <b class="arrow"></b>
                 </li>
 
+                @permission('administrator')
                 <li {{ setActive('revenue/cashOut') }}>
                     <a href="{{route('revenue.cashOut')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -174,6 +167,7 @@
 
                     <b class="arrow"></b>
                 </li>
+                @endpermission
 
                 <li {{ setActive('revenue/ccu') }}>
                     <a href="{{route('revenue.ccu')}}">
@@ -184,6 +178,7 @@
                     <b class="arrow"></b>
                 </li>
 
+                @permission('administrator')
                 <li {{ setActive('revenue/userOnline') }}>
                     <a href="{{route('revenue.userOnline')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -210,9 +205,11 @@
 
                     <b class="arrow"></b>
                 </li>
+                @endpermission
             </ul>
         </li>
 
+        @permission('administrator')
         <li {{ setOpen('game') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list-alt"></i>
@@ -735,6 +732,7 @@
 
             </ul>
         </li>
+        @endpermission
     </ul><!-- /.nav-list -->
 
     <!-- #section:basics/sidebar.layout.minimize -->

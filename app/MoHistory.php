@@ -10,11 +10,15 @@ class MoHistory extends Model
 {
     protected $table = 'mo_history';
 
-    public static function getTotalSMSRevenue($dateCharge)
+    public static function getTotalSMSRevenue($dateCharge, $cp)
     {
         $query = DB::table('mo_history as m');
         $query->select(DB::raw('m.telco as telco'), DB::raw('m.shortcode as shortcode'), DB::raw('SUM(m.amount) as sum_money') );
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'm.user_id');
 
+        });
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
 
@@ -24,6 +28,9 @@ class MoHistory extends Model
                 $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
                 $query->whereBetween('m.created_at',[$start,$end]);
             }
+        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
         }
         $query->groupBy('m.telco', 'm.shortcode');
         return $query->get()->toArray();

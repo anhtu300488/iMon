@@ -63,12 +63,16 @@ class ExchangeAssetRequest extends Model
 
         return $data;
     }
-    public static function getTotalFee($timeRequest)
+    public static function getTotalFee($timeRequest,$cp)
     {
         
         $query = DB::table('exchange_asset_request as a');
         $query->select(DB::raw("SUM(a.totalParValue) sum_money"));
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'a.requestUserId');
 
+        });
         if($timeRequest != ''){
             $startDateCharge = $timeRequest[0];
 
@@ -81,7 +85,9 @@ class ExchangeAssetRequest extends Model
             }
         }
 
-
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         $query->where("a.status", '=', 1);
         $query->whereNotNull("a.responseData");
 

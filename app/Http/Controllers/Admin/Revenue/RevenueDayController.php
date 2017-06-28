@@ -106,7 +106,7 @@ class RevenueDayController extends Controller
         foreach ($exchange_moneys as $index => $exchange_money){
             $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
-        $money_mo = MoHistory::getTotalSMSRevenue($dateCharge);
+        $money_mo = MoHistory::getTotalSMSRevenue($dateCharge, $cp);
 //        var_dump($money_mo);die;
         $sum_9029 = 0;
         $sum_8x = 0;
@@ -124,9 +124,9 @@ class RevenueDayController extends Controller
                 $sum_8x = $sum_8x + $smsRevenue->sum_money * $rate * 0.88;
             }
         }
-        $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge);
+        $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge, $cp);
         $sum_the = $sum_the_cao[0]->sum_money * 0.79;
-        $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
+        $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge,$cp);
         $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
         $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
         foreach ($sms_moneys as $index => $sms_money){

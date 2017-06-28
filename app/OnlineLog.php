@@ -11,7 +11,7 @@ class OnlineLog extends Model
     protected $table = 'online_log';
 
 
-    public static function getOnlineLog($insertedtime = null, $option = null)
+    public static function getOnlineLog($insertedtime = null, $option = null,$cp)
     {
         $sql = OnlineLog::select(DB::raw('logId, peakData, insertedTime'));
         if ($insertedtime != '' && $insertedtime != date("d-m-Y",strtotime(Carbon::now())) ){
@@ -19,7 +19,6 @@ class OnlineLog extends Model
             $sql->where(DB::raw('logId % 4'), '=', 1);
         } else {
             if($option == 1 || $option == 2 || $option == 6){
-//                $sql->where('insertedTime' , '>=', Date("Y-m-d H:i:s", time() - 3600* $option));
                 $start = date("Y-m-d H:i:s", time() - 3600* $option);
                 $end = date("Y-m-d H:i:s",strtotime(Carbon::now()));
                 $sql->whereBetween('insertedTime',[$start,$end]);
@@ -27,6 +26,10 @@ class OnlineLog extends Model
                 $sql->where(DB::raw('DATE(insertedTime)'), '=' ,date("Y-m-d",strtotime(Carbon::now())));
                 $sql->where(DB::raw('logId % 4'), '=', 1);
             }
+        }
+
+        if($cp != null && $cp != 19){
+            $sql->where('cp', '=', $cp);
         }
 
         return  $sql->orderBy('insertedTime', 'desc')->limit(500)->get();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
+use App\Cp;
 use App\ExchangeAssetRequest;
 use App\MoHistory;
 use App\Partner;
@@ -10,6 +11,7 @@ use App\PurchaseMoneyLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
@@ -27,13 +29,13 @@ class RevenueDayController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : null;
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
-        $cp = \Request::get('partner');
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $os = \Request::get('clientType');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
-        $partner = Partner::pluck('partnerName', 'partnerId');
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
         $partner->prepend('---Tất cả---', '');
 
@@ -47,17 +49,14 @@ class RevenueDayController extends Controller
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//        ->join('partner', function($join)
-//        {
-//            $join->on('partner.partnerId', '=', 'user.cp');
-//
-//        });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
+
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -95,10 +94,9 @@ class RevenueDayController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"), 'p.type')->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $total_by_type = PurchaseMoneyLog::getTotalByType($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-//        var_dump($total_by_type);die;
         $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate($type, $userName, $dateCharge, $datePlayGame, $cp, $os);
-        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge);
-        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge);
+        $exchange_moneys = ExchangeAssetRequest::getTotalRevenueByDate($dateCharge,$cp);
+        $sms_moneys = MoHistory::getTotalRevenueByDate($dateCharge,$cp);
 
         $purchase_arr = array();
         foreach ($purchase_moneys as $index => $purchase_money){
@@ -108,7 +106,7 @@ class RevenueDayController extends Controller
         foreach ($exchange_moneys as $index => $exchange_money){
             $purchase_arr[$exchange_money->purchase_date][4] = $exchange_money->sum_money;
         }
-        $money_mo = MoHistory::getTotalSMSRevenue($dateCharge);
+        $money_mo = MoHistory::getTotalSMSRevenue($dateCharge, $cp);
 //        var_dump($money_mo);die;
         $sum_9029 = 0;
         $sum_8x = 0;
@@ -126,9 +124,9 @@ class RevenueDayController extends Controller
                 $sum_8x = $sum_8x + $smsRevenue->sum_money * $rate * 0.88;
             }
         }
-        $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge);
+        $sum_the_cao = PurchaseMoneyLog::getSumRevenuShare($dateCharge, $cp);
         $sum_the = $sum_the_cao[0]->sum_money * 0.79;
-        $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge);
+        $doi_thuong = ExchangeAssetRequest::getTotalFee($dateCharge,$cp);
         $sum_doi_thuong = $doi_thuong[0]->sum_money * 0.965;
         $loi_nhuan = $sum_8x + $sum_9029 + $sum_the - $sum_doi_thuong;
         foreach ($sms_moneys as $index => $sms_money){
@@ -139,15 +137,16 @@ class RevenueDayController extends Controller
 
     }
 
-    public function statistic($fromDate,$toDate){
+    public function statistic($fromDate,$toDate,$partner){
         $fromStr = str_replace('-', '/', $fromDate);
         $toStr = str_replace('-', '/', $toDate);
         $date = $fromStr.' - '.$toStr;
         $dateCharge = explode(" - ", $date);
 
+        $cp = $partner != 1 ? $partner : Auth::user()->cp_id;
 
         //get data of today
-        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, null, null);
+        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $dateCharge, null, $cp, null);
 
         $purchase_arr = array();
         $today_arr = array();
@@ -169,7 +168,7 @@ class RevenueDayController extends Controller
         }
         //get data of yesterday
         $start[0] = $start[1] = date("m/d/Y",strtotime($dateCharge[0].' -1 days') );
-        $purchase_moneys1 = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $start, null, null, null);
+        $purchase_moneys1 = PurchaseMoneyLog::getTotalRevenueByDate(null, null, $start, null, $cp, null);
         if(count($purchase_moneys1) > 0) {
             foreach ($purchase_moneys1 as $index => $purchase_money) {
                 $yesterday_arr[$purchase_money->purchase_date][$purchase_money->type] = $purchase_money->sum_money;

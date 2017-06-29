@@ -8,7 +8,7 @@
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
         {{--<form class="form-horizontal" role="form">--}}
-        {!! Form::open(array('route' => 'tool.createAdmin.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
+        {!! Form::open(array('route' => 'createAdmin.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
         <!-- #section:elements.form -->
             {{ csrf_field() }}
 
@@ -72,6 +72,13 @@
                 <label for="password" class="col-md-4 control-label">Permission</label>
                 <div class="col-md-6">
                     {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-md-4 control-label">CP</label>
+                <div class="col-md-6">
+                    {!! Form::select('cp', $cp,null, array('class' => 'form-control')) !!}
                 </div>
             </div>
 

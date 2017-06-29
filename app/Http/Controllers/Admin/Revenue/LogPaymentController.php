@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Revenue;
 use App\LogPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class LogPaymentController extends Controller
@@ -23,6 +24,7 @@ class LogPaymentController extends Controller
         $pinCard = \Request::get('pinCard');
         $money = \Request::get('money');
         $page = \Request::get('page') ? \Request::get('page') : 1;
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
 
         $query = LogPayment::query();
         $query->join('user', function($join)
@@ -44,6 +46,9 @@ class LogPaymentController extends Controller
         }
         if($userId != ''){
             $query->where('log_payment.userId','=',$userId);
+        }
+        if($cp != ''){
+            $query->where('user.cp','=',$cp);
         }
         if($userName != ''){
             $query->where('user.userName','LIKE','%'.$userName.'%');

@@ -95,7 +95,9 @@
                             <th class="hidden-480">Nhà cung cấp</th>
                             <th>Card value</th>
                             <th>Card pin</th>
+                            <th>Card serial</th>
                             <th>Active</th>
+                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Ngày</th>
                             <th>Tác vụ</th>
                         </tr>
                         </thead>
@@ -108,7 +110,9 @@
                                 <td class="hidden-480">{{ $rs->provider }}</td>
                                 <td>{{ number_format($rs->cardValue) }}</td>
                                 <td>{{ $rs->cardPin }}</td>
+                                <td>{{ $rs->cardSerial }}</td>
                                 <td>@if($rs->active == 0)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">New</span> @endif</td>
+                                <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td>
                                     @permission('administrator')
                                     <a class="btn btn-xs btn-info" href="{{ route('purchaseMoney.edit',$rs->missId) }}">

@@ -14,16 +14,16 @@ class PurchaseMoneyLog extends Model
     {
         return $this->belongsToMany('App\UserReg', 'user','userId');
     }
-    public static function getSumRevenuShare($dateCharge)
+    public static function getSumRevenuShare($dateCharge, $cp)
     {
         $query = DB::table('purchase_money_log as p');
         $query->select(DB::raw('SUM(p.parValue) as sum_money'));
 
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'p.userId');
+
+        });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -36,13 +36,10 @@ class PurchaseMoneyLog extends Model
                 $query->whereBetween('p.purchasedTime',[$start,$end]);
             }
         }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
 
-//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
-//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
-//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
         $query->where(DB::raw('p.type'),'=', 1);
         return $query->get()->toArray();
     }
@@ -55,11 +52,6 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -87,21 +79,16 @@ class PurchaseMoneyLog extends Model
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
         if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
-//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
-//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
+
          $query->groupBy("p.type");
         return $query->get()->toArray();
     }
@@ -124,17 +111,12 @@ class PurchaseMoneyLog extends Model
                 $join->on('user.userId', '=', 'p.userId');
 
             });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -190,11 +172,6 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -222,21 +199,16 @@ class PurchaseMoneyLog extends Model
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
         if($userName != null){
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
-//        if(sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong')){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
-//        $query->leftJoin("user", 'user.userId', '=', 'purchase_money_log.userId');
-//        $query->leftJoin("partner", 'partner.id', '=', 'contacts.user_id');
+
         $query->groupBy("p.type");
         return $query->get()->toArray();
     }
@@ -260,17 +232,12 @@ class PurchaseMoneyLog extends Model
             $join->on('user.userId', '=', 'p.userId');
 
         });
-//            ->join('partner', function($join)
-//            {
-//                $join->on('partner.partnerId', '=', 'user.cp');
-//
-//            });
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }

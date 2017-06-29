@@ -47,11 +47,13 @@
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
+                                @permission('administrator')
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Đối tác</label>
-                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
 
                                 </div>
+                                @endpermission
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Hệ điều hành</label>
@@ -322,9 +324,12 @@
                     fromDate = date[0].split("/").join("-");
                     toDate = date[1].split("/").join("-");
                 }
-                $.get('/revenue/revenueDay/statistic/' + fromDate + '/' + toDate, function( data ) {
+                var partner = $('#partner').val();
+                if(partner == ''){
+                    partner = 1;
+                }
+                $.get('/revenue/revenueDay/statistic/' + fromDate + '/' + toDate + '/' + partner, function( data ) {
 //                    $(".modal-body").html(data);
-//                    alert(JSON.stringify(data[4][0]));
                     var array_date = new Array();
                     var sum_money_today = new Array();
                     var cash_money_yesterday = new Array();

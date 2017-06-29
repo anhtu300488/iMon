@@ -43,4 +43,5 @@ class LogPayment extends Model
     {
         return DB::table('log_payment')->where('id', '=', 1)->paginate(10);
     }
+
 }

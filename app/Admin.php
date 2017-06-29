@@ -17,7 +17,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'name', 'username', 'email', 'password', 'cp_id'
     ];
 
     /**
@@ -37,5 +37,15 @@ class Admin extends Authenticatable
 
         $this->session_id = $hash;
         $this->save();
+    }
+
+    public function roleUsers()
+    {
+        return $this->belongsToMany('App\RoleUser');
+    }
+
+    public function getGroupListAttribute()
+    {
+        return $this->roleUsers()->lists('role_id')->toArray();
     }
 }

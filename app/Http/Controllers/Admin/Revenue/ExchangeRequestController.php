@@ -30,6 +30,7 @@ class ExchangeRequestController extends Controller
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $status = \Request::get('status') ? \Request::get('status') : 3;
         $page = \Request::get('page') ? \Request::get('page') : 1;
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
 
         $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
 
@@ -53,6 +54,9 @@ class ExchangeRequestController extends Controller
             $query->where('exchange_asset_request.status','=',$status);
         }
 
+        if($cp != null){
+            $query->where('user.cp','=',$cp);
+        }
         $query->where('user.status', '=', 1);
 
         if($timeRequest != ''){
@@ -73,7 +77,7 @@ class ExchangeRequestController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->orderBy('exchange_asset_request.created_at', 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
         $purchase_arr = array();
-        $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest);
+        $purchase_moneys = ExchangeAssetRequest::getTotalRevenueByDate($timeRequest, $cp);
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date] = $purchase_money->sum_money;
         }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Revenue;
 
+use App\Cp;
 use App\Game;
 use App\OnlineLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CCUController extends Controller
 {
@@ -15,16 +17,22 @@ class CCUController extends Controller
 
         $insertedtime = $request->get('insertedtime');
         $option = $request->get('option');
-        $online_logs = OnlineLog::getOnlineLog($insertedtime, $option)->toArray();
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
+
+        $partner->prepend('---Tất cả---', '');
+
+        $online_logs = OnlineLog::getOnlineLog($insertedtime, $option, $cp)->toArray();
         $arr_log = array();
-//        if(count($online_logs) > 0){
+        if(count($online_logs) > 0){
             foreach($online_logs as $i => $log){
                 $arr_data =  (array)  json_decode($log["peakData"]);
                 $sum  = array_sum($arr_data);
                 $arr_log[$log["insertedTime"]] = array(json_decode($log["peakData"])->total, $sum - $arr_data["total"] - array_values($arr_data)[0]);
 
             }
-            $current_online = OnlineLog::getOnlineLog($insertedtime, $option)->toArray();
+            $current_online = OnlineLog::getOnlineLog($insertedtime, $option, $cp)->toArray();
             $current_time_log = json_decode($current_online[0]["peakData"]);
             $current_time_log = json_decode(json_encode($current_time_log), true);
             $list_game  = Game::getListGame()->toArray();
@@ -38,13 +46,11 @@ class CCUController extends Controller
                 }
             }
             $arr_game["Người chơi"] = $num_player . "/" . $current_time_log['total'];
-//        } else {
-//            $arr_game["Người chơi"] = "0/0";
-//        }
+        } else {
+            $arr_game["Người chơi"] = "0/0";
+        }
 
-//        var_dump($arr_log);die;
-
-        return view('admin.revenue.ccu.index', compact('timeArr','arr_game','arr_log'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('admin.revenue.ccu.index', compact('timeArr','arr_game','arr_log', 'partner'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     public function statistic($fromDate){

@@ -60,11 +60,13 @@
                                     </div>
                                 </div>
 
+                                @permission('administrator')
                                 <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">SĐT xác thực</label>
-                                    <input class="form-control" name="phone" type="text" value="{{request('phone')}}"/>
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
+
                                 </div>
+                                @endpermission
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Trạng thái</label>
@@ -74,6 +76,7 @@
 
 
                             </div>
+
                             {!! Form::close() !!}
                             <hr />
                             <div class="row">

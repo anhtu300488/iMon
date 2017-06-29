@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);
 
     Route::get('revenue/topCashOut', ['as' => 'revenue.topCashOut', 'uses' => 'Admin\Revenue\TopCashOutController@index']);
+    Route::get('revenue/topCharging', ['as' => 'revenue.topCharging', 'uses' => 'Admin\Revenue\TopChargingController@index']);
 
     Route::get('revenue/payCashOut', ['as' => 'revenue.payCashOut', 'uses' => 'Admin\Revenue\PayCashOutController@index']);
 

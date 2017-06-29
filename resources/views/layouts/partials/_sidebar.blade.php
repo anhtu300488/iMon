@@ -165,7 +165,14 @@
 
                     <b class="arrow"></b>
                 </li>
+                <li {{ setActive('revenue/topCharging') }}>
+                    <a href="{{route('revenue.topCharging')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Top user nạp tiền
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
                 <li {{ setActive('revenue/payCashOut') }}>
                     <a href="{{route('revenue.payCashOut')}}">
                         <i class="menu-icon fa fa-caret-right"></i>

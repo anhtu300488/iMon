@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Revenue;
 
+use App\Cp;
 use App\LogPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,7 +26,9 @@ class LogPaymentController extends Controller
         $money = \Request::get('money');
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
+        $partner->prepend('---Tất cả---', '');
         $query = LogPayment::query();
         $query->join('user', function($join)
         {
@@ -63,6 +66,6 @@ class LogPaymentController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->orderBy('created_at','desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
-        return view('admin.revenue.logPayment.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.revenue.logPayment.index',compact('data','partner'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

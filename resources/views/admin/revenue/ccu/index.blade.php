@@ -200,7 +200,11 @@
                 if(date != ''){
                     fromDate = date[0].split("/").join("-");
                 }
-                $.get('/revenue/ccu/statistic/' + fromDate, function( data ) {
+                var partner = $('#partner').val();
+                if(partner == ''){
+                    partner = 1;
+                }
+                $.get('/revenue/ccu/statistic/' + fromDate + '/' + partner, function( data ) {
                     var array_date = new Array();
                     var online_today = new Array();
                     var online_yesterday = new Array();

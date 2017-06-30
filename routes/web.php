@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
-    Route::get('revenue/ccu/statistic/{fromDate}', ['as' => 'revenue.ccu.statistic', 'uses' => 'Admin\Revenue\CCUController@statistic']);
+    Route::get('revenue/ccu/statistic/{fromDate}/{partner}', ['as' => 'revenue.ccu.statistic', 'uses' => 'Admin\Revenue\CCUController@statistic']);
 
     Route::get('revenue/wasteMoney', ['as' => 'revenue.wasteMoney', 'uses' => 'Admin\Revenue\WasteMoneyController@index']);
 

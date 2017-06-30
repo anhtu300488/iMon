@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Revenue;
 
+use App\Cp;
 use App\ExchangeAssetRequest;
 use App\Game;
 use App\UserReg;
@@ -31,7 +32,9 @@ class ExchangeRequestController extends Controller
         $status = \Request::get('status') ? \Request::get('status') : 3;
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
+        $partner->prepend('---Tất cả---', '');
         $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
 
         $query = ExchangeAssetRequest::query()->select('*', DB::raw('exchange_asset_request.status as status'), DB::raw('user.displayName as displayName'));
@@ -83,7 +86,7 @@ class ExchangeRequestController extends Controller
         }
 
 
-        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.revenue.exchangeRequest.index',compact('data', 'statusArr', 'purchase_arr', 'partner'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function update($id){

@@ -16,9 +16,11 @@ class GiftCodeController extends Controller
         $userName = \Request::get('userName');
         $userId = \Request::get('userId');
         $code = \Request::get('code');
+        $event = \Request::get('event');
+        $cashValue = \Request::get('cashValue');
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $giftEvent = GiftEvent::pluck('eventName', 'giftEventId');
-
+        $giftEvent->prepend('---Tất cả---', '');
         $query = GiftCode::query();
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
@@ -29,7 +31,12 @@ class GiftCodeController extends Controller
         if($code != ''){
             $query->where('code','=',$code);
         }
-
+        if($event != ''){
+            $query->where('giftEventId','=',$event);
+        }
+        if($cashValue != ''){
+            $query->where('cashValue','=',$cashValue);
+        }
         $query->where("expiredTime",  ">",  Date("Y-m-d", strtotime(Carbon::now())));
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);

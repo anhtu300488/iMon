@@ -65,7 +65,7 @@
         <div class="form-group">
             <label for="password" class="col-md-4 control-label">Permission</label>
             <div class="col-md-6">
-                {!! Form::select('roles[]', $roles ,[], array('class' => 'form-control','multiple')) !!}
+                {!! Form::select('roles[]', $roles,$rolePermissions, array('class' => 'form-control','multiple')) !!}
             </div>
         </div>
 

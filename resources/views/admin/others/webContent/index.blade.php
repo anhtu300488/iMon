@@ -53,7 +53,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('webContent.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -105,12 +105,12 @@
                                 <td>@if($rs->is_hot == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('webContent.edit',$rs->id) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['webContent.destroy', $rs->id],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

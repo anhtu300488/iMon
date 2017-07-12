@@ -38,7 +38,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('eventGift.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -96,12 +96,12 @@
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td class="hidden-480">{{ $rs->updated_at }}</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('eventGift.edit',$rs->giftEventId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['eventGift.destroy', $rs->giftEventId],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

@@ -37,7 +37,7 @@
 
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('emergencyNotification.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -83,12 +83,12 @@
                                 <td class="hidden-480">{{ $rs->createdTime }}</td>
                                 <td class="hidden-480">{{ $rs->expriedTime }}</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('emergencyNotification.edit',$rs->notificationId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['emergencyNotification.destroy', $rs->notificationId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

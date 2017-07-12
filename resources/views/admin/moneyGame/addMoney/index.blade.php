@@ -50,7 +50,7 @@
 
                                 <div class="col-xs-6 col-sm-6">
 
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('addMoney.create') }}"> Create New</a>
                                     @endpermission
 

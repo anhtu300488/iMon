@@ -78,7 +78,7 @@
                                     <td>{{ $rs->chargingUri }}</td>
                                     <td>{{ $rs->topupUri }}</td>
                                     <td>
-                                        @permission('administrator')
+                                        @permission(['administrator','admin'])
                                         <a class="btn btn-xs btn-info" href="{{ route('payment.edit',$rs->cpId) }}">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>

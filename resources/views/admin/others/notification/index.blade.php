@@ -46,7 +46,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('notification.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -94,12 +94,12 @@
                                 <td>@if($rs->repeat_daily == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('notification.edit',$rs->notificationId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['notification.destroy', $rs->notificationId],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

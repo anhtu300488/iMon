@@ -28,9 +28,13 @@ class OnlineLog extends Model
             }
         }
 
-//        if($cp != null && $cp != 19){
+        if($cp != null){
             $sql->where('cp', '=', $cp);
-//        }
+        }
+
+        if($cp == null){
+            $sql->where('cp', '=', -1);
+        }
 
         return  $sql->orderBy('insertedTime', 'desc')->limit(500)->get();
     }
@@ -63,7 +67,13 @@ class OnlineLog extends Model
 //            $sql->where(DB::raw('DATE(insertedTime)'), '=' , date("Y-m-d",strtotime($insertedtime)));
 //            $sql->where(DB::raw('logId % 4'), '=', 1);
         }
-        $sql->where('cp', '=', $cp);
+        if($cp != null){
+            $sql->where('cp', '=', $cp);
+        }
+
+        if($cp == null){
+            $sql->where('cp', '=', -1);
+        }
         return  $sql->orderBy('insertedTime', 'desc')->get();
     }
 }

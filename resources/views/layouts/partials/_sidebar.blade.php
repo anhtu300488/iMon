@@ -66,7 +66,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                @permission('administrator')
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/revenueUserCharge') }}>
                     <a href="{{route('revenue.revenueUserCharge')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -111,7 +111,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                @permission('administrator')
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/smsRevenue') }}>
                     <a href="{{route('revenue.smsRevenue')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -140,7 +140,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                @permission('administrator')
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/cashOut') }}>
                     <a href="{{route('revenue.cashOut')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -185,7 +185,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                @permission('administrator')
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/userOnline') }}>
                     <a href="{{route('revenue.userOnline')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -216,7 +216,7 @@
             </ul>
         </li>
 
-        @permission('administrator')
+        @permission(['administrator','admin'])
         <li {{ setOpen('game') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list-alt"></i>
@@ -404,7 +404,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @permission(['administrator', 'admin'])
                 <li {{ setActive('moneyGame/purchaseMoney') }}>
                     <a href="{{route('purchaseMoney.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -422,7 +422,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
                 <li {{ setActive('moneyGame/income') }}>
                     <a href="{{route('income.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -584,7 +584,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @permission(['administrator'])
                 <li {{ setActive('others/partner') }}>
                     <a href="{{route('partner.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -593,7 +593,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
                 <li {{ setActive('others/provider') }}>
                     <a href="{{route('provider.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -652,6 +652,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+                @permission(['administrator'])
                 <li {{ setActive('tool/payment') }}>
                     <a href="{{route('tool.payment')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -677,7 +678,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
                 <li {{ setActive('tool/sendEmail/create') }}>
                     <a href="{{route('tool.sendEmail.create')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -715,7 +716,8 @@
                 </li>
             </ul>
         </li>
-
+        @endpermission
+        @permission(['administrator'])
         <li {{ setOpen('system') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>

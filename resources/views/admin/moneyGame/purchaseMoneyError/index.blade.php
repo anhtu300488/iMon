@@ -133,14 +133,12 @@
                                 <td>{{ $rs->requestedTime }}</td>
 
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {{--{!! Form::open(['method' => 'PATCH','route' => ['errorPurchaseMoney.update', $rs->purchaseErrorId],'style'=>'display:inline']) !!}--}}
                                         <button class="btn btn-xs btn-info" type="button" data-id = "{{$rs->purchaseErrorId}}" data-userid="{{$rs->userId}}" data-provider="{{$rs->provider}}" data-serial="{{$rs->cardSerial}}" data-pin="{{$rs->cardPin}}" data-toggle="modal" data-target="#purchaseMoneyModal" title="Bù tiền">
                                             <i class="ace-icon fa fa-pencil"></i>
                                         </button>
                                     {{--{!! Form::close() !!}--}}
-                                    @endpermission
-                                    @permission('administrator')
                                     {!! Form::open(['method' => 'DELETE','route' => ['errorPurchaseMoney.destroy', $rs->purchaseErrorId],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

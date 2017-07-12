@@ -40,6 +40,19 @@
                                 </div>
 
                             </div>
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Sự kiện</label>
+                                    {!! Form::select('event', $giftEvent, request('event'), ['class' => 'form-control', 'id' => "event"]) !!}
+
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4">
+                                    <!-- #section:plugins/date-time.datepicker -->
+                                    <label class="control-label no-padding-right" for="form-field-1"> Mệnh giá code: </label>
+                                    <input class="form-control" name="cashValue" type="text" value="{{request('cashValue')}}"/>
+                                </div>
+                            </div>
                             <hr />
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6">
@@ -51,7 +64,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
 
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -109,12 +122,12 @@
                                 <td class="hidden-480">{{ $rs->redeemedTime }}</td>
                                 <td class="hidden-480">{{ $rs->expiredTime }}</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('giftCode.edit',$rs->giftId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['giftCode.destroy', $rs->giftId],'style'=>'display:inline']) !!}
                                     <button class="btn btn-xs btn-danger" type="submit">
                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

@@ -41,7 +41,7 @@ class AddMoneyController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'userId' => 'required',
-            'addCash' => 'required',
+            'addCash' => 'required|integer',
 //            'addGold' => 'required',
             'description' => 'required'
         ]);

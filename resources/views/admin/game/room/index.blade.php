@@ -41,7 +41,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('room.create') }}"> Create New</a>
                                     @endpermission
                                 </div>
@@ -111,12 +111,12 @@
                                 <td class="hidden-480">{{ $rs->endTime }}</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">Unsucess</span> @endif</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('room.edit',$rs->roomId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
                                     @endpermission
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'DELETE','route' => ['room.destroy', $rs->roomId],'style'=>'display:inline']) !!}
                                     {{--{!! Form::submit('', ['class' => 'btn btn-xs btn-danger']) !!}--}}
                                     <button class="btn btn-xs btn-danger" type="submit">

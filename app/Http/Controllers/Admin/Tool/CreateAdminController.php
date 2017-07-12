@@ -46,8 +46,9 @@ class CreateAdminController extends Controller
     public function store(Request $request){
 
         $this->validate($request, [
-            'name' => 'required|unique:admin',
-            'email' => 'required|email',
+            'name' => 'required',
+            'username' => 'required|unique:admin',
+            'email' => 'required|email|unique:admin,email',
             'password' => 'required',
             'roles' => 'required',
             'cp' => 'required'
@@ -71,7 +72,7 @@ class CreateAdminController extends Controller
         $admin = Admin::find($id);
         $roles = Role::pluck('display_name','id');
         $cp = Cp::where('cpId','!=', 1)->pluck('cpName','cpId');
-        $rolePermissions = DB::table('role_user')->select('role_id')->where("user_id",$id)->get();
+        $rolePermissions = $admin->roles->pluck('id','id')->toArray();
 //        var_dump($rolePermissions);die;
         return view('admin.tool.createAdmin.edit',compact('admin','roles','rolePermissions','cp'));
     }
@@ -86,23 +87,27 @@ class CreateAdminController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:admin',
-            'email' => 'required|email',
-            'password' => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:admin,email,'.$id,
+//            'password' => 'required',
             'roles' => 'required',
             'cp' => 'required'
         ]);
 
-        $role = Role::find($id);
-        $role->display_name = $request->input('display_name');
-        $role->description = $request->input('description');
-        $role->save();
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = array_except($input,array('password'));
+        }
 
-        DB::table("permission_role")->where("permission_role.role_id",$id)
-            ->delete();
+        $user = Admin::find($id);
+        $user->update($input);
+        DB::table('role_user')->where('user_id',$id)->delete();
 
-        foreach ($request->input('permission') as $key => $value) {
-            $role->attachPermission($value);
+
+        foreach ($request->input('roles') as $key => $value) {
+            $user->attachRole($value);
         }
 
         return redirect()->route('createAdmin.index')
@@ -117,7 +122,7 @@ class CreateAdminController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("admin")->where('id',$id)->delete();
+        Admin::find($id)->delete();
         return redirect()->route('createAdmin.index')
             ->with('message','Deleted Successfully');
     }

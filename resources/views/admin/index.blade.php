@@ -47,7 +47,7 @@
                                     <input class="form-control" name="userName" type="text" value="{{request('userName')}}"/>
                                 </div>
 
-                                @permission('administrator')
+                                @permission(['administrator','admin'])
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Đối tác</label>
                                     {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
@@ -325,7 +325,7 @@
                     toDate = date[1].split("/").join("-");
                 }
                 var partner = $('#partner').val();
-                if(partner == ''){
+                if(partner == '' || partner === undefined){
                     partner = 1;
                 }
                 $.get('/revenue/revenueDay/statistic/' + fromDate + '/' + toDate + '/' + partner, function( data ) {

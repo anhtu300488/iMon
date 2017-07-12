@@ -45,23 +45,27 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('basic/xunHistory', ['as' => 'basic.xuHistory', 'uses' => 'Admin\Basic\XuHistoryController@index']);
 
-    Route::get('tool/addMoney', ['as' => 'tool.addMoney', 'uses' => 'Admin\Tool\AddMoneyController@index']);
+    Route::get('tool/addMoney', ['as' => 'tool.addMoney', 'uses' => 'Admin\Tool\AddMoneyController@index','middleware' => ['permission:administrator']]);
 
-    Route::get('tool/addMoney/create', ['as' => 'tool.addMoney.create', 'uses' => 'Admin\Tool\AddMoneyController@create']);
+    Route::get('tool/addMoney/create', ['as' => 'tool.addMoney.create', 'uses' => 'Admin\Tool\AddMoneyController@create','middleware' => ['permission:administrator']]);
 
-    Route::post('tool/addMoney/create',['as'=>'tool.addMoney.store','uses'=>'Admin\Tool\AddMoneyController@store']);
+    Route::post('tool/addMoney/create',['as'=>'tool.addMoney.store','uses'=>'Admin\Tool\AddMoneyController@store','middleware' => ['permission:administrator']]);
 
     Route::get('tool/topGame', ['as' => 'tool.topGame', 'uses' => 'Admin\Tool\TopGameController@index']);
 
     Route::get('tool/userInfo', ['as' => 'tool.userInfo', 'uses' => 'Admin\Tool\UserInfoController@index']);
 
-    Route::resource('tool/createAdmin', 'Admin\Tool\CreateAdminController');
+//    Route::resource('tool/createAdmin', ['uses' => 'Admin\Tool\CreateAdminController','middleware' => ['permission:administrator']]);
 
-//    Route::get('tool/createAdmin', ['as' => 'tool.createAdmin', 'uses' => 'Admin\Tool\CreateAdminController@index']);
-//
-//    Route::get('tool/createAdmin/create', ['as' => 'tool.createAdmin.create', 'uses' => 'Admin\Tool\CreateAdminController@create', 'middleware' => ['permission:administrator']]);
-//
-//    Route::post('tool/createAdmin/create',['as'=>'tool.createAdmin.store','uses'=>'Admin\Tool\CreateAdminController@store','middleware' => ['permission:administrator']]);
+    Route::get('tool/createAdmin', ['as' => 'createAdmin.index', 'uses' => 'Admin\Tool\CreateAdminController@index','middleware' => ['permission:administrator']]);
+
+    Route::get('tool/createAdmin/create', ['as' => 'createAdmin.create', 'uses' => 'Admin\Tool\CreateAdminController@create', 'middleware' => ['permission:administrator']]);
+
+    Route::post('tool/createAdmin/create',['as'=>'createAdmin.store','uses'=>'Admin\Tool\CreateAdminController@store','middleware' => ['permission:administrator']]);
+
+    Route::get('tool/createAdmin/{id}/edit',['as'=>'createAdmin.edit','uses'=>'Admin\Tool\CreateAdminController@edit','middleware' => ['permission:administrator']]);
+    Route::patch('tool/createAdmin/{id}',['as'=>'createAdmin.update','uses'=>'Admin\Tool\CreateAdminController@update','middleware' => ['permission:administrator']]);
+    Route::delete('tool/createAdmin/{id}',['as'=>'createAdmin.destroy','uses'=>'Admin\Tool\CreateAdminController@destroy','middleware' => ['permission:administrator']]);
 
     Route::get('tool/serverMessage', ['as' => 'tool.serverMessage', 'uses' => 'Admin\Tool\ServerMessageController@index']);
 
@@ -131,12 +135,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/revenueUserPurchase', ['as' => 'revenue.revenueUserPurchase', 'uses' => 'Admin\Revenue\RevenueUserPurchaseController@index']);
 
-    Route::get('tool/roles',['as'=>'tool.roles','uses'=>'Admin\Tool\CreateRoleController@index']);
-    Route::get('tool/roles/create',['as'=>'tool.roles.create','uses'=>'Admin\Tool\CreateRoleController@create']);
-    Route::post('tool/roles/create',['as'=>'tool.roles.store','uses'=>'Admin\Tool\CreateRoleController@store']);
-    Route::get('tool/roles/{id}/edit',['as'=>'tool.roles.edit','uses'=>'Admin\Tool\CreateRoleController@edit']);
-    Route::patch('tool/roles/{id}',['as'=>'tool.roles.update','uses'=>'Admin\Tool\CreateRoleController@update']);
-    Route::delete('tool/roles/{id}',['as'=>'tool.roles.destroy','uses'=>'Admin\Tool\CreateRoleController@destroy']);
+    Route::get('tool/roles',['as'=>'tool.roles','uses'=>'Admin\Tool\CreateRoleController@index','middleware' => ['permission:administrator']]);
+    Route::get('tool/roles/create',['as'=>'tool.roles.create','uses'=>'Admin\Tool\CreateRoleController@create','middleware' => ['permission:administrator']]);
+    Route::post('tool/roles/create',['as'=>'tool.roles.store','uses'=>'Admin\Tool\CreateRoleController@store','middleware' => ['permission:administrator']]);
+    Route::get('tool/roles/{id}/edit',['as'=>'tool.roles.edit','uses'=>'Admin\Tool\CreateRoleController@edit','middleware' => ['permission:administrator']]);
+    Route::patch('tool/roles/{id}',['as'=>'tool.roles.update','uses'=>'Admin\Tool\CreateRoleController@update','middleware' => ['permission:administrator']]);
+    Route::delete('tool/roles/{id}',['as'=>'tool.roles.destroy','uses'=>'Admin\Tool\CreateRoleController@destroy','middleware' => ['permission:administrator']]);
 
     Route::get('tool/emailUpdate', ['as' => 'tool.emailUpdate', 'uses' => 'Admin\Tool\EmailUpdateController@email']);
 
@@ -148,9 +152,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('tool/crashTableAlarm','Admin\Tool\CrashTableAlarmController');
 
-    Route::get('system/ipLock', ['as' => 'system.ipLock', 'uses' => 'Admin\System\LockIpController@index']);
+    Route::get('system/ipLock', ['as' => 'system.ipLock', 'uses' => 'Admin\System\LockIpController@index','middleware' => ['permission:administrator']]);
 
-    Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store']);
+    Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store','middleware' => ['permission:administrator']]);
 
     Route::get('system/taixiu/create', ['as' => 'system.taixiu.create', 'uses' => 'Admin\System\TaiXiuController@create', 'middleware' => ['permission:administrator']]);
 
@@ -236,14 +240,26 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('moneyGame/eventGift','Admin\MoneyGame\GiftEventController');
 
     //purchase money
-    Route::resource('moneyGame/purchaseMoney','Admin\MoneyGame\PurchaseMoneyController');
+//    Route::resource('moneyGame/purchaseMoney','Admin\MoneyGame\PurchaseMoneyController');
+
+    Route::get('moneyGame/purchaseMoney',['as'=>'purchaseMoney.index','uses'=>'Admin\MoneyGame\PurchaseMoneyController@index','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/purchaseMoney/create',['as'=>'purchaseMoney.create','uses'=>'Admin\MoneyGame\PurchaseMoneyController@create','middleware' => ['permission:administrator|admin']]);
+    Route::post('moneyGame/purchaseMoney/create',['as'=>'purchaseMoney.store','uses'=>'Admin\MoneyGame\PurchaseMoneyController@store','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/purchaseMoney/{id}/edit',['as'=>'purchaseMoney.edit','uses'=>'Admin\MoneyGame\PurchaseMoneyController@edit','middleware' => ['permission:administrator|admin']]);
+    Route::patch('moneyGame/purchaseMoney/{id}',['as'=>'purchaseMoney.update','uses'=>'Admin\MoneyGame\PurchaseMoneyController@update','middleware' => ['permission:administrator|admin']]);
+    Route::delete('moneyGame/purchaseMoney/{id}',['as'=>'purchaseMoney.destroy','uses'=>'Admin\MoneyGame\PurchaseMoneyController@destroy','middleware' => ['permission:administrator|admin']]);
 
     //purchase money error
     Route::resource('moneyGame/errorPurchaseMoney','Admin\MoneyGame\PurchaseMoneyErrorController');
     Route::post('moneyGame/errorPurchaseMoney/purchaseMoney','Admin\MoneyGame\PurchaseMoneyErrorController@purchaseMoney');
 
     //add money
-    Route::resource('moneyGame/addMoney','Admin\MoneyGame\AddMoneyController');
+//    Route::resource('moneyGame/addMoney', ['uses' => 'Admin\MoneyGame\AddMoneyController','middleware' => ['permission:administrator']]);
+
+    Route::get('moneyGame/addMoney',['as'=>'addMoney.index','uses'=>'Admin\MoneyGame\AddMoneyController@index','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/addMoney/create',['as'=>'addMoney.create','uses'=>'Admin\MoneyGame\AddMoneyController@create','middleware' => ['permission:administrator|admin']]);
+    Route::post('moneyGame/addMoney/create',['as'=>'addMoney.store','uses'=>'Admin\MoneyGame\AddMoneyController@store','middleware' => ['permission:administrator|admin']]);
+
 
     //income
     Route::get('moneyGame/income', ['as' => 'income.index', 'uses' => 'Admin\MoneyGame\IncomeMoneyController@index']);

@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
 
-                                @permission('administrator')
+                                @permission(['administrator','admin'])
                                 <div class="col-xs-4 col-sm-4">
                                     <label  for="form-field-select-1">Đối tác</label>
                                     {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
@@ -178,7 +178,7 @@
                                 <td>
                                     {{--[{"provider":"VTT","amount":20000,"serial":"58122200912","pin":"6567138553863"}]--}}
                                     {{--[{"provider":"VTT","amount":20000,"serial":"58122218834","pin":"6567755011893"}]--}}
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     {!! Form::open(['method' => 'PATCH','route' => ['exchangeRequest.update', $rs->requestId],'style'=>'display:inline', 'onsubmit' => 'return confirm("Are you sure?");']) !!}
                                     @if($rs->status == 5)
                                         <button class="btn btn-xs btn-info" name="reload" type="submit" value="reload" title="Duyệt lại">

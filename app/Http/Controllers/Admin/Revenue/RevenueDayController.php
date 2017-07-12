@@ -32,7 +32,7 @@ class RevenueDayController extends Controller
         $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $os = \Request::get('clientType');
         $page = \Request::get('page') ? \Request::get('page') : 1;
-
+//        var_dump($cp);die;
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
         $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');

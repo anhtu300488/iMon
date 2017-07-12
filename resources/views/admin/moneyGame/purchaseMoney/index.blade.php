@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
 
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-info btn-sm" href="{{ route('purchaseMoney.create') }}"> Create New</a>
                                     @endpermission
 
@@ -114,7 +114,7 @@
                                 <td>@if($rs->active == 0)  <span class="label label-sm label-success">Success</span> @else <span class="label label-sm label-inverse arrowed-in">New</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td>
-                                    @permission('administrator')
+                                    @permission(['administrator','admin'])
                                     <a class="btn btn-xs btn-info" href="{{ route('purchaseMoney.edit',$rs->missId) }}">
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>

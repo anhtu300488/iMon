@@ -10,11 +10,19 @@ class LoggedInLog extends Model
 {
     protected $table = 'logged_in_log';
 
-    public static function getPlayUserInday($created_at)
+    public static function getPlayUserInday($created_at, $cp)
     {
-        return DB::table('logged_in_log as a')
-            ->select (DB::raw('count(DISTINCT a.userId) count'), DB::raw('date(a.loggedInTime) date'))
-            ->groupBy(DB::raw('date(a.loggedInTime)'))
+        $query = DB::table('logged_in_log as a')
+            ->select (DB::raw('count(DISTINCT a.userId) count'), DB::raw('date(a.loggedInTime) date'));
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'a.userId');
+
+        });
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
+        return $query->groupBy(DB::raw('date(a.loggedInTime)'))
             ->where("a.loggedInTime",">", $created_at)
             ->get()->toArray();
     }
@@ -22,9 +30,9 @@ class LoggedInLog extends Model
     public static function getTotalUser($userID, $userName, $ime, $ip, $client, $loginTime)
     {
 
-
-        $query = DB::table('logged_in_log as p');
-        $query->select(DB::raw('COUNT(DISTINCT p.userId) as total'), DB::raw("DATE(p.loggedInTime) purchase_date"));
+//        var_dump($userID);die;
+        $query = DB::table('logged_in_log');
+        $query->select(DB::raw('COUNT(DISTINCT userId) as total'), DB::raw("DATE(loggedInTime) purchase_date"));
 
         if ($loginTime) {
             $startDateCharge = $loginTime[0];
@@ -34,32 +42,32 @@ class LoggedInLog extends Model
             if($startDateCharge != '' && $endDateCharge != ''){
                 $start = date("Y-m-d 00:00:00",strtotime($startDateCharge));
                 $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
-                $query->whereBetween('p.loggedInTime',[$start,$end]);
+                $query->whereBetween('loggedInTime',[$start,$end]);
             }
         } else {
             $query->where("loggedInTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
 
-        if($userID){
-            $query->where('p.userId ','=',$userID);
-        }
+//        if($userID){
+//            $query->where('userId ','=',$userID);
+//        }
         if($client){
-            $query->where('p.clientType','=',$client);
+            $query->where('clientType','=',$client);
         }
 
         if($userName){
-            $query->where('p.userName','LIKE','%'.$userName.'%');
+            $query->where('userName','LIKE','%'.$userName.'%');
         }
 
         if($ime){
-            $query->where('p.deviceId','LIKE','%'.$ime.'%');
+            $query->where('deviceId','LIKE','%'.$ime.'%');
         }
 
         if($ip){
-            $query->where('p.remoteIp','LIKE','%'.$ip.'%');
+            $query->where('remoteIp','LIKE','%'.$ip.'%');
         }
 
-        $query->groupBy(DB::raw("DATE(p.loggedInTime)"));
+        $query->groupBy(DB::raw("DATE(loggedInTime)"));
         return $query->get()->toArray();
     }
 

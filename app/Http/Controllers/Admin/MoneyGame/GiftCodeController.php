@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\MoneyGame;
 
 use App\GiftCode;
 use App\GiftEvent;
+use App\GiftOrder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -47,9 +48,10 @@ class GiftCodeController extends Controller
     }
 
     public function create(){
-        $giftEventId = GiftEvent::pluck('eventName', 'giftEventId');
-        return view('admin.moneyGame.giftCode.create', compact('giftEventId'));
-    }
+    $giftEventId = GiftEvent::pluck('eventName', 'giftEventId');
+    $giftEventId->prepend('Admin thiết lập', -1);
+    return view('admin.moneyGame.giftCode.create', compact('giftEventId'));
+}
 
     public function store(Request $request){
         $this->validate($request, [
@@ -64,6 +66,31 @@ class GiftCodeController extends Controller
         $input = $request->all();
         $input['expiredTime'] = date('Y-m-d',strtotime($request->get('expiredTime')));
         GiftCode::create($input);
+
+        return redirect()->route('giftCode.index')
+            ->with('message','Add Successfully');
+    }
+
+    public function multi(){
+        $giftEventId = GiftEvent::pluck('eventName', 'giftEventId');
+        return view('admin.moneyGame.giftCode.multi', compact('giftEventId'));
+    }
+
+    public function multiStore(Request $request){
+        $this->validate($request, [
+            'giftEventId' => 'required',
+            'quantity' => 'required|integer'
+        ]);
+
+
+        $input = $request->all();
+        //get expiredTime via giftEventId
+        $event = GiftEvent::find($request->get('giftEventId'));
+        $input['expiredTime'] = date('Y-m-d H:i:s',strtotime($event['expiredTime']));
+        $input['vqmmTurn'] = $request->get('vqmmTurn') ? $request->get('vqmmTurn') : 0;
+        $input['cardPromotion'] = $request->get('cardPromotion') ? $request->get('cardPromotion') : 0;
+        $input['cardPromotionTurn'] = $request->get('cardPromotionTurn') ? $request->get('cardPromotionTurn') : 0;
+        GiftOrder::create($input);
 
         return redirect()->route('giftCode.index')
             ->with('message','Add Successfully');

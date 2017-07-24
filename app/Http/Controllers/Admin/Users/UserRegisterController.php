@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\BlackListUser;
 use App\ClientType;
+use App\Cp;
 use App\LoggedInLog;
 use App\Partner;
 use App\UserReg;
@@ -34,10 +35,11 @@ class UserRegisterController extends Controller
         $ip = \Request::get('ip');
         $status = \Request::get('status');
         $page = \Request::get('page') ? \Request::get('page') : 1;
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
 
         $statusArr = array('' => '---Tất cả---', 0 => 'Không hoạt động', 1 => 'Hoạt động', 3 => 'Tạm khóa');
 
-        $partner = Partner::pluck('partnerName', 'partnerId');
+        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
 
         $partner->prepend('---Tất cả---', '');
 
@@ -78,6 +80,10 @@ class UserRegisterController extends Controller
             $query->where('deviceIdentify','=', $deviceIdentify);
         }
 
+        if($cp != null){
+            $query->where('cp','=', $cp);
+        }
+
         $query->where($matchThese);
         if($dateRegister != ''){
             $startDateCharge = $dateRegister[0];
@@ -96,13 +102,13 @@ class UserRegisterController extends Controller
         $endLimit = $perPage * $page;
         $data = $query->orderBy('registedTime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
-        $total_by_os = UserReg::getTotalUserByOs();
+        $total_by_os = UserReg::getTotalUserByOs($cp);
 
         $day = 60*60*24; $day_7 = time() - 6*$day;
-        $register_info = UserReg::getRegisterInfo(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
-        $register_info_new = UserReg::getRegisterInfoNew(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
-        $user_play_inday  =  UserReg::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
-        $user_login_inday = LoggedInLog::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')));
+        $register_info = UserReg::getRegisterInfo(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
+        $register_info_new = UserReg::getRegisterInfoNew(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
+        $user_play_inday  =  UserReg::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
+        $user_login_inday = LoggedInLog::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
 //        $register_info_new = UserTable::getRegisterInfoNew(date("Y-m-d", $day_7) . "00:00:00");
         $created_at = array();
         //tai khoan moi

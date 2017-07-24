@@ -65,7 +65,7 @@
                                 <div class="col-xs-6 col-sm-6">
 
                                     @permission(['administrator','admin'])
-                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New</a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('giftCode.create') }}"> Create New</a> | <a class="btn btn-info btn-sm" href="{{ route('giftCode.multi') }}"> Tạo nhiều gift code</a>
                                     @endpermission
                                 </div>
                             </div>
@@ -98,8 +98,10 @@
                             <th class="hidden-480">Gift event</th>
                             <th>Code</th>
                             <th>Mon</th>
+                            <th>Số lượt VQMM</th>
+                            <th>Số thẻ</th>
+                            <th>% mỗi thẻ</th>
                             <th class="hidden-480">Ip</th>
-                            <th class="hidden-480">Dùng nhiều lần</th>
                             <th>Trạng thái</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian nhận</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian hết hạn</th>
@@ -116,8 +118,10 @@
                                 <td class="hidden-480">{{ $giftEvent[$rs->giftEventId] }}</td>
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ number_format($rs->cashValue) }}</td>
+                                <td>{{ $rs->vqmmTurn }}</td>
+                                <td>{{ $rs->cardPromotion }}</td>
+                                <td>{{ $rs->cardPromotionTurn }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>
-                                <td class="hidden-480">@if($rs->reuseable == 1)  <span class="label label-sm label-inverse arrowed-in">Có</span> @else <span class="label label-sm label-success">Không</span> @endif</td>
                                 <td>@if($rs->status == 0)  <span class="label label-sm label-inverse arrowed-in">Đã sử dụng</span> @else <span class="label label-sm label-success">Mới</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->redeemedTime }}</td>
                                 <td class="hidden-480">{{ $rs->expiredTime }}</td>

@@ -24,7 +24,7 @@ class UserReg extends Model
         return $this->hasOne('App\BlackListUser', 'userId', 'userId');
     }
 
-    public static function getTotalUserByOs()
+    public static function getTotalUserByOs($cp)
     {
         $query = DB::table('user as a')
             ->select(DB::raw("count(a.clientId) as sum_os"), DB::raw("p.name as name"), "a.clientId as clientId")
@@ -34,52 +34,49 @@ class UserReg extends Model
 //                $join->on('client_type.clientId', '=', 'a.clientId');
 //
 //            });
+        if($cp != null){
+            $query->where('a.cp','=', $cp);
+        }
         $query ->groupBy("a.clientId");
         $query->orderBy("sum_os", "desc");
         return $query->get()->toArray();
 
     }
 
-    public static function getRegisterInfo($created_at)
+    public static function getRegisterInfo($created_at, $cp)
     {
         $query =  DB::table('user as a')
             ->select (DB::raw('count(a.userId) count'), DB::raw('date(a.registedTime) date') )
             ->where("a.registedTime", ">" , $created_at);
-//        $cp_truyenthong     = sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong');
-//        if($cp_truyenthong){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("a.cp = ?", $cp_id);
-//        }
+        if($cp != null){
+            $query->where('a.cp','=', $cp);
+        }
         $query->groupBy(DB::raw('date(registedTime)'));
 
         return $query ->get()->toArray();
     }
 
-    public static function getRegisterInfoNew($created_at)
+    public static function getRegisterInfoNew($created_at, $cp)
     {
         $query = DB::table('user as a')
             ->select (DB::raw('count(DISTINCT a.deviceIdentify) count'), DB::raw('date(a.registedTime) date') )
             ->groupBy(DB::raw('date(a.registedTime)'))
             ->where("a.registedTime", ">", $created_at);
-//        $cp_truyenthong     = sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong');
-//        if($cp_truyenthong){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("g.cp = ?", $cp_id);
-//        }
+        if($cp != null){
+            $query->where('a.cp','=', $cp);
+        }
         return $query->get()->toArray();
     }
 
-    public static function getPlayUserInday($created_at)
+    public static function getPlayUserInday($created_at, $cp)
     {
         $query =  DB::table('user as a')
             ->select (DB::raw('count(DISTINCT a.deviceIdentify) count'), DB::raw('date(a.lastLoginTime) date') )
             ->groupBy(DB::raw('date(a.lastLoginTime)'))
             ->where("a.lastLoginTime", ">", $created_at);
-//        $cp_truyenthong     = sfContext::getInstance()->getUser()->hasCredential('cp_truyenthong');
-//        if($cp_truyenthong){
-//            $cp_id = PartnerTable::getCpIdByAdmin();
-//            $query->andWhere("a.cp = ?", $cp_id);
-//        }
+        if($cp != null){
+            $query->where('a.cp','=', $cp);
+        }
         return $query->get()->toArray();
     }
 

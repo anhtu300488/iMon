@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/payCashOut', ['as' => 'revenue.payCashOut', 'uses' => 'Admin\Revenue\PayCashOutController@index']);
 
+    Route::get('revenue/vip', ['as' => 'revenue.vip', 'uses' => 'Admin\Revenue\VipController@index']);
+
     Route::get('revenue/detailSmsHistory', ['as' => 'revenue.detailSmsHistory', 'uses' => 'Admin\Revenue\SmsHistoryRevenueController@index']);
 
     Route::get('revenue/moRevenue', ['as' => 'revenue.moRevenue', 'uses' => 'Admin\Revenue\MoRevenueController@index']);
@@ -234,7 +236,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('moneyGame/cardProvider', ['as' => 'moneyGame.cardProvider', 'uses' => 'Admin\MoneyGame\CardProviderController@index']);
 
     //giftcode
-    Route::resource('moneyGame/giftCode','Admin\MoneyGame\GiftCodeController');
+//    Route::resource('moneyGame/giftCode','Admin\MoneyGame\GiftCodeController');
+    Route::get('moneyGame/giftCode',['as'=>'giftCode.index','uses'=>'Admin\MoneyGame\GiftCodeController@index','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/giftCode/create',['as'=>'giftCode.create','uses'=>'Admin\MoneyGame\GiftCodeController@create','middleware' => ['permission:administrator|admin']]);
+    Route::post('moneyGame/giftCode/create',['as'=>'giftCode.store','uses'=>'Admin\MoneyGame\GiftCodeController@store','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/giftCode/{id}/edit',['as'=>'giftCode.edit','uses'=>'Admin\MoneyGame\GiftCodeController@edit','middleware' => ['permission:administrator|admin']]);
+    Route::patch('moneyGame/giftCode/{id}',['as'=>'giftCode.update','uses'=>'Admin\MoneyGame\GiftCodeController@update','middleware' => ['permission:administrator|admin']]);
+    Route::delete('moneyGame/giftCode/{id}',['as'=>'giftCode.destroy','uses'=>'Admin\MoneyGame\GiftCodeController@destroy','middleware' => ['permission:administrator|admin']]);
+    Route::get('moneyGame/giftCode/multi',['as'=>'giftCode.multi','uses'=>'Admin\MoneyGame\GiftCodeController@multi','middleware' => ['permission:administrator|admin']]);
+    Route::post('moneyGame/giftCode/multi',['as'=>'giftCode.multiStore','uses'=>'Admin\MoneyGame\GiftCodeController@multiStore','middleware' => ['permission:administrator|admin']]);
 
     //giftevent
     Route::resource('moneyGame/eventGift','Admin\MoneyGame\GiftEventController');

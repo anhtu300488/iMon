@@ -59,11 +59,6 @@
 
                                 </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Loại</label>
-                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-
-                                </div>
                             </div>
                             <hr />
                             <div class="row">
@@ -119,7 +114,7 @@
                             <td class="hidden-480">{{ $transactionArr[$rs->transactionId] }}</td>
                             <td class="hidden-480">{{ $rs->taxPercent }}%</td>
                             <td>{{ $rs->taxValue }}</td>
-                            <td class="hidden-480">{{ $gameArr[$rs->gameId] }}</td>
+                            <td class="hidden-480">{{ isset($gameArr[$rs->gameId]) ? $gameArr[$rs->gameId] : $rs->gameId }}</td>
                             <td class="hidden-480">{{ $rs->insertedTime }}</td>
                             <td class="hidden-480">{{ $rs->description }}</td>
                         </tr>

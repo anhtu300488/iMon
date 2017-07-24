@@ -97,6 +97,15 @@
                                     {!! Form::select('status', $statusArr, request('status'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
                                 </div>
                             </div>
+                            @permission(['administrator','admin'])
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
+
+                                </div>
+                            </div>
+                            @endpermission
                             {!! Form::close() !!}
                             <hr />
                             <div class="row">

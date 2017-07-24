@@ -140,6 +140,15 @@
                     <b class="arrow"></b>
                 </li>
 
+                <li {{ setActive('revenue/vip') }}>
+                    <a href="{{route('revenue.vip')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Chức năng Vip
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
                 @permission(['administrator','admin'])
                 <li {{ setActive('revenue/cashOut') }}>
                     <a href="{{route('revenue.cashOut')}}">
@@ -367,7 +376,8 @@
                 </li>
             </ul>
         </li>
-
+        @endpermission
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('moneyGame') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-calendar"></i>
@@ -451,8 +461,9 @@
                 </li>
             </ul>
         </li>
-
+        @endpermission
         <li {{ setOpen('users') }}>
+
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-tag"></i>
                 <span class="menu-text"> Người chơi game </span>
@@ -471,7 +482,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @permission(['administrator', 'admin'])
                 <li {{ setActive('users/userInfo') }}>
                     <a href="{{route('users.userInfo')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -543,10 +554,10 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
             </ul>
         </li>
-
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('others') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-file-o"></i>
@@ -640,7 +651,8 @@
                 </li>
             </ul>
         </li>
-
+        @endpermission
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('tool') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>

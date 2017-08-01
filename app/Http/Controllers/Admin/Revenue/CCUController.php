@@ -29,7 +29,12 @@ class CCUController extends Controller
             foreach($online_logs as $i => $log){
                 $arr_data =  (array)  json_decode($log["peakData"]);
                 $sum  = array_sum($arr_data);
-                $arr_log[$log["insertedTime"]] = array(json_decode($log["peakData"])->total, $sum - $arr_data["total"] - array_values($arr_data)[0]);
+                $par = 0;
+                $arrKey = array_keys($arr_data);
+                if(in_array('0', $arrKey) == true){
+                    $par = array_search('0', $arrKey);
+                }
+                $arr_log[$log["insertedTime"]] = array(json_decode($log["peakData"])->total, $sum - $arr_data["total"] - array_values($arr_data)[$par] );
 
             }
             $current_online = OnlineLog::getOnlineLog($insertedtime, $option, $cp)->toArray();

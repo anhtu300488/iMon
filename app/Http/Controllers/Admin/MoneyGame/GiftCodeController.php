@@ -78,14 +78,14 @@ class GiftCodeController extends Controller
 
     public function multiStore(Request $request){
         $this->validate($request, [
-            'giftEventId' => 'required',
+            'eventId' => 'required',
             'quantity' => 'required|integer'
         ]);
 
 
         $input = $request->all();
         //get expiredTime via giftEventId
-        $event = GiftEvent::find($request->get('giftEventId'));
+        $event = GiftEvent::find($request->get('eventId'));
         $input['expiredTime'] = date('Y-m-d H:i:s',strtotime($event['expiredTime']));
         $input['vqmmTurn'] = $request->get('vqmmTurn') ? $request->get('vqmmTurn') : 0;
         $input['cardPromotion'] = $request->get('cardPromotion') ? $request->get('cardPromotion') : 0;

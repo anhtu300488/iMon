@@ -22,12 +22,12 @@ class VipController extends Controller
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = DB::table('user as a');
-        $query->join('exchange_asset_request', function($join)
+        $query->join('purchase_money_log', function($join)
         {
-            $join->on('exchange_asset_request.requestUserId', '=', 'a.userId');
+            $join->on('purchase_money_log.userId', '=', 'a.userId');
 
         });
-        $query->select(DB::raw("COUNT(exchange_asset_request.requestUserId) numberExchange"), DB::raw("SUM(exchange_asset_request.totalParValue) sumMoney"), 'a.*' );
+        $query->select(DB::raw("COUNT(purchase_money_log.userId) numberExchange"), DB::raw("SUM(purchase_money_log.parValue) sumMoney"), 'a.*' );
 
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];
@@ -37,7 +37,7 @@ class VipController extends Controller
             if($startPlayGame != '' && $endPlayGame != ''){
                 $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
                 $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
-                $query->whereBetween('exchange_asset_request.created_at',[$start1,$end1]);
+                $query->whereBetween('purchase_money_log.purchasedTime',[$start1,$end1]);
             }
         }
 
@@ -45,7 +45,7 @@ class VipController extends Controller
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
-        $data = $query->groupBy("exchange_asset_request.requestUserId")->orderBy(DB::raw("a.vipLevel"), 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
+        $data = $query->groupBy("purchase_money_log.userId")->orderBy(DB::raw("a.totalMoneyCharged"), 'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
 
 //        var_dump($data);die;
 

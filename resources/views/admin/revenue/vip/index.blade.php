@@ -87,9 +87,9 @@
                             <td>{{ $rs->displayName }}</td>
                             <td>{{ number_format($rs->cash) }}</td>
                             <td>{{ $rs->numberExchange }}</td>
-                            <td>{{ $rs->sumMoney }}</td>
-                            <td>{{ number_format($rs->totalCashCharged) }}</td>
-                            <td>{{ number_format($rs->totalCashExchanged) }}</td>
+                            <td>{{ number_format($rs->sumMoney) }}</td>
+                            <td>{{ number_format($rs->totalMoneyCharged) }}</td>
+                            <td>{{ number_format($rs->totalMoneyExchanged) }}</td>
                             <td class="hidden-480">{{ $rs->lastLoginTime }}</td>
                             <td class="hidden-480">{{ $rs->registedTime }}</td>
                             <td class="hidden-480">{{ $rs->device }}</td>

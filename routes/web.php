@@ -121,6 +121,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/vip', ['as' => 'revenue.vip', 'uses' => 'Admin\Revenue\VipController@index']);
 
+    Route::get('revenue/vip/xlsx', ['as' => 'vip.excel', 'uses' => 'Admin\Revenue\VipController@downloadExcel']);
+
     Route::get('revenue/detailSmsHistory', ['as' => 'revenue.detailSmsHistory', 'uses' => 'Admin\Revenue\SmsHistoryRevenueController@index']);
 
     Route::get('revenue/moRevenue', ['as' => 'revenue.moRevenue', 'uses' => 'Admin\Revenue\MoRevenueController@index']);

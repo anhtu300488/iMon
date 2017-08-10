@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/vip','role'=>'search'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/vip','role'=>'search', 'name' => 'formSearch'])  !!}
 
                             <div class="row">
 
@@ -34,17 +34,25 @@
                                 </div>
 
                             </div>
+                            {!! Form::close() !!}
                             <hr />
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12">
-                                    <button type="submit" class="btn btn-info btn-sm">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button type="submit" class="btn btn-info btn-sm" onclick="document.formSearch.submit();">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ route('vip.excel', ['timeRequest' => request('timeRequest')]) }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                             {{--</form>--}}
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
 

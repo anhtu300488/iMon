@@ -63,6 +63,8 @@ class PurchaseMoneyLog extends Model
                 $end = date("Y-m-d 23:59:59",strtotime($endDateCharge));
                 $query->whereBetween('p.purchasedTime',[$start,$end]);
             }
+        } else {
+            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         }
 
         if($datePlayGame != ''){
@@ -124,6 +126,8 @@ class PurchaseMoneyLog extends Model
             $query->where('p.userName','LIKE','%'.$userName.'%');
         }
         if($dateCharge != ''){
+            $search = true;
+
             $startDateCharge = $dateCharge[0];
 
             $endDateCharge = $dateCharge[1];

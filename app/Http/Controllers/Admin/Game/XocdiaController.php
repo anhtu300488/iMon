@@ -27,7 +27,7 @@ class XocdiaController extends Controller
         }
 
         if($matchIndex != ''){
-            $query->where('matchIndex','LIKE','%'.$matchIndex.'%');
+            $query->where('matchLogId','LIKE','%'.$matchIndex.'%');
         }
 
         if($fromDate != '' && $toDate != ''){

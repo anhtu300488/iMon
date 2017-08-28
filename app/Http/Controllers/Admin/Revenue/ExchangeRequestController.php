@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Revenue;
 
+use App\Agent;
+use App\CashTransferLog;
 use App\Cp;
 use App\ExchangeAssetRequest;
 use App\Game;
@@ -246,4 +248,50 @@ class ExchangeRequestController extends Controller
             });
         })->download('xlsx');
     }
+
+    public function getMoneyExchange($id){
+        $timeRequest = explode(" - ", getToday());
+
+        $query = DB::table('user as a');
+        $query->join('exchange_asset_request', function($join)
+        {
+            $join->on('exchange_asset_request.requestUserId', '=', 'a.userId');
+
+        });
+        $query->select(DB::raw("SUM(exchange_asset_request.totalParValue) sumMoney"));
+
+        if($timeRequest != ''){
+            $startPlayGame = $timeRequest[0];
+
+            $endPlayGame = $timeRequest[1];
+
+            if($startPlayGame != '' && $endPlayGame != ''){
+                $start1 = date("Y-m-d 00:00:00",strtotime($startPlayGame));
+                $end1 = date("Y-m-d 23:59:59",strtotime($endPlayGame));
+                $query->whereBetween('exchange_asset_request.created_at',[$start1,$end1]);
+            }
+        }
+        if($id != ''){
+            $query->where('a.userId','=', $id);
+        }
+
+        $query->where('exchange_asset_request.status', '=', 1);
+
+        $results = $query->get()->toArray();
+        foreach ($results as $rs){
+            $data = $rs->sumMoney;
+        }
+
+
+        return number_format($data);
+    }
+
+    public function getMoneyTransfer($id){
+        return CashTransferLog::getMoneyTransfer($id);
+    }
+
+    public function getMoneyReceived($id){
+        return CashTransferLog::getMoneyReceived($id);
+    }
+
 }

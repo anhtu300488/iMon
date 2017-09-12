@@ -10,5 +10,5 @@ class taixiuProphecy extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['isGreat'];
+    protected $fillable = ['isGreat', 'admin_id'];
 }

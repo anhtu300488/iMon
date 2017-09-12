@@ -39,6 +39,7 @@ class CreateAdminController extends Controller
 
     public function create(){
         $roles = Role::pluck('display_name','id');
+        $roles->prepend('---Tất cả---', '');
         $cp = Cp::where('cpId','!=', 1)->pluck('cpName','cpId');
         return view('admin.tool.createAdmin.create',compact('roles','cp'));
     }
@@ -71,6 +72,7 @@ class CreateAdminController extends Controller
     public function edit($id){
         $admin = Admin::find($id);
         $roles = Role::pluck('display_name','id');
+        $roles->prepend('---Tất cả---', '');
         $cp = Cp::where('cpId','!=', 1)->pluck('cpName','cpId');
         $rolePermissions = $admin->roles->pluck('id','id')->toArray();
 //        var_dump($rolePermissions);die;

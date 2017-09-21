@@ -64,7 +64,7 @@ class PurchaseMoneyLog extends Model
                 $query->whereBetween('p.purchasedTime',[$start,$end]);
             }
         } else {
-            $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
+        //    $query->where("p.purchasedTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         }
 
         if($datePlayGame != ''){
@@ -101,11 +101,11 @@ class PurchaseMoneyLog extends Model
         $query = DB::table('purchase_money_log as p');
         $inday = 0;
         if($dateCharge != '' && $dateCharge[0] == $dateCharge[1]){
-            $query->select(DB::raw("HOUR(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') );
+            $query->select(DB::raw("HOUR(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue)/10 as sum_cash') );
             $inday = 1;
             $search = true;
         } else {
-            $query->select(DB::raw("DATE(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue) as sum_cash') );
+            $query->select(DB::raw("DATE(p.purchasedTime) purchase_date"), 'p.type as type',  DB::raw('SUM(p.parValue) as sum_money') , DB::raw('SUM(p.cashValue)/10 as sum_cash') );
         };
 
         $query->join('user', function($join)

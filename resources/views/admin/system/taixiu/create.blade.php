@@ -11,12 +11,17 @@
         {!! Form::open(array('route' => 'system.taixiu.store','method'=>'POST', 'class' => 'form-horizontal')) !!}
         <!-- #section:elements.form -->
             {{ csrf_field() }}
-
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <div class="form-group{{ $errors->has('isGreat') ? ' has-error' : '' }}">
-                <label for="name" class="col-md-4 control-label">isGreat</label>
+                <label for="name" class="col-md-4 control-label">Chọn kết quả phiên</label>
 
                 <div class="col-md-6">
-                    <input id="isGreat" type="text" class="form-control" name="isGreat" value="{{ old('isGreat') }}" required autofocus>
+                    {!! Form::radio('isGreat', 1 , true, ['style' => 'margin: 12px']) !!} Tài
+                    {!! Form::radio('isGreat', 0 , false, ['style' => 'margin: 12px']) !!} Xỉu
 
                     @if ($errors->has('isGreat'))
                         <span class="help-block">

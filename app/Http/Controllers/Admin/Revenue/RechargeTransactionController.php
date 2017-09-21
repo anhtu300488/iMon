@@ -185,4 +185,45 @@ class RechargeTransactionController extends Controller
             });
         })->download('xlsx');
     }
+
+    public function getMoneyLog($id){
+//        var_dump($id);die;
+        $query = PurchaseMoneyLog::query();
+        $query->select(DB::raw('user.userId AS userId'), DB::raw('user.userName AS userName'), "parValue", "description", "type", "purchasedTime" )
+        ->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'purchase_money_log.userId');
+
+        });
+        if($id != ''){
+            $query->where('user.userId','=', $id);
+        }
+        $results = $query->orderBy('purchase_money_log.purchasedTime', 'desc')->get()->toArray();
+
+        $html = "<table class='table table-striped table-bordered table-hover no-margin-bottom no-border-top'>
+                <thead>
+                    <tr>
+                        <th>Tên đăng nhập</th>
+                        <th>Kiểu thanh toán</th>
+                        <th>Số tiền</th>
+                        <th>Nhà mạng</th>
+                        <th>Thời gian</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        foreach ($results as $rs){
+            $html = $html . "<tr>";
+            $html = $html . "<td>".$rs['userName']."</td>";
+            $html = $html . "<td>".$rs['type']."</td>";
+            $html = $html . "<td>".number_format($rs['parValue'])."</td>";
+            $html = $html . "<td>".$rs['description']."</td>";
+            $html = $html . "<td>".$rs['purchasedTime']."</td>";
+            $html = $html . "</tr>";
+        }
+
+        $html = $html . "</tbody>
+                </table>";
+
+        return $html;
+    }
 }

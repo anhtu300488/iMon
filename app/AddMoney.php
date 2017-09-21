@@ -10,4 +10,8 @@ class AddMoney extends Model
 
     protected $fillable = ['userId', 'addCash', 'addGold', 'description', 'admin_id'];
 
+
+    public static function getListDataBySearch(){
+
+    }
 }

@@ -172,7 +172,10 @@
                                 <td class="hidden-480" style="text-align: center">
                                     @if($rs->description == null) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i> @endif
                                 </td>
-                                <td><a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a></td>
+                                <td>
+                                    <a href="#modal-table" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}"> <span class="ace-icon fa fa-signal"></span> </a>
+                                    <a href="#modal-detail" role="button" class="green" data-toggle="modal" data-id="{{$rs->requestUserId}}" data-charged="{{number_format($rs->totalMoneyCharged)}}" data-exchanged="{{number_format($rs->totalMoneyExchanged)}}"> <span class="ace-icon fa fa-camera"></span> </a>
+                                </td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td class="hidden-480">{{ getAdminName($rs->admin_id) }}</td>
                                 <td>
@@ -283,6 +286,38 @@
         </div><!-- /.modal-dialog -->
     </div><!-- PAGE CONTENT ENDS -->
 
+    <div id="modal-detail" class="modal fade" tabindex="-1">
+        <div class="modal-dialog" style="width: 768px">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        User ID: <span id="userIdDetail"></span> | Tổng tiền đã nạp: <span id="totalMoneyCharged" style="color: yellow"></span> | Tổng tiền đổi trong ngày: <span id="moneyExchanged" style="color: yellow"></span> | Tổng tiền đã đổi: <span id="totalMoneyExchanged" style="color: yellow"></span>
+                        <br /> Mua: <span id="received" style="color: yellow"></span> | Bán: <span id="transfer" style="color: yellow"></span>
+                    </div>
+                </div>
+
+                <div id="table-wrapper">
+                    <div class="modal-body modal-statistic no-padding" id = "table-detail-scroll">
+
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
     <script>
         jQuery(function($) {
 
@@ -356,6 +391,32 @@
                 });
 
                 document.getElementById("requestUserId").innerHTML = $(e.relatedTarget).data('id');
+            });
+        });
+
+        $(function() {
+            $('#modal-detail').on("show.bs.modal", function (e) {
+
+                var id = $(e.relatedTarget).data('id');
+                $.get('/revenue/rechargeTransaction/getMoneyLog/' + id, function( data ) {
+                    $("#table-detail-scroll").html(data);
+                });
+
+                $.get('/revenue/exchangeRequest/getMoneyExchange/' + id, function( data ) {
+                    document.getElementById("moneyExchanged").innerHTML = data;
+                });
+
+                $.get('/revenue/exchangeRequest/getMoneyReceived/' + id, function( data ) {
+                    document.getElementById("received").innerHTML = data;
+                });
+
+                $.get('/revenue/exchangeRequest/getMoneyTransfer/' + id, function( data ) {
+                    document.getElementById("transfer").innerHTML = data;
+                });
+
+                document.getElementById("userIdDetail").innerHTML = $(e.relatedTarget).data('id');
+                document.getElementById("totalMoneyCharged").innerHTML = $(e.relatedTarget).data('charged');
+                document.getElementById("totalMoneyExchanged").innerHTML = $(e.relatedTarget).data('exchanged');
             });
         });
 

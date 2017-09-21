@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\System;
 
 use App\taixiuProphecy;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TaiXiuController extends Controller
 {
@@ -19,6 +21,7 @@ class TaiXiuController extends Controller
         ]);
 
         $input = $request->all();
+        $input['admin_id'] = Auth::user()->id;
 
         taixiuProphecy::create($input);
 

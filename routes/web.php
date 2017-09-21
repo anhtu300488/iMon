@@ -110,6 +110,14 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/exchangeRequest/getMatchLog/{id}', ['as' => 'exchangeRequest.getMatchLog', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMatchLog']);
 
+    Route::get('revenue/rechargeTransaction/getMoneyLog/{id}', ['as' => 'rechargeTransaction.getMoneyLog', 'uses' => 'Admin\Revenue\RechargeTransactionController@getMoneyLog']);
+
+    Route::get('revenue/exchangeRequest/getMoneyExchange/{id}', ['as' => 'exchangeRequest.getMoneyExchange', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMoneyExchange']);
+
+    Route::get('revenue/exchangeRequest/getMoneyTransfer/{id}', ['as' => 'exchangeRequest.getMoneyTransfer', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMoneyTransfer']);
+
+    Route::get('revenue/exchangeRequest/getMoneyReceived/{id}', ['as' => 'exchangeRequest.getMoneyReceived', 'uses' => 'Admin\Revenue\ExchangeRequestController@getMoneyReceived']);
+
     Route::get('revenue/exchangeRequest/xlsx', ['as' => 'exchangeRequest.excel', 'uses' => 'Admin\Revenue\ExchangeRequestController@downloadExcel']);
 
     Route::get('revenue/cashOut', ['as' => 'revenue.cashOut', 'uses' => 'Admin\Revenue\CashOutController@index']);

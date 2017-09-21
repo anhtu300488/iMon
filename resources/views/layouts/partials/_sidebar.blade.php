@@ -63,7 +63,11 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+<<<<<<< HEAD
                 @permission(['administrator','admin', 'customer_care'])
+=======
+                @permission(['administrator','admin', 'customer_care', 'cp'])
+>>>>>>> 9bd54777236761b6e559ae1bd8b4dcd8b3a85275
                 <li {{ setActive('revenue/revenueDay') }}>
                     <a href="{{route('revenue.revenueDay')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -72,6 +76,11 @@
 
                     <b class="arrow"></b>
                 </li>
+<<<<<<< HEAD
+=======
+                @endpermission
+                @permission(['administrator','admin'])
+>>>>>>> 9bd54777236761b6e559ae1bd8b4dcd8b3a85275
                 <li {{ setActive('revenue/revenueUserCharge') }}>
                     <a href="{{route('revenue.revenueUserCharge')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -108,6 +117,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
+                @permission(['administrator','admin', 'cp'])
                 <li {{ setActive('revenue/logPayment') }}>
                     <a href="{{route('revenue.logPayment')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -116,6 +126,7 @@
 
                     <b class="arrow"></b>
                 </li>
+                @endpermission
                 @permission(['administrator','admin', 'customer_care'])
                 <li {{ setActive('revenue/smsRevenue') }}>
                     <a href="{{route('revenue.smsRevenue')}}">
@@ -135,7 +146,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-
+                @permission(['administrator','admin', 'cp'])
                 <li {{ setActive('revenue/exchangeRequest') }}>
                     <a href="{{route('revenue.exchangeRequest')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -153,7 +164,7 @@
 
                     <b class="arrow"></b>
                 </li>
-
+                @endpermission
                 @permission(['administrator','admin', 'customer_care'])
                 <li {{ setActive('revenue/cashOut') }}>
                     <a href="{{route('revenue.cashOut')}}">
@@ -189,7 +200,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-
+                @permission(['administrator','admin', 'customer_care', 'cp'])
                 <li {{ setActive('revenue/ccu') }}>
                     <a href="{{route('revenue.ccu')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -199,6 +210,7 @@
                     <b class="arrow"></b>
                 </li>
 
+                @endpermission
                 @permission(['administrator','admin', 'customer_care'])
                 <li {{ setActive('revenue/userOnline') }}>
                     <a href="{{route('revenue.userOnline')}}">
@@ -467,6 +479,7 @@
             </ul>
         </li>
         @endpermission
+        @permission(['administrator','admin', 'cp'])
         <li {{ setOpen('users') }}>
 
             <a href="#" class="dropdown-toggle">
@@ -562,6 +575,7 @@
                 @endpermission
             </ul>
         </li>
+        @endpermission
         @permission(['administrator', 'admin'])
         <li {{ setOpen('others') }}>
             <a href="#" class="dropdown-toggle">
@@ -691,6 +705,15 @@
                     <a href="{{route('createAdmin.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Tạo User
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li {{ setActive('system/taixiu/create') }}>
+                    <a href="{{route('system.taixiu.create')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tool tài xỉu
                     </a>
 
                     <b class="arrow"></b>

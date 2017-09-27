@@ -63,11 +63,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-<<<<<<< HEAD
-                @permission(['administrator','admin', 'customer_care'])
-=======
                 @permission(['administrator','admin', 'customer_care', 'cp'])
->>>>>>> 9bd54777236761b6e559ae1bd8b4dcd8b3a85275
                 <li {{ setActive('revenue/revenueDay') }}>
                     <a href="{{route('revenue.revenueDay')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -76,11 +72,8 @@
 
                     <b class="arrow"></b>
                 </li>
-<<<<<<< HEAD
-=======
                 @endpermission
-                @permission(['administrator','admin'])
->>>>>>> 9bd54777236761b6e559ae1bd8b4dcd8b3a85275
+                @permission(['administrator','admin', 'customer_care'])
                 <li {{ setActive('revenue/revenueUserCharge') }}>
                     <a href="{{route('revenue.revenueUserCharge')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -146,7 +139,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-                @permission(['administrator','admin', 'cp'])
+                @permission(['administrator','admin', 'cp', 'customer_care'])
                 <li {{ setActive('revenue/exchangeRequest') }}>
                     <a href="{{route('revenue.exchangeRequest')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -325,7 +318,14 @@
 
                     <b class="arrow"></b>
                 </li>
+                <li {{ setActive('game/poker') }}>
+                    <a href="{{route('game.poker')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Lịch sử poker
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
                 <li {{ setActive('game/rateMiniPoker') }}>
                     <a href="{{route('game.rateMiniPoker')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -394,7 +394,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator', 'admin'])
+        @permission(['administrator', 'admin', 'customer_care'])
         <li {{ setOpen('moneyGame') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-calendar"></i>
@@ -479,7 +479,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator','admin', 'cp'])
+        @permission(['administrator','admin', 'cp', 'customer_care'])
         <li {{ setOpen('users') }}>
 
             <a href="#" class="dropdown-toggle">
@@ -576,7 +576,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator', 'admin'])
+        @permission(['administrator', 'admin', 'customer_care'])
         <li {{ setOpen('others') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-file-o"></i>
@@ -671,7 +671,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator', 'admin'])
+        @permission(['administrator', 'admin', 'customer_care'])
         <li {{ setOpen('tool') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>

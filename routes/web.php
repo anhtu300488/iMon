@@ -222,6 +222,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //mini poker
     Route::get('game/miniPoker', ['as' => 'game.miniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@log']);
+    Route::get('game/poker', ['as' => 'game.poker', 'uses' => 'Admin\Game\PokerLogController@log']);
     Route::get('game/rateMiniPoker', ['as' => 'game.rateMiniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@rate']);
 
     //Xoc dia

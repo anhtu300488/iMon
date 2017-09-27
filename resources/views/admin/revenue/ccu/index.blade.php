@@ -201,7 +201,7 @@
                     fromDate = date[0].split("/").join("-");
                 }
                 var partner = $('#partner').val();
-                if(partner == ''){
+                if(partner == '' || typeof(partner) == "undefined" || partner == "undefined"){
                     partner = 1;
                 }
                 $.get('/revenue/ccu/statistic/' + fromDate + '/' + partner, function( data ) {

@@ -26,7 +26,7 @@ class LiengController extends Controller
         }
 
         if($matchIndex != ''){
-            $query->where('matchLogId','LIKE','%'.$matchIndex.'%');
+            $query->where('matchIndex','LIKE','%'.$matchIndex.'%');
         }
 
         if($fromDate != '' && $toDate != ''){

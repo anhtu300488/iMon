@@ -376,63 +376,6 @@ function getDescriptionXiTo($content){
 
     return $string;
 }
-//poker
-function getDescriptionPoker($content){
-    $arr =  (array) json_decode($content);
-//    var_dump($arr);die;
-    $minbet = isset($arr["minbet"]) ? $arr["minbet"] : "0";
-    $string = "Mức Cược: " . $minbet . " mon+";
-    $room = isset($arr["vipRoom"]) ? "Vip" : "Thường";
-    $string = $string . "Phòng: " . $room . "+";
-    $startTime = isset($arr["startTime"])? $arr["startTime"] : "";
-    $endTime = isset($arr["endTime"])? $arr["endTime"] : "";
-    $string = $string .  "Thời gian bắt đầu:" . $startTime . "+";
-    $string = $string .  "Thời gian kết thúc:" . $endTime . "+";
-    $string = $string . "+Người chơi+";
-    if(isset($arr["playerInfo"])){
-        foreach ($arr["playerInfo"] as $user){
-            $string = $string . "  " . $user->userId . "(" . $user->ip . ")+";
-        }
-    }
-    $string = $string . "+Người đầu tiên: " . $arr["firstTurnPlayer"] . "+";
-
-    $string = $string . "  Chi tiết bài:" . "+";
-    if(isset($arr["currentCards"])){
-        $currentCards = (array)get_object_vars($arr["currentCards"]);
-        foreach ($currentCards as $userId => $stringCard){
-            $string = $string . "  " .  (string)$userId .":". convertStringToCardMauBinh($stringCard) . "+";
-        }
-    }
-    $turn = $arr["turn"];
-//    $arr_actions = array("", "đánh bài", "bốc bài", "ăn bài", "gửi bài", "hạ phỏm", "tự động hạ");
-    if(isset($turn)){
-        foreach ($turn as $i => $objrurn){
-            $luot_danh =(string) $i + 1;
-            $string = $string . "  Lượt " . $luot_danh . ":";
-            $money = "";
-            if(isset($objrurn->data)){
-                $arrayCard = explode(":", $objrurn->data);
-                $money = isset($arrayCard[1]) ? $arrayCard[1] : "";
-            }
-            $string = $string . "  ". (string) $objrurn->userId . "  " . $objrurn->description . "  " . (string) $money . "+";
-
-        }
-    }
-
-    $string = $string . "Cập nhật tiền:" . "+";
-    if(isset($arr["changeMoney"])){
-        $changeMoney= (array)(get_object_vars($arr["changeMoney"]));
-        if (sizeof($changeMoney) > 0){
-            foreach ($changeMoney as $userId => $changeMoney){
-                $change_text = $changeMoney > 0 ? " Thắng " : " Thua ";
-                $string = $string .(string)$userId . $change_text .  (string)number_format($changeMoney) . " Mon,+";
-            }
-        }
-    }
-
-
-    return $string;
-}
 //Lieng
 function getDescriptionLieng($content){
     $arr =  (array) json_decode($content);

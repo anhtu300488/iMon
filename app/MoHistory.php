@@ -29,7 +29,7 @@ class MoHistory extends Model
                 $query->whereBetween('m.created_at',[$start,$end]);
             }
         } else {
-        //    $query->where("m.created_at",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
+            $query->where("m.created_at",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
         }
         if($cp != null){
             $query->where('user.cp','=', $cp);

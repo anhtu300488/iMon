@@ -325,4 +325,10 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'Admin\CheckUserController@checkUser',
         'as' => 'checkUser',
     ]);
+    Route::resource('gate/chargingError','Admin\gateway\ChargingErrorController');
+    Route::resource('gate/chargingHistory','Admin\gateway\ChargingHistoryController');
+    Route::resource('gate/chargingAgent','Admin\gateway\ChargingAgentController');
+    Route::resource('gate/chargingGWLog','Admin\gateway\ChargingGWlogController');
+
+    //gateway
 });

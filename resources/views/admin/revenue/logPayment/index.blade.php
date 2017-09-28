@@ -106,7 +106,6 @@
                             <th>Mệnh giá</th>
                             <th>Message</th>
                             <th>Nhà cung cấp</th>
-                            <th class="hidden-480">Dùng gateway</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian tạo</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian cập nhật</th>
                         </tr>
@@ -124,9 +123,6 @@
                                 <td>{{ number_format($rs->money) }}</td>
                                 <td>{{ $rs->message }}</td>
                                 <td>{{ $rs->providerId }}</td>
-                                {{--<td>@if($rs->useChargingGateway == 0)  <span class="label label-sm label-inverse arrowed-in">X</span> @else <span class="label label-sm label-success">V</span> @endif</td>--}}
-                                <td>@if($rs->useChargingGateway == 1) <span class="label label-sm label-success"><i class="ace-icon fa fa-check bigger-120"></i></span> @else
-                                        <i class="label label-danger">x</i> @endif </td>
                                 <td class="hidden-480">{{ $rs->created_at }}</td>
                                 <td class="hidden-480">{{ $rs->updated_at }}</td>
                             </tr>

@@ -38,8 +38,6 @@
     </div><!-- /.sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-                @permission(['administrator','admin', 'customer_care'])
-
         <li {{ setActive('home') }}>
             <a href="{{url('home')}}">
                 <i class="menu-icon fa fa-tachometer"></i>
@@ -48,22 +46,18 @@
 
             <b class="arrow"></b>
         </li>
-                @endpermission
 
         <li {{ setOpen('revenue') }}>
-                @permission(['administrator','admin', 'customer_care'])
-
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-desktop"></i>
                 <span class="menu-text"> Doanh Thu </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
-                @endpermission
+
             <b class="arrow"></b>
 
             <ul class="submenu">
-                @permission(['administrator','admin', 'customer_care', 'cp'])
                 <li {{ setActive('revenue/revenueDay') }}>
                     <a href="{{route('revenue.revenueDay')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -72,8 +66,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                @endpermission
-                @permission(['administrator','admin', 'customer_care'])
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/revenueUserCharge') }}>
                     <a href="{{route('revenue.revenueUserCharge')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -110,7 +103,6 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-                @permission(['administrator','admin', 'cp'])
                 <li {{ setActive('revenue/logPayment') }}>
                     <a href="{{route('revenue.logPayment')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -119,8 +111,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                @endpermission
-                @permission(['administrator','admin', 'customer_care'])
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/smsRevenue') }}>
                     <a href="{{route('revenue.smsRevenue')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -139,7 +130,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-                @permission(['administrator','admin', 'cp', 'customer_care'])
+
                 <li {{ setActive('revenue/exchangeRequest') }}>
                     <a href="{{route('revenue.exchangeRequest')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -157,8 +148,8 @@
 
                     <b class="arrow"></b>
                 </li>
-                @endpermission
-                @permission(['administrator','admin', 'customer_care'])
+
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/cashOut') }}>
                     <a href="{{route('revenue.cashOut')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -193,7 +184,7 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
-                @permission(['administrator','admin', 'customer_care', 'cp'])
+
                 <li {{ setActive('revenue/ccu') }}>
                     <a href="{{route('revenue.ccu')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -203,8 +194,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                @endpermission
-                @permission(['administrator','admin', 'customer_care'])
+                @permission(['administrator','admin'])
                 <li {{ setActive('revenue/userOnline') }}>
                     <a href="{{route('revenue.userOnline')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -235,7 +225,7 @@
             </ul>
         </li>
 
-        @permission(['administrator','admin', 'customer_care'])
+        @permission(['administrator','admin'])
         <li {{ setOpen('game') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list-alt"></i>
@@ -318,14 +308,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                <li {{ setActive('game/poker') }}>
-                    <a href="{{route('game.poker')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Lịch sử poker
-                    </a>
 
-                    <b class="arrow"></b>
-                </li>
                 <li {{ setActive('game/rateMiniPoker') }}>
                     <a href="{{route('game.rateMiniPoker')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -394,7 +377,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator', 'admin', 'customer_care'])
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('moneyGame') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-calendar"></i>
@@ -479,7 +462,6 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator','admin', 'cp', 'customer_care'])
         <li {{ setOpen('users') }}>
 
             <a href="#" class="dropdown-toggle">
@@ -500,7 +482,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                @permission(['administrator','admin', 'customer_care'])
+                @permission(['administrator', 'admin'])
                 <li {{ setActive('users/userInfo') }}>
                     <a href="{{route('users.userInfo')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -575,8 +557,7 @@
                 @endpermission
             </ul>
         </li>
-        @endpermission
-        @permission(['administrator', 'admin', 'customer_care'])
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('others') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-file-o"></i>
@@ -671,7 +652,7 @@
             </ul>
         </li>
         @endpermission
-        @permission(['administrator', 'admin', 'customer_care'])
+        @permission(['administrator', 'admin'])
         <li {{ setOpen('tool') }}>
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -709,16 +690,28 @@
 
                     <b class="arrow"></b>
                 </li>
+				@endpermission
+				
+				@permission(['administrator'])					
+					<li {{ setActive('system/taixiu/create') }}>
+						<a href="{{route('system.taixiu.create')}}">
+							<i class="menu-icon fa fa-caret-right"></i>
+							Tool tài xỉu
+						</a>
 
-                <li {{ setActive('system/taixiu/create') }}>
-                    <a href="{{route('system.taixiu.create')}}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Tool tài xỉu
-                    </a>
+						<b class="arrow"></b>
+					</li>
+				@endpermission
+				@if(Auth::user()->username == 'ducanhvnn')				
+					<li {{ setActive('system/taixiu/create') }}>
+						<a href="{{route('system.taixiu.create')}}">
+							<i class="menu-icon fa fa-caret-right"></i>
+							Tool tài xỉu
+						</a>
 
-                    <b class="arrow"></b>
-                </li>
-                @endpermission
+						<b class="arrow"></b>
+					</li>
+				@endif
                 <li {{ setActive('tool/sendEmail/create') }}>
                     <a href="{{route('tool.sendEmail.create')}}">
                         <i class="menu-icon fa fa-caret-right"></i>

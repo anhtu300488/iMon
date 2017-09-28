@@ -168,9 +168,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('system/ipLock', ['as' => 'system.ipLock.store', 'uses' => 'Admin\System\LockIpController@store','middleware' => ['permission:administrator']]);
 
-    Route::get('system/taixiu/create', ['as' => 'system.taixiu.create', 'uses' => 'Admin\System\TaiXiuController@create', 'middleware' => ['permission:administrator']]);
+    Route::get('system/taixiu/create', ['as' => 'system.taixiu.create', 'uses' => 'Admin\System\TaiXiuController@create', 'middleware' => ['permission:administrator|admin']]);
 
-    Route::post('system/taixiu/create',['as'=>'system.taixiu.store','uses'=>'Admin\System\TaiXiuController@store','middleware' => ['permission:administrator']]);
+    Route::post('system/taixiu/create',['as'=>'system.taixiu.store','uses'=>'Admin\System\TaiXiuController@store','middleware' => ['permission:administrator|admin']]);
 
 
 
@@ -222,7 +222,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     //mini poker
     Route::get('game/miniPoker', ['as' => 'game.miniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@log']);
-    Route::get('game/poker', ['as' => 'game.poker', 'uses' => 'Admin\Game\PokerLogController@log']);
     Route::get('game/rateMiniPoker', ['as' => 'game.rateMiniPoker', 'uses' => 'Admin\Game\MiniPokerLogController@rate']);
 
     //Xoc dia

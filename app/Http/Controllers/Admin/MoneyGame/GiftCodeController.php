@@ -90,6 +90,7 @@ class GiftCodeController extends Controller
         $input['vqmmTurn'] = $request->get('vqmmTurn') ? $request->get('vqmmTurn') : 0;
         $input['cardPromotion'] = $request->get('cardPromotion') ? $request->get('cardPromotion') : 0;
         $input['cardPromotionTurn'] = $request->get('cardPromotionTurn') ? $request->get('cardPromotionTurn') : 0;
+
         GiftOrder::create($input);
 
         return redirect()->route('giftCode.index')

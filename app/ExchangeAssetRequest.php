@@ -5,12 +5,13 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ExchangeAssetRequest extends Model
 {
     protected $table = 'exchange_asset_request';
 
-    public static function getTotalRevenueByDate($timeRequest,$cp)
+    public static function getTotalRevenueByDate($timeRequest,$cp = null)
     {
 
         $search = false;
@@ -29,6 +30,9 @@ class ExchangeAssetRequest extends Model
             $join->on('user.userId', '=', 'a.requestUserId');
 
         });
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
         if($timeRequest != ''){
             $search = true;
             $startDateCharge = $timeRequest[0];
@@ -57,6 +61,7 @@ class ExchangeAssetRequest extends Model
         }
 
 //        $query->groupBy(DB::raw("DATE(a.created_at)"));
+        $query->whereNotNull("a.responseData");
 
         $data = $query->get()->toArray();
 

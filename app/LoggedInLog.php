@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LoggedInLog extends Model
 {
@@ -21,6 +22,9 @@ class LoggedInLog extends Model
         });
         if($cp != null){
             $query->where('user.cp','=', $cp);
+        }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
         }
         return $query->groupBy(DB::raw('date(a.loggedInTime)'))
             ->where("a.loggedInTime",">", $created_at)
@@ -47,7 +51,6 @@ class LoggedInLog extends Model
         } else {
             $query->where("loggedInTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days')));
         }
-
 //        if($userID){
 //            $query->where('userId ','=',$userID);
 //        }

@@ -45,8 +45,11 @@ class HomeController extends Controller
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
-        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
-
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -62,7 +65,9 @@ class HomeController extends Controller
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
         if($cp != null){
             $query->where('user.cp','=', $cp);
         }

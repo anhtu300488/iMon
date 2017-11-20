@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Thống kê xóc đĩa
+    Thống kê tài xỉu
 @endsection
 @section('content')
     <div class="page-header">
@@ -28,7 +28,7 @@
 
                                 <div class="col-xs-4 col-sm-4">
                                     <label for="form-field-select-1">Match ID</label>
-                                    <input class="form-control" name="matchIndex" type="text" value="{{request('matchIndex')}}"/>
+                                    <input class="form-control" name="sessionId" type="text" value="{{request('sessionId')}}"/>
                                 </div>
 
                                 <div class="col-xs-4 col-sm-4">
@@ -40,20 +40,9 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <label for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
                                         <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -89,7 +78,7 @@
                         <tr>
                             <th class="hidden-480">STT</th>
                             <th>Room ID</th>
-                            <th>Match Index</th>
+                            <th>sessionId</th>
                             <th>Mô tả</th>
                             <th>Loại</th>
                             <th>Created time</th>
@@ -101,7 +90,7 @@
                             <tr>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->roomId }}</td>
-                                <td>{{ $rs->matchIndex }}</td>
+                                <td>{{ $rs->sessionId }}</td>
                                 <td>{{ $rs->description }}</td>
                                 <td></td>
                                 <td>{{ $rs->createdTime }}</td>
@@ -111,6 +100,7 @@
                     </table>
                 </div><!-- /.span -->
                 @include('layouts.partials._pagination')
+
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -119,17 +109,14 @@
 
             //datepicker plugin
             //link
-            $('.date-picker').datepicker({
-                autoclose: true,
-                todayHighlight: true
-            })
-            //show datepicker when clicking on the icon
-                .next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
-
-            //or change it into a date range picker
-            $('.input-daterange').datepicker({autoclose:true});
+              $('.date-picker').daterangepicker(
+                  {
+                      timePicker: true,
+                      format: 'DD/MM/YYYY H:mm:s',
+                      startDate: '<?php echo date('d/m/Y 00:00:00')?>',
+                      endDate: '<?php echo date('d/m/Y H:mm:s')?>'
+                  }
+              );
 
         });
     </script>

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use App\Cp;
+use Illuminate\Support\Facades\Auth;
 
 class RevenueUserPurchaseController extends Controller
 {
@@ -23,8 +25,26 @@ class RevenueUserPurchaseController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", get7Day());
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
-        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"),  DB::raw('SUM(p.parValue) as sum_money') ,  DB::raw('COUNT( DISTINCT p.userId) as total'));
+        $query = DB::table('purchase_money_log as p')->select(DB::raw("DATE(p.purchasedTime) created_date"),  DB::raw('SUM(p.parValue) as sum_money') ,  DB::raw('COUNT( DISTINCT p.userId) as total'))
+        ->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'p.userId');
 
+        });
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
+        // $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
+
+        // $partner->prepend('---Tất cả---', '');
+
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+
+        $partner = $partner_qr->pluck('cpName', 'cpId');
+        $partner->prepend('---Tất cả---', '');
 
         if($dateCharge != ''){
             $startDateCharge = $dateCharge[0];
@@ -37,18 +57,23 @@ class RevenueUserPurchaseController extends Controller
                 $query->whereBetween('p.purchasedTime',[$start,$end]);
             }
         }
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        
+        if($cp){
+            $query->where('user.cp', '=',$cp);
+        }
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
         $data = $query->groupBy(DB::raw("DATE(p.purchasedTime)"))->orderBy(DB::raw("DATE(p.purchasedTime)"),'desc')->offset($startLimit)->limit($perPage)->paginate($perPage);
-        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueUserPurchase($dateCharge);
+        $purchase_moneys = PurchaseMoneyLog::getTotalRevenueUserPurchase($dateCharge,  $cp);
         $purchase_arr = array();
 
         foreach ($purchase_moneys as $index => $purchase_money){
             $purchase_arr[$purchase_money->purchase_date] = (isset($purchase_money->sum_money) ? $purchase_money->sum_money : 0)/ (isset($purchase_money->total) ? $purchase_money->total : 1);
         }
 
-        return view('admin.revenue.revenueUserPurchase.index',compact('data','purchase_arr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.revenue.revenueUserPurchase.index',compact('data','purchase_arr', 'partner'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 }

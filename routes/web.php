@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('home', ['as' => 'home', 'uses' => 'Admin\HomeController@index']);
 
-    Route::get('profile', ['as' => 'profile', 'uses' => 'Admin\AuthController@profile']);
+    Route::get('profile', ['as' => 'profile', 'uẽses' => 'Admin\AuthController@profile']);
 
     Route::get('password.change', ['as' => 'password.change', 'uses' => 'Admin\AuthController@changePassword']);
 
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('revenue/ccu', ['as' => 'revenue.ccu', 'uses' => 'Admin\Revenue\CCUController@index']);
 
-    Route::get('revenue/ccu/statistic/{fromDate}/{partner}', ['as' => 'revenue.ccu.statistic', 'uses' => 'Admin\Revenue\CCUController@statistic']);
+    Route::get('revenue/ccu/statistic/{gameId}/{partner}', ['as' => 'revenue.ccu.statistic', 'uses' => 'Admin\Revenue\CCUController@statistic']);
 
     Route::get('revenue/wasteMoney', ['as' => 'revenue.wasteMoney', 'uses' => 'Admin\Revenue\WasteMoneyController@index']);
 
@@ -130,6 +130,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('revenue/vip', ['as' => 'revenue.vip', 'uses' => 'Admin\Revenue\VipController@index']);
 
     Route::get('revenue/vip/xlsx', ['as' => 'vip.excel', 'uses' => 'Admin\Revenue\VipController@downloadExcel']);
+    Route::get('revenue/logPayment/xlsx', ['as' => 'logPayment.excel', 'uses' => 'Admin\Revenue\LogPaymentController@downloadExcel']);
+    Route::get('revenue/historyMoney/xlsx', ['as' => 'historyMoney.excel', 'uses' => 'Admin\Revenue\MoneyHistoryController@downloadExcel']);
 
     Route::get('revenue/detailSmsHistory', ['as' => 'revenue.detailSmsHistory', 'uses' => 'Admin\Revenue\SmsHistoryRevenueController@index']);
 
@@ -242,6 +244,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('game/phom', ['as' => 'game.phom', 'uses' => 'Admin\Game\PhomController@index']);
     //Bacay
     Route::get('game/bacay', ['as' => 'game.bacay', 'uses' => 'Admin\Game\BaCayController@index']);
+    Route::get('game/poker', ['as' => 'game.poker', 'uses' => 'Admin\Game\PokerLogController@log']);
 
     Route::get('moneyGame/cardProvider', ['as' => 'moneyGame.cardProvider', 'uses' => 'Admin\MoneyGame\CardProviderController@index']);
 
@@ -300,6 +303,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     //notification
     Route::resource('others/notification','Admin\Others\NotificationController');
+    // Route::patch('others/tip/{id}', ['as' => 'tool.tip.update', 'uses' => 'Admin\Tool\QuickTipController@update']);
+    // Route::patch('others/tip/{id}', ['as' => 'tip.update', 'uses' => 'Admin\Tool\QuickTipController@update']);
+
+    Route::resource('others/tip','Admin\Others\QuickTipController');
+
 
     //notify
     Route::resource('others/notify','Admin\Others\NotifyController');
@@ -324,10 +332,17 @@ Route::group(['middleware' => ['auth']], function() {
         'uses' => 'Admin\CheckUserController@checkUser',
         'as' => 'checkUser',
     ]);
-    Route::resource('gate/chargingError','Admin\gateway\ChargingErrorController');
-    Route::resource('gate/chargingHistory','Admin\gateway\ChargingHistoryController');
-    Route::resource('gate/chargingAgent','Admin\gateway\ChargingAgentController');
-    Route::resource('gate/chargingGWLog','Admin\gateway\ChargingGWlogController');
+    Route::get('gate/chargingAgent', ['as' => 'gate.chargingAgent', 'uses' => 'Admin\Gateway\ChargingAgentController@index']);
+    Route::get('gate/chargingAgentLog', ['as' => 'gate.chargingAgentLog', 'uses' => 'Admin\Gateway\ChargingAgentlogController@index']);
+    Route::get('gate/chargingError', ['as' => 'gate.chargingError', 'uses' => 'Admin\Gateway\ChargingErrorController@index']);
+    Route::get('gate/chargingHistory', ['as' => 'gate.chargingHistory', 'uses' => 'Admin\Gateway\ChargingHistoryController@index']);
+    Route::get('gate/chargingGWLog', ['as' => 'gate.chargingGWLog', 'uses' => 'Admin\Gateway\ChargingGWlogController@index']);
+    Route::get('gate/smsThang', ['as' => 'gate.smsThang', 'uses' => 'Admin\Gateway\SmsThangController@index']);
+
+//    Route::get('gate/chargingError','Admin\Gateway\ChargingErrorController');
+//    Route::get('gate/chargingHistory','Admin\Gateway\ChargingHistoryController');
+//    Route::get('gate/chargingAgent','Admin\Gateway\ChargingAgentController');
+//    Route::get('gate/chargingGWLog','Admin\Gateway\ChargingGWlogController');
 
     //gateway
 });

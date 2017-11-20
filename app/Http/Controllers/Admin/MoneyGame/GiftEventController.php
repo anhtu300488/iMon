@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\MoneyGame;
 
+use App\GiftCode;
 use App\GiftEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -69,8 +70,10 @@ class GiftEventController extends Controller
     }
 
     public function destroy($id){
-        GiftEvent::find($id)->delete();
+        $giftEvent =  GiftEvent::find($id);
+        $giftEvent->status = 0;
+        $giftEvent->save();
         return redirect()->route('eventGift.index')
-            ->with('message','Deleted Successfully');
+            ->with('message','Xóa không thành công');
     }
 }

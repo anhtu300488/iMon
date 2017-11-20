@@ -40,7 +40,13 @@
                                         </span>
                                     </div>
                                 </div>
+                                @permission('administrator')
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
 
+                                </div>
+                                @endpermission
                             </div>
                             <hr />
                             <div class="row">

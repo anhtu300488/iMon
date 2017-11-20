@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Thống kê xóc đĩa
+    Thống kê TLMN solo
 @endsection
 @section('content')
     <div class="page-header">
@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Từ ngày</label>
+                                    <label for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
                                         <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="fromDate" value="{{request('fromDate')}}"/>
                                         <span class="input-group-addon">
@@ -49,16 +49,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-4 col-sm-4">
-                                    <!-- #section:plugins/date-time.datepicker -->
-                                    <label for="id-date-picker-1">Đến ngày</label>
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" name="toDate" value="{{request('toDate')}}"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar bigger-110"></i>
-                                        </span>
-                                    </div>
-                                </div>
                             </div>
                             <hr />
                             <div class="row">
@@ -119,17 +109,14 @@
 
             //datepicker plugin
             //link
-            $('.date-picker').datepicker({
-                autoclose: true,
-                todayHighlight: true
-            })
-            //show datepicker when clicking on the icon
-                .next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
-
-            //or change it into a date range picker
-            $('.input-daterange').datepicker({autoclose:true});
+              $('.date-picker').daterangepicker(
+                  {
+                      timePicker: true,
+                      format: 'DD/MM/YYYY H:mm:s',
+                      startDate: '11/10/2017 00:00:00',
+                      endDate: '11/10/2017 14:1010:09'
+                  }
+              );
 
         });
     </script>

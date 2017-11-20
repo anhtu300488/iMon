@@ -10,43 +10,53 @@ use Illuminate\Support\Facades\Config;
 class PokerLogController extends Controller
 {
     public function log(Request $request){
-        $arr_type = array("" => "---Tất cả---", 100 => "100", 1000 => "1000", 10000 => "10000" );
-        $arr_card = array("" => "---Tất cả---" , 54 => "Nổ hũ", 57 => "Thùng phá sảnh", 58 => "Tứ quý chi đầu",
-            59 => "Cù lũ", 60 => "Thùng", 61 => "Sảnh", 62 => "Xám",
-            63 => "Thú", 64 => "Đôi J trở lên", 65 => "Mậu thầu");
 
-        $roomId = \Request::get('roomId');
-        $logIndex = \Request::get('logIndex');
         $fromDate = \Request::get('fromDate');
-        $toDate = \Request::get('toDate');
         $userId = \Request::get('userId');
 
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $query = MatchLog::query()->where("gameId", "=", 3);
-        if($roomId != ''){
-            $query->where('roomId','LIKE','%'.$roomId.'%');
+        
+        $sessionId = \Request::get('sessionId');
+        if($sessionId != ''){
+            $query->where('sessionId','=', $sessionId );
         }
 
-        if($logIndex != ''){
-            $query->where('matchLogId','LIKE','%'.$logIndex.'%');
-        }
-
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('createdTime',[$start,$end]);
+        if($fromDate != ''){
+            $text = trim($fromDate);
+            $dateArr = explode('-', $text);
+            if (count($dateArr) == 2) {
+                $date1 = trim($dateArr[0]);
+                $day_time1 = explode(' ', $date1);
+                $date1Arr = explode('/', $day_time1[0]);
+                $date1Str = '';
+                if (count($date1Arr) == 3) {
+                    $date1Str = $date1Arr[2] . '-' . $date1Arr[1] . '-' . $date1Arr[0] . ' ' .  $day_time1[1];
+                }
+                $date2 = trim($dateArr[1]);
+                $day_time2 = explode(' ', $date2);
+                $date2Arr = explode('/', $day_time2[0]);
+                $date2Str = '';
+                if (count($date2Arr) == 3) {
+                    $date2Str = $date2Arr[2] . '-' . $date2Arr[1] . '-' . $date2Arr[0] . ' ' .  $day_time2[1];
+                }
+                $query->whereBetween('createdTime', array($date1Str, $date2Str));
+            }
         } else {
-            $query->where("createdTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -7 days') ));
-
+            $query->where("createdTime",  ">",  Date("Y-m-d"));
         }
         if($userId != ''){
             $query->where('description','LIKE','%'.$userId.'%');
+        } else {
+            if($sessionId == ''){
+                $query->where('matchLogId','=',1);
+            }
         }
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('createdtime', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('matchLogId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         return view('admin.game.poker.index',compact('data', 'typeArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
 

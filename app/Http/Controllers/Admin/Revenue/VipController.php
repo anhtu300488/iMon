@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Cp;
 
 class VipController extends Controller
 {
@@ -21,15 +23,30 @@ class VipController extends Controller
 
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
         $page = \Request::get('page') ? \Request::get('page') : 1;
-
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $query = DB::table('user as a');
         $query->join('purchase_money_log', function($join)
         {
             $join->on('purchase_money_log.userId', '=', 'a.userId');
 
         });
-        $query->select(DB::raw("COUNT(purchase_money_log.userId) numberExchange"), DB::raw("SUM(purchase_money_log.parValue) sumMoney"), 'a.*' );
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21,22]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
 
+        $game_select = \Request::get('list_games');
+        $partner->prepend('---Tất cả---', '');
+        $query->select(DB::raw("COUNT(purchase_money_log.userId) numberExchange"), DB::raw("SUM(purchase_money_log.parValue) sumMoney"), 'a.*' );
+        $query->join('user', function($join)
+        {
+            $join->on('user.userId', '=', 'purchase_money_log.userId');
+
+        });
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];
 
@@ -50,21 +67,24 @@ class VipController extends Controller
 
 //        var_dump($data);die;
 
-        return view('admin.revenue.vip.index',compact('data'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.revenue.vip.index',compact('data', 'partner'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
     public function downloadExcel(Request $request){
 
         $timeRequest = \Request::get('timeRequest') ? explode(" - ", \Request::get('timeRequest')) : explode(" - ", get7Day());
-
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
         $query = UserReg::query();
         $query->join('purchase_money_log', function($join)
         {
             $join->on('purchase_money_log.userId', '=', 'user.userId');
 
         });
-        $query->select("user.userId", "user.userName","user.displayName", "user.cash", DB::raw("COUNT(purchase_money_log.userId) numberExchange"), DB::raw("SUM(purchase_money_log.parValue) sumMoney") , "user.totalMoneyCharged", "user.totalMoneyExchanged", "user.lastLoginTime", "user.registedTime", "user.device", "user.verifiedPhone" );
 
+        $query->select("user.userId", "user.userName","user.displayName", "user.cp","user.cash", DB::raw("COUNT(purchase_money_log.userId) numberExchange"), DB::raw("SUM(purchase_money_log.parValue) sumMoney") , "user.totalMoneyCharged", "user.totalMoneyExchanged", "user.lastLoginTime", "user.registedTime", "user.device", "user.verifiedPhone" );
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($timeRequest != ''){
             $startPlayGame = $timeRequest[0];
 
@@ -97,7 +117,7 @@ class VipController extends Controller
         return \Maatwebsite\Excel\Facades\Excel::create('vip', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
-                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','Số mon hiện tại','Số lần nạp','Số tiền nạp','Tổng tiền nạp', 'Tổng tiền đổi', 'Last login', 'Thời gian đăng ký', 'Mã thiết bị', 'Số điện thoại kích hoạt');
+                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','Cp','Số mon hiện tại','Số lần nạp','Số tiền nạp','Tổng tiền nạp', 'Tổng tiền đổi', 'Last login', 'Thời gian đăng ký', 'Mã thiết bị', 'Số điện thoại kích hoạt');
                 $sheet->fromArray($data, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });

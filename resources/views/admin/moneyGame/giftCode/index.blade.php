@@ -119,8 +119,8 @@
                                 <td>{{ $rs->code }}</td>
                                 <td>{{ number_format($rs->cashValue) }}</td>
                                 <td>{{ $rs->vqmmTurn }}</td>
-                                <td>{{ $rs->cardPromotion }}</td>
                                 <td>{{ $rs->cardPromotionTurn }}</td>
+                                <td>{{ $rs->cardPromotion }}</td>
                                 <td class="hidden-480">{{ $rs->ip }}</td>
                                 <td>@if($rs->status == 0)  <span class="label label-sm label-inverse arrowed-in">Đã sử dụng</span> @else <span class="label label-sm label-success">Mới</span> @endif</td>
                                 <td class="hidden-480">{{ $rs->redeemedTime }}</td>

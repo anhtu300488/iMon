@@ -48,6 +48,10 @@
 
                                 </div>
                                 @endpermission
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Game</label>
+                                    {!! Form::select('list_games', $list_games, request('list_games'), ['class' => 'form-control', 'id' => "list_games"]) !!}
+                                </div>
 
                             </div>
 
@@ -194,17 +198,16 @@
     <script type="text/javascript">
         $(function() {
             $('#modal-table').on("show.bs.modal", function (e) {
-                var date = $('input[name=insertedtime]').val().split(" - ");
-                var newDate = new Date();
-                var fromDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
-                if(date != ''){
-                    fromDate = date[0].split("/").join("-");
-                }
                 var partner = $('#partner').val();
+                var gameId = $('#list_games').val();
+
                 if(partner == ''){
                     partner = 1;
                 }
-                $.get('/revenue/ccu/statistic/' + fromDate + '/' + partner, function( data ) {
+                if(gameId == ''){
+                    gameId = -1;
+                }
+                $.get('/revenue/ccu/statistic/' + gameId + '/' + partner, function( data ) {
                     var array_date = new Array();
                     var online_today = new Array();
                     var online_yesterday = new Array();
@@ -212,8 +215,8 @@
                         array_date.push(index);
                         var data0 = (data[index][0] === undefined) ? 0 : data[index][0];
                         var data1 = (data[index][1] === undefined) ? 0 : data[index][1];
-                        online_yesterday.push(data1);
-                        online_today.push(data0);
+                        online_yesterday.push(data0);
+                        online_today.push(data1);
                     });
 
                     $('#container1').highcharts({

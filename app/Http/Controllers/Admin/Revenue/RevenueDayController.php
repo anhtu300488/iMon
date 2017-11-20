@@ -30,13 +30,17 @@ class RevenueDayController extends Controller
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
         $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        $kenh = \Request::get('channel');
         $os = \Request::get('clientType');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 //        var_dump($cp);die;
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
 
-        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
-
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -49,14 +53,16 @@ class RevenueDayController extends Controller
             $join->on('user.userId', '=', 'p.userId');
 
         });
+        $query->where(DB::raw('p.description'),'!=', "GameOperator");
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-
         if($cp != null){
             $query->where('user.cp','=', $cp);
         }
-
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }
@@ -135,7 +141,7 @@ class RevenueDayController extends Controller
             $purchase_arr[$sms_money->purchase_date][5] = $sms_money->sum_money;
         }
 
-        return view('admin.revenue.revenueDay.index',compact('data', 'partner', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr', 'sum_8x', 'sum_9029', 'sum_the', 'sum_doi_thuong', 'loi_nhuan'))->with('i', ($request->input('page', 1) - 1) * $perPage);
+        return view('admin.revenue.revenueDay.index',compact('data', 'partner','chanel', 'clientType', 'total_by_type', 'typeArr', 'purchase_arr', 'sum_8x', 'sum_9029', 'sum_the', 'sum_doi_thuong', 'loi_nhuan'))->with('i', ($request->input('page', 1) - 1) * $perPage);
 
     }
 

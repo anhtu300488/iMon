@@ -16,7 +16,6 @@
                             </a>
                         </span>
                     </div>
-
                     <div class="widget-body">
                         <div class="widget-main">
                             {!! Form::open(['method'=>'GET','url'=>'revenue/topCharging','role'=>'search'])  !!}
@@ -37,7 +36,13 @@
                                     {!! Form::select('type', array("" => "Tất cả", 1 => "Thẻ cào", 2 => "SMS"), request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
 
                                 </div>
+                                @permission(['administrator','admin'])
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
 
+                                </div>
+                                @endpermission
                             </div>
                             <hr />
                             <div class="row">
@@ -58,7 +63,10 @@
 
         </div>
     </div><!-- /.page-header -->
-
+            <div class="col-sm-8">
+                <b>Tổng MON nạp vào game: {{ number_format($sum_money_top_all) }}</b></br>
+                <b>Tổng MON top 10 nạp  : {{ number_format($sum_money_top10) }} ({{ $sum_money_top_all == 0 ? 0: number_format($sum_money_top10 *100 / $sum_money_top_all)}}%)</b></br>
+            </div>
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->

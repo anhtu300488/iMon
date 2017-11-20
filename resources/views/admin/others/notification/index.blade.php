@@ -33,6 +33,13 @@
                                     <label class="control-label no-padding-right" for="form-field-1"> Nội dung </label>
                                     <input class="form-control" name="message" type="text" value="{{request('message')}}"/>
                                 </div>
+                                @permission(['administrator','admin'])
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
+
+                                </div>
+                                @endpermission
 
                             </div>
 
@@ -77,6 +84,7 @@
                             <th class="hidden-480">STT</th>
                             <th>Tiêu đề</th>
                             <th>Nội dung push</th>
+                            <th>Đối tác</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Push time</th>
                             <th>Lặp lại hàng ngày</th>
                             <th>Trạng thái</th>
@@ -90,6 +98,7 @@
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td>{{ $rs->title }}</td>
                                 <td>{{ decodeEmoji($rs->message) }}</td>
+                                <td>{{ $rs->cp }}</td>
                                 <td class="hidden-480">{{ $rs->pushTime }}</td>
                                 <td>@if($rs->repeat_daily == 1)  <span class="label label-sm label-success">Yes</span> @else <span class="label label-sm label-inverse arrowed-in">No</span> @endif</td>
                                 <td>@if($rs->status == 1)  <span class="label label-sm label-success">Active</span> @else <span class="label label-sm label-inverse arrowed-in">Deactive</span> @endif</td>

@@ -101,7 +101,6 @@
                                     <td class="hidden-480">{{ $rs->insertTime }}</td>
                                     <td>@if($rs->isAlarm == 1)  <span class="label label-sm label-success">Bật</span> @else <span class="label label-sm label-inverse arrowed-in">Tắt</span> @endif</td>
                                     <td>
-                                        @permission('administrator')
                                         {!! Form::open(['method' => 'PATCH','route' => ['crashTableAlarm.update', $rs->crashId],'style'=>'display:inline']) !!}
                                         @if($rs->isAlarm == 1)
                                             <button class="btn btn-xs btn-inverse" type="submit" value="alarmOff" name="alarmOff" title="Tắt cảnh báo" onclick='return confirm("Bạn có chắc chắn muốn tắt cảnh báo?");'>
@@ -112,7 +111,6 @@
                                             </button>
                                         @endif
                                         {!! Form::close() !!}
-                                        @endpermission
                                     </td>
                                 </tr>
                             @endforeach

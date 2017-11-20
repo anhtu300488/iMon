@@ -19,7 +19,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                            {!! Form::open(['method'=>'GET','url'=>'revenue/historyMoney','role'=>'search', 'id' => 'formSearch'])  !!}
+                            {!! Form::open(['method'=>'GET','url'=>'revenue/historyMoney','role'=>'search', 'id' => 'formSearch', 'name' => 'formSearch'])  !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
@@ -44,32 +44,40 @@
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4">
                                     <!-- #section:plugins/date-time.datepicker -->
-                                    <label  for="id-date-picker-1">Thời gian</label>
+                                    <label for="id-date-picker-1">Thời gian</label>
                                     <div class="input-group">
-                                        <input class="form-control" type="text" name="date_charge" id="id-date-range-picker-1" value="{{request('date_charge') ? request('date_charge') : getToday()}}" />
+                                        <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy h:i:s" name="fromDate" value="{{request('fromDate')}}"/>
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
                                 </div>
-
-                                <div class="col-xs-4 col-sm-4">
-                                    <label  for="form-field-select-1">Loại</label>
-                                    {!! Form::select('type', $typeArr, request('type'), ['class' => 'form-control', 'id' => "form-field-select-1"]) !!}
-
-                                </div>
-
                             </div>
                             <hr />
-                            <div class="row">
+<!--                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
                                     <button type="submit" class="btn btn-info btn-sm" onclick="checkRequired()">
                                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                         Tìm kiếm
                                     </button>
                                 </div>
-                            </div>
+                            </div> -->
                             {!! Form::close() !!}
+                                                        <div class="row">
+                                <div class="col-xs-6 col-sm-6">
+                                    <button type="submit" id="search_button" onclick="document.formSearch.submit();" class="btn btn-info btn-sm">
+                                        <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                        Tìm kiếm
+                                    </button>
+                                </div>
+                                <div class="col-xs-6 col-sm-6">
+                                    <a href="{{ route('historyMoney.excel', ['userId' => request('userId'),'fromDate' => request('fromDate'),'userName' => request('userName'), 'game' => request('game')]) }}">
+                                        <button class="btn btn-info btn-sm">
+                                            Download Excel
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -130,22 +138,28 @@
     <script>
         jQuery(function($) {
 
-            //or change it into a date range picker
-            $('.date_charge').datepicker({autoclose:true});
+            //datepicker plugin
+            //link
+              $('.date-picker').daterangepicker(
+                  {
+                      timePicker: true,
+                      format: 'DD/MM/YYYY H:mm:s',
+                      startDate: '<?php echo date('d/m/Y 00:00:00')?>',
+                      endDate: '<?php echo date('d/m/Y H:mm:s')?>'
+                  }
+              );
 
+            // $('.date-picker').datepicker({
+            //     autoclose: true,
+            //     todayHighlight: true
+            // })
+            // //show datepicker when clicking on the icon
+            //     .next().on(ace.click_event, function(){
+            //     $(this).prev().focus();
+            // });
 
-            //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
-            $('input[name=date_charge]').daterangepicker({
-                'applyClass' : 'btn-sm btn-success',
-                'cancelClass' : 'btn-sm btn-default',
-                locale: {
-                    applyLabel: 'Apply',
-                    cancelLabel: 'Cancel',
-                }
-            })
-                .prev().on(ace.click_event, function(){
-                $(this).next().focus();
-            });
+            // //or change it into a date range picker
+            // $('.input-daterange').datepicker({autoclose:true});
 
         });
     </script>

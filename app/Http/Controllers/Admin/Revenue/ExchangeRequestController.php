@@ -34,7 +34,13 @@ class ExchangeRequestController extends Controller
         $status = \Request::get('status') ? \Request::get('status') : 3;
         $page = \Request::get('page') ? \Request::get('page') : 1;
         $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
-        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
+    //    $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
+
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
 
         $partner->prepend('---Tất cả---', '');
         $statusArr = array(3 => "Chưa xử lý", 1 => "Thành công" , 2 => "Thất bại", -1 => "Từ chối", 5 => "Đang kiểm tra", -2 => '---Tất cả---');
@@ -61,6 +67,9 @@ class ExchangeRequestController extends Controller
 
         if($cp != null){
             $query->where('user.cp','=',$cp);
+        }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
         }
         $query->where('user.status', '=', 1);
 

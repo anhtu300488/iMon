@@ -49,14 +49,14 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Số thẻ khuyến mại</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="cardPromotion" />
+                    <input type="text" class="form-control" id="form-field-8" name="cardPromotionTurn" />
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-8">% giá trị thẻ</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="form-field-8" name="cardPromotionTurn" />
+                    <input type="text" class="form-control" id="form-field-8" name="cardPromotion" />
                 </div>
             </div>
 

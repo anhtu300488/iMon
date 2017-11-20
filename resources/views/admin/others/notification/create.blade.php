@@ -73,7 +73,15 @@
                     {{ Form::checkbox('status', 1, true, ['class' => 'field']) }}
                 </div>
             </div>
+                <div class="form-group">
+                    @permission(['administrator','admin'])
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Đối tác</label>
+                    <div class="col-sm-9">
+                        {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
 
+                    </div>
+                    @endpermission
+                </div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit">

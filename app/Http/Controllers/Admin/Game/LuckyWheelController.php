@@ -8,6 +8,7 @@ use App\LuckyWheelLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
 
 class LuckyWheelController extends Controller
 {
@@ -45,15 +46,35 @@ class LuckyWheelController extends Controller
 
         $query->where($matchThese);
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('time',[$start,$end]);
+        if($fromDate != ''){
+            $text = trim($fromDate);
+            $dateArr = explode('-', $text);
+            if (count($dateArr) == 2) {
+                $date1 = trim($dateArr[0]);
+                $day_time1 = explode(' ', $date1);
+                $date1Arr = explode('/', $day_time1[0]);
+                $date1Str = '';
+                if (count($date1Arr) == 3) {
+                    $date1Str = $date1Arr[2] . '-' . $date1Arr[1] . '-' . $date1Arr[0] . ' ' .  $day_time1[1];
+                }
+                $date2 = trim($dateArr[1]);
+                $day_time2 = explode(' ', $date2);
+                $date2Arr = explode('/', $day_time2[0]);
+                $date2Str = '';
+                if (count($date2Arr) == 3) {
+                    $date2Str = $date2Arr[2] . '-' . $date2Arr[1] . '-' . $date2Arr[0] . ' ' .  $day_time2[1];
+                }
+                $query->whereBetween('time', array($date1Str, $date2Str));
+            }
+        } else {
+            $query->where("time",  ">",  Date("Y-m-d"));
         }
+
+
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
         $endLimit = $perPage * $page;
-        $data = $query->orderBy('time', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
+        $data = $query->orderBy('logId', 'desc')->limit($startLimit,$endLimit)->paginate($perPage);
 
         $list_by_round = LuckyWheelLog::getSumKenByRound($userId, $roundItem, $description, $fromDate, $toDate);
 

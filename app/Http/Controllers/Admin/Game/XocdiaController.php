@@ -6,6 +6,7 @@ use App\MatchLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
 
 class XocdiaController extends Controller
 {
@@ -26,17 +27,39 @@ class XocdiaController extends Controller
             $query->where('roomId','LIKE','%'.$roomId.'%');
         }
 
-        if($matchIndex != ''){
-            $query->where('matchIndex','LIKE','%'.$matchIndex.'%');
+        $sessionId = \Request::get('sessionId');
+        if($sessionId != ''){
+            $query->where('sessionId','=', $sessionId );
         }
 
-        if($fromDate != '' && $toDate != ''){
-            $start = date("Y-m-d",strtotime($fromDate));
-            $end = date("Y-m-d",strtotime($toDate));
-            $query->whereBetween('createdTime',[$start,$end]);
+        if($fromDate != ''){
+            $text = trim($fromDate);
+            $dateArr = explode('-', $text);
+            if (count($dateArr) == 2) {
+                $date1 = trim($dateArr[0]);
+                $day_time1 = explode(' ', $date1);
+                $date1Arr = explode('/', $day_time1[0]);
+                $date1Str = '';
+                if (count($date1Arr) == 3) {
+                    $date1Str = $date1Arr[2] . '-' . $date1Arr[1] . '-' . $date1Arr[0] . ' ' .  $day_time1[1];
+                }
+                $date2 = trim($dateArr[1]);
+                $day_time2 = explode(' ', $date2);
+                $date2Arr = explode('/', $day_time2[0]);
+                $date2Str = '';
+                if (count($date2Arr) == 3) {
+                    $date2Str = $date2Arr[2] . '-' . $date2Arr[1] . '-' . $date2Arr[0] . ' ' .  $day_time2[1];
+                }
+                $query->whereBetween('createdTime', array($date1Str, $date2Str));
+            }
+        } else {
+            $query->where("createdTime",  ">",  Date("Y-m-d"));
         }
         if($userId != ''){
             $query->where('description','LIKE','%'.$userId.'%');
+        }
+        if($userId = '' && $fromDate = '' && $sessionId = '') {
+            $query->where('matchLogId','=',1);
         }
 //        if($type ==  1){
 //            $query->where("description", 'like', "%true%");

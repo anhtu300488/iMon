@@ -32,6 +32,13 @@
                                         </span>
                                     </div>
                                 </div>
+                                @permission('administrator')
+                                <div class="col-xs-4 col-sm-4">
+                                    <label  for="form-field-select-1">Đối tác</label>
+                                    {!! Form::select('partner', $partner, request('partner'), ['class' => 'form-control', 'id' => "partner"]) !!}
+
+                                </div>
+                                @endpermission
 
                             </div>
                             {!! Form::close() !!}
@@ -44,7 +51,7 @@
                                     </button>
                                 </div>
                                 <div class="col-xs-6 col-sm-6">
-                                    <a href="{{ route('vip.excel', ['timeRequest' => request('timeRequest')]) }}">
+                                    <a href="{{ route('vip.excel', ['timeRequest' => request('timeRequest'), 'partner' => request('partner')]) }}">
                                         <button class="btn btn-info btn-sm">
                                             Download Excel
                                         </button>
@@ -74,6 +81,7 @@
                             <th>User ID</th>
                             <th>Tên đăng nhập</th>
                             <th>Tên hiển thị</th>
+                            <th>Phiên bản</th>
                             <th>Số mon hiện tại</th>
                             <th>Số lần nạp</th>
                             <th>Số tiền nạp</th>
@@ -93,6 +101,7 @@
                             <td>{{ $rs->userId }}</td>
                             <td>{{ $rs->userName }}</td>
                             <td>{{ $rs->displayName }}</td>
+                            <td>{{ $partner[$rs->cp] }}</td>
                             <td>{{ number_format($rs->cash) }}</td>
                             <td>{{ $rs->numberExchange }}</td>
                             <td>{{ number_format($rs->sumMoney) }}</td>

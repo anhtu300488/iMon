@@ -299,7 +299,14 @@
 
                     <b class="arrow"></b>
                 </li>
+                <li {{ setActive('game/poker') }}>
+                    <a href="{{route('game.poker')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thống kê game Poker
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
                 <li {{ setActive('game/miniPoker') }}>
                     <a href="{{route('game.miniPoker')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
@@ -649,6 +656,17 @@
 
                     <b class="arrow"></b>
                 </li>
+                        @permission(['administrator', 'admin'])
+
+                <li {{ setActive('others/tip') }}>
+                    <a href="{{route('tip.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quick tip vào game
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                        @endpermission
+
             </ul>
         </li>
         @endpermission
@@ -692,16 +710,6 @@
                 </li>
 				@endpermission
 				
-				@permission(['administrator'])					
-					<li {{ setActive('system/taixiu/create') }}>
-						<a href="{{route('system.taixiu.create')}}">
-							<i class="menu-icon fa fa-caret-right"></i>
-							Tool tài xỉu
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-				@endpermission
 				@if(Auth::user()->username == 'ducanhvnn')				
 					<li {{ setActive('system/taixiu/create') }}>
 						<a href="{{route('system.taixiu.create')}}">
@@ -772,6 +780,62 @@
                     <b class="arrow"></b>
                 </li>
 
+            </ul>
+        </li>
+        @endpermission
+        @permission(['administrator'])
+        <li {{ setOpen('system') }}>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list"></i>
+                <span class="menu-text"> paygate </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+
+                <li {{ setActive('gate/chargingAgent') }}>
+                    <a href="{{route('gate.chargingAgent')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        chargingAgent
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('gate/chargingError') }}>
+                    <a href="{{route('gate.chargingError')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        chargingError
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('gate/chargingHistory') }}>
+                    <a href="{{route('gate.chargingHistory')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        chargingHistory
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('gate/chargingAgentLog') }}>
+                    <a href="{{route('gate.chargingAgentLog')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý Agent log
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li {{ setActive('gate/chargingGWLog') }}>
+                    <a href="{{route('gate.chargingGWLog')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        chargingGWLog
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
         @endpermission

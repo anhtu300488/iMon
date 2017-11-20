@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
 use App\ExchangeAssetRequest;
-use App\Partner;
+use App\Cp;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RevenueUserChargeController extends Controller
 {
@@ -29,9 +30,11 @@ class RevenueUserChargeController extends Controller
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
         $typeArr = array('' => '---Tất cả---',1 => 'Thẻ cào', 2 => 'SMS', 3 => 'IAP');
-
-        $partner = Partner::pluck('partnerName', 'partnerId');
-
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -49,12 +52,15 @@ class RevenueUserChargeController extends Controller
 //                $join->on('partner.partnerId', '=', 'user.cp');
 //
 //            });
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
         if($type != null){
             $query->where(DB::raw('p.type'),'=', $type);
         }
-//        if($cp != null){
-//            $query->where(DB::raw('partner.partnerId'),'=', $cp);
-//        }
+       if($cp != null){
+           $query->where(DB::raw('user.cp'),'=', $cp);
+       }
         if($os != null){
             $query->where(DB::raw('user.clientId'),'=', $os);
         }

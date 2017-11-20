@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin\Revenue;
 
 use App\ClientType;
-use App\Partner;
+use App\Cp;
 use App\PurchaseMoneyLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RechargeTransactionController extends Controller
 {
@@ -29,8 +30,11 @@ class RechargeTransactionController extends Controller
         $userId = \Request::get('userId');
         $page = \Request::get('page') ? \Request::get('page') : 1;
 
-        $partner = Partner::pluck('partnerName', 'partnerId');
-
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -50,6 +54,13 @@ class RechargeTransactionController extends Controller
             $join->on('user.userId', '=', 'purchase_money_log.userId');
 
         });
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
         if($userName != ''){
             $query->where('purchase_money_log.userName','LIKE','%'.$userName.'%');
         }
@@ -100,13 +111,19 @@ class RechargeTransactionController extends Controller
         $dateCharge = \Request::get('date_charge') ? explode(" - ", \Request::get('date_charge')) : explode(" - ", getToday());
         $datePlayGame = \Request::get('date_play_game') ? explode(" - ", \Request::get('date_play_game')): null;
         $type = \Request::get('type');
-        $cp = \Request::get('partner');
+        // $cp = \Request::get('partner');
         $os = \Request::get('clientType');
         $displayName = \Request::get('displayName');
         $userId = \Request::get('userId');
-
-        $partner = Partner::pluck('partnerName', 'partnerId');
-
+        $cp = \Request::get('partner') ? \Request::get('partner') : Auth::user()->cp_id;
+        if($cp != null){
+            $query->where('user.cp','=', $cp);
+        }
+        $partner_qr =  Cp::where('cpId','!=', 1);
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -126,6 +143,9 @@ class RechargeTransactionController extends Controller
                 $join->on('user.userId', '=', 'purchase_money_log.userId');
 
             });
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("user.cp",  [1,17,18,19,21]);
+        }
         if($userName != ''){
             $query->where('purchase_money_log.userName','LIKE','%'.$userName.'%');
         }

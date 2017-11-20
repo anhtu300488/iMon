@@ -6,6 +6,7 @@ use App\MatchLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
 
 class LiengController extends Controller
 {
@@ -32,6 +33,9 @@ class LiengController extends Controller
             $start = date("Y-m-d",strtotime($fromDate));
             $end = date("Y-m-d",strtotime($toDate));
             $query->whereBetween('createdTime',[$start,$end]);
+        } else {
+            $query->where("createdTime",  ">",  Date("Y-m-d", strtotime(Carbon::now().' -1 days') ));
+
         }
 
         if($type ==  1){

@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserReg extends Model
 {
@@ -37,6 +38,9 @@ class UserReg extends Model
         if($cp != null){
             $query->where('a.cp','=', $cp);
         }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("a.cp",  [1,17,18,19,21]);
+        }
         $query ->groupBy("a.clientId");
         $query->orderBy("sum_os", "desc");
         return $query->get()->toArray();
@@ -50,6 +54,9 @@ class UserReg extends Model
             ->where("a.registedTime", ">" , $created_at);
         if($cp != null){
             $query->where('a.cp','=', $cp);
+        }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("a.cp",  [1,17,18,19,21]);
         }
         $query->groupBy(DB::raw('date(registedTime)'));
 
@@ -65,6 +72,9 @@ class UserReg extends Model
         if($cp != null){
             $query->where('a.cp','=', $cp);
         }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("a.cp",  [1,17,18,19,21]);
+        }
         return $query->get()->toArray();
     }
 
@@ -77,12 +87,19 @@ class UserReg extends Model
         if($cp != null){
             $query->where('a.cp','=', $cp);
         }
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("a.cp",  [1,17,18,19,21]);
+        }
         return $query->get()->toArray();
     }
 
     public static function getTotalUserRegByDay($loginTime)
     {
         $startDateCharge = $loginTime ? date("Y-m-d",strtotime($loginTime[0])) : Date("Y-m-d", strtotime(Carbon::now().' -7 days'));
-        return UserReg::whereDate('registedTime', '=', $startDateCharge)->count();
+        $q = UserReg::whereDate('registedTime', '=', $startDateCharge);
+         if(Auth::user()->id == "100033"){
+            $q->whereIn("a.cp",  [1,17,18,19,21]);
+        }
+        return $q->count();
     }
 }

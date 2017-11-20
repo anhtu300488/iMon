@@ -39,8 +39,11 @@ class UserRegisterController extends Controller
 
         $statusArr = array('' => '---Tất cả---', 0 => 'Không hoạt động', 1 => 'Hoạt động', 3 => 'Tạm khóa');
 
-        $partner = Cp::where('cpId','!=', 1)->pluck('cpName', 'cpId');
-
+        $partner_qr =  Cp::query();
+        if(Auth::user()->id == "100033"){
+            $partner_qr->whereIn("cpId",  [1,17,18,19,21]);
+        }
+        $partner = $partner_qr->pluck('cpName', 'cpId');
         $partner->prepend('---Tất cả---', '');
 
         $clientType = ClientType::pluck('name', 'clientId');
@@ -67,7 +70,6 @@ class UserRegisterController extends Controller
         if($displayName != ''){
             $query->where('displayName','LIKE','%'.$displayName.'%');
         }
-
         if($device != ''){
             $query->where('device','LIKE','%'.$device.'%');
         }
@@ -83,7 +85,9 @@ class UserRegisterController extends Controller
         if($cp != null){
             $query->where('cp','=', $cp);
         }
-
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("cp",  [1,17,18,19,21]);
+        }
         $query->where($matchThese);
         if($dateRegister != ''){
             $startDateCharge = $dateRegister[0];
@@ -105,6 +109,7 @@ class UserRegisterController extends Controller
         $total_by_os = UserReg::getTotalUserByOs($cp);
 
         $day = 60*60*24; $day_7 = time() - 6*$day;
+
         $register_info = UserReg::getRegisterInfo(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
         $register_info_new = UserReg::getRegisterInfoNew(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
         $user_play_inday  =  UserReg::getPlayUserInday(Date("Y-m-d", strtotime(Carbon::now().' -6 days')), $cp);
@@ -144,7 +149,6 @@ class UserRegisterController extends Controller
             );
 
         }
-
         return view('admin.users.userReg.index',compact('data', 'partner', 'clientType', 'total_by_os', 'sevent_day', 'statusArr'))->with('i', ($request->input('page', 1) - 1) * $perPage);
     }
 
@@ -182,7 +186,7 @@ class UserRegisterController extends Controller
             $matchThese['status'] = $status;
         }
 
-        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "deviceIdentify", "cp", "clientId", "registedTime");
+        $query = UserReg::query()->select("userId", "userName","displayName", "ip", "device", "deviceIdentify", "cp", "clientId", "registedTime", "verifiedPhone");
         if($userName != ''){
             $query->where('userName','LIKE','%'.$userName.'%');
         }
@@ -202,7 +206,9 @@ class UserRegisterController extends Controller
         if($deviceIdentify != ''){
             $query->where('deviceIdentify','=',$deviceIdentify);
         }
-
+        if(Auth::user()->id == "100033"){
+            $query->whereIn("cp",  [1,17,18,19,21]);
+        }
 
         $query->where($matchThese);
 
@@ -238,7 +244,7 @@ class UserRegisterController extends Controller
         return \Maatwebsite\Excel\Facades\Excel::create('user_reg', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
-                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Device ID','Đối tác', 'Nền tảng', 'Ngày đăng ký');
+                $headings = array('User ID','Tên đăng nhập', 'Tên hiển thị','IP','Thiết bị','Device ID','Đối tác', 'Nền tảng', 'Ngày đăng ký', 'SDT xác thực');
                 $sheet->fromArray($data, null, 'A1', false, false);
                 $sheet->prependRow(1, $headings);
             });

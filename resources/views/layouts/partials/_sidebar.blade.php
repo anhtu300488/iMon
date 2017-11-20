@@ -425,7 +425,7 @@
                 <li {{ setActive('moneyGame/purchaseMoney') }}>
                     <a href="{{route('purchaseMoney.index')}}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                       Bù tiền nạp thẻ lỗi
+                        Bù tiền nạp thẻ lỗi
                     </a>
 
                     <b class="arrow"></b>
@@ -656,7 +656,7 @@
 
                     <b class="arrow"></b>
                 </li>
-                        @permission(['administrator', 'admin'])
+                @permission(['administrator', 'admin'])
 
                 <li {{ setActive('others/tip') }}>
                     <a href="{{route('tip.index')}}">
@@ -665,7 +665,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                        @endpermission
+                @endpermission
 
             </ul>
         </li>
@@ -708,18 +708,18 @@
 
                     <b class="arrow"></b>
                 </li>
-				@endpermission
-				
-				@if(Auth::user()->username == 'ducanhvnn')				
-					<li {{ setActive('system/taixiu/create') }}>
-						<a href="{{route('system.taixiu.create')}}">
-							<i class="menu-icon fa fa-caret-right"></i>
-							Tool tài xỉu
-						</a>
+                @endpermission
 
-						<b class="arrow"></b>
-					</li>
-				@endif
+                @if(Auth::user()->username == 'ducanhvnn')
+                    <li {{ setActive('system/taixiu/create') }}>
+                        <a href="{{route('system.taixiu.create')}}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Tool tài xỉu
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                @endif
                 <li {{ setActive('tool/sendEmail/create') }}>
                     <a href="{{route('tool.sendEmail.create')}}">
                         <i class="menu-icon fa fa-caret-right"></i>

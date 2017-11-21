@@ -666,7 +666,14 @@
                     <b class="arrow"></b>
                 </li>
                 @endpermission
+                <li {{ setActive('others/mail') }}>
+                    <a href="{{route('mail.index')}}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý mail phản hồi
+                    </a>
 
+                    <b class="arrow"></b>
+                </li>
             </ul>
         </li>
         @endpermission

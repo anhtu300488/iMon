@@ -327,6 +327,9 @@ Route::group(['middleware' => ['auth']], function() {
     //web content
     Route::resource('others/webContent','Admin\Others\WebContentController');
 
+    //mail content
+    Route::resource('others/mail','Admin\Others\MailController');
+
     //Check username exists via userid
     Route::get('checkUser', [
         'uses' => 'Admin\CheckUserController@checkUser',

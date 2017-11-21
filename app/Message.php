@@ -12,5 +12,5 @@ class Message extends Model
 
     protected $primaryKey = 'messageId';
 
-    protected $fillable = ['recipientUserName', 'title', 'body', 'senderUserId', 'senderUserName', 'recipientUserId'];
+    protected $fillable = ['recipientUserName', 'title', 'body', 'senderUserId', 'senderUserName', 'recipientUserId', 'parentId'];
 }

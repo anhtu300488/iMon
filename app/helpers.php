@@ -708,3 +708,9 @@ function getParValue($cardSerial,$cardPin){
 
     return $money;
 }
+
+function getMailReply($id)
+{
+    $result = \App\Message::where(['parentId' => $id, 'status' => 1])->get();
+    return $result;
+}

@@ -34,7 +34,7 @@
                     <input type="hidden" name="recipientUserName" value="{{$data->senderUserName}}">
                     <input type="hidden" name="senderUserId" value="{{$data->recipientUserId}}">
                     <input type="hidden" name="senderUserName" value="{{$data->recipientUserName}}">
-                    <input type="hidden" name="senderUserName" value="{{$data->messageId}}">
+                    <input type="hidden" name="messageId" value="{{$data->messageId}}">
                     <div class="form-group">
                         <div class="col-sm-9">
                             {!! Form::textarea('body') !!}

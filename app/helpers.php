@@ -714,3 +714,9 @@ function getMailReply($id)
     $result = \App\Message::where(['parentId' => $id, 'status' => 1])->get();
     return $result;
 }
+
+function getMasterMailReply($id)
+{
+    $result = \App\Message::where(['parentId' => $id, 'status' => 1, 'senderUserId' => 1000000])->get();
+    return $result;
+}

@@ -93,6 +93,7 @@
                             <th class="hidden-480">Tên người gửi</th>
                             <th>Tiêu đề</th>
                             <th>Nội dung</th>
+                            <th>Nội dung trả lời gần nhất</th>
                             <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>Thời gian</th>
                             <th>Action</th>
                         </tr>
@@ -106,6 +107,15 @@
                                 <td class="hidden-480">{{ $rs->senderUserName }}</td>
                                 <td>{{ $rs->title }}</td>
                                 <td>{{ $rs->body }}</td>
+                                <td>
+                                    <?php $mid = $rs->messageId; $reply = getMasterMailReply($mid); ?>
+                                    @if(count($reply) > 0)
+                                        @foreach($reply as $k => $v)
+                                                <div>{{$v->body}} </div>
+                                        @endforeach
+                                    @endif
+
+                                </td>
                                 <td class="hidden-480">{{ $rs->sentTime }}</td>
                                 <td>
 

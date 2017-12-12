@@ -53,6 +53,7 @@ class MailController extends Controller
 
     public function store(Request $request){
         $input = $request->all();
+        $input['readed'] = 1;
         Message::create($input);
 
         return redirect()->back();

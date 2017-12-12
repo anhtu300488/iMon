@@ -7,6 +7,7 @@ use App\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class MailController extends Controller
 {
@@ -34,7 +35,7 @@ class MailController extends Controller
             $query->where('body','LIKE','%'.$body.'%');
         }
 
-        $query->where('recipientUserId',1000000) ->whereNull('parentId');
+        $query->where('recipientUserId',1000000)->where('status',1) ->whereNull('parentId');
 
         $perPage = Config::get('app_per_page') ? Config::get('app_per_page') : 100;
         $startLimit = $perPage * ($page - 1);
@@ -44,6 +45,8 @@ class MailController extends Controller
     }
 
     public function show($id){
+        Message::where('messageId', $id)
+            ->update(['readed' => 1]);
         $data = Message::find($id);
         return view('admin.others.mail.show',compact('data'));
     }
@@ -52,6 +55,12 @@ class MailController extends Controller
         $input = $request->all();
         Message::create($input);
 
+        return redirect()->back();
+    }
+
+    public function destroy($id){
+        Message::where('messageId', $id)
+            ->update(['status' => 0]);
         return redirect()->back();
     }
 }

@@ -77,8 +77,13 @@
 
     <div class="row">
         <div class="col-xs-12">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <!-- PAGE CONTENT BEGINS -->
-            <div class="row">
+            <div class="row" >
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -95,7 +100,7 @@
 
                         <tbody>
                         @foreach($data as $key => $rs)
-                            <tr>
+                            <tr @if($rs->readed == 0) style="font-weight: bold;" @endif>
                                 <td class="hidden-480">{{ ++$i }}</td>
                                 <td class="hidden-480">{{ $rs->senderUserId }}</td>
                                 <td class="hidden-480">{{ $rs->senderUserName }}</td>
@@ -103,11 +108,18 @@
                                 <td>{{ $rs->body }}</td>
                                 <td class="hidden-480">{{ $rs->sentTime }}</td>
                                 <td>
-                                    {!! Form::open(['method' => 'GET','route' => ['mail.show', $rs->messageId],'style'=>'display:inline']) !!}
-                                    <button class="btn btn-xs btn-info" type="submit" title="Chi tiết">
-                                        <i class="ace-icon fa fa-reply white"></i>
+
+                                    @permission(['administrator','admin'])
+                                    <a class="btn btn-xs btn-info" href="{{ route('mail.show',$rs->messageId) }}">
+                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    </a>
+                                    {!! Form::open(['method' => 'DELETE','route' => ['mail.destroy', $rs->messageId],'style'=>'display:inline']) !!}
+                                    <button class="btn btn-xs btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                     </button>
                                     {!! Form::close() !!}
+
+                                    @endpermission
                                 </td>
                             </tr>
                         @endforeach
@@ -118,5 +130,4 @@
             </div><!-- /.row -->
         </div><!-- /.col -->
     </div><!-- /.row -->
-
 @endsection
